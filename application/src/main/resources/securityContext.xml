@@ -1,0 +1,57 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-2.0.1.xsd">
+
+    <beans:import resource="dataSource.xml"/>
+    
+    <http access-decision-manager-ref="accessDecisionManager"
+          access-denied-page="/accessDenied.ftl">
+        <intercept-url pattern="/login.ftl" access="ROLE_ANONYMOUS,ROLE_GUEST" />
+        <intercept-url pattern="/accessDenied.ftl" access="ROLE_ANONYMOUS,ROLE_GUEST,ROLE_USER,ROLE_ADMIN" />
+        <intercept-url pattern="/hello.ftl" access="ROLE_USER" />
+        <intercept-url pattern="/priceincrease.ftl" access="ROLE_ADMIN" />
+        <http-basic/>  
+        <form-login login-page="/login.ftl"
+            default-target-url="/hello.ftl"
+            authentication-failure-url="/login.ftl?error=true" />
+        <logout logout-success-url="/login.ftl" />
+        <anonymous username="guest" granted-authority="ROLE_GUEST" />
+    </http>
+
+    <authentication-provider>
+      <password-encoder hash="md5"/>
+      <jdbc-user-service data-source-ref="dataSource" />
+    </authentication-provider>
+
+    <beans:bean id="accessDecisionManager"
+        class="org.springframework.security.vote.AffirmativeBased">
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:bean class="org.springframework.security.vote.RoleVoter" />
+                <beans:bean class="org.springframework.security.vote.AuthenticatedVoter" />
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+    
+    <beans:bean id="exceptionTranslationFilter"
+        class="org.springframework.security.ui.ExceptionTranslationFilter">
+      <beans:property name="authenticationEntryPoint">
+          <beans:bean
+              class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
+                  <beans:property name="loginFormUrl" value="/login.ftl" />
+                  <beans:property name="forceHttps" value="false" />
+          </beans:bean>
+       </beans:property>
+       <beans:property name="accessDeniedHandler">
+           <beans:bean
+               class="org.springframework.security.ui.AccessDeniedHandlerImpl">
+               <beans:property name="errorPage" value="/accessDenied.ftl" />
+           </beans:bean>
+       </beans:property>
+    </beans:bean>
+    
+</beans:beans>

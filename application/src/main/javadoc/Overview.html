@@ -1,0 +1,283 @@
+<html>
+<body>
+This simple application illustrates the use of Spring, several new components,
+new testing infrastructure and architectural patterns
+that are under consideration for inclusion in Cheetah.
+
+<h2>Application Overview -- "springapp"</h2>
+
+<p>
+The application implements just two functions:
+</p>
+
+<ul>
+	<li> View a list of products (description and price) stored in a database.</li>
+	<li> Increase the prices of all products by some percentage.</li>
+</ul>
+
+<h2>Technology Stack</h2>
+
+<p>
+The application illustrates use of these components and frameworks:
+
+<ul>
+	<li>Spring framework components, specifically
+		<ul>
+			<li>Spring MVC, including form controllers, commands, and validators</li>
+			<li>dependency injection all over the place</li>
+		</ul>
+	</li>
+	<li>FreeMarker (JSP alternative)</li>
+	<li>JodaTime</li>
+	<li>TestNG</li>
+	<li>Maven2 (basic configuration, but enough to build and run tests)</li>
+	<li>PMD and FindBugs (basic configuration)</li>
+	<li>Spring Security (authentication provider uses database via jdbc for users and roles)</li>
+	<li>JPA-based data access objects (DAOs).
+		<ul>
+			<li>Hibernate is used as the underlying JPA engine.</li>
+			<li>Spring framework is used to simplify persistence code</li>
+		</ul>
+	</li>
+   <li>Selenium acceptance testing, driven via TestNG</li>
+	
+</ul>
+
+<h2>Running the application</h2>
+
+<p>
+The application is built using Maven 2.
+</p>
+
+<ol>
+	<li>First be sure that <code>src/main/resources/jdbc.properties</code> is 
+	correctly configured for your local environment. All environmental dependencies
+   should be located there.</li>
+   <li>Run <code>mvn sql:execute</code> to create the database and load data.</li>
+	<li>Run <code>mvn clean install</code> to compile the application and deploy it to the 
+	project's /target directory.</li>
+	<li>Run <code>mvn javadoc:javadoc</code> to generate javadoc in the 
+	/target/site/apidocs directory.</li>
+	<li>Run the goals <code>mvn sql:execute</code> to initialize and populate the database 
+	with test data.</li>
+	<li>Start Tomcat and go to <code>http://localhost:8080/springapp/hello.ftl</code>. 
+	You should see a login page.</li>
+   <li>Login with login <code>admin</code> and password <code>password</code>. You should see 
+	a welcome page with the list of products inserted into the database.</li>
+	<li>Click the Increase Price link. Enter a percentage and press <code>execute</code>. 
+	You are taken back to the welcome page to view the increased prices. If you enter 
+	negative numbers or percentages that are above 50 you will see error messages.</li>
+   <li>Login <code>user1</code> and password <code>password</code> cannot use the price 
+   increase page, so you will get a "Bad credentials" error if you log in with these credentials 
+   and try to use this page.</li>
+   <li>Login <code>user2</code> is disabled, so you will get a "User disabled"
+   error if you log in with these credentials and try to use this page.</li>
+   <li>If you log in with the wrong user or password, you should see an error page.</li>
+</ol>
+
+<p/>
+
+<h2>Running the Selenium acceptance tests</h2>
+
+<ol>
+   <li>You must use Firefox 2, installed in the standard location for your platform. For more info, see the 
+       <a href="http://selenium-rc.openqa.org/tutorial.html">Selenium RC tutorial</a>.</li>
+   <li>You can only run the acceptance tests from inside Eclipse one at a time right now. This will change in the near future.</li>
+   <li>Do a <code>mvn clean install</code> from the command line. All the tests should pass. This does not run the acceptance tests.</li>
+   <li>Start your web server, either from Eclipse WTP or externally.</li>
+   <li>Start the Selenium server from the command line by typing <code>mvn selenium:start-server</code>. This will start a selenium server 
+       on the console - it will launch a web browser when commanded to by the tests.</li>
+   <li>Open the test you want to run in Eclipse, and run it via TestNG. This will open a web browser and execute the tests.</li> 
+</ol>
+
+<p/>
+
+<h2>Architecture Overview</h2>
+
+
+The application, "springapp", grew from the example described in a
+ <a href="http://static.springframework.org/docs/Spring-MVC-step-by-step/">
+tutorial </a> on the Spring Framework. It has been extended to more explicitly
+illustrate architectural patterns that are proposed to include in Cheetah.
+<p/>
+This example has been ported from ant to maven2, and modified so that it will 
+work in Eclipse WTP.
+<p/>
+
+
+<h2>Layered Architecture</h2>
+<p>
+The architectural layering follows roughly that proposed by Eric Evans in
+ <a href="">Domain-Driven Design</a>. Each layer has narrow, well-defined responsibilities.
+</p>
+
+<h3>User Interface Layer</h3>
+<p>
+Shows information to the user and interprets user's commands. Does
+<strong>NOT</strong> implement any business logic other than low-level validation of
+user input. It is further broken down into the two usual parts:
+</p>
+
+<dl>
+	<dt><strong>Presentation</strong></dt>
+	<dd>Formats the views and receives user commands. Receives models to
+		display from the control layer, and forwards commands to that layer. This
+		application uses Java ServerPages, but eventually will be ported
+		to FreeMarker.</dd>
+	<dt><strong>Control</strong></dt>
+	<dd>Implements the logic to determine the view, validate user input, and interpret 
+		and act on user commands. Requests that a service in the next layer down carry out 
+		the command. This application uses Spring MVC, for example in
+		{@link springapp.web.controllers.InventoryController} and
+		{@link springapp.web.controllers.PriceIncreaseFormController}, as well as
+		with commands ({@link springapp.web.commands.PriceIncrease} and
+		command validators (springapp.web.commands.PriceIncreaseValidator}
+	</dd>
+</dl>
+
+<h3>Service (AKA Application) Layer</h3>
+
+<p>
+Defines the jobs the software is supposed to do. Coordinates
+tasks and delegates work to collaborations of domain objects in the next layer down.
+</p>
+
+<p>
+See {@link springapp.service.SimpleProductService}, which implements interface
+{@link springapp.service.ProductService}.
+</p>
+
+<h3>Domain Layer</h3>
+
+<p>
+Represents concepts of the business, information about the business
+situation, and business rules. Controls the state of the business situation, but technical
+details of storing it are delegated to the infrastructure. All logic of the business should
+reside in these objects. The only example here is {@link springapp.domain.Product}, which
+is pretty stupid, unfortunately.
+</p>
+
+<h3>Repository Layer</h3>
+
+<p>
+Although Evans does not explicitly identify this pattern as a separate layer, it is an important
+component in the life cycle of business entities, and is critical in meeting Cheetah's 
+architectural goals. So we single it out here.
+<p>
+
+<p>
+Repositories decouple business entities from the technical complexities (e.g. Hibernate, SQL)
+of persistence). A repository provides the illusion of an in-memory collection of all objects
+of some type. It provides methods for adding and removing objects, as well as selecting objects
+based on some criteria.
+</p>
+
+<p>
+In spring, repositories are implemented using DAOs, as represented here with interface
+{@link springapp.repository.ProductDao} and implementation {@link springapp.repository.JpaProductDao}.
+</p>
+
+<h3>Infrastructure Layer</h3>
+
+<p>Provides generic technical capabilities that support the higher
+layers. The infrastructure may also support the pattern of interactions between the four
+layers through an architectural framework. Examples of components that provide such
+capabilities are
+</p>
+
+<ul>
+	<li>Spring Framework</li>
+	<li>Hibernate</li>
+	<li>Servlet container</li>
+	<li>FreeMarker</li>
+</ul>
+
+<h2>Layer interactions</h2>
+
+<p>
+Each layer interacts with the one below it using either a very simple pattern, or
+transparently using Spring's dependency injection. Moreover higher layers reference
+entities in lower layers using interfaces. Specific examples follow in the next sections.
+</p>
+
+<h3>Presentation Layer--Service Layer interactions</h3>
+
+<p>
+{@link springapp.web.controllers.InventoryController} is injected with the 
+stateless service {@link springapp.service.SimpleProductService} and invokes 
+user-requested, product-related
+business functions (show products, increase price) by referencing the interface
+{@link springapp.service.ProductService}
+</p>
+
+<h3>Service Layer -- Domain Layer interactions</h3>
+
+<p>
+{@link springapp.service.SimpleProductService} retrieves and saves modified
+{@link Product} instances using
+interface {@link springapp.repository.ProductDao}.
+</p>
+
+<h3>Domain Layer -- Infrastructure Layer interactions</h3>
+
+<p>
+Domain layer entity Product does not directly interact with any other layers. In a more complex
+application, domain entities will interact with other business objects. Domain objects worry
+about business function, nothing else.
+</p>
+
+<h2>Project Goals</h2>
+
+<p>
+This application illustrates the implementation of several
+<a href="">goals</a> of the Cheetah project:
+<dl>
+	<dt><strong>Simplicity</strong></dt>
+	<dd>layered architecture, combined with Spring and other supporting infrastructure,
+	simplifies the application in several ways:
+		<ul>
+			<li>Layers invoke services of lower layers with simple interfaces.</li>
+			<li>By division of responsibilities and separation of concerns among layers,
+			objects are not cluttered with technical complexities or responsibilities that are not
+			their primary concern.</li>
+		</ul>
+	</dd>
+
+	<dt><strong>Testability</strong></dt>
+	<dd> 
+	<p> The application layering, combined with Spring dependency injection and other
+	features, allow lower-layer objects to be easily mocked up.. Examples:</p>
+	
+		<ul>
+			<li>When unit-testing {@link springapp.web.controllers.InventoryController},
+				ProductService is mocked-up using an anonymous inner class in
+				{@link springapp.web.controllers.InventoryControllerTests}.
+			</li>
+			<li>When testing {@link springapp.service.SimpleProductService}, the product repository,
+			ProductDao, is mocked up with an implementation that mimics an in-memory database 
+				({@link springapp.repository.InMemoryProductDao}). See 
+				{@link springapp.service.SimpleProductServiceTests}.
+			</li>	
+			<li> Services are stateless. Controllers access services transparently using
+				Spring dependency injection</li>
+			<li> The package <a href="TODO">JodaTime</a> is used to mock system time when testing.
+			See {@link springapp.web.controllers.InventoryControllerTests} for an example.</li>
+		</ul>
+	<p>
+	Moreover, all objects in all layers are just POJOS, enabling them to be tested outside of
+	any container.
+	</p>
+</dd>
+</dl>
+<h2>Issues, Decisions to be made</h2>
+
+<h3> Package Structure</h3>
+
+<ol>
+	<li> Does the package structure shown here seem like a reasonable starting point?
+	<li> Should we continue the convention of adding subfolders for business areas or functions?
+	     If not, the packages ..web/controllers and others will get very large.
+</ol>
+
+</body>
+</html>
