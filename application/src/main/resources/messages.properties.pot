@@ -15,11 +15,11 @@ msgstr ""
 "X-Accelerator-Marker: &\n"
 
 #: title
-msgid "SpringApp"
+msgid "Mifos"
 msgstr ""
 
 #: heading
-msgid "Hello :: SpringApp"
+msgid "Hello :: Mifos"
 msgstr ""
 
 #: greeting
@@ -27,7 +27,7 @@ msgid "Greetings, it is now"
 msgstr ""
 
 #: priceincrease.heading
-msgid "Price Increase :: SpringApp"
+msgid "Price Increase :: Mifos"
 msgstr ""
 
 #: error.not-specified

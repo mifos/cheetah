@@ -2,14 +2,14 @@
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.mifos</groupId>
-   <artifactId>springapp3-testing</artifactId>
+   <artifactId>cheetah-testing</artifactId>
    <packaging>jar</packaging>
    <version>0.0.3-SNAPSHOT</version>
-   <name>Mifos - Springapp3 Acceptance Tests</name>
+   <name>Mifos - Cheetah Acceptance Tests</name>
    <url>http://www.mifos.org</url>
    <parent>
       <groupId>org.mifos</groupId>
-      <artifactId>springapp3-parent</artifactId>
+      <artifactId>cheetah-parent</artifactId>
       <version>0.0.3-SNAPSHOT</version>
    </parent>
    <properties>
