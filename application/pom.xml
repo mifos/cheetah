@@ -40,10 +40,6 @@
          <id>Codehaus Repository</id>
          <url>http://repository.codehaus.org/</url>
       </pluginRepository>
-      <pluginRepository>
-         <id>ibiblio</id>
-         <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/org/codehaus/cargo/</url>
-      </pluginRepository>
    </pluginRepositories>
    <dependencies>
       <dependency>
@@ -149,12 +145,6 @@
       	<artifactId>persistence-api</artifactId>
       	<version>1.0</version>
       </dependency>
-      <dependency>
-         <groupId>org.openqa.selenium.client-drivers</groupId>
-         <artifactId>selenium-java-client-driver</artifactId>
-         <version>1.0-beta-1</version>
-         <scope>test</scope>
-      </dependency>
    </dependencies>
    <build>
       <finalName>springapp3</finalName>
@@ -184,24 +174,6 @@
             </configuration>
          </plugin>
          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-pmd-plugin</artifactId>
-            <version>2.4</version>
-            <configuration>
-               <rulesets>
-                  <ruleset>${basedir}/../pmd.xml</ruleset>
-               </rulesets>
-            </configuration>
-            <executions>
-               <execution>
-                  <goals>
-                     <goal>check</goal>
-                     <goal>cpd-check</goal>
-                  </goals>
-               </execution>
-            </executions>
-         </plugin>
-         <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>findbugs-maven-plugin</artifactId>
             <version>2.0-20080806.104243-13</version>
@@ -214,9 +186,28 @@
             </configuration>
             <executions>
                <execution>
-                  <phase>test</phase>
+                  <phase>verify</phase>
                   <goals>
                      <goal>check</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>         
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+               <rulesets>
+                  <ruleset>${basedir}/../pmd.xml</ruleset>
+               </rulesets>
+            </configuration>
+            <executions>
+               <execution>
+                  <phase>verify</phase>
+                  <goals>
+                     <goal>check</goal>
+                     <goal>cpd-check</goal>
                   </goals>
                </execution>
             </executions>
@@ -253,16 +244,6 @@
                   <srcFile>sql/product_data.sql</srcFile>
                </srcFiles>
             </configuration>
-         </plugin>
-         <plugin>
-             <groupId>org.codehaus.mojo</groupId>
-             <artifactId>selenium-maven-plugin</artifactId>
-             <version>1.0-beta-3</version>
-         </plugin>
-         <plugin>
-           <groupId>org.codehaus.cargo</groupId>
-           <artifactId>cargo-maven2-plugin</artifactId>
-           <version>1.0-alpha-5</version>
          </plugin>
       </plugins>
    </build>

@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -82,15 +83,16 @@ public class JdbcProductDaoTest extends AbstractTransactionalTestNGSpringContext
     }
 	*/
     
+    @BeforeMethod
     protected void onSetUpInTransaction() {
         super.deleteFromTables(new String[] {"products"});
-        super.executeSqlScript("file:db/load_data.sql", true);
+        super.executeSqlScript("file:sql/product_data.sql", true);
     }
-
+    
     public void testGetProductList() {
         
         List<Product> products = productDao.getProductList();
-        assertEquals(2, products.size());
+        assertEquals(products.size(), 3);
         
     }
     

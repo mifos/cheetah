@@ -29,6 +29,7 @@ import org.testng.annotations.Test;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 
+
 public class SeleniumTestUtils {
 
 	private DefaultSelenium selenium = null;

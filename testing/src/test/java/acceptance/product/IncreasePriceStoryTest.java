@@ -45,7 +45,7 @@ public class IncreasePriceStoryTest extends UiTestCaseBase {
 	
 	@BeforeMethod
 	public void setUp() throws Exception {
-		super.setUp();
+		super.setUp();	
 		loginPage = new LoginPage(selenium);
 	}
 

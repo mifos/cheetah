@@ -3,92 +3,136 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.mifos</groupId>
    <artifactId>springapp3-testing</artifactId>
-   <packaging>pom</packaging>
+   <packaging>jar</packaging>
    <version>0.0.3-SNAPSHOT</version>
    <name>Mifos - Springapp3 Acceptance Tests</name>
    <url>http://www.mifos.org</url>
    <parent>
-     <groupId>org.mifos</groupId>
-     <artifactId>springapp3-parent</artifactId>
-     <version>0.0.3-SNAPSHOT</version>
+      <groupId>org.mifos</groupId>
+      <artifactId>springapp3-parent</artifactId>
+      <version>0.0.3-SNAPSHOT</version>
    </parent>
    <properties>
-     <tomcat.home.directory>/Users/adam/work/mifos/deploy/apache-tomcat-6.0.18</tomcat.home.directory>
-     <cargo.install.directory>${project.build.directory}/installs</cargo.install.directory>
-     <selenium.port>4444</selenium.port>
-     <servlet.port>8080</servlet.port>
-     <selenium.background>true</selenium.background>
+      <cargo.install.directory>${project.build.directory}/installs</cargo.install.directory>
+      <selenium.port>4444</selenium.port>
+      <servlet.port>8080</servlet.port>
+      <selenium.background>true</selenium.background>
    </properties>
-   <profiles>
-    <profile>
-      <id>tomcat6x</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <container.name>tomcat6x</container.name>
-        <container.url>http://www.ibiblio.org/pub/mirrors/apache/tomcat/tomcat-6/v6.0.18/bin/apache-tomcat-6.0.18.zip</container.url>
-        <tomcat.version>6.0.18</tomcat.version>
-        <tomcat.home.directory>${cargo.install.directory}/${container.name}/tomcat-${tomcat.version}/tomcat-${tomcat.version}/</tomcat.home.directory>
-        <war.target>${tomcat.home.directory}/webapps</war.target>
-      </properties>
-      <build>
-        <plugins>
-          <!-- copy customized configuration files to the application server -->
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>process-resources</phase>
-                <configuration>
-                  <tasks>
-                    <copy todir="${tomcat.home.directory}/conf" overwrite="true">
-                      <fileset dir="${basedir}/src/test/containers/${container.name}"/>
-                    </copy>
-                  </tasks>
-                </configuration>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
    
-   <profile>
-      <id>firefox</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <browser>*firefox</browser>
-      </properties>
-    </profile>
-    <profile>
-      <id>iexplore</id>
-      <properties>
-        <browser>*iexplore</browser>
-      </properties>
-    </profile>
-    <profile>
-      <id>otherbrowser</id>
-      <properties>
-        <browser>*custom ${browserPath}</browser>
-      </properties>
-    </profile>
+      <profiles>
+        <profile>
+         <id>download-container</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.codehaus.cargo</groupId>
+                  <artifactId>cargo-maven2-plugin</artifactId>
+                  <version>1.0-SNAPSHOT</version>
+                  <configuration>
+                  <container>
+                     <zipUrlInstaller>
+                        <url>${container.url}</url>
+                        <installDir>${cargo.install.directory}/${container.name}</installDir>
+                     </zipUrlInstaller>
+                  </container>
+               </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+   
+        <profile>
+         <id>local-container</id>
+         <activation>
+            <activeByDefault>false</activeByDefault>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.codehaus.cargo</groupId>
+                  <artifactId>cargo-maven2-plugin</artifactId>
+                  <version>1.0-SNAPSHOT</version>
+                  <configuration>
+                  <container>
+                     <home>${tomcat.home.directory}</home>
+                  </container>
+               </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
 
-    <profile>
-      <id>dev</id>
-      <properties>
-        <selenium.background>false</selenium.background>
-      </properties>
-    </profile>
 
+      <profile>
+         <id>tomcat6x</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <properties>
+            <container.name>tomcat6x</container.name>
+            <container.url>http://www.ibiblio.org/pub/mirrors/apache/tomcat/tomcat-6/v6.0.18/bin/apache-tomcat-6.0.18.zip</container.url>
+            <tomcat.version>6.0.18</tomcat.version>
+            <tomcat.home.directory>${cargo.install.directory}/${container.name}/tomcat-${tomcat.version}/tomcat-${tomcat.version}/</tomcat.home.directory>
+            <war.target>${tomcat.home.directory}/webapps</war.target>
+         </properties>
+         <build>
+            <plugins>
+               <!-- copy customized configuration files to the application server -->
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-antrun-plugin</artifactId>
+                  <executions>
+                     <execution>
+                        <phase>process-resources</phase>
+                        <configuration>
+                           <tasks>
+                              <copy todir="${tomcat.home.directory}/conf"
+                                 overwrite="true">
+                                 <fileset dir="${basedir}/src/test/containers/${container.name}" />
+                              </copy>
+                           </tasks>
+                        </configuration>
+                        <goals>
+                           <goal>run</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
+      <profile>
+         <id>firefox</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <properties>
+            <browser>*firefox</browser>
+         </properties>
+      </profile>
+      <profile>
+         <id>iexplore</id>
+         <properties>
+            <browser>*iexplore</browser>
+         </properties>
+      </profile>
+      <profile>
+         <id>otherbrowser</id>
+         <properties>
+            <browser>*custom ${browserPath}</browser>
+         </properties>
+      </profile>
+      <profile>
+         <id>dev</id>
+         <properties>
+            <selenium.background>false</selenium.background>
+            <selenium.log.output>false</selenium.log.output>
+         </properties>
+      </profile>
    </profiles>
-   
    <repositories>
       <repository>
          <id>spring-snapshot</id>
@@ -106,10 +150,10 @@
          <name>OpenQA Repository</name>
          <url>http://archiva.openqa.org/repository/releases</url>
          <snapshots>
-           <enabled>false</enabled>
+            <enabled>false</enabled>
          </snapshots>
          <releases>
-           <enabled>true</enabled>
+            <enabled>true</enabled>
          </releases>
       </repository>
       <!-- for selenium 1.0-SNAPSHOT -->
@@ -118,13 +162,13 @@
          <name>OpenQA Snapshots Repository</name>
          <url>http://archiva.openqa.org/repository/snapshots</url>
          <snapshots>
-           <enabled>true</enabled>
+            <enabled>true</enabled>
          </snapshots>
          <releases>
-           <enabled>false</enabled>
+            <enabled>false</enabled>
          </releases>
       </repository>
-  </repositories>
+   </repositories>
    <pluginRepositories>
       <pluginRepository>
          <id>Codehaus Snapshots</id>
@@ -142,7 +186,7 @@
       </pluginRepository>
    </pluginRepositories>
    <dependencies>
-       <dependency>
+      <dependency>
          <groupId>org.mifos</groupId>
          <artifactId>springapp3</artifactId>
          <version>0.0.3-SNAPSHOT</version>
@@ -242,30 +286,30 @@
          <version>1.0.0</version>
       </dependency>
       <dependency>
-      	<groupId>org.hibernate</groupId>
-      	<artifactId>hibernate-entitymanager</artifactId>
-      	<version>3.3.2.GA</version>
+         <groupId>org.hibernate</groupId>
+         <artifactId>hibernate-entitymanager</artifactId>
+         <version>3.3.2.GA</version>
       </dependency>
       <dependency>
-      	<groupId>javax.persistence</groupId>
-      	<artifactId>persistence-api</artifactId>
-      	<version>1.0</version>
+         <groupId>javax.persistence</groupId>
+         <artifactId>persistence-api</artifactId>
+         <version>1.0</version>
       </dependency>
       <dependency>
          <groupId>org.openqa.selenium.client-drivers</groupId>
          <artifactId>selenium-java-client-driver</artifactId>
-         <version>1.0-beta-1</version>
+         <version>1.0-SNAPSHOT</version>
          <scope>test</scope>
       </dependency>
    </dependencies>
    <build>
       <finalName>springapp3-testing</finalName>
-      <defaultGoal>jar</defaultGoal>
+      <defaultGoal>integration-test</defaultGoal>
       <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
       <scriptSourceDirectory>${basedir}/src/main/scripts</scriptSourceDirectory>
       <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
-      <outputDirectory>${project.build.directory}/springapp2/WEB-INF/classes</outputDirectory>
-      <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+      <outputDirectory>${basedir}/target/springapp3/WEB-INF/classes</outputDirectory>
+      <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
       <plugins>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -280,36 +324,39 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.4.2</version>
-            <configuration>         
+            <configuration>
                <includedGroups>ui</includedGroups>
                <excludedGroups>workInProgress</excludedGroups>
-              <!-- Skip the normal tests, we'll run them in the integration-test phase -->
-              <skip>true</skip>
-              <systemProperties>
-                <property>
-                  <name>browser</name>
-                  <value>${browser}</value>
-                </property>
-                <property>
-                  <name>servlet.port</name>
-                  <value>${servlet.port}</value>
-                </property>
-                <property>
-                  <name>selenium.port</name>
-                  <value>${selenium.port}</value>
-                </property>
+               <!--
+                  Skip the normal tests, we'll run them in the
+                  integration-test phase
+               -->
+               <skip>true</skip>
+               <systemProperties>
+                  <property>
+                     <name>browser</name>
+                     <value>${browser}</value>
+                  </property>
+                  <property>
+                     <name>servlet.port</name>
+                     <value>${servlet.port}</value>
+                  </property>
+                  <property>
+                     <name>selenium.port</name>
+                     <value>${selenium.port}</value>
+                  </property>
                </systemProperties>
             </configuration>
             <executions>
-              <execution>
-                <phase>integration-test</phase>
-                <goals>
-                  <goal>test</goal>
-                </goals>
-                <configuration>
-                  <skip>false</skip>
-                </configuration>
-              </execution>
+               <execution>
+                  <phase>integration-test</phase>
+                  <goals>
+                     <goal>test</goal>
+                  </goals>
+                  <configuration>
+                     <skip>false</skip>
+                  </configuration>
+               </execution>
             </executions>
          </plugin>
          <plugin>
@@ -331,84 +378,79 @@
             </executions>
          </plugin>
          <plugin>
-           <groupId>org.codehaus.mojo</groupId>
-           <artifactId>selenium-maven-plugin</artifactId>
-           <executions>
-             <execution>
-               <id>start-selenium</id>
-               <phase>pre-integration-test</phase>
-               <goals>
-                 <goal>start-server</goal>
-               </goals>
-             </execution>
-           </executions>
-           <configuration>
-             <background>${selenium.background}</background>
-             <port>${selenium.port}</port>
-             <logOutput>true</logOutput>
-           </configuration>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>selenium-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>start-selenium</id>
+                  <phase>pre-integration-test</phase>
+                  <goals>
+                     <goal>start-server</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <background>${selenium.background}</background>
+               <port>${selenium.port}</port>
+               <logOutput>${selenium.log.output}</logOutput>
+            </configuration>
          </plugin>
-         
          <plugin>
-              <groupId>org.codehaus.cargo</groupId>
-              <artifactId>cargo-maven2-plugin</artifactId>
-              <version>1.0-SNAPSHOT</version>
-              <executions>
-                <execution>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven2-plugin</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <executions>
+               <execution>
                   <id>install</id>
                   <phase>generate-resources</phase>
                   <goals>
-                    <goal>install</goal>
+                     <goal>install</goal>
                   </goals>
-                </execution>
-                <execution>
+               </execution>
+               <execution>
                   <id>start-container</id>
                   <phase>pre-integration-test</phase>
                   <goals>
-                    <goal>start</goal>
+                     <goal>start</goal>
                   </goals>
                   <configuration>
-                    <wait>false</wait>
+                     <wait>false</wait>
                   </configuration>
-                </execution>
-                <execution>
+               </execution>
+               <execution>
                   <id>stop-container</id>
                   <phase>post-integration-test</phase>
                   <goals>
-                    <goal>stop</goal>
+                     <goal>stop</goal>
                   </goals>
-                </execution>
-              </executions>
-              <configuration>
-                <container>
+               </execution>
+            </executions>
+            <configuration>
+               <container>
                   <containerId>${container.name}</containerId>
-                  <zipUrlInstaller>
-                    <url>${container.url}</url>
-                    <installDir>${cargo.install.directory}/${container.name}</installDir>
-                  </zipUrlInstaller>
                   <log>${project.build.directory}/logs/${container.name}.log</log>
                   <output>${project.build.directory}/logs/${container.name}.out</output>
                   <timeout>600000</timeout>
-                </container>
-                <configuration>
-               <properties>
-                 <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
-                 <cargo.jboss.configuration>default</cargo.jboss.configuration>
-                 <cargo.rmi.port>1099</cargo.rmi.port>
-               </properties>
-               <deployables>
-                 <deployable>
-                   <groupId>org.mifos</groupId>
-                   <artifactId>springapp3</artifactId>
-                   <type>war</type>
-                   <properties>
-                     <context>springapp3</context>
-                   </properties>                   
-                 </deployable>
-               </deployables>
-             </configuration>
-           </configuration>
-         </plugin>         
+               </container>
+               <configuration>
+                  <properties>
+                     <cargo.servlet.port>${servlet.port}</cargo.servlet.port>
+                     <cargo.jboss.configuration>default</cargo.jboss.configuration>
+                     <cargo.rmi.port>1099</cargo.rmi.port>
+                  </properties>
+                  <deployables>
+                     <deployable>
+                        <groupId>org.mifos</groupId>
+                        <artifactId>springapp3</artifactId>
+                        <type>war</type>
+                        <properties>
+                           <context>springapp3</context>
+                        </properties>
+                     </deployable>
+                  </deployables>
+               </configuration>
+            </configuration>
+         </plugin>
       </plugins>
    </build>
    <reporting>
