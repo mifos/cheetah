@@ -22,35 +22,18 @@
  *
  */      
 
-package framework.util;
 
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.Test;
+package org.mifos.loan.repository;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import java.util.List;
+
+import org.mifos.loan.domain.Product;
 
 
-public class SeleniumTestUtils {
+public interface ProductDao {
 
-	private DefaultSelenium selenium = null;
+    List<Product> getProductList();
 
-	public SeleniumTestUtils() {
-		createSelenium();
-	}
-	
-	public synchronized DefaultSelenium getSelenium() {
-		return selenium;
-	}
-	
-	private synchronized void createSelenium() {
-		selenium = new DefaultSelenium("localhost", 4444, "*firefox","http://localhost:8080/mifos/");
-		selenium.start();
-	}
-	
-	@Test
-	@AfterSuite(groups={"ui"})
-	public synchronized void stopSelenium() {
-		selenium.stop();
-	}
+    void saveProduct(Product prod);
 
 }

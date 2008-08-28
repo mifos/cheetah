@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="application/target/springapp3/WEB-INF/classes" path="application/src/main/java"/>
+	<classpathentry kind="src" output="application/target/mifos/WEB-INF/classes" path="application/src/main/java"/>
 	<classpathentry kind="src" output="testing/target/test-classes" path="testing/src/test/resources"/>
 	<classpathentry kind="src" output="testing/target/test-classes" path="testing/src/test/java"/>
 	<classpathentry kind="src" output="application/target/test-classes" path="application/src/test/java"/>
-	<classpathentry excluding="**" kind="src" output="application/target/springapp3/WEB-INF/classes" path="application/src/main/resources"/>
+	<classpathentry excluding="**" kind="src" output="application/target/mifos/WEB-INF/classes" path="application/src/main/resources"/>
 	<classpathentry excluding="**" kind="src" output="application/target/test-classes" path="application/src/test/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>

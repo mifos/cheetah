@@ -22,35 +22,16 @@
  *
  */      
 
-package framework.util;
 
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.Test;
+package org.mifos.core;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import org.joda.time.DateTime;
 
 
-public class SeleniumTestUtils {
+public class DateUtilityService implements IDateUtilityService {
 
-	private DefaultSelenium selenium = null;
-
-	public SeleniumTestUtils() {
-		createSelenium();
-	}
-	
-	public synchronized DefaultSelenium getSelenium() {
-		return selenium;
-	}
-	
-	private synchronized void createSelenium() {
-		selenium = new DefaultSelenium("localhost", 4444, "*firefox","http://localhost:8080/mifos/");
-		selenium.start();
-	}
-	
-	@Test
-	@AfterSuite(groups={"ui"})
-	public synchronized void stopSelenium() {
-		selenium.stop();
+	public DateTime getCurrentDateTime() {
+		return new DateTime();
 	}
 
 }

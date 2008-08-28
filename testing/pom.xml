@@ -188,7 +188,7 @@
    <dependencies>
       <dependency>
          <groupId>org.mifos</groupId>
-         <artifactId>springapp3</artifactId>
+         <artifactId>cheetah</artifactId>
          <version>0.0.3-SNAPSHOT</version>
          <type>war</type>
       </dependency>
@@ -303,12 +303,12 @@
       </dependency>
    </dependencies>
    <build>
-      <finalName>springapp3-testing</finalName>
+      <finalName>cheetah-testing</finalName>
       <defaultGoal>integration-test</defaultGoal>
       <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
       <scriptSourceDirectory>${basedir}/src/main/scripts</scriptSourceDirectory>
       <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
-      <outputDirectory>${basedir}/target/springapp3/WEB-INF/classes</outputDirectory>
+      <outputDirectory>${basedir}/target/cheetah-testing/WEB-INF/classes</outputDirectory>
       <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
       <plugins>
          <plugin>
@@ -441,10 +441,10 @@
                   <deployables>
                      <deployable>
                         <groupId>org.mifos</groupId>
-                        <artifactId>springapp3</artifactId>
+                        <artifactId>cheetah</artifactId>
                         <type>war</type>
                         <properties>
-                           <context>springapp3</context>
+                           <context>mifos</context>
                         </properties>
                      </deployable>
                   </deployables>

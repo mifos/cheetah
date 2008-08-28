@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="timeNow" class="org.joda.time.DateTime">
+	</bean>
+	
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="messages"/>
+    </bean>
+
+    <bean name="/" class="org.mifos.ui.core.controller.RedirectionController">
+        <property name="viewToRedirectTo" value="index"/>
+    </bean>
+
+    <bean name="/index.ftl" class="org.mifos.ui.core.controller.RedirectionController">
+        <property name="viewToRedirectTo" value="index"/>
+    </bean>
+    
+    <bean name="/login.ftl" class="org.mifos.ui.core.controller.GenericController"/>
+    <bean name="/accessDenied.ftl" class="org.mifos.ui.core.controller.GenericController"/>
+    <bean name="/languages.ftl" class="org.mifos.ui.core.controller.GenericController"/>
+
+    <bean name="/hello.ftl" class="org.mifos.ui.loan.controller.InventoryController">
+        <property name="productService" ref="productService"/>
+    </bean>
+
+    <bean name="/priceincrease.ftl" class="org.mifos.ui.loan.controller.PriceIncreaseFormController">
+        <property name="sessionForm" value="true"/>
+        <property name="commandName" value="priceIncrease"/>
+        <property name="commandClass" value="org.mifos.ui.loan.command.PriceIncrease"/>
+        <property name="validator">
+            <bean class="org.mifos.ui.loan.command.PriceIncreaseValidator"/>
+        </property>
+        <property name="formView" value="priceincrease"/>
+        <property name="successView" value="hello.ftl"/>
+        <property name="productService" ref="productService"/>
+    </bean>
+    
+    <!-- freemarker config -->
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+	  <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+	  <property name="defaultEncoding" value="UTF-8" />
+	  <property name="freemarkerVariables">
+	     <map>
+	        <entry key="xml_escape" value-ref="fmXmlEscape"/>
+	     </map>
+       </property>
+	</bean>
+	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+	
+	<!-- 
+	  View resolvers can also be configured with ResourceBundles or XML files. If you need
+	  different view resolving based on Locale, you have to use the resource bundle resolver.
+	-->
+	<bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+	  <property name="cache" value="true"/>
+	  <property name="prefix" value=""/>
+	  <property name="suffix" value=".ftl"/>
+	  <property name="contentType" value="text/html; charset=UTF-8" />
+	  <!-- if you want to use the Spring FreeMarker macros, set this property to true -->
+	  <property name="exposeSpringMacroHelpers" value="true"/>
+	</bean>
+	
+</beans>

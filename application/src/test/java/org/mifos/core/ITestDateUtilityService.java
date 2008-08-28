@@ -22,35 +22,28 @@
  *
  */      
 
-package framework.util;
 
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.Test;
+package org.mifos.core;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import org.joda.time.DateTime;
+import org.mifos.core.IDateUtilityService;
 
+/**
+ * An attempt to wrap technicalities of setting and restoring system date
+ * using JodaTime.
+ * <p>
+ * However, I could not get time-setting to work using this interface --
+ * see @link springap.service.utils.TestDateUtilityService} for an attempted
+ * implementation and {@link org.mifos.core.TestDateUtilityServiceTests}
+ * for tests that are failing.
+ * </p>
+ * 
+ * @author kpierce
+ *
+ */
+public interface ITestDateUtilityService extends IDateUtilityService {
 
-public class SeleniumTestUtils {
-
-	private DefaultSelenium selenium = null;
-
-	public SeleniumTestUtils() {
-		createSelenium();
-	}
+	void setCurrentDateTime (DateTime time);
+	void restoreCurrentDateTime();
 	
-	public synchronized DefaultSelenium getSelenium() {
-		return selenium;
-	}
-	
-	private synchronized void createSelenium() {
-		selenium = new DefaultSelenium("localhost", 4444, "*firefox","http://localhost:8080/mifos/");
-		selenium.start();
-	}
-	
-	@Test
-	@AfterSuite(groups={"ui"})
-	public synchronized void stopSelenium() {
-		selenium.stop();
-	}
-
 }

@@ -147,12 +147,12 @@
       </dependency>
    </dependencies>
    <build>
-      <finalName>springapp3</finalName>
+      <finalName>cheetah</finalName>
       <defaultGoal>war:war</defaultGoal>
       <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
       <scriptSourceDirectory>${basedir}/src/main/scripts</scriptSourceDirectory>
       <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
-      <outputDirectory>${basedir}/target/springapp3/WEB-INF/classes</outputDirectory>
+      <outputDirectory>${basedir}/target/cheetah/WEB-INF/classes</outputDirectory>
       <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
       <plugins>
          <plugin>

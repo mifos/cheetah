@@ -53,7 +53,7 @@ public class UserLoginStoryTest extends UiTestCaseBase {
 
 	public void userLoginSuccessTest() throws Exception {
 		loginPage.loginAs("user1", "password");
-		assertEquals(selenium.getText("hello.heading"), "Hello :: SpringApp");
+		assertEquals(selenium.getText("hello.heading"), "Hello :: Mifos");
 		loginPage.logout();
 	}
 
@@ -66,7 +66,7 @@ public class UserLoginStoryTest extends UiTestCaseBase {
 
 	public void adminLoginSuccessTest() throws Exception {
 		loginPage.loginAs("admin", "password");
-		assertEquals(selenium.getText("hello.heading"), "Hello :: SpringApp");
+		assertEquals(selenium.getText("hello.heading"), "Hello :: Mifos");
 		loginPage.logout();
 	}
 

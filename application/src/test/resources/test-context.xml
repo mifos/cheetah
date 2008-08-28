@@ -7,7 +7,7 @@
 
     <!-- the test application context definition for the jdbc based tests --> 
 
-    <bean id="productDao" class="springapp.repository.JdbcProductDao">
+    <bean id="productDao" class="org.mifos.loan.repository.JdbcProductDao">
         <property name="dataSource" ref="dataSource" />
     </bean>
 

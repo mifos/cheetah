@@ -22,35 +22,18 @@
  *
  */      
 
-package framework.util;
 
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.Test;
+package org.mifos.loan.service;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import java.util.List;
+
+import org.mifos.loan.domain.Product;
 
 
-public class SeleniumTestUtils {
+public interface ProductService {
 
-	private DefaultSelenium selenium = null;
-
-	public SeleniumTestUtils() {
-		createSelenium();
-	}
-	
-	public synchronized DefaultSelenium getSelenium() {
-		return selenium;
-	}
-	
-	private synchronized void createSelenium() {
-		selenium = new DefaultSelenium("localhost", 4444, "*firefox","http://localhost:8080/mifos/");
-		selenium.start();
-	}
-	
-	@Test
-	@AfterSuite(groups={"ui"})
-	public synchronized void stopSelenium() {
-		selenium.stop();
-	}
-
+    void increasePrice(int percentage);
+    
+    List<Product> getProducts();
+    
 }
