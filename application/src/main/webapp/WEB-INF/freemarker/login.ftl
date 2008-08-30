@@ -30,7 +30,7 @@
 				src="images/trans.gif" width=100></td>
 		</tr>
 	</table>
-   
+    
       
      <form method="POST" action="j_spring_security_check" id="login.form">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
