@@ -25,6 +25,9 @@
          <activation>
             <activeByDefault>true</activeByDefault>
          </activation>
+         <properties>
+            <tomcat.home.directory>${cargo.install.directory}/${container.name}/tomcat-${tomcat.version}/tomcat-${tomcat.version}/</tomcat.home.directory>
+         </properties>
          <build>
             <plugins>
                <plugin>
@@ -49,6 +52,9 @@
          <activation>
             <activeByDefault>false</activeByDefault>
          </activation>
+         <properties>
+            <tomcat.home.directory>/Users/adam/work/mifos/deploy/apache-tomcat-6.0.18-cargo</tomcat.home.directory>
+         </properties>
          <build>
             <plugins>
                <plugin>
@@ -75,7 +81,6 @@
             <container.name>tomcat6x</container.name>
             <container.url>http://www.apache.org/dist/tomcat/tomcat-6/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</container.url>
             <tomcat.version>6.0.18</tomcat.version>
-            <tomcat.home.directory>${cargo.install.directory}/${container.name}/tomcat-${tomcat.version}/tomcat-${tomcat.version}/</tomcat.home.directory>
             <war.target>${tomcat.home.directory}/webapps</war.target>
          </properties>
          <build>
