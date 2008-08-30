@@ -73,7 +73,7 @@
          </activation>
          <properties>
             <container.name>tomcat6x</container.name>
-            <container.url>http://www.ibiblio.org/pub/mirrors/apache/tomcat/tomcat-6/v6.0.18/bin/apache-tomcat-6.0.18.zip</container.url>
+            <container.url>http://www.apache.org/dist/tomcat/tomcat-6/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</container.url>
             <tomcat.version>6.0.18</tomcat.version>
             <tomcat.home.directory>${cargo.install.directory}/${container.name}/tomcat-${tomcat.version}/tomcat-${tomcat.version}/</tomcat.home.directory>
             <war.target>${tomcat.home.directory}/webapps</war.target>
@@ -120,17 +120,47 @@
          </properties>
       </profile>
       <profile>
-         <id>otherbrowser</id>
-         <properties>
-            <browser>*custom ${browserPath}</browser>
-         </properties>
-      </profile>
-      <profile>
          <id>dev</id>
          <properties>
             <selenium.background>false</selenium.background>
             <selenium.log.output>false</selenium.log.output>
          </properties>
+      </profile>
+      <profile>
+         <id>continuous-integration</id>
+         <activation>
+            <activeByDefault>false</activeByDefault>
+         </activation>
+         <properties>
+            <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration</continuous.integration.resources.dir>
+            <database.properties.file>${continuous.integration.resources.dir}/jdbc.local.properties</database.properties.file>
+         </properties>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <configuration>         
+                     <additionalClasspathElements>
+                        <additionalClasspathElement>${continuous.integration.resources.dir}</additionalClasspathElement>
+                     </additionalClasspathElements>
+                  </configuration>
+               </plugin>            
+               <plugin>
+                  <groupId>org.codehaus.cargo</groupId>
+                  <artifactId>cargo-maven2-plugin</artifactId>
+                  <configuration>
+                     <container>
+                        <dependencies>
+                           <dependency>
+                              <location>${basedir}/../resources/continuous-integration</location>
+                           </dependency>
+                        </dependencies>                  
+                     </container>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
       </profile>
    </profiles>
    <repositories>

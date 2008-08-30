@@ -17,15 +17,6 @@
 
     <tx:annotation-driven />
 
-    <bean id="propertyConfigurer" 
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:jdbc.properties</value>
-            </list>
-        </property>
-    </bean>
-
     <bean id="entityManagerFactory"
         class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <!-- <property name="persistenceUnitName" value="mifos_cheetah" /> -->
