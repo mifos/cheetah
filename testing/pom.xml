@@ -59,15 +59,14 @@
                   <artifactId>cargo-maven2-plugin</artifactId>
                   <version>1.0-SNAPSHOT</version>
                   <configuration>
-                  <wait>false</wait>
-                  <container>
-                     <home>${tomcat.home.directory}</home>
-                  </container>
-                  <configuration>
-                      <type>standalone</type>
-                      <home>${tomcat.deploy.directory}</home>
+                     <container>
+                        <home>${tomcat.home.directory}</home>
+                     </container>
+                     <configuration>
+                         <type>standalone</type>
+                         <home>${tomcat.deploy.directory}</home>
+                     </configuration>
                   </configuration>
-               </configuration>
                </plugin>
             </plugins>
          </build>
@@ -460,6 +459,7 @@
                </execution>
             </executions>
             <configuration>
+               <wait>false</wait>
                <container>
                   <containerId>${container.name}</containerId>
                   <log>${project.build.directory}/logs/${container.name}.log</log>
