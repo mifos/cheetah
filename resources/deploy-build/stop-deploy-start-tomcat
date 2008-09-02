@@ -18,5 +18,5 @@ tar zxf $HOME/arc/$TOMCAT.tar.gz
 mv $TOMCAT $TOMCAT_DEPLOY
 cp $DEPLOY_RESOURCES/server.xml $DEPLOY_BASE/$TOMCAT_DEPLOY/conf
 cp $DEPLOY_RESOURCES/jdbc.local.properties $DEPLOY_BASE/$TOMCAT_DEPLOY/lib
-cp $PROJECT_BUILD_DIR/application/target/cheetah.war $TOMCAT_DEPLOY/webapps/mifos.war
+cp $PROJECT_BUILD_DIR/application/target/mifos.war $TOMCAT_DEPLOY/webapps
 $CATALINA_HOME/bin/catalina.sh start
