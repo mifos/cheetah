@@ -5,10 +5,12 @@ TOMCAT=apache-tomcat-6.0.18
 TOMCAT_DEPLOY=$TOMCAT-mifos-cheetah
 export CATALINA_HOME=$DEPLOY_BASE/$TOMCAT_DEPLOY
 $CATALINA_HOME/bin/catalina.sh stop
+cp resources/continuous-integration/server.xml $DEPLOY_BASE
 cp application/target/cheetah.war $DEPLOY_BASE/mifos.war
 cd $DEPLOY_BASE
 rm -rf $CATALINA_HOME
 tar zxf $HOME/arc/$TOMCAT.tar.gz
 mv $TOMCAT $TOMCAT_DEPLOY
 mv mifos.war $TOMCAT_DEPLOY/webapps
+cp server.xml $TOMCAT_DEPLOY/conf
 $CATALINA_HOME/bin/catalina.sh start
