@@ -54,7 +54,9 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
 	
 	@AfterSuite(groups={"acceptance", "ui"})
 	public void stopSelenium() {
-		selenium.stop();
+		if (selenium != null) {
+			selenium.stop();
+		}
 	}
 
 	@Autowired

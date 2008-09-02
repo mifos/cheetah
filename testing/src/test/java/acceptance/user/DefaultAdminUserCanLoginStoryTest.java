@@ -34,9 +34,13 @@ import org.testng.annotations.Test;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
 
+/*
+ * Corresponds to story 661 in mingle
+ * http://mingle.mifos.org:7070/projects/cheetah/cards/661
+ */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
 @Test(sequential=true, groups={"userLoginStory","acceptance","ui"})
-public class UserLoginStoryTest extends UiTestCaseBase {
+public class DefaultAdminUserCanLoginStoryTest extends UiTestCaseBase {
 
 	private LoginPage loginPage;
 	
@@ -50,23 +54,24 @@ public class UserLoginStoryTest extends UiTestCaseBase {
 	public void logOut() throws Exception {
 		loginPage.logout();
 	}
+	
+	// Selenium doesn't shut down cleanly without running at least one test
+	public void dummy() {
+		
+	}
 
+	@Test(groups="workInProgress")
 	public void userLoginSuccessTest() throws Exception {
-		loginPage.loginAs("user1", "password");
+		loginPage.loginAs("mifos", "testmifos");
 		assertEquals(selenium.getText("hello.heading"), "Welcome to Mifos");
 		loginPage.logout();
 	}
 
+	@Test(groups="workInProgress")
 	public void userLoginFailureTest() throws Exception {
-		loginPage.loginAs("user1", "bad password");
+		loginPage.loginAs("mifos", "mifos3");
 		assertEquals(selenium.getText("login.errorcaption"), "Login error:");
-		assertEquals(selenium.getText("login.errormessage"), "Bad credentials");
-		loginPage.logout();
-	}
-
-	public void adminLoginSuccessTest() throws Exception {
-		loginPage.loginAs("admin", "password");
-		assertEquals(selenium.getText("hello.heading"), "Welcome to Mifos");
+		assertEquals(selenium.getText("login.errormessage"), "Your username or password is incorrect");
 		loginPage.logout();
 	}
 

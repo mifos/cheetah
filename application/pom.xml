@@ -184,12 +184,12 @@
       </dependency>
    </dependencies>
    <build>
-      <finalName>cheetah</finalName>
+      <finalName>mifos</finalName>
       <defaultGoal>war:war</defaultGoal>
       <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
       <scriptSourceDirectory>${basedir}/src/main/scripts</scriptSourceDirectory>
       <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
-      <outputDirectory>${basedir}/target/cheetah/WEB-INF/classes</outputDirectory>
+      <outputDirectory>${basedir}/target/mifos/WEB-INF/classes</outputDirectory>
       <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
       <resources>
          <resource>

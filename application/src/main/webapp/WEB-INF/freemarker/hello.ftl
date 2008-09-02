@@ -3,9 +3,12 @@
 <html>
   <head>
   	<title id="hello.title">[@spring.message "title" /]</title>
+    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-    <h1 id="hello.heading">[@spring.message "heading" /]</h1>
+   [#include "headerForHomepage.ftl"]
+         
+    <h1 id="hello.heading">[@spring.message "welcomeToMifos" /]</h1>
     <p>[@spring.message "greeting" /] <span id="hello.longtime">${model.now?datetime?string.long}</span></p>
     <p>[@spring.message "greeting" /] <span id="hello.shorttime">${model.now?date?string.short}</span></p>
     <h3>[@spring.message "Products" /]</h3>

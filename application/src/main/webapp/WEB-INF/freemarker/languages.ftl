@@ -5,7 +5,7 @@
   	<title>[@spring.message "title" /]</title>
   </head>
   <body>
-    <h1>[@spring.message "heading" /]</h1>
+    <h1>[@spring.message "welcomeToMifos" /]</h1>
     <p>Chinese text: [@spring.message "chineseText" /]</p>
     <p>Arabic text: [@spring.message "arabicText" /] </p>
     <p>Hindi text: [@spring.message "hindiText" /] </p>

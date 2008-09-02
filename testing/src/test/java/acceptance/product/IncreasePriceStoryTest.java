@@ -58,7 +58,7 @@ public class IncreasePriceStoryTest extends UiTestCaseBase {
 		loginPage.loginAs("admin", "password")
 			.navigateToIncreasePricesPage()
 			.increasePricesBy(goodPercent);
-		assertEquals(selenium.getText("hello.heading"), "Hello :: Mifos");
+		assertEquals(selenium.getText("hello.heading"), "Welcome to Mifos");
 	}
 
 	public void increasePriceFailureTest() {

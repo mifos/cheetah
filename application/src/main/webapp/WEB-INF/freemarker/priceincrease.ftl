@@ -8,7 +8,7 @@
      </style>  
    </head>
    <body>
-   <h1 id="priceincrease.heading">[@spring.message "heading" /]</h1>														
+   <h1 id="priceincrease.heading">[@spring.message "welcomeToMifos" /]</h1>														
       <form action="priceincrease.ftl" method="POST" id="priceincrease.form">
         <table width="95%" bgcolor="f8f8ff" border="0" cellspacing="0" cellpadding="5">
           <tr>
