@@ -1,0 +1,14 @@
+#!/bin/bash
+# current working directory must be the root of mifos-cheetah project
+# DEPLOY_BASE is the directory a tomcat installation will be created in
+TOMCAT=apache-tomcat-6.0.18
+TOMCAT_DEPLOY=$TOMCAT-mifos-cheetah
+export CATALINA_HOME=$DEPLOY_BASE/$TOMCAT_DEPLOY
+$CATALINA_HOME/bin/catalina.sh stop
+cp application/target/cheetah.war $DEPLOY_BASE/mifos.war
+cd $DEPLOY_BASE
+rm -rf $CATALINA_HOME
+tar zxf $HOME/arc/$TOMCAT.tar.gz
+mv $TOMCAT $TOMCAT_DEPLOY
+mv mifos.war $TOMCAT_DEPLOY/webapps
+$CATALINA_HOME/bin/catalina.sh start
