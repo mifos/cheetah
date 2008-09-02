@@ -17,14 +17,23 @@
    </properties>
    <profiles>
       <profile>
+         <id>deploy-build</id>
+         <activation>
+            <activeByDefault>false</activeByDefault>
+         </activation>
+         <properties>
+            <database.properties.file>${basedir}/../resources/deploy-build/jdbc.local.properties</database.properties.file>
+         </properties>
+      </profile>
+      <profile>
          <id>continuous-integration</id>
+         <activation>
+            <activeByDefault>false</activeByDefault>
+         </activation>
          <properties>
             <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration</continuous.integration.resources.dir>
             <database.properties.file>${continuous.integration.resources.dir}/jdbc.local.properties</database.properties.file>
          </properties>
-         <activation>
-            <activeByDefault>false</activeByDefault>
-         </activation>
          <build>
             <plugins>
                <plugin>
