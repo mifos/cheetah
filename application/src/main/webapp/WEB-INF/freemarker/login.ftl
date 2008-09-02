@@ -53,7 +53,7 @@
 						</tr>
 	
 					</table> <!-- login-table -->
-				</div> <! login-interaction -->
+				</div> <!-- login-interaction -->
 			</div> <!-- login -->
 		</form>
 	</div> <!-- page-content -->
