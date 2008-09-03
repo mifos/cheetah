@@ -27,6 +27,7 @@
     <bean name="/login2.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/accessDenied.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/languages.ftl" class="org.mifos.ui.core.controller.GenericController"/>
+    <bean name="/adminHome.ftl" class="org.mifos.ui.core.controller.GenericController"/>
 
     <bean name="/hello.ftl" class="org.mifos.ui.loan.controller.InventoryController">
         <property name="productService" ref="productService"/>

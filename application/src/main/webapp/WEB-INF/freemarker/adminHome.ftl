@@ -1,33 +1,40 @@
 [#ftl]
 [#import "spring.ftl" as spring]
+[#import "macros.ftl" as mifos]
 <html>
   <head>
   	<title id="hello.title">[@spring.message "title" /]</title>
    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-   [#include "headerForHomepage.ftl"]
+  [@mifos.header currentTab="Admin" /]
       
 	<div class="page-content fontnormal">
 	
-		<p class="fontnormalboldorange">
+		<p class="fontnormalboldorangeheading">
 		Administrative Tasks
 		</p>
 		<p class="fontnormal">
-		Welcome to mifos administrative area. Click on a link below to begin.
+		Welcome to the mifos administrative area. Click on a link below to begin.
 		</p>
 		
-		<p class="fontnormalboldorange">
+		<p class="fontnormalboldorangeheading">
 		Manage Organization
 		</p>
 		
-		<p class="fontnormalbold>Users</p>
+		<p class="fontnormalbold">Users</p>
 		<ul>
-		<li>View Users</li>
-		<li>Define a new user</li>
+		<li>View users | <a href="">Define a new user</a></li>
+		</ul>
+
+		<p class="fontnormalboldorangeheading">
+		System Information
+		</p>
+		<ul>
+			<li><a href="appInfo.ftl">View System Information</a></li>
 		</ul>
 		
-		<p class="fontnormalboldorange">
+		<p class="fontnormalboldorangeheading">
 		Manage Products
 		</p>
 
@@ -36,8 +43,7 @@
 		</p>
 
 		<ul>
-			<li>View loan products</li>
-			<li><a href="createLoanProduct.ftl">Define a new loan product</a></li>
+			<li>View loan products | <a href="">Define a new loan product</a></li>
 		</ul>
 		
 	</div>

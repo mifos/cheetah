@@ -1,6 +1,6 @@
 [#ftl]
 [#import "spring.ftl" as spring]
-[#import "mifosMacros.ftl" as mifos]
+[#import "macros.ftl" as mifos]
 <html>
   <head>
     <title>[@spring.message "systemInformation" /]</title>

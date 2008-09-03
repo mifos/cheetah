@@ -2,7 +2,7 @@
 [#import "spring.ftl" as spring]
 
 [#-- To use macros defined here add the following directive at the top of an ftl file --]
-[#-- [#import "mifosMacros.ftl" as mifos] --]
+[#-- [#import "macros.ftl" as mifos] --]
 
 [#-- header macro --]
 [#-- Generate the Mifos header with tabbed navigation --]
@@ -21,7 +21,7 @@
 		<li><a href="hello.ftl" title="Home" [#if currentTab == "Home"]class="current"[/#if]>[@spring.message "tab.Home" /]</a></li>
 		<li><a href="" title="Home" [#if currentTab == "ClientsAndAccounts"]class="current"[/#if]>[@spring.message "tab.ClientsAndAccounts" /]</a></li>
 		<li><a href="" title="Home" [#if currentTab == "Reports"]class="current"[/#if]>[@spring.message "tab.Reports" /]</a></li>
-		<li><a href="" title="Home" [#if currentTab == "Admin"]class="current"[/#if]>[@spring.message "tab.Admin" /]</a></li>
+		<li><a href="adminHome.ftl" title="Home" [#if currentTab == "Admin"]class="current"[/#if]>[@spring.message "tab.Admin" /]</a></li>
 		</ul>
 	</div>			
 </div>

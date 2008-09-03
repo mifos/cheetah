@@ -2,6 +2,14 @@
 /* BEGIN ADDITIONS FOR CHEETAH */
 /********************************/
 
+.fontnormalboldorangeheading {
+
+	text-decoration:none; 
+	color:#CC6601;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 11pt;
+	font-weight: bold;
+}
 #homePageHeader { 
    border-bottom: 6px #FF9600 solid; 
 }
