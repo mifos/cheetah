@@ -3,7 +3,7 @@
 <html>
   <head>
   	<title id="hello.title">[@spring.message "title" /]</title>
-    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
+   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
    [#include "headerForHomepage.ftl"]
