@@ -9,7 +9,7 @@
 	</div>			
 	<div id="top-menu-bar">
 		<ul id="simple-menu">
-		<li><a href="" title="Home" class="current">Home</a></li>
+		<li><a href="hello.ftl" title="Home" class="current">Home</a></li>
 		<li><a href="" title="Home">Clients & Accounts</a></li>
 		<li><a href="" title="Home">Reports</a></li>
 		<li><a href="" title="Home">Admin</a></li>

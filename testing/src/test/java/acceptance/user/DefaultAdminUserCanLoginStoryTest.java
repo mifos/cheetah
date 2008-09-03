@@ -50,22 +50,14 @@ public class DefaultAdminUserCanLoginStoryTest extends UiTestCaseBase {
 		loginPage.logout();
 	}
 	
-	// Selenium doesn't shut down cleanly without running at least one test
-	public void dummy() {
-		
-	}
-
-	@Test(groups="workInProgress")
 	public void userLoginSuccessTest() throws Exception {
 		loginPage.loginAs("mifos", "testmifos");
 		assertEquals(selenium.getText("hello.heading"), "Welcome to Mifos");
 		loginPage.logout();
 	}
 
-	@Test(groups="workInProgress")
 	public void userLoginFailureTest() throws Exception {
 		loginPage.loginAs("mifos", "mifos3");
-		assertEquals(selenium.getText("login.errorcaption"), "Login error:");
 		assertEquals(selenium.getText("login.errormessage"), "Your username or password is incorrect");
 		loginPage.logout();
 	}

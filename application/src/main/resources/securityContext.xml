@@ -8,6 +8,14 @@
 
     <beans:import resource="dataSource.xml"/>
     
+    <beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <beans:property name="basenames">
+        	<beans:list>
+        		<beans:value>springSecurityMessages</beans:value>
+        	</beans:list>
+        </beans:property>
+    </beans:bean>
+        
     <http access-decision-manager-ref="accessDecisionManager"
           access-denied-page="/accessDenied.ftl">
         <intercept-url pattern="/login.ftl" access="ROLE_ANONYMOUS,ROLE_GUEST" />

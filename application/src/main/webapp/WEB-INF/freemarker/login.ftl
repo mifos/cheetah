@@ -31,7 +31,7 @@
 					<div class="error-messages">
 				      [#assign error=model.request.getParameter("error")!""]
 				      [#if error =="true" ]
-				        <span id="login.errorcaption">Login error:</span> <span id="login.errormessage">${model.request.getSession().getAttribute("SPRING_SECURITY_LAST_EXCEPTION").message}</span><br/>
+				        <span id="login.errormessage">${model.request.getSession().getAttribute("SPRING_SECURITY_LAST_EXCEPTION").message}</span><br/>
 				        </font>
 				      [/#if ]
 					</div>
