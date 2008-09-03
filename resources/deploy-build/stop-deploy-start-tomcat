@@ -18,5 +18,6 @@ tar zxf $HOME/arc/$TOMCAT.tar.gz
 mv $TOMCAT $TOMCAT_DEPLOY
 cp $DEPLOY_RESOURCES/server.xml $DEPLOY_BASE/$TOMCAT_DEPLOY/conf
 cp $DEPLOY_RESOURCES/jdbc.local.properties $DEPLOY_BASE/$TOMCAT_DEPLOY/lib
-cp $PROJECT_BUILD_DIR/application/target/mifos.war $TOMCAT_DEPLOY/webapps
+LATEST_CHEETAH_WAR=`find $HOME/.m2/repository/org/mifos -iname "cheetah*.war" |sort -r | head -1`
+cp $LATEST_CHEETAH_WAR $TOMCAT_DEPLOY/webapps/mifos.war
 $CATALINA_HOME/bin/catalina.sh start
