@@ -43,6 +43,9 @@
           <beans:bean
               class="org.springframework.security.ui.webapp.AuthenticationProcessingFilterEntryPoint">
                   <beans:property name="loginFormUrl" value="/login.ftl" />
+                  <!-- 
+                  <beans:property name="loginFormUrl" value="/login2.ftl" />
+                  -->
                   <beans:property name="forceHttps" value="false" />
           </beans:bean>
        </beans:property>

@@ -15,7 +15,7 @@ ul#simple-menu li a.current{color:#000166;background:#FF9600;}
 ul#simple-menu li a.current:hover{color:#000166;background:#FF9600;}
 
 #top-right-links{}
-a#logout{float:right;height:20px;margin:8px 18px 0 0;font-family: Arial, Verdana, Helvetica, sans-serif;font-size: 9pt;color:#:#000000;}
+a#logout{float:right;height:20px;margin:8px 18px 0 0;font-family: Arial, Verdana, Helvetica, sans-serif;font-size: 9pt;color:#000000;}
 
 p.boldOrange {
 	text-decoration:none; 
@@ -29,6 +29,9 @@ p.boldOrange {
 	padding-top: 15px;
 	min-height: 480px;
 	background-color: white;
+	margin-left: 5px;
+	margin-right: 5px;
+	font-size: small;
 	}
 
 #login {
@@ -97,6 +100,67 @@ table#login-table td#login-submit {
 	color: red;
 	font-weight: bold;
 	padding: 10px 10px 0px 10px;
+}
+
+/* styles for login form */
+	
+
+form {  /* set width in form, not fieldset (still takes up more room w/ fieldset width */
+  font-family:verdana,arial,sans-serif;
+  margin: 0;
+  padding: 0;
+  min-width: 400px;
+  max-width: 600px;
+  width: 4500px;
+}
+
+form fieldset.login {  /* Setting border-color for the tag alone does not work in Firefox */
+	border-color: #d7deee;
+	border-width: 1px;
+  border-style: solid;
+  padding: 10px;        /* padding in fieldset support spotty in IE */
+  margin: 0;
+}
+
+form fieldset legend {
+	font-size:1.1em; /* bump up legend font size, not too large or it'll overwrite border on left */
+                       /* be careful with padding, it'll shift the nice offset on top of border  */
+}
+
+form label {
+	display: block;  /* block float the labels to left column, set a width */
+	float: left;
+	width: 100px;
+	padding: 0;
+	margin: 5px 0 0; /* set top margin same as form input - textarea etc. elements */
+	text-align: right;
+}
+
+form fieldset label:first-letter { /* use first-letter pseudo-class to underline accesskey, note that */
+	text-decoration:underline;    /* Firefox 1.07 WIN and Explorer 5.2 Mac don't support first-letter */
+                                    /* pseudo-class on legend elements, but do support it on label elements */
+                                    /* we instead underline first letter on each label element and accesskey */
+                                    /* each input. doing only legends would  lessens cognitive load */
+                                   /* opera breaks after first letter underlined legends but not labels */
+}
+
+form input, form textarea {
+	/* display: inline; inline display must not be set or will hide submit buttons in IE 5x mac */
+	width:auto;      /* set width of form elements to auto-size, otherwise watch for wrap on resize */
+	margin:5px 0 0 10px; /* set margin on left of form elements rather than right of
+                              label aligns textarea better in IE */
+}
+
+form small {
+	display: block;
+	margin: 0 0 5px 160px; /* instructions/comments left margin set to align w/ right column inputs */
+	padding: 1px 3px;
+	font-size: 88%;
+}
+
+form .required{ /* uses class instead of div, more efficient */
+	font-weight:bold;
+}
 	
 /******************************/
 /* END ADDITIONS FOR CHEETAH */
