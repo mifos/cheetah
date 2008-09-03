@@ -4,7 +4,14 @@ public class AppInfo {
 
 	private String svnRevision;
 	private String buildTag;
+	private String buildId;
 
+	public String getBuildId() {
+		return buildId;
+	}
+	public void setBuildId(String buildId) {
+		this.buildId = buildId;
+	}
 	public String getSvnRevision() {
 		return svnRevision;
 	}

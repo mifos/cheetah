@@ -10,7 +10,8 @@
     <h1>[@spring.message "systemInformation" /]</h1>
     <ul>
       <li>Svn Revision: ${model.appInfo.svnRevision}</li>
-      <li>Build id: ${model.appInfo.buildTag} </li>
+      <li>Build tag: ${model.appInfo.buildTag} </li>
+      <li>Build id: ${model.appInfo.buildId} </li>
     </ul>
     [#include "footer.ftl"]    
   </body>

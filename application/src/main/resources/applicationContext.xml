@@ -22,6 +22,7 @@
     <bean id="appInfo" class="org.mifos.core.AppInfo">
         <property name="svnRevision" value="${svn.revision.appInfo}"/>
         <property name="buildTag" value="${build.tag.appInfo}"/>
+        <property name="buildId" value="${build.id.appInfo}"/>
     </bean>
 
 </beans>

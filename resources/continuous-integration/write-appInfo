@@ -1,5 +1,6 @@
 #!/bin/bash
 cat >application/src/main/resources/appInfo.properties <<EOF
 svn.revision.appInfo=$SVN_REVISION
+build.id.appInfo=$BUILD_ID
 build.tag.appInfo=$BUILD_TAG
 EOF
