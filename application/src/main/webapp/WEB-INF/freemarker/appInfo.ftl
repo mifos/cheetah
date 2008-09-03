@@ -9,9 +9,9 @@
      [#include "headerForHomepage.ftl"]
     <h1>[@spring.message "systemInformation" /]</h1>
     <ul>
-      <li>Svn Revision: ${model.appInfo.svnRevision}</li>
-      <li>Build tag: ${model.appInfo.buildTag} </li>
-      <li>Build id: ${model.appInfo.buildId} </li>
+      <li>[@spring.message "svnRevision" /]: ${model.appInfo.svnRevision}</li>
+      <li>[@spring.message "buildTag" /]: ${model.appInfo.buildTag} </li>
+      <li>[@spring.message "buildId" /]: ${model.appInfo.buildId} </li>
     </ul>
     [#include "footer.ftl"]    
   </body>
