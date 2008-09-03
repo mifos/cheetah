@@ -60,7 +60,6 @@ public class DefaultAdminUserCanLoginStoryTest extends UiTestCaseBase {
 		
 	}
 
-	@Test(groups="workInProgress")
 	public void userLoginSuccessTest() throws Exception {
 		loginPage.loginAs("mifos", "testmifos");
 		assertEquals(selenium.getText("hello.heading"), "Welcome to Mifos");

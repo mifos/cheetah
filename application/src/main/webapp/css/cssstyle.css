@@ -17,6 +17,14 @@ ul#simple-menu li a.current:hover{color:#000166;background:#FF9600;}
 #top-right-links{}
 a#logout{float:right;height:20px;margin:8px 18px 0 0;font-family: Arial, Verdana, Helvetica, sans-serif;font-size: 9pt;color:#:#000000;}
 
+p.boldOrange {
+	text-decoration:none; 
+	color:#CC6601;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 9pt;
+	font-weight: bold;	
+	}
+	
 .page-content {
 	padding-top: 15px;
 	min-height: 480px;
