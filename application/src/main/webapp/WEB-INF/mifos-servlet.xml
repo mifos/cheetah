@@ -27,6 +27,10 @@
         <property name="productService" ref="productService"/>
     </bean>
 
+    <bean name="/appInfo.ftl" class="org.mifos.ui.core.controller.AppInfoController">
+        <property name="appInfo" ref="appInfo"/>
+    </bean>
+
     <bean name="/priceincrease.ftl" class="org.mifos.ui.loan.controller.PriceIncreaseFormController">
         <property name="sessionForm" value="true"/>
         <property name="commandName" value="priceIncrease"/>

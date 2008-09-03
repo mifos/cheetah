@@ -12,6 +12,8 @@
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/application/src/test/resources"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/testing/src/test/resources"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/testing/src/test/java"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/application/src/main/webapp/WEB-INF/freemarker"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/application/src/main/webapp/css"/>
 <property name="java-output-path"/>
         <property name="context-root" value="mifos"/>
 </wb-module>
