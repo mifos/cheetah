@@ -17,6 +17,7 @@
       <selenium.port>4444</selenium.port>
       <servlet.port>8080</servlet.port>
       <selenium.background>true</selenium.background>
+      <tomcat.container.url>http://www.apache.org/dist/tomcat/tomcat-6/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.container.url>
    </properties>
    
       <profiles>
@@ -80,7 +81,7 @@
          </activation>
          <properties>
             <container.name>tomcat6x</container.name>
-            <container.url>http://www.apache.org/dist/tomcat/tomcat-6/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</container.url>
+            <container.url>${tomcat.container.url}</container.url>
             <tomcat.version>6.0.18</tomcat.version>
             <war.target>${tomcat.home.directory}/webapps</war.target>
          </properties>
@@ -132,6 +133,7 @@
             <selenium.log.output>false</selenium.log.output>
          </properties>
       </profile>
+      
       <profile>
          <id>continuous-integration</id>
          <activation>
@@ -140,6 +142,7 @@
          <properties>
             <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration</continuous.integration.resources.dir>
             <database.properties.file>${continuous.integration.resources.dir}/jdbc.local.properties</database.properties.file>
+            <tomcat.container.url>file:///home/hudson/arc/apache-tomcat-${tomcat.version}.zip</tomcat.container.url>
          </properties>
          <build>
             <plugins>
