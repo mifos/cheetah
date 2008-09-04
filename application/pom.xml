@@ -32,7 +32,7 @@
          </activation>
          <properties>
             <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration</continuous.integration.resources.dir>
-            <database.properties.file>${continuous.integration.resources.dir}/jdbc.local.properties</database.properties.file>
+            <database.properties.file>${continuous.integration.resources.dir}/integration/jdbc.local.properties</database.properties.file>
          </properties>
          <build>
             <plugins>
@@ -48,6 +48,7 @@
             </plugins>
          </build>
       </profile>
+      
    </profiles>   
    <repositories>
       <repository>
@@ -191,35 +192,7 @@
       <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
       <outputDirectory>${basedir}/target/mifos/WEB-INF/classes</outputDirectory>
       <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
-      <resources>
-         <resource>
-           <directory>sql</directory>
-           <filtering>true</filtering>
-           <targetPath>sql</targetPath>
-         </resource>
-         <resource>
-           <directory>src/main/resources</directory>
-         </resource>
-      </resources>      
       <plugins>
-         <plugin>
-           <groupId>org.codehaus.mojo</groupId>
-           <artifactId>properties-maven-plugin</artifactId>
-           <version>1.0-SNAPSHOT</version>
-           <executions>
-             <execution>
-               <phase>initialize</phase>
-               <goals>
-                 <goal>read-project-properties</goal>
-               </goals>
-               <configuration>
-                 <files>
-                   <file>${database.properties.file}</file>
-                 </files>
-               </configuration>
-             </execution>
-           </executions>
-         </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
@@ -282,32 +255,6 @@
             <configuration>
                <dependentWarIncludes>**/*.ftl</dependentWarIncludes>
                <workDirectory>${basedir}/target</workDirectory>
-            </configuration>
-         </plugin>
-         <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>sql-maven-plugin</artifactId>
-            <version>1.1</version>
-            <dependencies>
-               <dependency>
-                  <groupId>mysql</groupId>
-                  <artifactId>mysql-connector-java</artifactId>
-                  <version>5.1.6</version>
-               </dependency>
-            </dependencies>
-            <configuration>
-               <driver>com.mysql.jdbc.Driver</driver>
-               <url><![CDATA[jdbc:mysql://localhost:3306?useUnicode=true&characterEncoding=UTF-8]]></url>
-               <username>root</username>
-               <password>mysql</password>
-               <autocommit>true</autocommit>
-               <srcFiles>
-                  <srcFile>${project.build.outputDirectory}/sql/create_database.sql</srcFile>
-                  <srcFile>${project.build.outputDirectory}/sql/create_products.sql</srcFile>
-                  <srcFile>${project.build.outputDirectory}/sql/create_security.sql</srcFile>
-                  <srcFile>${project.build.outputDirectory}/sql/security_data.sql</srcFile>
-                  <srcFile>${project.build.outputDirectory}/sql/product_data.sql</srcFile>
-               </srcFiles>
             </configuration>
          </plugin>
       </plugins>

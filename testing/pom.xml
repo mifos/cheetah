@@ -20,7 +20,7 @@
       <tomcat.container.url>http://www.apache.org/dist/tomcat/tomcat-6/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.container.url>
    </properties>
    
-      <profiles>
+   <profiles>
         <profile>
          <id>download-container</id>
          <activation>
@@ -36,19 +36,19 @@
                   <artifactId>cargo-maven2-plugin</artifactId>
                   <version>1.0-SNAPSHOT</version>
                   <configuration>
-                  <container>
-                     <zipUrlInstaller>
-                        <url>${container.url}</url>
-                        <installDir>${cargo.install.directory}/${container.name}</installDir>
-                     </zipUrlInstaller>
-                  </container>
-               </configuration>
+                     <container>
+                        <zipUrlInstaller>
+                           <url>${container.url}</url>
+                           <installDir>${cargo.install.directory}/${container.name}</installDir>
+                        </zipUrlInstaller>
+                     </container>
+                  </configuration>
                </plugin>
             </plugins>
          </build>
       </profile>
    
-        <profile>
+      <profile>
          <id>local-container</id>
          <activation>
             <activeByDefault>false</activeByDefault>
@@ -133,14 +133,14 @@
             <selenium.log.output>false</selenium.log.output>
          </properties>
       </profile>
-      
+     
       <profile>
          <id>continuous-integration</id>
          <activation>
             <activeByDefault>false</activeByDefault>
          </activation>
          <properties>
-            <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration</continuous.integration.resources.dir>
+            <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration/acceptance</continuous.integration.resources.dir>
             <database.properties.file>${continuous.integration.resources.dir}/jdbc.local.properties</database.properties.file>
             <tomcat.container.url>file:///home/hudson/arc/apache-tomcat-${tomcat.version}.zip</tomcat.container.url>
          </properties>
@@ -162,7 +162,7 @@
                      <container>
                         <dependencies>
                            <dependency>
-                              <location>${basedir}/../resources/continuous-integration</location>
+                              <location>${database.properties.file}</location>
                            </dependency>
                         </dependencies>                  
                      </container>
@@ -483,6 +483,7 @@
                         <properties>
                            <context>mifos</context>
                         </properties>
+                        <pingURL>http://localhost:${servlet.port}/mifos</pingURL>
                      </deployable>
                   </deployables>
                </configuration>
