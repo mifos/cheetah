@@ -12,9 +12,6 @@
      <artifactId>cheetah-parent</artifactId>
      <version>0.0.3-SNAPSHOT</version>
    </parent>
-   <properties>
-      <database.properties.file>${basedir}/src/main/resources/jdbc.properties</database.properties.file>
-   </properties>
    <profiles>
       <profile>
          <id>deploy-build</id>

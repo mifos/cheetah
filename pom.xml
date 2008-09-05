@@ -13,6 +13,10 @@
      <module>testing</module>
    </modules>
 
+   <properties>
+      <database.properties.file>${basedir}/../application/src/main/resources/jdbc.properties</database.properties.file>
+   </properties>
+
    <build>
       <resources>
          <resource>
