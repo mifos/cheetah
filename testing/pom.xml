@@ -18,6 +18,7 @@
       <servlet.port>8080</servlet.port>
       <selenium.background>true</selenium.background>
       <tomcat.container.url>http://www.apache.org/dist/tomcat/tomcat-6/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.container.url>
+      <cargo.wait>false</cargo.wait>
    </properties>
    
    <profiles>
@@ -27,7 +28,7 @@
             <activeByDefault>true</activeByDefault>
          </activation>
          <properties>
-            <tomcat.home.directory>${cargo.install.directory}/${container.name}/tomcat-${tomcat.version}/tomcat-${tomcat.version}/</tomcat.home.directory>
+            <tomcat.home.directory>${cargo.install.directory}/${container.name}/apache-tomcat-${tomcat.version}/apache-tomcat-${tomcat.version}/</tomcat.home.directory>
          </properties>
          <build>
             <plugins>
@@ -129,6 +130,7 @@
       <profile>
          <id>dev</id>
          <properties>
+            <cargo.wait>true</cargo.wait>
             <selenium.background>false</selenium.background>
             <selenium.log.output>false</selenium.log.output>
          </properties>
@@ -462,7 +464,7 @@
                </execution>
             </executions>
             <configuration>
-               <wait>false</wait>
+               <wait>${cargo.wait}</wait>
                <container>
                   <containerId>${container.name}</containerId>
                   <log>${project.build.directory}/logs/${container.name}.log</log>
