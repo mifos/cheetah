@@ -102,7 +102,7 @@ p.boldOrange {
 #login {
 	background-color: white;
 	margin:auto;
-	width: 450px;
+	width: 500px;
 	border:1px #d7deee solid;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: small;
@@ -137,7 +137,7 @@ p.boldOrange {
 #login-table {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: small;
-	min-width: 300px;
+	min-width: 250px;
 	border-left:1px #d7deee solid;
 	padding: 0px 10px 10px 10px;
 }
