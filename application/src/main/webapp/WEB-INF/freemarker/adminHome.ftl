@@ -24,7 +24,7 @@
 		
 		<p class="fontnormalbold">Users</p>
 		<ul>
-		<li>View users | <a href="">Define a new user</a></li>
+		<li>View users | <a href="createLoanAccount.ftl">Define a new user</a></li>
 		</ul>
 
 		<p class="fontnormalboldorangeheading">
@@ -43,7 +43,7 @@
 		</p>
 
 		<ul>
-			<li>View loan products | <a href="">Define a new loan product</a></li>
+			<li>View loan products | <a href="createLoanProduct.ftl">Define a new loan product</a></li>
 		</ul>
 		
 	</div>
