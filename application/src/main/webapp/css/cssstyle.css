@@ -98,9 +98,25 @@ p.boldOrange {
 	padding-right: 5px;
 }
 
+.page-content {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+		}
+	
 .page-content h2 {
 	color: #CC6601;
+	font-size: x-large;
+	font-weight: bold;
+}
+
+.page-content h3 {
+	color: #CC6601;
 	font-size: large;
+	font-weight: bold;
+}
+
+.page-content h4 {
+	color: black;
+	font-size: medium;
 	font-weight: bold;
 }
 
@@ -294,8 +310,6 @@ form.loan-product fieldset label{
 body {margin:0px; background-color:#FFFFF;}
 a {
 	text-decoration:underline; 
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size: 9pt;
 	color:#000166;
 }
 a:visited{

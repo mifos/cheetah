@@ -9,43 +9,36 @@
   <body>
   [@mifos.header currentTab="Admin" /]
       
-	<div class="page-content fontnormal">
+	<div class="page-content">
 	
-		<p class="fontnormalboldorangeheading">
-		Administrative Tasks
-		</p>
-		<p class="fontnormal">
-		Welcome to the mifos administrative area. Click on a link below to begin.
-		</p>
+		<h2>Administrative Tasks</h2>
 		
-		<p class="fontnormalboldorangeheading">
-		Manage Organization
-		</p>
+			<p>
+			Welcome to the mifos administrative area. Click on a link below to begin.
+			</p>
 		
-		<p class="fontnormalbold">Users</p>
-		<ul>
-		<li>View users | <a href="createLoanAccount.ftl">Define a new user</a></li>
-		</ul>
-
-		<p class="fontnormalboldorangeheading">
-		System Information
-		</p>
-		<ul>
-			<li><a href="appInfo.ftl">View System Information</a></li>
-		</ul>
+			<h3>Manage Organization</h3>
+			
+				<h4>Users</h4>
+				
+					<ul>
+					<li>View users | <a href="createLoanAccount.ftl">Define a new user</a></li>
+					</ul>
 		
-		<p class="fontnormalboldorangeheading">
-		Manage Products
-		</p>
-
-		<p class="fontnormalbold">
-		Manage Loan Products
-		</p>
-
-		<ul>
-			<li>View loan products | <a href="createLoanProduct.ftl">Define a new loan product</a></li>
-		</ul>
+				<h4>System Information</h4>
+				
+					<ul>
+						<li><a href="appInfo.ftl">View System Information</a></li>
+					</ul>
+				
+			<h3>Manage Products</h3>
+	
+				<h4>Manage Loan Products</h4>
 		
+					<ul>
+						<li>View loan products | <a href="createLoanProduct.ftl">Define a new loan product</a></li>
+					</ul>
+			
 	</div>
 </body>
 </html>
