@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+       classpath:xsd/spring-beans-2.5.xsd">
 
 	<bean id="timeNow" class="org.joda.time.DateTime">
 	</bean>
@@ -29,6 +29,8 @@
     <bean name="/languages.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/adminHome.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/clientsAndAccounts.ftl" class="org.mifos.ui.core.controller.GenericController"/>
+    <bean name="/createClient.ftl" class="org.mifos.ui.core.controller.GenericController"/>
+    <bean name="/createClientSuccess.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/createLoanProduct.ftl" class="org.mifos.ui.loan.controller.LoanProductController"/>
 
     <bean name="/hello.ftl" class="org.mifos.ui.loan.controller.InventoryController">
@@ -67,6 +69,7 @@
 	  View resolvers can also be configured with ResourceBundles or XML files. If you need
 	  different view resolving based on Locale, you have to use the resource bundle resolver.
 	-->
+   
 	<bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 	  <property name="cache" value="true"/>
 	  <property name="prefix" value=""/>
