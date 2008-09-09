@@ -14,7 +14,8 @@
 					src="images/logo.gif" width=188></td>
 	
 	<div id="top-right-links">
-	<a id="logout" href="j_spring_security_logout">Logout</a>
+      <a id="settings" href="#">Your settings</a> |
+   	<a id="logout" href="j_spring_security_logout">Logout</a>
 	</div>			
 	<div id="top-menu-bar">
 		<ul id="simple-menu">

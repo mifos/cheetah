@@ -37,28 +37,6 @@
 			<input type="submit" value="Login" class="buttn" id="login.form.submit" tabindex="3">
 	</fieldset>
 					
-<!--
-					<table id="login-table">
-						<tr>
-							<td id="login-name-label" class="label">[@spring.message "UserName" /]:</td>
-							<td><input type="text" name="j_username" id="login.form.username"></td>
-						</tr>
-	
-						<tr>
-							<td id="login-password-label" class="label">Password:</td>
-							<td><input type="password" name="j_password" id="login.form.password"></td>
-						</tr>
-	
-						<tr>
-							<td></td>
-							<td id="login-submit"><input type="submit" value="Login" class="buttn" id="login.form.submit"></td>
-						</tr>
-	
-					</table>
-				</div>
-			</div>
-		</form>
--->
 	</div>
 
 </body>
