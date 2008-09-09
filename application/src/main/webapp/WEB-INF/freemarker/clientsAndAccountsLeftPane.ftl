@@ -9,7 +9,7 @@
        <p/>
        <p>
          Create new Clients<br/> 
-         <a href="" >Create new Clients</a>
+         <a href="createClient.ftl" >Create new Clients</a>
          <p/>
        <p>
          Create new Accounts<br/>
