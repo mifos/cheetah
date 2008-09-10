@@ -19,13 +19,11 @@
  */
 package org.mifos.loan.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
 import org.mifos.client.repository.InMemoryClientDao;
 import org.mifos.client.service.ClientService;
+import org.mifos.core.MifosException;
 import org.mifos.loan.repository.ClientDao;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -43,18 +41,35 @@ public class BasicClientServiceTest {
         clientService.setClientDao(clientDao);
     }
 
-    public void testCreateClient() {
+    public void testCreateClient() throws MifosException {
     	String expectedFirstName = "Jane";
     	String expectedLastName = "Smith";
     	DateTime expectedDateOfBirth = new DateTime();
-        Client client = clientService.createClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
-        Assert.assertNotNull(client);
-        Assert.assertEquals(client.getFirstName(), expectedFirstName);
-        Assert.assertEquals(client.getLastName(), expectedLastName);
-        Assert.assertEquals(client.getDateOfBirth(), expectedDateOfBirth);
+        createAndVerifyClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
     }
     
-    public void testGetClient() {
+    public void testCreateClientEmptyName() throws MifosException {
+    	String expectedFirstName = "";
+    	String expectedLastName = "";
+    	DateTime expectedDateOfBirth = new DateTime();
+        createAndVerifyClient(expectedFirstName, expectedLastName,
+				expectedDateOfBirth);
+    }
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_LOAD_OF_KNOWN_NULL_VALUE"}, justification="testing behavior when date is null")
+    public void testCreateClientNullDate() {
+    	String expectedFirstName = "Foo";
+    	String expectedLastName = "Bar";
+    	DateTime expectedDateOfBirth = null;
+    	try {
+    		clientService.createClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
+    		Assert.fail("Should throw exception for null date.");
+    	} catch (MifosException mifosException) {
+    		// expected - do nothing
+		}
+    }
+
+    public void testGetClient() throws MifosException {
     	String expectedFirstName = "Homer";
     	String expectedLastName = "Simpson";
     	DateTime expectedDateOfBirth = new DateTime();
@@ -66,4 +81,14 @@ public class BasicClientServiceTest {
         Assert.assertEquals(freshClient.getLastName(), expectedClient.getLastName());
         Assert.assertEquals(freshClient.getDateOfBirth(), expectedClient.getDateOfBirth());
     }
+
+    private void createAndVerifyClient(String expectedFirstName,
+			String expectedLastName, DateTime expectedDateOfBirth) throws MifosException {
+		Client client = clientService.createClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
+        Assert.assertNotNull(client);
+        Assert.assertEquals(client.getFirstName(), expectedFirstName);
+        Assert.assertEquals(client.getLastName(), expectedLastName);
+        Assert.assertEquals(client.getDateOfBirth(), expectedDateOfBirth);
+	}
+
 }

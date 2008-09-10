@@ -22,11 +22,12 @@ package org.mifos.client.service;
 
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
+import org.mifos.core.MifosException;
 import org.mifos.loan.repository.ClientDao;
 
 public interface ClientService {
 
-	Client createClient(String firstName, String lastName, DateTime expectedDateOfBirth);
+	Client createClient(String firstName, String lastName, DateTime expectedDateOfBirth) throws MifosException;
 	Client getClient(Integer clientId);
 	void setClientDao(ClientDao clientDao);
 	ClientDao getClientDao();

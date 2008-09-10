@@ -26,7 +26,9 @@ import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
+import org.mifos.core.MifosException;
 import org.mifos.loan.repository.ClientDao;
+import org.mifos.loan.service.MifosInvalidDateException;
 
 public class InMemoryClientDao implements ClientDao {
 
@@ -34,7 +36,10 @@ public class InMemoryClientDao implements ClientDao {
 	
 	@Override
 	public Client createClient(String firstName, String lastName,
-			DateTime dateOfBirth) {
+			DateTime dateOfBirth) throws MifosException {
+		if (dateOfBirth == null) {
+			throw new MifosInvalidDateException("Date cannot be null.");
+		}
 		Client client = new Client(firstName, lastName, dateOfBirth);
 		clients.put(client.getId(), client);
 		return client;
