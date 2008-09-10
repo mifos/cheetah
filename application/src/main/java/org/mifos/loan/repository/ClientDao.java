@@ -20,10 +20,12 @@
 
 package org.mifos.loan.repository;
 
+import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
 
 public interface ClientDao {
 	
-	Client createClient();
+	Client createClient(String firstName, String lastName, DateTime dateOfBirth);
+	Client getClient(Integer clientId);
 
 }

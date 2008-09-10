@@ -27,6 +27,7 @@ import org.mifos.loan.repository.ClientDao;
 public interface ClientService {
 
 	Client createClient(String firstName, String lastName, DateTime expectedDateOfBirth);
+	Client getClient(Integer clientId);
 	void setClientDao(ClientDao clientDao);
 	ClientDao getClientDao();
 	

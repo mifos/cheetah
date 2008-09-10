@@ -20,16 +20,29 @@
 
 package org.mifos.client.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
 import org.mifos.loan.repository.ClientDao;
 
 public class InMemoryClientDao implements ClientDao {
 
+	private Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
+	
 	@Override
-	public Client createClient() {
-		return null;
+	public Client createClient(String firstName, String lastName,
+			DateTime dateOfBirth) {
+		Client client = new Client(firstName, lastName, dateOfBirth);
+		clients.put(client.getId(), client);
+		return client;
+	}
+
+	@Override
+	public Client getClient(Integer clientId) {
+		return clients.get(clientId);
 	}
 
 

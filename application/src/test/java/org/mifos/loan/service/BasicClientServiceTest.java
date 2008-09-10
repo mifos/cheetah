@@ -31,7 +31,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-
 @Test(groups = { "unit" })
 public class BasicClientServiceTest {
 
@@ -53,5 +52,18 @@ public class BasicClientServiceTest {
         Assert.assertEquals(client.getFirstName(), expectedFirstName);
         Assert.assertEquals(client.getLastName(), expectedLastName);
         Assert.assertEquals(client.getDateOfBirth(), expectedDateOfBirth);
+    }
+    
+    public void testGetClient() {
+    	String expectedFirstName = "Homer";
+    	String expectedLastName = "Simpson";
+    	DateTime expectedDateOfBirth = new DateTime();
+        Client expectedClient = clientService.createClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
+        Integer clientId = expectedClient.getId();
+        Client freshClient = clientService.getClient(clientId);
+        Assert.assertEquals(freshClient.getId(), expectedClient.getId());
+        Assert.assertEquals(freshClient.getFirstName(), expectedClient.getFirstName());
+        Assert.assertEquals(freshClient.getLastName(), expectedClient.getLastName());
+        Assert.assertEquals(freshClient.getDateOfBirth(), expectedClient.getDateOfBirth());
     }
 }

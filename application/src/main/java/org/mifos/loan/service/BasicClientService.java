@@ -29,13 +29,18 @@ public class BasicClientService implements ClientService {
 
 	private ClientDao clientDao;
 	
-	public ClientDao getClientDao() {
-		return clientDao;
+	@Override
+	public Client createClient(String firstName, String lastName, DateTime dateOfBirth) {
+		return clientDao.createClient(firstName, lastName, dateOfBirth);
 	}
 
 	@Override
-	public Client createClient(String firstName, String lastName, DateTime dateOfBirth) {
-		return new Client(firstName, lastName, dateOfBirth);
+	public Client getClient(Integer clientId) {
+		return clientDao.getClient(clientId);
+	}
+
+	public ClientDao getClientDao() {
+		return clientDao;
 	}
 
 	@Override
