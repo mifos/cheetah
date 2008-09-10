@@ -33,26 +33,12 @@
     <bean name="/createClientSuccess.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/createLoanProduct.ftl" class="org.mifos.ui.loan.controller.LoanProductController"/>
 
-    <bean name="/hello.ftl" class="org.mifos.ui.loan.controller.InventoryController">
-        <property name="productService" ref="productService"/>
-    </bean>
+    <bean name="/hello.ftl" class="org.mifos.ui.core.controller.GenericController"/>
 
     <bean name="/appInfo.ftl" class="org.mifos.ui.core.controller.AppInfoController">
         <property name="appInfo" ref="appInfo"/>
     </bean>
 
-    <bean name="/priceincrease.ftl" class="org.mifos.ui.loan.controller.PriceIncreaseFormController">
-        <property name="sessionForm" value="true"/>
-        <property name="commandName" value="priceIncrease"/>
-        <property name="commandClass" value="org.mifos.ui.loan.command.PriceIncrease"/>
-        <property name="validator">
-            <bean class="org.mifos.ui.loan.command.PriceIncreaseValidator"/>
-        </property>
-        <property name="formView" value="priceincrease"/>
-        <property name="successView" value="hello.ftl"/>
-        <property name="productService" ref="productService"/>
-    </bean>
-    
     <!-- freemarker config -->
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 	  <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>

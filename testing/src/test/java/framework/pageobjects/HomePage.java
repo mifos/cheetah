@@ -37,10 +37,4 @@ public class HomePage extends AbstractPage {
 		super(selenium);
 	}
 
-	public IncreasePricesPage navigateToIncreasePricesPage() {
-		selenium.click("footer.priceincrease");
-		waitForPageToLoad();
-		return new IncreasePricesPage(selenium);
-	}
-
 }

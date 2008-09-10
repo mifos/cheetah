@@ -13,12 +13,6 @@
 
     <import resource="dataSource.xml"/>
 
-    <bean id="productService" class="org.mifos.loan.service.SimpleProductService">
-        <property name="productDao" ref="productDao"/>
-    </bean>
-
-    <bean id="productDao" class="org.mifos.loan.repository.JpaProductDao" />
-
     <bean id="appInfo" class="org.mifos.core.AppInfo">
         <property name="svnRevision" value="${svn.revision.appInfo}"/>
         <property name="buildTag" value="${build.tag.appInfo}"/>
