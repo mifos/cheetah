@@ -20,6 +20,18 @@
 
 package org.mifos.loan.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum LoanProductStatus {
-	ACTIVE, INACTIVE
+	ACTIVE, INACTIVE;
+	
+	public static List<String> toStringList() {
+		List<String> categories = new ArrayList<String>();
+		for (LoanProductStatus status: LoanProductStatus.values()) {
+			categories.add(status.toString());
+		}
+		return categories;
+	}
+
 }

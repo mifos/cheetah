@@ -59,6 +59,12 @@ public class LoanProduct {
 		this.status = status;
 	}
 
+    
+    public LoanProduct() {
+    	//Spring framework needs a no-argument constructor
+    	//By including this comment, PMD will not flag the empty constructor
+}
+ 
 	public LoanProduct (String longName, String shortName, Double minInterestRate,
 						Double maxInterestRate, LoanProductStatus status) {
 		this.longName = longName;

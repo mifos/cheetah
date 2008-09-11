@@ -197,35 +197,37 @@ form {  /* set width in form, not fieldset (still takes up more room w/ fieldset
 
 }
 
-form fieldset {  /* Setting border-color for the tag alone does not work in Firefox */
+fieldset {  /* Setting border-color for the tag alone does not work in Firefox */
 	border-color: #d7deee;
 	border-width: 2px;
   border-style: solid;
   padding: 10px;
   margin: 0;
+  width: 600px;
 }
 
-form fieldset legend {
+fieldset legend {
 	font-size:medium; /* bump up legend font size, not too large or it'll overwrite border on left */
                        /* be careful with padding, it'll shift the nice offset on top of border  */
 }
 
-form label {
+fieldset label {
 	display: block;  /* block float the labels to left column, set a width */
 	float: left;
 	padding: 0;
 	margin: 5px 0 0; /* set top margin same as form input - textarea etc. elements */
 	text-align: right;
+	width: 300px;
 }
 
-form input, form textarea, form select {
+fieldset input, form textarea, form select {
 	/* display: inline; inline display must not be set or will hide submit buttons in IE 5x mac */
 	width:auto;      /* set width of form elements to auto-size, otherwise watch for wrap on resize */
 	margin:5px 0 0 10px; /* set margin on left of form elements rather than right of
                               label aligns textarea better in IE */
 }
 
-form fieldset label:first-letter { /* use first-letter pseudo-class to underline accesskey, note that */
+fieldset fieldset label:first-letter { /* use first-letter pseudo-class to underline accesskey, note that */
 	text-decoration:underline;    /* Firefox 1.07 WIN and Explorer 5.2 Mac don't support first-letter */
                                     /* pseudo-class on legend elements, but do support it on label elements */
                                     /* we instead underline first letter on each label element and accesskey */
@@ -240,7 +242,7 @@ form small {
 	font-size: 88%;
 }
 
-form .required{ /* uses class instead of div, more efficient */
+fieldset .required{ /* uses class instead of div, more efficient */
 	font-weight:bold;
 }
 

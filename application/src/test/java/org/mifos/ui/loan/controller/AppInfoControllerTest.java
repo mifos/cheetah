@@ -53,7 +53,7 @@ public class AppInfoControllerTest {
         Assert.assertNotNull(modelAndView.getModel());
         Map<String, Object> modelMap = (Map<String, Object>) modelAndView.getModel().get("model");
         Assert.assertNotNull(modelMap);
-        System.out.println(modelMap);
+        //System.out.println(modelMap);
         AppInfo actualAppInfo = (AppInfo) modelMap.get("appInfo");
 		Assert.assertNotNull(actualAppInfo);
 		Assert.assertEquals(actualAppInfo.getSvnRevision(), expectedSvnRevision);
