@@ -87,7 +87,9 @@
    <rule ref="rulesets/strictexception.xml/AvoidRethrowingException"/>
    <rule ref="rulesets/strictexception.xml/DoNotExtendJavaLangError"/>
    <rule ref="rulesets/strictexception.xml/DoNotThrowExceptionInFinally"/>
+   <!-- disabling to allow static enums - reenable if you can get @SuppressWarnings to work on them.  
    <rule ref="rulesets/design.xml/UseSingleton"/>
+   -->
    <rule ref="rulesets/design.xml/SimplifyBooleanReturns"/>
    <rule ref="rulesets/design.xml/SimplifyBooleanExpressions"/>
    <rule ref="rulesets/design.xml/SwitchStmtsShouldHaveDefault"/>
