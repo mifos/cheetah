@@ -37,4 +37,9 @@ public class HomePage extends AbstractPage {
 		super(selenium);
 	}
 
+	public CreateLoanPage navigateToCreateLoanPage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
