@@ -21,14 +21,12 @@
 package org.mifos.client.repository;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
+import org.mifos.client.service.MifosInvalidDateException;
 import org.mifos.core.MifosException;
-import org.mifos.loan.repository.ClientDao;
-import org.mifos.loan.service.MifosInvalidDateException;
 
 public class InMemoryClientDao extends BaseClientDao {
 

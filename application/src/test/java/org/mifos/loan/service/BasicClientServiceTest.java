@@ -21,10 +21,11 @@ package org.mifos.loan.service;
 
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
+import org.mifos.client.repository.ClientDao;
 import org.mifos.client.repository.InMemoryClientDao;
+import org.mifos.client.service.BasicClientService;
 import org.mifos.client.service.ClientService;
 import org.mifos.core.MifosException;
-import org.mifos.loan.repository.ClientDao;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

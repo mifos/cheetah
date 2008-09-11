@@ -22,8 +22,8 @@ package org.mifos.client.service;
 
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
+import org.mifos.client.repository.ClientDao;
 import org.mifos.core.MifosException;
-import org.mifos.loan.repository.ClientDao;
 
 public interface ClientService {
 

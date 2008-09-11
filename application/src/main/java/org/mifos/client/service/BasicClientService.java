@@ -18,15 +18,35 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.loan.repository;
+package org.mifos.client.service;
 
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
+import org.mifos.client.repository.ClientDao;
 import org.mifos.core.MifosException;
 
-public interface ClientDao {
+public class BasicClientService implements ClientService {
+
+	private ClientDao clientDao;
 	
-	Client createClient(String firstName, String lastName, DateTime dateOfBirth) throws MifosException;
-	Client getClient(Integer clientId);
+	@Override
+	public Client createClient(String firstName, String lastName, DateTime dateOfBirth) throws MifosException {
+		return clientDao.createClient(firstName, lastName, dateOfBirth);
+	}
+
+	@Override
+	public Client getClient(Integer clientId) {
+		return clientDao.getClient(clientId);
+	}
+
+	public ClientDao getClientDao() {
+		return clientDao;
+	}
+
+	@Override
+	public void setClientDao(ClientDao clientDao) {
+		this.clientDao = clientDao;
+	}
+
 
 }

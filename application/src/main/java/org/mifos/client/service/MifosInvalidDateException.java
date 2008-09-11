@@ -18,36 +18,24 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.loan.service;
+package org.mifos.client.service;
 
-import org.joda.time.DateTime;
-import org.mifos.client.domain.Client;
-import org.mifos.client.service.ClientService;
 import org.mifos.core.MifosException;
-import org.mifos.loan.repository.ClientDao;
 
-public class BasicClientService implements ClientService {
+public class MifosInvalidDateException extends MifosException {
 
-	private ClientDao clientDao;
+	private static final long serialVersionUID = 5179303673305467704L;
+
+	public MifosInvalidDateException(String message) {
+		super(message);
+	}
 	
-	@Override
-	public Client createClient(String firstName, String lastName, DateTime dateOfBirth) throws MifosException {
-		return clientDao.createClient(firstName, lastName, dateOfBirth);
-	}
+    public MifosInvalidDateException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	@Override
-	public Client getClient(Integer clientId) {
-		return clientDao.getClient(clientId);
-	}
-
-	public ClientDao getClientDao() {
-		return clientDao;
-	}
-
-	@Override
-	public void setClientDao(ClientDao clientDao) {
-		this.clientDao = clientDao;
-	}
-
+    public MifosInvalidDateException(Throwable cause) {
+        super(cause);
+    }
 
 }

@@ -26,7 +26,6 @@ import java.util.Map;
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
-import org.mifos.loan.repository.ClientDao;
 import org.springframework.validation.Validator;
 
 public class BaseClientDao implements ClientDao {

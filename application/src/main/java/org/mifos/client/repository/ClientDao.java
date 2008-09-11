@@ -18,24 +18,15 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.loan.service;
+package org.mifos.client.repository;
 
+import org.joda.time.DateTime;
+import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
 
-public class MifosInvalidDateException extends MifosException {
-
-	private static final long serialVersionUID = 5179303673305467704L;
-
-	public MifosInvalidDateException(String message) {
-		super(message);
-	}
+public interface ClientDao {
 	
-    public MifosInvalidDateException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public MifosInvalidDateException(Throwable cause) {
-        super(cause);
-    }
+	Client createClient(String firstName, String lastName, DateTime dateOfBirth) throws MifosException;
+	Client getClient(Integer clientId);
 
 }
