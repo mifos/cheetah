@@ -21,25 +21,22 @@
 package org.mifos.client.repository;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
 import org.mifos.loan.repository.ClientDao;
-import org.mifos.loan.service.MifosInvalidDateException;
+import org.springframework.validation.Validator;
 
-public class InMemoryClientDao extends BaseClientDao {
+public class BaseClientDao implements ClientDao {
 
-	private Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
+	private Validator validator; 
+
+	private final Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
 	
 	@Override
-	public Client createClient(String firstName, String lastName,
-			DateTime dateOfBirth) throws MifosException {
-		if (dateOfBirth == null) {
-			throw new MifosInvalidDateException("Date cannot be null.");
-		}
+	public Client createClient(String firstName, String lastName, DateTime dateOfBirth) throws MifosException {
 		Client client = new Client(firstName, lastName, dateOfBirth);
 		clients.put(client.getId(), client);
 		return client;
@@ -48,6 +45,14 @@ public class InMemoryClientDao extends BaseClientDao {
 	@Override
 	public Client getClient(Integer clientId) {
 		return clients.get(clientId);
+	}
+
+	public Validator getValidator() {
+		return validator;
+	}
+
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 
 

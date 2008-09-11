@@ -4,14 +4,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns:aop="http://www.springframework.org/schema/aop"
          xmlns:tx="http://www.springframework.org/schema/tx"
+         xmlns:p="http://www.springframework.org/schema/p"
          xsi:schemaLocation="http://www.springframework.org/schema/beans 
            classpath:xsd/spring-beans-2.5.xsd
            http://www.springframework.org/schema/aop 
            classpath:xsd/spring-aop-2.0.xsd
            http://www.springframework.org/schema/tx 
-           classpath:xsd/spring-tx-2.5.xsd">
+           classpath:xsd/spring-tx-2.5.xsd
+           http://www.springframework.org/schema/context
+           classpath:xsd/spring-context-2.5.xsd">
 
     <import resource="dataSource.xml"/>
+
+    <bean id="configurationLoader" 
+      class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" />
+
+    <bean id="validator" class="org.springmodules.validation.bean.BeanValidator"
+        p:configurationLoader-ref="configurationLoader"/>  
 
     <bean id="appInfo" class="org.mifos.core.AppInfo">
         <property name="svnRevision" value="${svn.revision.appInfo}"/>

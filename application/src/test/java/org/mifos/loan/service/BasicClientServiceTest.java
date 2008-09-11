@@ -48,12 +48,12 @@ public class BasicClientServiceTest {
         createAndVerifyClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
     }
     
+    @Test(groups = { "workInProgress" })
     public void testCreateClientEmptyName() throws MifosException {
     	String expectedFirstName = "";
     	String expectedLastName = "";
     	DateTime expectedDateOfBirth = new DateTime();
-        createAndVerifyClient(expectedFirstName, expectedLastName,
-				expectedDateOfBirth);
+    	verifyMifosException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for empty names.");
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_LOAD_OF_KNOWN_NULL_VALUE"}, justification="testing behavior when date is null")
@@ -61,14 +61,20 @@ public class BasicClientServiceTest {
     	String expectedFirstName = "Foo";
     	String expectedLastName = "Bar";
     	DateTime expectedDateOfBirth = null;
+    	verifyMifosException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for null date.");
+    }
+
+    private void verifyMifosException(String expectedFirstName, String expectedLastName, 
+    		DateTime expectedDateOfBirth, String message ) {
     	try {
     		clientService.createClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
-    		Assert.fail("Should throw exception for null date.");
+    		Assert.fail(message);
     	} catch (MifosException mifosException) {
     		// expected - do nothing
 		}
     }
-
+    
+    
     public void testGetClient() throws MifosException {
     	String expectedFirstName = "Homer";
     	String expectedLastName = "Simpson";

@@ -29,6 +29,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 
 @Entity
 @Table(name="products")
@@ -39,9 +41,15 @@ public class Client implements Serializable {
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
-    
+
+	@NotBlank  
+	@Length(max = 80) 
 	private String firstName;
+
+	@NotBlank  
+	@Length(max = 80) 
 	private String lastName;
+
 	private DateTime dateOfBirth;
 
 	public Client(String firstName, String lastName, DateTime dateOfBirth) {

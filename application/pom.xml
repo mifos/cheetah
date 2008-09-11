@@ -59,6 +59,12 @@
          <url>http://download.java.net/maven/2/</url>
          <layout>default</layout>
       </repository>
+      <repository>
+         <id>ibiblio-maven2-repository</id>
+         <name>Ibiblio maven2 repository</name>
+         <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
+         <layout>default</layout>
+      </repository>
    </repositories>
    <pluginRepositories>
       <pluginRepository>
@@ -160,6 +166,11 @@
       	<artifactId>persistence-api</artifactId>
       	<version>1.0</version>
       </dependency>
+      <dependency>
+          <groupId>org.springmodules</groupId>
+          <artifactId>spring-modules-validation</artifactId>
+          <version>0.8</version>
+      </dependency>       
    </dependencies>
    <build>
       <finalName>mifos</finalName>
