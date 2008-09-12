@@ -20,7 +20,6 @@
 
 package org.mifos.loan.service;
 
-import java.math.BigDecimal;
 
 /**
  *
@@ -29,12 +28,11 @@ public class BasicLoanService implements LoanService {
 
 	// TODO: TDD work in progress, refactor to actually create a loan
 	@Override
-	public LoanDTO createLoan(Integer loanProductID, BigDecimal loanAmount,
-			BigDecimal loanInterestRate) {
+	public LoanDto createLoan(LoanDto loanDto) {
 		int newID = 1;
-		LoanDTO newLoanDTO = new LoanDTO(loanAmount,loanInterestRate,loanProductID);
-		newLoanDTO.setId(newID);
-		return newLoanDTO;
+		LoanDto newLoanDto = new LoanDto(loanDto.getAmount(),loanDto.getInterestRate(),loanDto.getLoanProductId());
+		newLoanDto.setId(newID);
+		return newLoanDto;
 	}
 
 }

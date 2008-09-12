@@ -40,11 +40,12 @@ public class LoanServiceTest {
 		Integer LOAN_PRODUCT_ID = 1;
 		BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
 		BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
+		LoanDto inputLoanDto = new LoanDto(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		
-		LoanDTO loanDTO = loanService.createLoan(LOAN_PRODUCT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE);
-		assert(loanDTO.getId() == 1);
-		assert(loanDTO.getLoanProductId() == 1);
-		assert(loanDTO.getAmount() == LOAN_AMOUNT);
-		assert(loanDTO.getInterestRate() == LOAN_INTEREST_RATE);
+		LoanDto loanDto = loanService.createLoan(inputLoanDto);
+		assert(loanDto.getId() == 1);
+		assert(loanDto.getLoanProductId() == 1);
+		assert(loanDto.getAmount() == LOAN_AMOUNT);
+		assert(loanDto.getInterestRate() == LOAN_INTEREST_RATE);
 	}
 }

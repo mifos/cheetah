@@ -20,11 +20,9 @@
 
 package org.mifos.loan.service;
 
-import java.math.BigDecimal;
 
 public interface LoanService {
 
-	LoanDTO createLoan(Integer loan_product_id, BigDecimal loan_amount,
-			BigDecimal loan_interest_rate);
+	LoanDto createLoan(LoanDto loanDto);
 
 }
