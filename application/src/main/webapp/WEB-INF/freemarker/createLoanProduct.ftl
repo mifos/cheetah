@@ -26,6 +26,7 @@
 			
 				<label for="loanproduct.form.longname" accesskey="l">Long name:</label>
 					[@form.input path="longName"/]
+					[@form.errors path="longName"/]
 					<br/>
 			
 				<label  for="loanproduct.form.shortname" accesskey="s">Short name:</label>

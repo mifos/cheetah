@@ -31,12 +31,14 @@
     <bean name="/clientsAndAccounts.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/createClient.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/createClientSuccess.ftl" class="org.mifos.ui.core.controller.GenericController"/>
+    
     <bean name="/createLoanProduct.ftl" class="org.mifos.ui.loan.controller.LoanProductController">
-        <property name="sessionForm" value="true"/>
-        <property name="commandName" value="loanProduct"/>
-        <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductCommand"/>
-        <property name="formView" value="createLoanProduct"/>
-        <property name="successView" value="hello.ftl"/>
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="loanProduct"/>
+        <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductDTO"/>
+        <property name="formView"     value="createLoanProduct"/>
+        <property name="successView"  value="hello.ftl"/>
+        <property name="validator"    ref="beanValidator"/>
     </bean>
 
     <bean name="/hello.ftl" class="org.mifos.ui.core.controller.GenericController"/>
@@ -69,5 +71,11 @@
 	  <!-- if you want to use the Spring FreeMarker macros, set this property to true -->
 	  <property name="exposeSpringMacroHelpers" value="true"/>
 	</bean>
+	
+	<bean id="beanValidator" class="org.springmodules.validation.bean.BeanValidator">
+		<property name="configurationLoader" ref="configurationLoader"/>
+	</bean>
+	
+	<bean id="configurationLoader" class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" />
 	
 </beans>

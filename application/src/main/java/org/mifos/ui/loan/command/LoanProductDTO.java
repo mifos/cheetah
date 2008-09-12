@@ -22,13 +22,20 @@ package org.mifos.ui.loan.command;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mifos.loan.domain.LoanProductStatus;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 
-public class LoanProductCommand {
+public class LoanProductDTO {
 
-    private static final Log LOG = LogFactory.getLog(LoanProductCommand.class);
+    private static final Log LOG = LogFactory.getLog(LoanProductDTO.class);
 	
+		@NotBlank
 		private String longName;
+		
+		@NotBlank
 		private String shortName;
+		
+		@Min(value=0)
 		private Double minInterestRate;
 		private Double maxInterestRate;
 		private LoanProductStatus status;
@@ -69,7 +76,7 @@ public class LoanProductCommand {
 	     * Spring framework needs a default no-argument constructor
 	     */
 	    @SuppressWarnings("PMD.UnnecessaryConstructor")
-	    public LoanProductCommand() {
+	    public LoanProductDTO() {
 	    	//Spring framework needs a no-argument constructor
 	    	//By including this comment, PMD will not flag the empty constructor
 	    	//status = ""; //I had to add this to prevent PMD from flagging this constructor as unnecessary

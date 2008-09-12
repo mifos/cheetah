@@ -18,11 +18,12 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.loan.domain;
+package org.mifos.loan.domain; //NOPMD
 
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("PMD.UseSingleton")
 public enum LoanProductStatus {
 	ACTIVE, INACTIVE;
 	
