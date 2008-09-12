@@ -17,6 +17,7 @@
  * See also http://www.apache.org/licenses/LICENSE-2.0.html for an
  * explanation of the license and how it is applied.
  */
+
 package org.mifos.ui.loan.controller;
 
 import java.util.Map;
@@ -53,7 +54,6 @@ public class AppInfoControllerTest {
         Assert.assertNotNull(modelAndView.getModel());
         Map<String, Object> modelMap = (Map<String, Object>) modelAndView.getModel().get("model");
         Assert.assertNotNull(modelMap);
-        //System.out.println(modelMap);
         AppInfo actualAppInfo = (AppInfo) modelMap.get("appInfo");
 		Assert.assertNotNull(actualAppInfo);
 		Assert.assertEquals(actualAppInfo.getSvnRevision(), expectedSvnRevision);

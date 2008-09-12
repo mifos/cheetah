@@ -18,45 +18,35 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.client.domain;
-
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+package org.mifos.client.service;
 
 import org.joda.time.DateTime;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
-@Entity
-@Table(name="products")
-public class Client implements Serializable {
+public class ClientForm implements MifosForm {
 
-	private static final long serialVersionUID = -8583711590279795781L;
+	private Integer id;
 
-	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer id;
-
+	@NotBlank  
+	@Length(max = 80) 
 	private String firstName;
+	
+	@NotBlank  
+	@Length(max = 80) 
 	private String lastName;
+	
+	@NotNull
 	private DateTime dateOfBirth;
-
-	public Client(String firstName, String lastName, DateTime dateOfBirth) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.dateOfBirth = new DateTime(dateOfBirth);
+	
+	public Integer getId() {
+		return id;
 	}
 
-    public Integer getId() {
-    	return id;
-    }
-    
-    public void setId (Integer id){
-    	this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -69,17 +59,17 @@ public class Client implements Serializable {
 	public String getLastName() {
 		return lastName;
 	}
-	
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	public DateTime getDateOfBirth() {
-		return new DateTime(this.dateOfBirth);
+		return dateOfBirth;
 	}
-	
+
 	public void setDateOfBirth(DateTime dateOfBirth) {
-		this.dateOfBirth = new DateTime(dateOfBirth);
+		this.dateOfBirth = dateOfBirth;
 	}
-	
+
 }

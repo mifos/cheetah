@@ -20,16 +20,14 @@
 
 package org.mifos.client.service;
 
-import org.joda.time.DateTime;
-import org.mifos.client.domain.Client;
 import org.mifos.client.repository.ClientDao;
-import org.mifos.core.MifosException;
+import org.mifos.core.MifosServiceException;
+import org.springframework.validation.Validator;
 
 public interface ClientService {
 
-	Client createClient(String firstName, String lastName, DateTime expectedDateOfBirth) throws MifosException;
-	Client getClient(Integer clientId);
+	ClientForm getClient(Integer clientId);
+	ClientForm createClient(ClientForm clientForm) throws MifosServiceException;
 	void setClientDao(ClientDao clientDao);
-	ClientDao getClientDao();
-	
+	void setValidator(Validator validator);
 }
