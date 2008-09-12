@@ -159,6 +159,7 @@
    <rule ref="rulesets/imports.xml/UnusedImports"/>
    <rule ref="rulesets/imports.xml/ImportFromSamePackage"/>
    <rule ref="rulesets/imports.xml/TooManyStaticImports"/>
+   <!--
    <rule ref="rulesets/junit.xml/JUnitStaticSuite"/>
    <rule ref="rulesets/junit.xml/JUnitSpelling"/>
    <rule ref="rulesets/junit.xml/JUnitAssertionsShouldIncludeMessage"/>
@@ -169,7 +170,7 @@
    <rule ref="rulesets/junit.xml/UseAssertSameInsteadOfAssertTrue"/>
    <rule ref="rulesets/junit.xml/UseAssertNullInsteadOfAssertTrue"/>
    <rule ref="rulesets/junit.xml/SimplifyBooleanAssertion"/>
-   <!--  
+  
       <rule ref="rulesets/naming.xml/ShortVariable"/>
 	  <rule ref="rulesets/naming.xml/LongVariable"/> -->
    <rule ref="rulesets/naming.xml/ShortMethodName"/>

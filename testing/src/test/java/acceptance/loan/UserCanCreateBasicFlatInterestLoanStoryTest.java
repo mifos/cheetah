@@ -24,7 +24,6 @@ import static org.testng.Assert.assertEquals;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import framework.pageobjects.CreateLoanPage;
@@ -63,8 +62,8 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 
 	@Test(groups={"workInProgress"})
 	public void createValidLoanTest() throws Exception {
-		final double LOAN_AMOUNT = 1200;
-		final double INTEREST_RATE = 12;
+		double LOAN_AMOUNT = 1200;
+		double INTEREST_RATE = 12;
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
 		assertEquals(selenium.getText("createLoanAccount"), "Create Loan Account");
@@ -75,8 +74,8 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 
 	@Test(groups={"workInProgress"})
 	public void createInvalidLoanTest() throws Exception {
-		final double LOAN_AMOUNT = 1200;
-		final double INTEREST_RATE = -5;
+		double LOAN_AMOUNT = 1200;
+		double INTEREST_RATE = -5;
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
 		assertEquals(selenium.getText("createLoanAccount"), "Create Loan Account");

@@ -44,7 +44,7 @@ public class AbstractPage {
 		selenium.waitForPageToLoad(MAX_WAIT_FOR_PAGE_TO_LOAD_IN_MILLISECONDS);
 	}
 	
-	public void setSelenium(DefaultSelenium selenium) {
+	final public void setSelenium(DefaultSelenium selenium) {
 		this.selenium = selenium;
 	}
 

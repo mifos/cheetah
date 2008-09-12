@@ -19,7 +19,6 @@
  */
 package framework.test;
 
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +26,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 
-import framework.pageobjects.LoginPage;
 import framework.util.SeleniumTestUtils;
 	
 @ContextConfiguration(locations={"classpath:test-context.xml", "classpath:ui-test-context.xml"})
