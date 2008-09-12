@@ -19,7 +19,10 @@
  */
 package org.mifos.client.service;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.mifos.client.repository.ClientDao;
 import org.mifos.client.repository.InMemoryClientDao;
 import org.mifos.core.MifosException;
@@ -33,8 +36,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 @ContextConfiguration(locations={"classpath:unitTestContext.xml"})
+@Test(groups = { "unit" })
 public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
 
+    private static final Logger logger = Logger.getLogger(BasicClientServiceTest.class);
     private ClientService clientService;
     Validator validator;
         
@@ -46,7 +51,6 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
         clientService.setValidator(validator);
     }
 
-	@Test(groups = { "unit" })
     public void testCreateClient() throws MifosServiceException {
     	String expectedFirstName = "Jane";
     	String expectedLastName = "Smith";
@@ -54,15 +58,16 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
         createAndVerifyClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
     }
     
-    @Test(groups = { "unit" })
     public void testCreateClientEmptyName() throws MifosException {
-    	String expectedFirstName = "";
+    	String expectedFirstName = "Foo";
     	String expectedLastName = "";
     	DateTime expectedDateOfBirth = new DateTime();
     	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for empty names.");
+    	expectedFirstName = "";
+    	expectedLastName = "Bar";
+    	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for empty names.");
     }
 
-    @Test(groups = { "unit" })
     public void testCreateClientLongName() throws MifosException, MifosServiceException {
     	String eightyCharName = "01234567890123456789012345678901234567890123456789012345678901234567890123456789";
 		String expectedFirstName80Chars = eightyCharName;
@@ -74,7 +79,6 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
     	createClient(expectedFirstName, expectedLastName80Chars, expectedDateOfBirth);
     }
 
-    @Test(groups = { "unit" })
     public void testCreateClientTooLongName() throws MifosException {
     	String eightyOneCharName = "012345678901234567890123456789012345678901234567890123456789012345678901234567891";
 		String expectedFirstName81Chars = eightyOneCharName;
@@ -86,8 +90,8 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
     	verifyMifosServiceException(expectedFirstName, expectedLastName81Chars, expectedDateOfBirth, "Should throw exception for empty names.");
     }
 
+    @Test(groups = { "workInProgress" })
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_LOAD_OF_KNOWN_NULL_VALUE"}, justification="testing behavior when date is null")
-    @Test(groups = { "unit" })
     public void testCreateClientNullDate() {
     	String expectedFirstName = "Foo";
     	String expectedLastName = "Bar";
@@ -95,8 +99,6 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
     	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for null date.");
     }
 
-    
-    @Test(groups = { "unit" })
     public void testGetClient() throws MifosException, MifosServiceException {
     	String expectedFirstName = "Homer";
     	String expectedLastName = "Simpson";
@@ -108,9 +110,26 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(freshClientForm.getId(), expectedClientForm.getId());
         Assert.assertEquals(freshClientForm.getFirstName(), expectedClientForm.getFirstName());
         Assert.assertEquals(freshClientForm.getLastName(), expectedClientForm.getLastName());
-        Assert.assertEquals(freshClientForm.getDateOfBirth(), expectedClientForm.getDateOfBirth());
+        Assert.assertEquals(freshClientForm.getDateTimeOfBirth(), expectedClientForm.getDateTimeOfBirth());
+    }
+    
+    public void testCreateClientGoodDateOfBirth() throws MifosServiceException {
+    	DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+    	DateTime expectedDateOfBirth = dateTimeFormatter.parseDateTime("1880-01-01");
+    	String expectedFirstName = "Yeung";
+    	String expectedLastName = "Enough";
+       	createClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
+    }
+    
+    public void testCreateClientBadDateOfBirth() throws MifosServiceException {
+    	DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+    	DateTime expectedDateOfBirth = dateTimeFormatter.parseDateTime("1753-01-01");
+    	String expectedFirstName = "Far";
+    	String expectedLastName = "Too-Old";
+       	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for date older than 1 January 1880");
     }
 
+    @Test(enabled = false)
     private void verifyMifosServiceException(String expectedFirstName, String expectedLastName, 
     		DateTime expectedDateOfBirth, String message ) {
     	try {
@@ -119,9 +138,12 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
     		Assert.fail(message);
     	} catch (MifosServiceException mifosException) {
     		// expected - do nothing
+    		logger.info("Errors: " + mifosException.getErrors().toString());
+    		logger.info("Errors: " + mifosException.getErrors().getAllErrors().toString());
 		}
     }
 
+    @Test(enabled = false)
 	private void createClient(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth)
 			throws MifosServiceException {
@@ -129,6 +151,7 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
 		clientService.createClient(clientForm);
 	}
 
+    @Test(enabled = false)
     private void createAndVerifyClient(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth) throws MifosServiceException {
     	ClientForm clientForm = createClientForm(expectedFirstName,
@@ -137,23 +160,26 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
         Assert.assertNotNull(newClientForm);
         Assert.assertEquals(newClientForm.getFirstName(), expectedFirstName);
         Assert.assertEquals(newClientForm.getLastName(), expectedLastName);
-        Assert.assertEquals(newClientForm.getDateOfBirth(), expectedDateOfBirth);
+        Assert.assertEquals(newClientForm.getDateTimeOfBirth(), expectedDateOfBirth);
 	}
 
+    @Test(enabled = false)
 	private ClientForm createClientForm(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth) {
 		ClientForm clientForm = new ClientForm();
     	clientForm.setFirstName(expectedFirstName);
     	clientForm.setLastName(expectedLastName);
-    	clientForm.setDateOfBirth(expectedDateOfBirth);
+    	clientForm.setDateTimeOfBirth(expectedDateOfBirth);
 		return clientForm;
 	}
 
 	@Autowired
+    @Test(enabled = false)
 	public void setValidator(Validator validator) {
 		this.validator = validator;
 	}
 
+    @Test(enabled = false)
     public void setClientService(BasicClientService clientService) {
 		this.clientService = clientService;
 	}

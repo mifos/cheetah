@@ -19,12 +19,11 @@
  */
 package framework.util;
 
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.Test;
-
-import com.thoughtworks.selenium.DefaultSelenium;
-
-public class UiTestUtils {
+public final class UiTestUtils {
+	
+	private UiTestUtils() {
+		// prevent instantiation
+	}
 
 	// handy if you want to look at Selenium's web browser when a test is running, instead of setting a breakpoint.
 	static void sleep() {

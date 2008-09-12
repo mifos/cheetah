@@ -37,7 +37,7 @@ public class AbstractPage {
 	}
 	
 	public AbstractPage(DefaultSelenium selenium) {
-		setSelenium(selenium);
+		this.selenium = selenium;
 	}
 	
 	protected void waitForPageToLoad() {

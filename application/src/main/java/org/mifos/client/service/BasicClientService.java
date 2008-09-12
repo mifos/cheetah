@@ -37,7 +37,7 @@ public class BasicClientService implements ClientService {
 		validate(clientForm);
 		try {
 			Client client;
-			client = clientDao.createClient(clientForm.getFirstName(), clientForm.getLastName(), clientForm.getDateOfBirth());
+			client = clientDao.createClient(clientForm.getFirstName(), clientForm.getLastName(), clientForm.getDateTimeOfBirth());
 			return createClientForm(client);
 		} catch (MifosException e) {
 			throw new MifosServiceException("Caught exception in ClientDao.", e, new BeanPropertyBindingResult(clientForm, "clientForm"));
@@ -63,7 +63,7 @@ public class BasicClientService implements ClientService {
 		ClientForm clientForm = new ClientForm();
 		clientForm.setFirstName(client.getFirstName());
 		clientForm.setLastName(client.getLastName());
-		clientForm.setDateOfBirth(client.getDateOfBirth());
+		clientForm.setDateTimeOfBirth(client.getDateOfBirth());
 		return clientForm;
 	}
 

@@ -29,7 +29,7 @@ import org.mifos.core.MifosException;
 
 public class InMemoryClientDao extends BaseClientDao {
 
-	private Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
+	private final Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
 	
 	@Override
 	public Client createClient(String firstName, String lastName,

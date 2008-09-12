@@ -140,7 +140,6 @@
    <!-- Not sure we want to enforce these
    <rule ref="rulesets/optimizations.xml/LocalVariableCouldBeFinal"/>
    <rule ref="rulesets/optimizations.xml/MethodArgumentCouldBeFinal"/>  -->
-   
    <rule ref="rulesets/optimizations.xml/AvoidInstantiatingObjectsInLoops"/>
    <rule ref="rulesets/optimizations.xml/UseArrayListInsteadOfVector"/>
    <rule ref="rulesets/optimizations.xml/SimplifyStartsWith"/>
@@ -152,7 +151,8 @@
    <rule ref="rulesets/sunsecure.xml/MethodReturnsInternalArray"/>
    <rule ref="rulesets/sunsecure.xml/ArrayIsStoredDirectly"/>
    <rule ref="rulesets/coupling.xml/CouplingBetweenObjects"/>
-   <!--  <rule ref="rulesets/coupling.xml/ExcessiveImports"/> -->
+   <!--  
+     <rule ref="rulesets/coupling.xml/ExcessiveImports"/> -->
    <rule ref="rulesets/coupling.xml/LooseCoupling"/>
    <rule ref="rulesets/imports.xml/DuplicateImports"/>
    <rule ref="rulesets/imports.xml/DontImportJavaLang"/>
@@ -160,10 +160,10 @@
    <rule ref="rulesets/imports.xml/ImportFromSamePackage"/>
    <rule ref="rulesets/imports.xml/TooManyStaticImports"/>
    <!--
-   <rule ref="rulesets/junit.xml/JUnitStaticSuite"/>
-   <rule ref="rulesets/junit.xml/JUnitSpelling"/>
-   <rule ref="rulesets/junit.xml/JUnitAssertionsShouldIncludeMessage"/>
-   <rule ref="rulesets/junit.xml/JUnitTestsShouldIncludeAssert"/>
+     <rule ref="rulesets/junit.xml/JUnitStaticSuite"/>
+     <rule ref="rulesets/junit.xml/JUnitSpelling"/>
+     <rule ref="rulesets/junit.xml/JUnitAssertionsShouldIncludeMessage"/>
+     <rule ref="rulesets/junit.xml/JUnitTestsShouldIncludeAssert"/> -->
    <rule ref="rulesets/junit.xml/TestClassWithoutTestCases"/>
    <rule ref="rulesets/junit.xml/UnnecessaryBooleanAssertion"/>
    <rule ref="rulesets/junit.xml/UseAssertEqualsInsteadOfAssertTrue"/>
@@ -171,7 +171,8 @@
    <rule ref="rulesets/junit.xml/UseAssertNullInsteadOfAssertTrue"/>
    <rule ref="rulesets/junit.xml/SimplifyBooleanAssertion"/>
   
-      <rule ref="rulesets/naming.xml/ShortVariable"/>
+  <!--
+     <rule ref="rulesets/naming.xml/ShortVariable"/>
 	  <rule ref="rulesets/naming.xml/LongVariable"/> -->
    <rule ref="rulesets/naming.xml/ShortMethodName"/>
    <rule ref="rulesets/naming.xml/VariableNamingConventions"/>
@@ -199,7 +200,8 @@
    <rule ref="rulesets/codesize.xml/NcssMethodCount"/>
    <rule ref="rulesets/codesize.xml/NcssTypeCount"/>
    <rule ref="rulesets/codesize.xml/NcssConstructorCount"/>
-   <rule ref="rulesets/codesize.xml/TooManyMethods"/>
+   <!-- test classes have many methods
+     <rule ref="rulesets/codesize.xml/TooManyMethods"/> -->
    <rule ref="rulesets/finalizers.xml/EmptyFinalizer"/>
    <rule ref="rulesets/finalizers.xml/FinalizeOnlyCallsSuperFinalize"/>
    <rule ref="rulesets/finalizers.xml/FinalizeOverloaded"/>
@@ -209,15 +211,13 @@
    <rule ref="rulesets/logging-jakarta-commons.xml/UseCorrectExceptionLogging"/>
    <rule ref="rulesets/logging-jakarta-commons.xml/ProperLogger"/>
    <!-- doesn't seem to apply for tests, but could be useful for production code
-   <rule ref="rulesets/javabeans.xml/BeanMembersShouldSerialize"/> -->
-   
+   <rule ref="rulesets/javabeans.xml/BeanMembersShouldSerialize"/> -->   
    <rule ref="rulesets/javabeans.xml/MissingSerialVersionUID"/>
    <rule ref="rulesets/clone.xml/ProperCloneImplementation"/>
    <rule ref="rulesets/clone.xml/CloneThrowsCloneNotSupportedException"/>
    <rule ref="rulesets/clone.xml/CloneMethodMustImplementCloneable"/>
    <!--  This rule was triggered by testng annotations
-   <rule ref="rulesets/strings.xml/AvoidDuplicateLiterals"/> -->
-   
+   <rule ref="rulesets/strings.xml/AvoidDuplicateLiterals"/>  -->
    <rule ref="rulesets/strings.xml/StringInstantiation"/>
    <rule ref="rulesets/strings.xml/StringToString"/>
    <rule ref="rulesets/strings.xml/InefficientStringBuffering"/>
@@ -225,7 +225,7 @@
    <rule ref="rulesets/strings.xml/UseStringBufferLength"/>
    <rule ref="rulesets/strings.xml/AppendCharacterWithChar"/>
    <!-- 
-   <rule ref="rulesets/strings.xml/ConsecutiveLiteralAppends"/>  -->
+   <rule ref="rulesets/strings.xml/ConsecutiveLiteralAppends"/> -->
    <rule ref="rulesets/strings.xml/UseIndexOfChar"/>
    <rule ref="rulesets/strings.xml/InefficientEmptyStringCheck"/>
    <rule ref="rulesets/strings.xml/InsufficientStringBufferDeclaration"/>

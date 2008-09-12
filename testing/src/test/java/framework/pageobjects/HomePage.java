@@ -30,7 +30,7 @@ import com.thoughtworks.selenium.DefaultSelenium;
 public class HomePage extends AbstractPage {
 
 	public HomePage() {
-		// do nothing
+		super();
 	}
 
 	public HomePage(DefaultSelenium selenium) {

@@ -43,13 +43,13 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 	private LoginPage loginPage;
 	
 	@BeforeMethod
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
 	}
 
 	@AfterMethod
-	public void logOut() throws Exception {
+	public void logOut() {
 		loginPage.logout();
 	}
 	
@@ -61,7 +61,7 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 	}
 
 	@Test(groups={"workInProgress"})
-	public void createValidLoanTest() throws Exception {
+	public void createValidLoanTest() {
 		double LOAN_AMOUNT = 1200;
 		double INTEREST_RATE = 12;
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
@@ -73,7 +73,7 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 	}
 
 	@Test(groups={"workInProgress"})
-	public void createInvalidLoanTest() throws Exception {
+	public void createInvalidLoanTest() {
 		double LOAN_AMOUNT = 1200;
 		double INTEREST_RATE = -5;
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");

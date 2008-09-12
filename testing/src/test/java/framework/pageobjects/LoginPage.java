@@ -30,7 +30,7 @@ import com.thoughtworks.selenium.DefaultSelenium;
 public class LoginPage extends AbstractPage {
 
 	public LoginPage() {
-		// do nothing
+		super();
 	}
 	
 	public LoginPage(DefaultSelenium selenium) {

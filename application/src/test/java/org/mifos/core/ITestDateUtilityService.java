@@ -20,7 +20,6 @@
 package org.mifos.core;
 
 import org.joda.time.DateTime;
-import org.mifos.core.IDateUtilityService;
 
 /**
  * An attempt to wrap technicalities of setting and restoring system date

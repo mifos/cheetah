@@ -20,7 +20,9 @@
 
 package org.mifos.client.service;
 
+import java.util.Date;
 import org.joda.time.DateTime;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
@@ -38,6 +40,7 @@ public class ClientForm implements MifosForm {
 	private String lastName;
 	
 	@NotNull
+	@Expression("dateOfBirth >= [1800-01-01]")
 	private DateTime dateOfBirth;
 	
 	public Integer getId() {
@@ -64,12 +67,16 @@ public class ClientForm implements MifosForm {
 		this.lastName = lastName;
 	}
 
-	public DateTime getDateOfBirth() {
-		return dateOfBirth;
+	public Date getDateOfBirth() {
+		return dateOfBirth.toDate();
 	}
 
-	public void setDateOfBirth(DateTime dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
+	public DateTime getDateTimeOfBirth() {
+		return new DateTime(dateOfBirth);
+	}
+
+	public void setDateTimeOfBirth(DateTime dateOfBirth) {
+		this.dateOfBirth = new DateTime(dateOfBirth);
 	}
 
 }

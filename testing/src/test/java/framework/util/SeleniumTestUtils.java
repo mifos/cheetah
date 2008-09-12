@@ -20,7 +20,6 @@
 package framework.util;
 
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.Test;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 
@@ -30,22 +29,27 @@ public class SeleniumTestUtils {
 	private DefaultSelenium selenium = null;
 
 	public SeleniumTestUtils() {
-		createSelenium();
+			createSelenium();
 	}
 	
-	public synchronized DefaultSelenium getSelenium() {
-		return selenium;
+	public DefaultSelenium getSelenium() {
+		synchronized (this) {
+			return selenium;
+		}
 	}
 	
-	private synchronized void createSelenium() {
-		selenium = new DefaultSelenium("localhost", 4444, "*firefox","http://localhost:8080/mifos/");
-		selenium.start();
+	private void createSelenium() {
+		synchronized (this) {
+			selenium = new DefaultSelenium("localhost", 4444, "*firefox","http://localhost:8080/mifos/");
+			selenium.start();
+		}
 	}
 	
-	@Test
 	@AfterSuite(groups={"ui"})
-	public synchronized void stopSelenium() {
-		selenium.stop();
+	public void stopSelenium() {
+		synchronized (this) {
+			selenium.stop();
+		}
 	}
 
 }

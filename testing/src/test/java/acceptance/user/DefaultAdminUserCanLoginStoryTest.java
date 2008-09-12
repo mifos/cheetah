@@ -19,7 +19,7 @@
  */
 package acceptance.user;
 
-import static org.testng.Assert.assertEquals;
+import org.testng.Assert;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
@@ -40,25 +40,25 @@ public class DefaultAdminUserCanLoginStoryTest extends UiTestCaseBase {
 	private LoginPage loginPage;
 	
 	@BeforeMethod
-	public void setUp() throws Exception {
+	public void setUp() {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
 	}
 
 	@AfterMethod
-	public void logOut() throws Exception {
+	public void logOut() {
 		loginPage.logout();
 	}
 	
-	public void userLoginSuccessTest() throws Exception {
+	public void userLoginSuccessTest() {
 		loginPage.loginAs("mifos", "testmifos");
-		assertEquals(selenium.getText("hello.heading"), "Welcome to Mifos");
+		Assert.assertEquals(selenium.getText("hello.heading"), "Welcome to Mifos");
 		loginPage.logout();
 	}
 
-	public void userLoginFailureTest() throws Exception {
+	public void userLoginFailureTest() {
 		loginPage.loginAs("mifos", "mifos3");
-		assertEquals(selenium.getText("login.errormessage"), "Your username or password is incorrect");
+		Assert.assertEquals(selenium.getText("login.errormessage"), "Your username or password is incorrect");
 		loginPage.logout();
 	}
 
