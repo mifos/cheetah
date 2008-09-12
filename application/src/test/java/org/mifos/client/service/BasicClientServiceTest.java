@@ -59,7 +59,31 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
     	String expectedFirstName = "";
     	String expectedLastName = "";
     	DateTime expectedDateOfBirth = new DateTime();
-    	verifyMifosException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for empty names.");
+    	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for empty names.");
+    }
+
+    @Test(groups = { "unit" })
+    public void testCreateClientLongName() throws MifosException, MifosServiceException {
+    	String eightyCharName = "01234567890123456789012345678901234567890123456789012345678901234567890123456789";
+		String expectedFirstName80Chars = eightyCharName;
+    	String expectedLastName = "Bar";
+    	DateTime expectedDateOfBirth = new DateTime();
+    	createClient(expectedFirstName80Chars, expectedLastName, expectedDateOfBirth);
+		String expectedFirstName = "Foo";
+    	String expectedLastName80Chars = eightyCharName;
+    	createClient(expectedFirstName, expectedLastName80Chars, expectedDateOfBirth);
+    }
+
+    @Test(groups = { "unit" })
+    public void testCreateClientTooLongName() throws MifosException {
+    	String eightyOneCharName = "012345678901234567890123456789012345678901234567890123456789012345678901234567891";
+		String expectedFirstName81Chars = eightyOneCharName;
+    	String expectedLastName = "Bar";
+    	DateTime expectedDateOfBirth = new DateTime();
+    	verifyMifosServiceException(expectedFirstName81Chars, expectedLastName, expectedDateOfBirth, "Should throw exception for empty names.");
+		String expectedFirstName = "Foo";
+    	String expectedLastName81Chars = eightyOneCharName;
+    	verifyMifosServiceException(expectedFirstName, expectedLastName81Chars, expectedDateOfBirth, "Should throw exception for empty names.");
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_LOAD_OF_KNOWN_NULL_VALUE"}, justification="testing behavior when date is null")
@@ -68,19 +92,9 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
     	String expectedFirstName = "Foo";
     	String expectedLastName = "Bar";
     	DateTime expectedDateOfBirth = null;
-    	verifyMifosException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for null date.");
+    	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for null date.");
     }
 
-    private void verifyMifosException(String expectedFirstName, String expectedLastName, 
-    		DateTime expectedDateOfBirth, String message ) {
-    	try {
-    		ClientForm clientForm = createClientForm(expectedFirstName, expectedLastName, expectedDateOfBirth);
-    		clientService.createClient(clientForm);
-    		Assert.fail(message);
-    	} catch (MifosServiceException mifosException) {
-    		// expected - do nothing
-		}
-    }
     
     @Test(groups = { "unit" })
     public void testGetClient() throws MifosException, MifosServiceException {
@@ -96,6 +110,24 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(freshClientForm.getLastName(), expectedClientForm.getLastName());
         Assert.assertEquals(freshClientForm.getDateOfBirth(), expectedClientForm.getDateOfBirth());
     }
+
+    private void verifyMifosServiceException(String expectedFirstName, String expectedLastName, 
+    		DateTime expectedDateOfBirth, String message ) {
+    	try {
+    		createClient(expectedFirstName, expectedLastName,
+					expectedDateOfBirth);
+    		Assert.fail(message);
+    	} catch (MifosServiceException mifosException) {
+    		// expected - do nothing
+		}
+    }
+
+	private void createClient(String expectedFirstName,
+			String expectedLastName, DateTime expectedDateOfBirth)
+			throws MifosServiceException {
+		ClientForm clientForm = createClientForm(expectedFirstName, expectedLastName, expectedDateOfBirth);
+		clientService.createClient(clientForm);
+	}
 
     private void createAndVerifyClient(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth) throws MifosServiceException {
