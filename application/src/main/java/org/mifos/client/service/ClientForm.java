@@ -68,7 +68,7 @@ public class ClientForm implements MifosForm {
 	}
 
 	public Date getDateOfBirth() {
-		return dateOfBirth.toDate();
+		return getDate(this.dateOfBirth);
 	}
 
 	public DateTime getDateTimeOfBirth() {
@@ -76,7 +76,25 @@ public class ClientForm implements MifosForm {
 	}
 
 	public void setDateTimeOfBirth(DateTime dateOfBirth) {
-		this.dateOfBirth = new DateTime(dateOfBirth);
+		this.dateOfBirth = getDateTime(dateOfBirth);
+	}
+	
+	@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+	private Date getDate(DateTime dateTime) {
+		Date result = null;
+		if (dateTime != null) {
+			result = dateTime.toDate();
+		}
+		return result;
 	}
 
+	@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+	private DateTime getDateTime(DateTime date) {
+		DateTime result = null;
+		if (date != null) {
+			result = new DateTime(date);
+		}
+		return result;
+	}
+	
 }
