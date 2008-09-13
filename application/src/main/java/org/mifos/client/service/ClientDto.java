@@ -27,7 +27,7 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
-public class ClientForm implements MifosForm {
+public class ClientDto implements MifosDto {
 
 	private Integer id;
 

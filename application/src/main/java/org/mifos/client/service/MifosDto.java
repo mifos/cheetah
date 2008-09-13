@@ -20,5 +20,5 @@
 
 package org.mifos.client.service;
 
-public interface MifosForm {
+public interface MifosDto {
 }

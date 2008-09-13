@@ -26,8 +26,8 @@ import org.springframework.validation.Validator;
 
 public interface ClientService {
 
-	ClientForm getClient(Integer clientId);
-	ClientForm createClient(ClientForm clientForm) throws MifosServiceException;
+	ClientDto getClient(Integer clientId);
+	ClientDto createClient(ClientDto clientForm) throws MifosServiceException;
 	void setClientDao(ClientDao clientDao);
 	void setValidator(Validator validator);
 }

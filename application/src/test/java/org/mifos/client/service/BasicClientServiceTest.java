@@ -103,10 +103,10 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
     	String expectedFirstName = "Homer";
     	String expectedLastName = "Simpson";
     	DateTime expectedDateOfBirth = new DateTime();
-		ClientForm clientForm = createClientForm(expectedFirstName, expectedLastName, expectedDateOfBirth);
-		ClientForm expectedClientForm = clientService.createClient(clientForm);
+		ClientDto clientForm = createClientForm(expectedFirstName, expectedLastName, expectedDateOfBirth);
+		ClientDto expectedClientForm = clientService.createClient(clientForm);
         Integer clientId = expectedClientForm.getId();
-        ClientForm freshClientForm = clientService.getClient(clientId);
+        ClientDto freshClientForm = clientService.getClient(clientId);
         Assert.assertEquals(freshClientForm.getId(), expectedClientForm.getId());
         Assert.assertEquals(freshClientForm.getFirstName(), expectedClientForm.getFirstName());
         Assert.assertEquals(freshClientForm.getLastName(), expectedClientForm.getLastName());
@@ -147,16 +147,16 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
 	private void createClient(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth)
 			throws MifosServiceException {
-		ClientForm clientForm = createClientForm(expectedFirstName, expectedLastName, expectedDateOfBirth);
+		ClientDto clientForm = createClientForm(expectedFirstName, expectedLastName, expectedDateOfBirth);
 		clientService.createClient(clientForm);
 	}
 
     @Test(enabled = false)
     private void createAndVerifyClient(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth) throws MifosServiceException {
-    	ClientForm clientForm = createClientForm(expectedFirstName,
+    	ClientDto clientForm = createClientForm(expectedFirstName,
 				expectedLastName, expectedDateOfBirth);
-    	ClientForm newClientForm  = clientService.createClient(clientForm);
+    	ClientDto newClientForm  = clientService.createClient(clientForm);
         Assert.assertNotNull(newClientForm);
         Assert.assertEquals(newClientForm.getFirstName(), expectedFirstName);
         Assert.assertEquals(newClientForm.getLastName(), expectedLastName);
@@ -164,9 +164,9 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
 	}
 
     @Test(enabled = false)
-	private ClientForm createClientForm(String expectedFirstName,
+	private ClientDto createClientForm(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth) {
-		ClientForm clientForm = new ClientForm();
+		ClientDto clientForm = new ClientDto();
     	clientForm.setFirstName(expectedFirstName);
     	clientForm.setLastName(expectedLastName);
     	clientForm.setDateTimeOfBirth(expectedDateOfBirth);

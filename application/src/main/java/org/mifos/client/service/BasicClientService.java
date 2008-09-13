@@ -33,7 +33,7 @@ public class BasicClientService implements ClientService {
 	private Validator validator;
 	
 	@Override
-	public ClientForm createClient(ClientForm clientForm) throws MifosServiceException {
+	public ClientDto createClient(ClientDto clientForm) throws MifosServiceException {
 		validate(clientForm);
 		try {
 			Client client;
@@ -44,7 +44,7 @@ public class BasicClientService implements ClientService {
 		}
 	}
 
-	private void validate(ClientForm clientForm) throws MifosServiceException {
+	private void validate(ClientDto clientForm) throws MifosServiceException {
 		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(clientForm, "clientForm");
 		validator.validate(clientForm, errors);
 		if (errors.getErrorCount() > 0) {
@@ -54,13 +54,13 @@ public class BasicClientService implements ClientService {
 	}
 
 	@Override
-	public ClientForm getClient(Integer clientId) {
+	public ClientDto getClient(Integer clientId) {
 		Client client = clientDao.getClient(clientId);
 		return createClientForm(client);
 	}
 
-	private ClientForm createClientForm(Client client) {
-		ClientForm clientForm = new ClientForm();
+	private ClientDto createClientForm(Client client) {
+		ClientDto clientForm = new ClientDto();
 		clientForm.setFirstName(client.getFirstName());
 		clientForm.setLastName(client.getLastName());
 		clientForm.setDateTimeOfBirth(client.getDateOfBirth());
