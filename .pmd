@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pmd>
     <useProjectRuleSet>true</useProjectRuleSet>
-    <ruleSetFile>/Users/adam/work/mifos/ws-cheetah/mifos-cheetah/pmd.xml</ruleSetFile>
+    <ruleSetFile>pmd.xml</ruleSetFile>
     <includeDerivedFiles>false</includeDerivedFiles>
 </pmd>
