@@ -67,6 +67,7 @@ public class ClientForm implements MifosForm {
 		this.lastName = lastName;
 	}
 
+	// needed because valang can only validate Date, not DateTime
 	public Date getDateOfBirth() {
 		return getDate(this.dateOfBirth);
 	}
