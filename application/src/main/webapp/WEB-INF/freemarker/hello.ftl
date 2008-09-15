@@ -8,9 +8,11 @@
   </head>
   <body>
   [@mifos.header currentTab="Home" /]
-      
+  [#include "homeLeftPane.ftl" ]  
+  
+  <div id="homePageContent">      
     <p id="hello.heading" class="boldOrange">[@spring.message "welcomeToMifos" /]</p>
+  </div>
 
-    [#include "footer.ftl"]    
   </body>
 </html>

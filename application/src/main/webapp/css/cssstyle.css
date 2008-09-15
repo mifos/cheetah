@@ -2,6 +2,10 @@
 /* BEGIN ADDITIONS FOR CHEETAH */
 /********************************/
 
+.left-pane-heading-group {
+	margin:0 0 0 10px;
+}
+
 .fontnormalboldorangeheading {
 
 	text-decoration:none; 
@@ -12,6 +16,10 @@
 }
 #homePageHeader { 
    border-bottom: 6px #FF9600 solid; 
+}
+
+#homePageContent {
+	margin:0 0 0 200px;
 }
 
 #logo { 
