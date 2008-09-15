@@ -20,13 +20,13 @@
           access-denied-page="/accessDenied.ftl">
         <intercept-url pattern="/login.ftl" access="ROLE_ANONYMOUS,ROLE_GUEST" />
         <intercept-url pattern="/accessDenied.ftl" access="ROLE_ANONYMOUS,ROLE_GUEST,ROLE_USER,ROLE_ADMIN" />
-        <intercept-url pattern="/hello.ftl" access="ROLE_USER" />
+        <intercept-url pattern="/home.ftl" access="ROLE_USER" />
         <intercept-url pattern="/appInfo.ftl" access="ROLE_USER" />
         <intercept-url pattern="/priceincrease.ftl" access="ROLE_ADMIN" />
         <intercept-url pattern="/adminHome.ftl" access="ROLE_ADMIN" />
         <http-basic/>  
         <form-login login-page="/login.ftl"
-            default-target-url="/hello.ftl"
+            default-target-url="/home.ftl"
             authentication-failure-url="/login.ftl?error=true" />
         <logout logout-success-url="/login.ftl" />
         <anonymous username="guest" granted-authority="ROLE_GUEST" />

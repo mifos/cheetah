@@ -38,11 +38,11 @@
         <property name="commandName"  value="loanProduct"/>
         <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductDTO"/>
         <property name="formView"     value="createLoanProduct"/>
-        <property name="successView"  value="hello.ftl"/>
+        <property name="successView"  value="home.ftl"/>
         <property name="validator"    ref="beanValidator"/>
     </bean>
 
-    <bean name="/hello.ftl" class="org.mifos.ui.core.controller.GenericController"/>
+    <bean name="/home.ftl" class="org.mifos.ui.core.controller.GenericController"/>
 
     <bean name="/appInfo.ftl" class="org.mifos.ui.core.controller.AppInfoController">
         <property name="appInfo" ref="appInfo"/>
