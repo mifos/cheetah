@@ -24,6 +24,7 @@ import org.apache.commons.logging.LogFactory;
 import org.mifos.loan.domain.LoanProductStatus;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
 public class LoanProductDTO {
 
@@ -35,9 +36,14 @@ public class LoanProductDTO {
 		@NotBlank
 		private String shortName;
 		
+		@NotNull
 		@Min(value=0)
+		//@Expression(value="minInterestRate <= maxInterestRate") can't get this to work -- getting Valang error
 		private Double minInterestRate;
+		
+		@Min(value=0)
 		private Double maxInterestRate;
+		
 		private LoanProductStatus status;
 		
 		public String getLongName() {

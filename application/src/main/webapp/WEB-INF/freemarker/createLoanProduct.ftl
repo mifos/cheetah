@@ -18,7 +18,7 @@
 		<h2>Create a new loan product</h2>
 				
 		 [@form.form action="createLoanProduct.ftl" commandName="loanProduct"]
-		 [@form.errors path="*" cssClass="error"/]
+		 [@form.errors path="*" cssClass="error-messages"/]
 		
 			<fieldset>
 			
@@ -26,7 +26,7 @@
 			
 				<label for="loanproduct.form.longname" accesskey="l">Long name:</label>
 					[@form.input path="longName"/]
-					[@form.errors path="longName"/]
+					[@form.errors path="longName" cssClass="error-messages"/]
 					<br/>
 			
 				<label  for="loanproduct.form.shortname" accesskey="s">Short name:</label>

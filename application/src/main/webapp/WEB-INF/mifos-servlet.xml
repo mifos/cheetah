@@ -11,6 +11,7 @@
         <property name="basenames">
         	<list>
         		<value>messages</value>
+				<value>errors</value>
         	</list>
         </property>
     </bean>
