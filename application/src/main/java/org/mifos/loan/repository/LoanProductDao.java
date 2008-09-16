@@ -9,5 +9,6 @@ public interface LoanProductDao {
 	void deleteLoanProduct (LoanProduct loanProduct);
 	void saveLoanProduct (LoanProduct loanProduct);
 	List<LoanProduct> getLoanProducts ();
-	LoanProduct get (String longName);
+	LoanProduct get (Integer id);
+	LoanProduct getByShortName (String shortName);
 }

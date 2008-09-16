@@ -1,32 +1,43 @@
 package org.mifos.loan.repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mifos.loan.domain.LoanProduct;
 
 public class InMemoryLoanProductDao implements LoanProductDao {
 
-	private HashMap<String, LoanProduct> loanProductStore;
+	private Map<Integer, LoanProduct> loanProductStore;
+	private int nextKey = 0;
+	
+	public InMemoryLoanProductDao() {
+		loanProductStore = new HashMap<Integer, LoanProduct>();
+	}
 
-	@Override
 	public void deleteLoanProduct(LoanProduct loanProduct) {
-		loanProductStore.remove(loanProduct.getLongName());			
+		loanProductStore.remove(loanProduct.getId());			
 	}
 
-	@Override
-	public LoanProduct get(String longName) {
-		return loanProductStore.get(longName);
+	public LoanProduct get(Integer id) {
+		return loanProductStore.get(id);
 	}
 
-	@Override
 	public List<LoanProduct> getLoanProducts() {
-		return (List<LoanProduct>) loanProductStore.values();
+		return new ArrayList<LoanProduct> (loanProductStore.values());
 	}
 
-	@Override
 	public void saveLoanProduct(LoanProduct loanProduct) {
-		loanProductStore.put(loanProduct.getLongName(), loanProduct);			
+		if (loanProduct.getId()==null) {
+			loanProduct.setId(nextKey++);
+		}
+		loanProductStore.put(loanProduct.getId(), loanProduct);			
 	}
-
+		
+	public LoanProduct getByShortName (String shortName){
+		List<LoanProduct> loanProducts = new ArrayList<LoanProduct> (loanProductStore.values());
+		return loanProducts.get(0);
+		
+	}
 }

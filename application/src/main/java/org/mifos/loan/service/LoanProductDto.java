@@ -17,7 +17,7 @@
  * See also http://www.apache.org/licenses/LICENSE-2.0.html for an
  * explanation of the license and how it is applied.
  */
-package org.mifos.ui.loan.command;
+package org.mifos.loan.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,9 +26,9 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
-public class LoanProductDTO {
+public class LoanProductDto {
 
-    private static final Log LOG = LogFactory.getLog(LoanProductDTO.class);
+    private static final Log LOG = LogFactory.getLog(LoanProductDto.class);
 	
 		@NotBlank
 		private String longName;
@@ -82,10 +82,19 @@ public class LoanProductDTO {
 	     * Spring framework needs a default no-argument constructor
 	     */
 	    @SuppressWarnings("PMD.UnnecessaryConstructor")
-	    public LoanProductDTO() {
+	    public LoanProductDto() {
 	    	//Spring framework needs a no-argument constructor
 	    	//By including this comment, PMD will not flag the empty constructor
 	    	//status = ""; //I had to add this to prevent PMD from flagging this constructor as unnecessary
+	    }
+	    
+	    public LoanProductDto (String longName, String shortName, Double minInterestRate, 
+	    					   Double maxInterestRate, LoanProductStatus status) {
+	    	this.longName = longName;
+	    	this.shortName = shortName;
+	    	this.minInterestRate = minInterestRate;
+	    	this.maxInterestRate = maxInterestRate;
+	    	this.status = status;
 	    }
 
 }

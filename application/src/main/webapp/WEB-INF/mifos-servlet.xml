@@ -36,7 +36,7 @@
     <bean name="/createLoanProduct.ftl" class="org.mifos.ui.loan.controller.LoanProductController">
         <property name="sessionForm"  value="true"/>
         <property name="commandName"  value="loanProduct"/>
-        <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductDTO"/>
+        <property name="commandClass" value="org.mifos.loan.service.LoanProductDto"/>
         <property name="formView"     value="createLoanProduct"/>
         <property name="successView"  value="home.ftl"/>
         <property name="validator"    ref="beanValidator"/>

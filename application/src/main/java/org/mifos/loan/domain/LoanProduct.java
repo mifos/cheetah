@@ -22,12 +22,19 @@ package org.mifos.loan.domain;
 
 public class LoanProduct {
 	
+	private Integer id;
 	private String longName;
 	private String shortName;
 	private Double minInterestRate;
 	private Double maxInterestRate;
 	private LoanProductStatus status;
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getLongName() {
 		return longName;
 	}

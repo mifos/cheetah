@@ -1,8 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="mifos-cheetah">
-  <test verbose="2" name="org.mifos.ui.loan.command.LoanProductDtoValidationTest" annotations="JDK">
+  <test verbose="2" name="org.mifos.loan.service.LoanProductServiceTest" annotations="JDK">
     <classes>
-      <class name="org.mifos.ui.loan.command.LoanProductDtoValidationTest"/>
+      <class name="org.mifos.loan.service.LoanProductServiceTest"/>
     </classes>
   </test>
 </suite>

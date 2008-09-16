@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mifos.loan.domain.LoanProductStatus;
-import org.mifos.ui.loan.command.LoanProductDTO;
+import org.mifos.loan.service.LoanProductDto;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -57,7 +57,7 @@ public class LoanProductController extends SimpleFormController {
     
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
-    	LoanProductDTO loanProduct = new LoanProductDTO();
+    	LoanProductDto loanProduct = new LoanProductDto();
     	loanProduct.setStatus(LoanProductStatus.ACTIVE);
     	return loanProduct;
     }

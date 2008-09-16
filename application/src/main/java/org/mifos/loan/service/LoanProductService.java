@@ -2,13 +2,11 @@ package org.mifos.loan.service;
 
 import java.util.List;
 
-import org.mifos.loan.domain.LoanProduct;
-
 public interface LoanProductService {
 
 	List getLoanProducts();
-	LoanProduct getLoanProduct (String longName);
-	void newLoanProduct(LoanProduct loanProduct);
-	void updateLoanProduct (LoanProduct loanProduct);
-	void deleteLoanProduct (LoanProduct loanProduct);
+	LoanProductDto getLoanProduct (String shortName);
+	LoanProductDto newLoanProduct(LoanProductDto loanProductDto);
+	LoanProductDto updateLoanProduct (LoanProductDto loanProductDto);
+	void deleteLoanProduct (String shortname);
 }

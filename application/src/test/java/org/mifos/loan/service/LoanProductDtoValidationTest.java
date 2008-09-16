@@ -1,4 +1,4 @@
-package org.mifos.ui.loan.command;
+package org.mifos.loan.service;
 
 import org.mifos.loan.domain.LoanProductStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +14,19 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations={"classpath:unitTestContext.xml"})
 public class LoanProductDtoValidationTest  extends AbstractTestNGSpringContextTests{
 	
-	private LoanProductDTO loanProductDTO;
+	private LoanProductDto loanProductDTO;
 	
 	@Autowired
 	private BeanValidator validator;
 	
 	@BeforeMethod
 	public void setup() {
-		loanProductDTO = new LoanProductDTO();
+		loanProductDTO = new LoanProductDto();
 	}
 	
 	@Test(groups = { "unit" })
 	public void testValidInputs() {
-		loanProductDTO = new LoanProductDTO();
+		loanProductDTO = new LoanProductDto();
 		loanProductDTO.setLongName("A long name");
 		loanProductDTO.setShortName("a short name");
 		loanProductDTO.setMinInterestRate(1.0);
@@ -41,7 +41,7 @@ public class LoanProductDtoValidationTest  extends AbstractTestNGSpringContextTe
 
 	//@Test(groups = { "workInProgress" })
 	public void testBlankLongName() {
-		loanProductDTO = new LoanProductDTO();
+		loanProductDTO = new LoanProductDto();
 		/*loanProductDTO.setLongName("A long name");
 		loanProductDTO.setShortName("a short name");
 		loanProductDTO.setMinInterestRate(1.0);
