@@ -18,36 +18,43 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.loan.service;
+package org.mifos.loan.repository;
 
 import java.math.BigDecimal;
 
-import org.mifos.loan.repository.InMemoryLoanDao;
+import org.mifos.loan.domain.Loan;
+import org.mifos.loan.service.DefaultLoanService;
+import org.mifos.loan.service.LoanDto;
+import org.mifos.loan.service.LoanService;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+/**
+ *
+ */
 @Test(groups = { "unit" })
-public class LoanServiceTest {
+public class InMemoryLoanDaoTest {
 
-	private LoanService loanService;
+	private LoanDao loanDao;
 	
-	@SuppressWarnings("PMD.UrF")
 	@BeforeMethod
 	void setUp() {
-		loanService = new DefaultLoanService();
-		loanService.setLoanDao(new InMemoryLoanDao());
+		loanDao = new InMemoryLoanDao();
 	}
+	
 	
 	public void testCreateLoan() {
 		Integer LOAN_PRODUCT_ID = 1;
 		BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
 		BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
-		LoanDto inputLoanDto = new LoanDto(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		
-		LoanDto loanDto = loanService.createLoan(inputLoanDto);
-		assert(loanDto.getId() == 1);
-		assert(loanDto.getLoanProductId() == 1);
-		assert(loanDto.getAmount() == LOAN_AMOUNT);
-		assert(loanDto.getInterestRate() == LOAN_INTEREST_RATE);
+		Loan loan = loanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		assert(loan.getId() == 1);
+		assert(loan.getLoanProductId() == 1);
+		assert(loan.getAmount() == LOAN_AMOUNT);
+		assert(loan.getInterestRate() == LOAN_INTEREST_RATE);
+		
+		loan = loanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		assert(loan.getId() == 2);
 	}
 }

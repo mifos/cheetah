@@ -18,21 +18,34 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.loan.service;
+package org.mifos.loan.repository;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.mifos.loan.domain.Loan;
 
 
 /**
  *
  */
-public class BasicLoanService implements LoanService {
+public class InMemoryLoanDao implements LoanDao {
 
-	// TODO: TDD work in progress, refactor to actually create a loan
+	private int nextLoanId = 1;
+	
+	private final Map<Integer, Loan> clients = new HashMap<Integer, Loan>(); 
+
 	@Override
-	public LoanDto createLoan(LoanDto loanDto) {
-		int newID = 1;
-		LoanDto newLoanDto = new LoanDto(loanDto.getAmount(),loanDto.getInterestRate(),loanDto.getLoanProductId());
-		newLoanDto.setId(newID);
-		return newLoanDto;
+	public Loan createLoan(BigDecimal loanAmount, BigDecimal interestRate,
+			Integer loanProductId) {
+		Loan loan = new Loan(loanAmount, interestRate, loanProductId);
+		loan.setId(generateNextLoanId());
+		clients.put(loan.getId(), loan);
+		return loan;
 	}
 
+	synchronized private int generateNextLoanId() {
+		return nextLoanId++;
+	}
 }

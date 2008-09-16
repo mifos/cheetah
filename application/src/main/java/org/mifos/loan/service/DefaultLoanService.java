@@ -20,15 +20,36 @@
 
 package org.mifos.loan.service;
 
+import org.mifos.loan.domain.Loan;
 import org.mifos.loan.repository.LoanDao;
+//import net.sf.dozer.util.mapping.DozerBeanMapper;
 
+/**
+ *
+ */
+public class DefaultLoanService implements LoanService {
+	// TODO: TDD work in progress, refactor to map 
 
-public interface LoanService {
+	LoanDao loanDao;
+	//private DozerBeanMapper beanMapper;
+	
+	@Override
+	public LoanDto createLoan(LoanDto loanDto) {
+		Loan loan = loanDao.createLoan(loanDto.getAmount(),loanDto.getInterestRate(),loanDto.getLoanProductId());
+		LoanDto newLoanDto = new LoanDto(loan.getAmount(), loan.getInterestRate(), loan.getLoanProductId());
+		newLoanDto.setId(loan.getId());
 
-	LoanDto createLoan(LoanDto loanDto);
+		return newLoanDto;
+	}
 
-	LoanDao getLoanDao();
+	@Override
+	public LoanDao getLoanDao() {
+		return loanDao;
+	}
 
-	void setLoanDao(LoanDao loanDao);
+	@Override
+	public void setLoanDao(LoanDao loanDao) {
+		this.loanDao = loanDao;
+	}
 
 }

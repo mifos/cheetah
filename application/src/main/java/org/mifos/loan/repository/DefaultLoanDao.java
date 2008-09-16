@@ -18,17 +18,23 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.loan.service;
+package org.mifos.loan.repository;
 
-import org.mifos.loan.repository.LoanDao;
+import java.math.BigDecimal;
 
+import org.mifos.loan.domain.Loan;
 
-public interface LoanService {
+/**
+ *
+ */
+public class DefaultLoanDao implements LoanDao {
 
-	LoanDto createLoan(LoanDto loanDto);
+	@Override
+	public Loan createLoan(BigDecimal loanAmount, BigDecimal interestRate,
+			Integer loanProductId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-	LoanDao getLoanDao();
-
-	void setLoanDao(LoanDao loanDao);
 
 }
