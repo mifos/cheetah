@@ -31,6 +31,9 @@ public class LoanDto {
 	private BigDecimal amount;
 	private BigDecimal interestRate;
 	
+	public LoanDto() {
+		// empty constructor for dozer mapping
+	}
 	
 	public LoanDto(BigDecimal amount, BigDecimal interestRate,
 			Integer loanProductId) {

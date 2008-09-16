@@ -22,6 +22,8 @@ package org.mifos.loan.service;
 
 import java.math.BigDecimal;
 
+import net.sf.dozer.util.mapping.DozerBeanMapper;
+
 import org.mifos.loan.repository.InMemoryLoanDao;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -33,18 +35,20 @@ public class LoanServiceTest {
 	
 	@SuppressWarnings("PMD.UrF")
 	@BeforeMethod
-	void setUp() {
+	public void setUp() {
 		loanService = new DefaultLoanService();
 		loanService.setLoanDao(new InMemoryLoanDao());
+		loanService.setBeanMapper(new DozerBeanMapper());
 	}
 	
 	public void testCreateLoan() {
-		Integer LOAN_PRODUCT_ID = 1;
-		BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
-		BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
+		final Integer LOAN_PRODUCT_ID = 1;
+		final BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
+		final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
 		LoanDto inputLoanDto = new LoanDto(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		
 		LoanDto loanDto = loanService.createLoan(inputLoanDto);
+		
 		assert(loanDto.getId() == 1);
 		assert(loanDto.getLoanProductId() == 1);
 		assert(loanDto.getAmount() == LOAN_AMOUNT);

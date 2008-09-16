@@ -20,6 +20,8 @@
 
 package org.mifos.loan.service;
 
+import net.sf.dozer.util.mapping.MapperIF;
+
 import org.mifos.loan.repository.LoanDao;
 
 
@@ -30,5 +32,7 @@ public interface LoanService {
 	LoanDao getLoanDao();
 
 	void setLoanDao(LoanDao loanDao);
+	
+	void setBeanMapper(MapperIF mapper);
 
 }

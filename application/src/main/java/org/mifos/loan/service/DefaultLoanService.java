@@ -20,24 +20,27 @@
 
 package org.mifos.loan.service;
 
+import net.sf.dozer.util.mapping.MapperIF;
+
 import org.mifos.loan.domain.Loan;
 import org.mifos.loan.repository.LoanDao;
-//import net.sf.dozer.util.mapping.DozerBeanMapper;
+
 
 /**
  *
  */
 public class DefaultLoanService implements LoanService {
-	// TODO: TDD work in progress, refactor to map 
-
-	LoanDao loanDao;
-	//private DozerBeanMapper beanMapper;
+	private LoanDao loanDao;
+	private MapperIF beanMapper;
 	
 	@Override
 	public LoanDto createLoan(LoanDto loanDto) {
 		Loan loan = loanDao.createLoan(loanDto.getAmount(),loanDto.getInterestRate(),loanDto.getLoanProductId());
-		LoanDto newLoanDto = new LoanDto(loan.getAmount(), loan.getInterestRate(), loan.getLoanProductId());
-		newLoanDto.setId(loan.getId());
+
+		// Use a net.sf.dozer.util.mapping.DozerBeanMapper to copy fields 
+		// from the Loan domain object to the LoanDto.  Not so interesting
+		// now, but it will be as we add fields
+		LoanDto newLoanDto = (LoanDto) beanMapper.map(loan, LoanDto.class);
 
 		return newLoanDto;
 	}
@@ -52,4 +55,14 @@ public class DefaultLoanService implements LoanService {
 		this.loanDao = loanDao;
 	}
 
+	@Override
+	public void setBeanMapper(MapperIF mapper) {
+		beanMapper = mapper;
+	}
+
+	protected MapperIF getBeanMapper() {
+		return beanMapper;
+	}
+
+	
 }
