@@ -21,7 +21,11 @@ package org.mifos.core;
 
 import org.joda.time.DateTime;
 
-public interface IDateUtilityService {
 
-	DateTime getCurrentDateTime();
+public class StandardDateUtilityService implements DateUtilityService {
+
+	public DateTime getCurrentDateTime() {
+		return new DateTime();
+	}
+
 }

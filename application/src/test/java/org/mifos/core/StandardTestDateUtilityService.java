@@ -20,23 +20,21 @@
 package org.mifos.core;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeUtils;
+import org.joda.time.Duration;
 
-/**
- * An attempt to wrap technicalities of setting and restoring system date
- * using JodaTime.
- * <p>
- * However, I could not get time-setting to work using this interface --
- * see @link springap.service.utils.TestDateUtilityService} for an attempted
- * implementation and {@link org.mifos.core.TestDateUtilityServiceTests}
- * for tests that are failing.
- * </p>
- * 
- * @author kpierce
- *
- */
-public interface ITestDateUtilityService extends IDateUtilityService {
+public class StandardTestDateUtilityService implements TestDateUtilityService
+ {
 
-	void setCurrentDateTime (DateTime time);
-	void restoreCurrentDateTime();
+	public DateTime getCurrentDateTime() {
+		return new DateTime();
+	}
 	
+	public void setCurrentDateTime (DateTime newTime) {
+		Duration durToNewTime = new Duration(new DateTime(), newTime);
+		DateTimeUtils.setCurrentMillisOffset(durToNewTime.getMillis());
+	}
+	public void restoreCurrentDateTime() {
+		DateTimeUtils.setCurrentMillisSystem();
+	}
 }

@@ -71,7 +71,7 @@ public class TestDateUtilityServiceTests {
 	}
 
 	public void setDateTimeOnce() throws InterruptedException {
-		ITestDateUtilityService service = new TestDateUtilityService();
+		TestDateUtilityService service = new StandardTestDateUtilityService();
 		DateTime JanFirst2008 = new DateTime(2008, 1, 1, 0, 0, 0, 0);
 		service.setCurrentDateTime(JanFirst2008);
 		Thread.sleep(10);
