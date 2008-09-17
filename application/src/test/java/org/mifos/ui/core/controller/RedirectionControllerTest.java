@@ -24,7 +24,6 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 
-import org.mifos.ui.core.controller.RedirectionController;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;

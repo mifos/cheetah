@@ -37,8 +37,8 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * @author kpierce
  *
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"UPM"}, justification="@BeforeMethod & @AfterMethod methods are called by testNG")
 @java.lang.SuppressWarnings("PMD.UnusedPrivateMethod")
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"UPM"}, justification="@BeforeMethod & @AfterMethod methods are called by testNG")
 @Test(groups = { "unit" })
 public class TestDateUtilityServiceTests {
 

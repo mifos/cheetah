@@ -9,6 +9,7 @@ import org.mifos.loan.domain.LoanProduct;
 
 public class InMemoryLoanProductDao implements LoanProductDao {
 
+	@SuppressWarnings("PMD.ImmutableField")
 	private Map<Integer, LoanProduct> loanProductStore;
 	private int nextKey = 0;
 	

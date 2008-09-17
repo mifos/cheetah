@@ -235,7 +235,7 @@
             <version>2.4</version>
             <configuration>
                <rulesets>
-                  <ruleset>${basedir}/../pmd.xml</ruleset>
+                  <ruleset>${basedir}/../.ruleset</ruleset>
                </rulesets>
             </configuration>
             <executions>
