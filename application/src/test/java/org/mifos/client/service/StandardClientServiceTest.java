@@ -37,15 +37,15 @@ import org.testng.annotations.Test;
 
 @ContextConfiguration(locations={"classpath:unitTestContext.xml"})
 @Test(groups = { "unit" })
-public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
+public class StandardClientServiceTest extends AbstractTestNGSpringContextTests {
 
-    private static final Logger logger = Logger.getLogger(BasicClientServiceTest.class);
+    private static final Logger logger = Logger.getLogger(StandardClientServiceTest.class);
     private ClientService clientService;
     Validator validator;
         
 	@BeforeMethod(groups = { "unit" })
     protected void setUp() {
-		clientService = new BasicClientService();
+		clientService = new StandardClientService();
 		ClientDao clientDao = new InMemoryClientDao();
         clientService.setClientDao(clientDao);
         clientService.setValidator(validator);
@@ -180,7 +180,7 @@ public class BasicClientServiceTest extends AbstractTestNGSpringContextTests {
 	}
 
     @Test(enabled = false)
-    public void setClientService(BasicClientService clientService) {
+    public void setClientService(StandardClientService clientService) {
 		this.clientService = clientService;
 	}
 

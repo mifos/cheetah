@@ -27,7 +27,7 @@ import org.mifos.core.MifosServiceException;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
 
-public class BasicClientService implements ClientService {
+public class StandardClientService implements ClientService {
 
 	private ClientDao clientDao;
 	private Validator validator;

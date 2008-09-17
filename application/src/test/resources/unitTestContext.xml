@@ -21,7 +21,7 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-   <bean id="basicClientService" class="org.mifos.client.service.BasicClientService">
+   <bean id="standardClientService" class="org.mifos.client.service.StandardClientService">
       <property name="validator" ref="validator"/>
    </bean> 
 
