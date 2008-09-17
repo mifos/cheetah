@@ -24,6 +24,10 @@ public class MifosException extends Exception {
 
 	private static final long serialVersionUID = -7431390954369329626L;
 
+	public MifosException() {
+		super();
+	}
+	
 	public MifosException(String message) {
 		super(message);
 	}

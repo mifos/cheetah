@@ -26,8 +26,9 @@ import java.util.Map;
 import org.joda.time.DateTime;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
+import org.springframework.validation.Validator;
 
-public class InMemoryClientDao extends BaseClientDao {
+public class InMemoryClientDao implements ClientDao {
 
 	private final Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
 	
@@ -44,5 +45,16 @@ public class InMemoryClientDao extends BaseClientDao {
 		return clients.get(clientId);
 	}
 
+	private Validator validator; 
+
+	public Validator getValidator() {
+		return validator;
+	}
+
+	public void setValidator(Validator validator) {
+		this.validator = validator;
+	}
+
+	
 
 }
