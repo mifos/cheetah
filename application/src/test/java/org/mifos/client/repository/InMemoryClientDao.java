@@ -32,7 +32,7 @@ public class InMemoryClientDao extends BaseClientDao {
 	private final Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
 	
 	@Override
-	public Client createClient(String firstName, String lastName,
+	public Client create(String firstName, String lastName,
 			DateTime dateOfBirth) throws MifosException {
 		Client client = new Client(firstName, lastName, dateOfBirth);
 		clients.put(client.getId(), client);
@@ -40,7 +40,7 @@ public class InMemoryClientDao extends BaseClientDao {
 	}
 
 	@Override
-	public Client getClient(Integer clientId) {
+	public Client get(Integer clientId) {
 		return clients.get(clientId);
 	}
 

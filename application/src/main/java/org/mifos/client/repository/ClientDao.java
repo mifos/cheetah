@@ -26,7 +26,7 @@ import org.mifos.core.MifosException;
 
 public interface ClientDao {
 	
-	Client createClient(String firstName, String lastName, DateTime dateOfBirth) throws MifosException;
-	Client getClient(Integer clientId);
+	Client create(String firstName, String lastName, DateTime dateOfBirth) throws MifosException;
+	Client get(Integer clientId);
 
 }

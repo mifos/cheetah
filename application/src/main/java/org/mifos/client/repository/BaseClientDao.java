@@ -35,14 +35,14 @@ public class BaseClientDao implements ClientDao {
 	private final Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
 	
 	@Override
-	public Client createClient(String firstName, String lastName, DateTime dateOfBirth) throws MifosException {
+	public Client create(String firstName, String lastName, DateTime dateOfBirth) throws MifosException {
 		Client client = new Client(firstName, lastName, dateOfBirth);
 		clients.put(client.getId(), client);
 		return client;
 	}
 
 	@Override
-	public Client getClient(Integer clientId) {
+	public Client get(Integer clientId) {
 		return clients.get(clientId);
 	}
 
