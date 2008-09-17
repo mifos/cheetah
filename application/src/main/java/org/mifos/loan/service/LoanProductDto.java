@@ -31,9 +31,11 @@ public class LoanProductDto {
     private static final Log LOG = LogFactory.getLog(LoanProductDto.class);
 	
 		@NotBlank
+		@NotNull
 		private String longName;
 		
 		@NotBlank
+		@NotNull
 		private String shortName;
 		
 		@NotNull
@@ -41,9 +43,11 @@ public class LoanProductDto {
 		//@Expression(value="minInterestRate <= maxInterestRate") can't get this to work -- getting Valang error
 		private Double minInterestRate;
 		
+		@NotNull
 		@Min(value=0)
 		private Double maxInterestRate;
 		
+		@NotNull
 		private LoanProductStatus status;
 		
 		public String getLongName() {

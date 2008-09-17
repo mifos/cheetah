@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
 import org.springmodules.validation.bean.BeanValidator;
 import org.testng.Assert;
@@ -14,46 +16,58 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 @ContextConfiguration(locations={"classpath:unitTestContext.xml"})
+@Test(groups = { "unit" })
 public class LoanProductDtoValidationTest  extends AbstractTestNGSpringContextTests{
 	
     private static final Logger logger = Logger.getLogger(LoanProductDtoValidationTest.class);
 
-	private LoanProductDto loanProductDTO;
+	private LoanProductDto loanProductDto;
 	
 	@Autowired
 	private Validator validator;
 	
 	@BeforeMethod
 	public void setup() {
-		loanProductDTO = new LoanProductDto();
+		loanProductDto = validLoanProductDto();
 	}
 	
-	@Test(groups = { "unit" })
 	public void testValidInputs() {
-		loanProductDTO = new LoanProductDto();
-		loanProductDTO.setLongName("A long name");
-		loanProductDTO.setShortName("a short name");
-		loanProductDTO.setMinInterestRate(1.0);
-		loanProductDTO.setMaxInterestRate(3.0);
-		loanProductDTO.setStatus(LoanProductStatus.ACTIVE);
-		
-		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanProductDTO, "loanProduct");
-		validator.validate(loanProductDTO, errors);
-		Assert.assertEquals(0, errors.getErrorCount());
+		Assert.assertEquals(0, getErrors().getErrorCount());
 	}
 
-	@Test(groups = { "workInProgress" })
-	public void testBlankLongName() {
-		loanProductDTO = new LoanProductDto();
-		loanProductDTO.setLongName("");
-		loanProductDTO.setShortName("a short name");
-		loanProductDTO.setMinInterestRate(1.0);
-		loanProductDTO.setMaxInterestRate(3.0);
-		loanProductDTO.setStatus(LoanProductStatus.ACTIVE);
-		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanProductDTO, "loanProduct");
-		validator.validate(loanProductDTO, errors);
-		logger.info("Errors: " + errors.getAllErrors().toString());
-		Assert.assertTrue(errors.getErrorCount() > 0, "Expected an error when longName missing");
+	public void testBlankLongName () {
+		loanProductDto.setLongName("");
+		assertFieldError ("longName", "not.blank");
+	}
+
+	public void testNullLongName () {
+		loanProductDto.setLongName(null);
+		assertFieldError ("longName", "not.null");
+	}
+
+	public void testNullMinInterestRate () {
+		loanProductDto.setMinInterestRate(null);
+		assertFieldError ("minInterestRate", "not.null");
+	}
+
+	public void testNegativeMinInterestRate () {
+		loanProductDto.setMinInterestRate(-1.1);
+		assertFieldError("minInterestRate", "min");
+	}
+	
+	public void testNullMaxInterestRate () {
+		loanProductDto.setMaxInterestRate(null);
+		assertFieldError ("maxInterestRate", "not.null");
+	}
+	
+	public void testNegativeMaxInterestRate () {
+		loanProductDto.setMaxInterestRate(-1.1);
+		assertFieldError("maxInterestRate", "min");
+	}
+
+	public void testNullStatus () {
+		loanProductDto.setStatus(null);
+		assertFieldError ("status", "not.null");
 	}
 	
 	@Autowired
@@ -62,5 +76,29 @@ public class LoanProductDtoValidationTest  extends AbstractTestNGSpringContextTe
 		this.validator = validator;
 	}
 
+	private LoanProductDto validLoanProductDto() {
+		loanProductDto = new LoanProductDto();
+		loanProductDto.setLongName("long");
+		loanProductDto.setShortName("short");
+		loanProductDto.setMinInterestRate(1.1);
+		loanProductDto.setMaxInterestRate(2.2);
+		loanProductDto.setStatus(LoanProductStatus.ACTIVE);
+		return loanProductDto;
+	}
 	
+	private void assertFieldError (String fieldName, String errorMessage) {
+		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanProductDto, "loanProduct");
+		validator.validate(loanProductDto, errors);
+		Assert.assertTrue(errors.getErrorCount() > 0, "Expected errors but got none.");
+		FieldError fieldError = errors.getFieldError(fieldName);
+		Assert.assertNotNull(fieldError, "Expected error on field " + fieldName + ", but got none");
+		Assert.assertEquals(fieldError.getDefaultMessage().toString(), errorMessage, "Incorrect validation error message.");
+	}
+
+	private Errors getErrors(){
+		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanProductDto, "loanProduct");
+		validator.validate(loanProductDto, errors);
+		return errors;
+
+	}
 }

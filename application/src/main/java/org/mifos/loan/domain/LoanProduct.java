@@ -20,10 +20,23 @@
 
 package org.mifos.loan.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="loanproducts")
 public class LoanProduct {
 	
+	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String longName;
+	
+	@Column(unique=true)
 	private String shortName;
 	private Double minInterestRate;
 	private Double maxInterestRate;
