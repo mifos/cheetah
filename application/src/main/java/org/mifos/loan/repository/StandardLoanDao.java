@@ -27,7 +27,7 @@ import org.mifos.loan.domain.Loan;
 /**
  *
  */
-public class DefaultLoanDao implements LoanDao {
+public class StandardLoanDao implements LoanDao {
 
 	@Override
 	public Loan createLoan(BigDecimal loanAmount, BigDecimal interestRate,

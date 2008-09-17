@@ -22,13 +22,22 @@ package org.mifos.loan.service;
 
 import java.math.BigDecimal;
 
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
+
 /**
  *
  */
 public class LoanDto {
 	private Integer id;
+	
+	@NotNull
 	private Integer loanProductId;
+	@NotNull
+	@Min(value=0)
 	private BigDecimal amount;
+	@NotNull
+	@Min(value=0)
 	private BigDecimal interestRate;
 	
 	public LoanDto() {

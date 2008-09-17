@@ -23,7 +23,7 @@ package org.mifos.loan.repository;
 import java.math.BigDecimal;
 
 import org.mifos.loan.domain.Loan;
-import org.mifos.loan.service.DefaultLoanService;
+import org.mifos.loan.service.StandardLoanService;
 import org.mifos.loan.service.LoanDto;
 import org.mifos.loan.service.LoanService;
 import org.testng.annotations.BeforeMethod;

@@ -45,7 +45,9 @@ public class InMemoryLoanDao implements LoanDao {
 		return loan;
 	}
 
-	synchronized private int generateNextLoanId() {
-		return nextLoanId++;
+	private int generateNextLoanId() {
+		synchronized(this) {
+			return nextLoanId++;
+		}
 	}
 }

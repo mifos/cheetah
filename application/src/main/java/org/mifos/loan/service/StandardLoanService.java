@@ -22,19 +22,24 @@ package org.mifos.loan.service;
 
 import net.sf.dozer.util.mapping.MapperIF;
 
+import org.mifos.core.MifosServiceException;
 import org.mifos.loan.domain.Loan;
 import org.mifos.loan.repository.LoanDao;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Validator;
 
 
 /**
  *
  */
-public class DefaultLoanService implements LoanService {
+public class StandardLoanService implements LoanService {
 	private LoanDao loanDao;
 	private MapperIF beanMapper;
+	private Validator validator;
 	
 	@Override
-	public LoanDto createLoan(LoanDto loanDto) {
+	public LoanDto createLoan(LoanDto loanDto) throws MifosServiceException {
+		validate(loanDto);
 		Loan loan = loanDao.createLoan(loanDto.getAmount(),loanDto.getInterestRate(),loanDto.getLoanProductId());
 
 		// Use a net.sf.dozer.util.mapping.DozerBeanMapper to copy fields 
@@ -45,6 +50,14 @@ public class DefaultLoanService implements LoanService {
 		return newLoanDto;
 	}
 
+	private void validate(LoanDto loanDto) throws MifosServiceException {
+		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanDto, "loanDto");
+		validator.validate(loanDto, errors);
+		if (errors.getErrorCount() > 0) {
+			throw new MifosServiceException("Loan validation failed.", errors);
+		}
+	}
+	
 	@Override
 	public LoanDao getLoanDao() {
 		return loanDao;
@@ -62,6 +75,11 @@ public class DefaultLoanService implements LoanService {
 
 	protected MapperIF getBeanMapper() {
 		return beanMapper;
+	}
+
+	@Override
+	public void setValidator(Validator validator) {
+		this.validator = validator;
 	}
 
 	

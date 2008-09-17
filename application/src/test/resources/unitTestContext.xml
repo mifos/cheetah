@@ -25,4 +25,8 @@
       <property name="validator" ref="validator"/>
    </bean> 
 
+   <bean id="standardLoanService" class="org.mifos.loan.service.StandardLoanService">
+      <property name="validator" ref="validator"/>
+   </bean> 
+
 </beans>

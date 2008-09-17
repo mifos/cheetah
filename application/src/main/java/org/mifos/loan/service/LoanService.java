@@ -22,17 +22,21 @@ package org.mifos.loan.service;
 
 import net.sf.dozer.util.mapping.MapperIF;
 
+import org.mifos.core.MifosServiceException;
 import org.mifos.loan.repository.LoanDao;
+import org.springframework.validation.Validator;
 
 
 public interface LoanService {
 
-	LoanDto createLoan(LoanDto loanDto);
+	LoanDto createLoan(LoanDto loanDto) throws MifosServiceException;
 
 	LoanDao getLoanDao();
 
 	void setLoanDao(LoanDao loanDao);
 	
 	void setBeanMapper(MapperIF mapper);
+
+	void setValidator(Validator validator);
 
 }
