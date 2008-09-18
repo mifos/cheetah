@@ -22,6 +22,7 @@ package org.mifos.loan.service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mifos.loan.domain.LoanProductStatus;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
@@ -39,12 +40,12 @@ public class LoanProductDto {
 		private String shortName;
 		
 		@NotNull
-		@Min(value=0)
-		//@Expression(value="minInterestRate <= maxInterestRate") can't get this to work -- getting Valang error
+		@Min(0)
+		@Expression("maxInterestRate not null and minInterestRate <= maxInterestRate")  // first clause stops evaluation of the expression if maxInterestRate is null
 		private Double minInterestRate;
 		
 		@NotNull
-		@Min(value=0)
+		@Min(0)
 		private Double maxInterestRate;
 		
 		@NotNull

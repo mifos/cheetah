@@ -70,6 +70,15 @@ public class LoanProductDtoValidationTest  extends AbstractTestNGSpringContextTe
 		assertFieldError ("status", "not.null");
 	}
 	
+	public void testMinInterestRate () {
+		loanProductDto.setMinInterestRate(5.0);
+		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanProductDto, "loanProduct");
+		validator.validate(loanProductDto, errors);
+		logger.info(errors);
+		Assert.assertTrue(errors.getErrorCount() > 0, "Expected errors but got none.");
+	}
+	
+	
 	@Autowired
     @Test(enabled = false)
 	public void setValidator(Validator validator) {
