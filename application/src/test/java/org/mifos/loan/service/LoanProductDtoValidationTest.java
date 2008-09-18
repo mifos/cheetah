@@ -17,6 +17,7 @@
  * See also http://www.apache.org/licenses/LICENSE-2.0.html for an
  * explanation of the license and how it is applied.
  */
+
 package org.mifos.loan.service;
 
 import org.apache.log4j.Logger;
@@ -87,11 +88,15 @@ public class LoanProductDtoValidationTest  extends AbstractTestNGSpringContextTe
 		assertFieldError ("status", "not.null");
 	}
 	
-	public void testMinGreaterThanMaxInterestRate() {
+	public void testMinInterestRate () {
 		loanProductDto.setMinInterestRate(5.0);
-		loanProductDto.setMaxInterestRate(4.0);
-		assertFieldError("minInterestRate", "expression");
+		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanProductDto, "loanProduct");
+		validator.validate(loanProductDto, errors);
+		logger.info(errors);
+		Assert.assertTrue(errors.getErrorCount() > 0, "Expected errors but got none.");
 	}
+	
+	
 	@Autowired
     @Test(enabled = false)
 	public void setValidator(Validator validator) {
