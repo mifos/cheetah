@@ -3,27 +3,17 @@ package org.mifos.client.service;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.validation.BeanPropertyBindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.Validator;
-import org.testng.Assert;
+import org.mifos.core.AbstractDtoValidationTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-@ContextConfiguration(locations={"classpath:unitTestContext.xml"})
 @Test(groups = { "unit" })
-public class ClientDtoValidationTest  extends AbstractTestNGSpringContextTests{
+public class ClientDtoValidationTest  extends AbstractDtoValidationTest {
 	
-	private static final String maxLengthName = "01234567890123456789012345678901234567890123456789012345678901234567890123456789";
-	private static final String tooLongName = maxLengthName + "1";
+	private static final String eightyCharName = "01234567890123456789012345678901234567890123456789012345678901234567890123456789";
+	private static final String eightyOneCharName = eightyCharName + "1";
 
 	private ClientDto clientDto;
-	
-	private Validator validator;
 	
 	@BeforeMethod
 	public void setup() {
@@ -31,76 +21,72 @@ public class ClientDtoValidationTest  extends AbstractTestNGSpringContextTests{
 	}
 	
 	public void testValidInputs() {
-		verifyNoErrors();
-	}
-
-	private void verifyNoErrors() {
-		Assert.assertEquals(getErrors().getErrorCount(), 0);
+		verifyNoErrors(clientDto);
 	}
 
 	public void testBlankFirstName () {
 		clientDto.setFirstName("");
-		assertFieldError ("firstName", "not.blank");
+		verifyFieldError(clientDto, "firstName", "not.blank");
 	}
 
 	public void testNullFirstName () {
 		clientDto.setFirstName(null);
-		assertFieldError ("firstName", "not.null");
+		verifyFieldError(clientDto, "firstName", "not.null");
 	}
 
 	public void testValidLongFirstNameBoundary () {
-		clientDto.setFirstName(maxLengthName);
-		verifyNoErrors();
+		clientDto.setFirstName(eightyCharName);
+		verifyNoErrors(clientDto);
 	}
 	
 	public void testInvalidLongFirstName () {
-		clientDto.setFirstName(tooLongName);
-		assertFieldError ("firstName", "length");
+		clientDto.setFirstName(eightyOneCharName);
+		verifyFieldError(clientDto, "firstName", "length");
 	}
 	
 	public void testValidLongLastNameBoundary () {
-		clientDto.setLastName(maxLengthName);
-		verifyNoErrors();
+		clientDto.setLastName(eightyCharName);
+		verifyNoErrors(clientDto);
 	}
 	
 	public void testInvalidLongLastName () {
-		clientDto.setLastName(tooLongName);
-		assertFieldError ("lastName", "length");
+		clientDto.setLastName(eightyOneCharName);
+		verifyFieldError(clientDto, "lastName", "length");
 	}
 	
 	public void testBlankLastName () {
 		clientDto.setLastName("");
-		assertFieldError ("lastName", "not.blank");
+		verifyFieldError(clientDto, "lastName", "not.blank");
 	}
 
 	public void testNullLastName () {
 		clientDto.setLastName(null);
-		assertFieldError ("lastName", "not.null");
+		verifyFieldError(clientDto, "lastName", "not.null");
 	}
 
 	public void testNullDateOfBirth () {
 		clientDto.setDateTimeOfBirth(null);
-		assertFieldError ("dateOfBirth", "not.null");
+		verifyFieldError(clientDto, "dateOfBirth", "not.null");
 	}
 
 	public void testValidDateOfBirth () {
 		clientDto.setDateTimeOfBirth(new DateTime());
-		verifyNoErrors();
+		verifyNoErrors(clientDto);
 	}
 
 	public void testValidDateOfBirthBoundary () {
 		clientDto.setDateTimeOfBirth(getDateTime("1800-01-01"));
-		verifyNoErrors();
+		verifyNoErrors(clientDto);
 	}
 
 	public void testInvalidDateOfBirthBoundary () {
 		clientDto.setDateTimeOfBirth(getDateTime("1799-12-31"));
-		assertFieldError ("dateOfBirth", "expression");
+		verifyFieldError(clientDto, "dateOfBirth", "expression");
 	}
 
 	public void testInValidDateOfBirth () {
 		clientDto.setDateTimeOfBirth(getDateTime("1753-01-01"));
-		assertFieldError ("dateOfBirth", "expression");
+		verifyFieldError(clientDto, "dateOfBirth", "expression");
 	}
 
 	private DateTime getDateTime(String date) {
@@ -108,12 +94,6 @@ public class ClientDtoValidationTest  extends AbstractTestNGSpringContextTests{
 		return dateTimeFormatter.parseDateTime(date);
 	}
 	
-	@Autowired
-    @Test(enabled = false)
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
-
 	private ClientDto validClientDto() {
 		clientDto = new ClientDto();
 		clientDto.setFirstName("Jane");
@@ -121,20 +101,5 @@ public class ClientDtoValidationTest  extends AbstractTestNGSpringContextTests{
 		clientDto.setDateTimeOfBirth(new DateTime());
 		return clientDto;
 	}
-	
-	private void assertFieldError (String fieldName, String errorMessage) {
-		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(clientDto, "client");
-		validator.validate(clientDto, errors);
-		Assert.assertTrue(errors.getErrorCount() > 0, "Expected errors but got none.");
-		FieldError fieldError = errors.getFieldError(fieldName);
-		Assert.assertNotNull(fieldError, "Expected error on field " + fieldName + ", but got none");
-		Assert.assertEquals(fieldError.getDefaultMessage(), errorMessage, "Incorrect validation error message.");
-	}
 
-	private Errors getErrors(){
-		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(clientDto, "client");
-		validator.validate(clientDto, errors);
-		return errors;
-
-	}
 }
