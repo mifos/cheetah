@@ -45,48 +45,35 @@ public class LoanProduct {
 	public Integer getId() {
 		return id;
 	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+
 	public String getLongName() {
 		return longName;
 	}
-	public void setLongName(String longName) {
-		this.longName = longName;
-	}
+
 	public String getShortName() {
 		return shortName;
 	}
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
-	}
+
 	public Double getMinInterestRate() {
 		return minInterestRate;
 	}
-	public void setMinInterestRate(Double minInterestRate) {
-		this.minInterestRate = minInterestRate;
-	}
+
 	public Double getMaxInterestRate() {
 		return maxInterestRate;
 	}
-	public void setMaxInterestRate(Double maxInterestRate) {
-		this.maxInterestRate = maxInterestRate;
-	}
+
 	public LoanProductStatus getStatus() {
 		return status;
 	}
-	public void setStatus(LoanProductStatus status) {
-		this.status = status;
-	}
-
     
     public LoanProduct() {
     	//Spring framework needs a no-argument constructor
     	//By including this comment, PMD will not flag the empty constructor
 }
  
-	public LoanProduct (String longName, String shortName, Double minInterestRate,
+	public LoanProduct (Integer id, String longName, String shortName, Double minInterestRate,
 						Double maxInterestRate, LoanProductStatus status) {
+		this.id = id;
 		this.longName = longName;
 		this.shortName = shortName;
 		this.minInterestRate = minInterestRate;

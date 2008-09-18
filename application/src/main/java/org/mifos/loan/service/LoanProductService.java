@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface LoanProductService {
 
-	List getLoanProducts();
-	LoanProductDto getLoanProduct (String shortName);
-	LoanProductDto newLoanProduct(LoanProductDto loanProductDto);
-	LoanProductDto updateLoanProduct (LoanProductDto loanProductDto);
-	void deleteLoanProduct (String shortname);
+	List getAll();
+	LoanProductDto getLoanProduct (Integer id);
+	LoanProductDto createLoanProduct(LoanProductDto product);
+	//LoanProductDto updateLoanProduct (LoanProductDto product);
+	void deleteLoanProduct (LoanProductDto product);
 }

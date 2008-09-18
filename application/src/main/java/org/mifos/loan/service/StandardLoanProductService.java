@@ -7,22 +7,22 @@ import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.repository.LoanProductDao;
 
 //@edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP"})
-public class DefaultLoanProductService implements LoanProductService {
+public class StandardLoanProductService implements LoanProductService {
 
 	LoanProductDao loanProductDao;
 	
 	@Override
-	public void deleteLoanProduct(String shortName) {
-		loanProductDao.deleteLoanProduct(loanProductDao.getByShortName(shortName));
+	public void deleteLoanProduct(LoanProductDto product) {
+		loanProductDao.deleteLoanProduct(disAssembleLoanProduct(product));
 	}
 
 	@Override
-	public LoanProductDto getLoanProduct(String shortName) {
-		return assembleDto (loanProductDao.getByShortName(shortName));
+	public LoanProductDto getLoanProduct(Integer id) {
+		return assembleDto (loanProductDao.get(id));
 	}
 
 	@Override
-	public List<LoanProductDto> getLoanProducts() {
+	public List<LoanProductDto> getAll() {
 		List<LoanProduct> loanProducts = loanProductDao.getLoanProducts();
 		List<LoanProductDto> loanProductDTOs = new ArrayList<LoanProductDto>();
 		for (LoanProduct loanProduct: loanProducts) {
@@ -32,27 +32,30 @@ public class DefaultLoanProductService implements LoanProductService {
 	}
 
 	@Override
-	public LoanProductDto newLoanProduct(LoanProductDto loanProductDto) {
-		LoanProduct loanProduct = createLoanProduct (loanProductDto);
-		loanProductDao.saveLoanProduct(loanProduct);
-		return loanProductDto;
+	public LoanProductDto createLoanProduct(LoanProductDto loanProductDto) {
+		LoanProduct product = loanProductDao.createLoanProduct(loanProductDto.getLongName(), loanProductDto.getShortName(),
+															   loanProductDto.getMinInterestRate(), loanProductDto.getMaxInterestRate(), 
+															   loanProductDto.getStatus());
+		return assembleDto(product);
 	}
 
+	/* implement for a later story
 	@Override
 	public LoanProductDto updateLoanProduct(LoanProductDto loanProductDto) {
-		LoanProduct currentLoanProduct = loanProductDao.getByShortName(loanProductDto.getShortName());
+		LoanProduct currentLoanProduct = loanProductDao.get(loanProductDto.getId());
 		LoanProduct changedLoanProduct = updateLoanProductFromDto(currentLoanProduct, loanProductDto);
-		loanProductDao.saveLoanProduct(changedLoanProduct);
+		loanProductDao.updateLoanProduct(changedLoanProduct);
 		return assembleDto(changedLoanProduct);
 	}
+	*/
 	
 	private LoanProductDto assembleDto (LoanProduct loanProduct) {
 		return new LoanProductDto(loanProduct.getLongName(), loanProduct.getShortName(), loanProduct.getMinInterestRate(),
 				                                loanProduct.getMaxInterestRate(), loanProduct.getStatus());
 	}
 	
-	private LoanProduct createLoanProduct (LoanProductDto dto) {
-		return new LoanProduct(dto.getLongName(), dto.getShortName(), dto.getMinInterestRate(),
+	private LoanProduct disAssembleLoanProduct (LoanProductDto dto) {
+		return new LoanProduct(dto.getId(), dto.getLongName(), dto.getShortName(), dto.getMinInterestRate(),
 				               dto.getMaxInterestRate(), dto.getStatus());
 	}
 	
@@ -60,11 +63,12 @@ public class DefaultLoanProductService implements LoanProductService {
 		this.loanProductDao = dao;
 	}
 	
-	private LoanProduct updateLoanProductFromDto (LoanProduct current, LoanProductDto changedDto) {
+	/* implement for a later story
 		current.setLongName(changedDto.getLongName());
 		current.setMinInterestRate(changedDto.getMinInterestRate());
 		current.setMaxInterestRate(changedDto.getMaxInterestRate());
 		current.setStatus(changedDto.getStatus());
 		return current;
 	}
+	*/
 }

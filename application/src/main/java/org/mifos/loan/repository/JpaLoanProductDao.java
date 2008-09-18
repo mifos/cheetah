@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.mifos.loan.domain.LoanProduct;
+import org.mifos.loan.domain.LoanProductStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 public class JpaLoanProductDao implements LoanProductDao {
@@ -14,11 +15,16 @@ public class JpaLoanProductDao implements LoanProductDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	public LoanProduct createLoanProduct (String longName, String shortName, Double minInterestRate,
+			Double maxInterestRate, LoanProductStatus status) {
+		return null;
+	}
+
 	@Override
 	@Transactional
 	public void deleteLoanProduct(LoanProduct loanProduct) {
-		LoanProduct retrievedLoanProduct = entityManager.find(LoanProduct.class, loanProduct.getId());
-		entityManager.remove(retrievedLoanProduct);
+		LoanProduct loanProductToBeRemoved = entityManager.find(LoanProduct.class, loanProduct.getId());
+		entityManager.remove(loanProductToBeRemoved);
 
 	}
 
@@ -30,14 +36,6 @@ public class JpaLoanProductDao implements LoanProductDao {
 
 	@Override
 	@Transactional(readOnly=true)
-	public LoanProduct getByShortName(String shortName) {
-		return (LoanProduct) entityManager.createQuery("SELECT lp from LoanProduct lp WHERE lp.shortName = :shortName")
-					.setParameter("shortName", shortName)
-					.getSingleResult();
-	}
-
-	@Override
-	@Transactional(readOnly=true)
 	public List<LoanProduct> getLoanProducts() {
 		Query query = entityManager.createQuery("from LoanProduct");
 		return query.getResultList();
@@ -45,13 +43,9 @@ public class JpaLoanProductDao implements LoanProductDao {
 
 	@Override
 	@Transactional
-	public void saveLoanProduct(LoanProduct loanProduct) {
-		if (loanProduct.getId() == null) {
-			entityManager.persist(loanProduct);
-		}
-		else {
-			entityManager.merge(loanProduct);
-		}
+	public void updateLoanProduct(LoanProduct loanProduct) {
+		entityManager.merge(loanProduct);
 	}
 
+	
 }
