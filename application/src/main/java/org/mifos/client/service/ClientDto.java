@@ -27,20 +27,22 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
-public class ClientDto implements MifosDto {
+public class ClientDto {
 
 	private Integer id;
 
+	@NotNull
 	@NotBlank  
 	@Length(max = 80) 
 	private String firstName;
 	
+	@NotNull
 	@NotBlank  
 	@Length(max = 80) 
 	private String lastName;
 	
 	@NotNull
-	@Expression("dateOfBirth >= [1800-01-01]")
+	@Expression("dateOfBirth >= [1799-12-31]")
 	private DateTime dateOfBirth;
 	
 	public Integer getId() {

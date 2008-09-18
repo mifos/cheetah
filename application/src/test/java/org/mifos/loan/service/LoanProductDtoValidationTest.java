@@ -1,7 +1,6 @@
 package org.mifos.loan.service;
 
 import org.apache.log4j.Logger;
-import org.mifos.client.service.StandardClientServiceTest;
 import org.mifos.loan.domain.LoanProductStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -10,7 +9,6 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
-import org.springmodules.validation.bean.BeanValidator;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

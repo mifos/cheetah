@@ -90,7 +90,6 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     	verifyMifosServiceException(expectedFirstName, expectedLastName81Chars, expectedDateOfBirth, "Should throw exception for empty names.");
     }
 
-    @Test(groups = { "workInProgress" })
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_LOAD_OF_KNOWN_NULL_VALUE"}, justification="testing behavior when date is null")
     public void testCreateClientNullDate() {
     	String expectedFirstName = "Foo";
@@ -103,14 +102,14 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     	String expectedFirstName = "Homer";
     	String expectedLastName = "Simpson";
     	DateTime expectedDateOfBirth = new DateTime();
-		ClientDto clientForm = createClientForm(expectedFirstName, expectedLastName, expectedDateOfBirth);
-		ClientDto expectedClientForm = clientService.createClient(clientForm);
-        Integer clientId = expectedClientForm.getId();
-        ClientDto freshClientForm = clientService.getClient(clientId);
-        Assert.assertEquals(freshClientForm.getId(), expectedClientForm.getId());
-        Assert.assertEquals(freshClientForm.getFirstName(), expectedClientForm.getFirstName());
-        Assert.assertEquals(freshClientForm.getLastName(), expectedClientForm.getLastName());
-        Assert.assertEquals(freshClientForm.getDateTimeOfBirth(), expectedClientForm.getDateTimeOfBirth());
+		ClientDto clientDto = createclientDto(expectedFirstName, expectedLastName, expectedDateOfBirth);
+		ClientDto expectedclientDto = clientService.createClient(clientDto);
+        Integer clientId = expectedclientDto.getId();
+        ClientDto freshclientDto = clientService.getClient(clientId);
+        Assert.assertEquals(freshclientDto.getId(), expectedclientDto.getId());
+        Assert.assertEquals(freshclientDto.getFirstName(), expectedclientDto.getFirstName());
+        Assert.assertEquals(freshclientDto.getLastName(), expectedclientDto.getLastName());
+        Assert.assertEquals(freshclientDto.getDateTimeOfBirth(), expectedclientDto.getDateTimeOfBirth());
     }
     
     public void testCreateClientGoodDateOfBirth() throws MifosServiceException {
@@ -129,7 +128,6 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
        	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for date older than 1 January 1880");
     }
 
-    @Test(enabled = false)
     private void verifyMifosServiceException(String expectedFirstName, String expectedLastName, 
     		DateTime expectedDateOfBirth, String message ) {
     	try {
@@ -143,34 +141,31 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
 		}
     }
 
-    @Test(enabled = false)
 	private void createClient(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth)
 			throws MifosServiceException {
-		ClientDto clientForm = createClientForm(expectedFirstName, expectedLastName, expectedDateOfBirth);
-		clientService.createClient(clientForm);
+		ClientDto clientDto = createclientDto(expectedFirstName, expectedLastName, expectedDateOfBirth);
+		clientService.createClient(clientDto);
 	}
 
-    @Test(enabled = false)
     private void createAndVerifyClient(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth) throws MifosServiceException {
-    	ClientDto clientForm = createClientForm(expectedFirstName,
+    	ClientDto clientDto = createclientDto(expectedFirstName,
 				expectedLastName, expectedDateOfBirth);
-    	ClientDto newClientForm  = clientService.createClient(clientForm);
-        Assert.assertNotNull(newClientForm);
-        Assert.assertEquals(newClientForm.getFirstName(), expectedFirstName);
-        Assert.assertEquals(newClientForm.getLastName(), expectedLastName);
-        Assert.assertEquals(newClientForm.getDateTimeOfBirth(), expectedDateOfBirth);
+    	ClientDto newclientDto  = clientService.createClient(clientDto);
+        Assert.assertNotNull(newclientDto);
+        Assert.assertEquals(newclientDto.getFirstName(), expectedFirstName);
+        Assert.assertEquals(newclientDto.getLastName(), expectedLastName);
+        Assert.assertEquals(newclientDto.getDateTimeOfBirth(), expectedDateOfBirth);
 	}
 
-    @Test(enabled = false)
-	private ClientDto createClientForm(String expectedFirstName,
+	private ClientDto createclientDto(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth) {
-		ClientDto clientForm = new ClientDto();
-    	clientForm.setFirstName(expectedFirstName);
-    	clientForm.setLastName(expectedLastName);
-    	clientForm.setDateTimeOfBirth(expectedDateOfBirth);
-		return clientForm;
+		ClientDto clientDto = new ClientDto();
+    	clientDto.setFirstName(expectedFirstName);
+    	clientDto.setLastName(expectedLastName);
+    	clientDto.setDateTimeOfBirth(expectedDateOfBirth);
+		return clientDto;
 	}
 
 	@Autowired

@@ -33,20 +33,20 @@ public class StandardClientService implements ClientService {
 	private Validator validator;
 	
 	@Override
-	public ClientDto createClient(ClientDto clientForm) throws MifosServiceException {
-		validate(clientForm);
+	public ClientDto createClient(ClientDto clientDto) throws MifosServiceException {
+		validate(clientDto);
 		try {
 			Client client;
-			client = clientDao.create(clientForm.getFirstName(), clientForm.getLastName(), clientForm.getDateTimeOfBirth());
-			return createClientForm(client);
+			client = clientDao.create(clientDto.getFirstName(), clientDto.getLastName(), clientDto.getDateTimeOfBirth());
+			return createClientDto(client);
 		} catch (MifosException e) {
-			throw new MifosServiceException("Caught exception in ClientDao.", e, new BeanPropertyBindingResult(clientForm, "clientForm"));
+			throw new MifosServiceException("Caught exception in ClientDao.", e, new BeanPropertyBindingResult(clientDto, "clientForm"));
 		}
 	}
 
-	private void validate(ClientDto clientForm) throws MifosServiceException {
-		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(clientForm, "clientForm");
-		validator.validate(clientForm, errors);
+	private void validate(ClientDto clientDto) throws MifosServiceException {
+		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(clientDto, "clientDto");
+		validator.validate(clientDto, errors);
 		if (errors.getErrorCount() > 0) {
 			throw new MifosServiceException("Client form validation failed.", errors);
 		}
@@ -56,15 +56,15 @@ public class StandardClientService implements ClientService {
 	@Override
 	public ClientDto getClient(Integer clientId) {
 		Client client = clientDao.get(clientId);
-		return createClientForm(client);
+		return createClientDto(client);
 	}
 
-	private ClientDto createClientForm(Client client) {
-		ClientDto clientForm = new ClientDto();
-		clientForm.setFirstName(client.getFirstName());
-		clientForm.setLastName(client.getLastName());
-		clientForm.setDateTimeOfBirth(client.getDateOfBirth());
-		return clientForm;
+	private ClientDto createClientDto(Client client) {
+		ClientDto clientDto = new ClientDto();
+		clientDto.setFirstName(client.getFirstName());
+		clientDto.setLastName(client.getLastName());
+		clientDto.setDateTimeOfBirth(client.getDateOfBirth());
+		return clientDto;
 	}
 
 
