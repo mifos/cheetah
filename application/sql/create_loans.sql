@@ -4,5 +4,5 @@ CREATE TABLE loans (
   amount decimal(15,3),
   interestRate decimal(15,3),
   primary key (id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE INDEX loans_id ON loans(id);
