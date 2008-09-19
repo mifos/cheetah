@@ -21,20 +21,38 @@
 package org.mifos.loan.repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.mifos.loan.domain.Loan;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
  */
-public class StandardLoanDao implements LoanDao {
+@Repository
+public class StandardLoanDao  implements LoanDao {
 
+	@PersistenceContext
+	private EntityManager entityManager;
+	
 	@Override
+	@Transactional
 	public Loan createLoan(BigDecimal loanAmount, BigDecimal interestRate,
 			Integer loanProductId) {
-		// TODO Auto-generated method stub
-		return null;
+		Loan loan = new Loan(loanAmount, interestRate, loanProductId);
+		entityManager.persist(loan);
+		return loan;
 	}
 
+	@Transactional
+	public List<Loan> getAll() {
+		Query query = entityManager.createQuery("from Loan");
+		return query.getResultList();
+	}
 
 }

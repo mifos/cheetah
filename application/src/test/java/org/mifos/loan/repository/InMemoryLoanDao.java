@@ -22,6 +22,7 @@ package org.mifos.loan.repository;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mifos.loan.domain.Loan;
@@ -49,5 +50,11 @@ public class InMemoryLoanDao implements LoanDao {
 		synchronized(this) {
 			return nextLoanId++;
 		}
+	}
+
+	@Override
+	public List<Loan> getAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

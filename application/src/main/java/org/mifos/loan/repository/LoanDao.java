@@ -21,6 +21,7 @@
 package org.mifos.loan.repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.mifos.loan.domain.Loan;
 
@@ -29,4 +30,6 @@ import org.mifos.loan.domain.Loan;
  */
 public interface LoanDao {
 	Loan createLoan(BigDecimal loanAmount, BigDecimal interestRate, Integer loanProductId);
+	List<Loan> getAll();
+
 }

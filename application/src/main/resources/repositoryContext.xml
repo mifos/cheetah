@@ -11,7 +11,7 @@
 
     <import resource="dataSource.xml"/>
     
-    <context:component-scan base-package="org.mifos.loan.repository" />
+    <context:component-scan base-package="org.mifos" />
 
     <context:annotation-config />
 
@@ -37,4 +37,7 @@
     </bean>
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+    
+    <bean id="standardLoanDao" class="org.mifos.loan.repository.StandardLoanDao"/>
+
 </beans>

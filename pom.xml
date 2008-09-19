@@ -70,10 +70,9 @@
                <autocommit>true</autocommit>
                <srcFiles>
                   <srcFile>${project.build.outputDirectory}/sql/create_database.sql</srcFile>
-                  <srcFile>${project.build.outputDirectory}/sql/create_products.sql</srcFile>
+                  <srcFile>${project.build.outputDirectory}/sql/create_loans.sql</srcFile>
                   <srcFile>${project.build.outputDirectory}/sql/create_security.sql</srcFile>
                   <srcFile>${project.build.outputDirectory}/sql/security_data.sql</srcFile>
-                  <srcFile>${project.build.outputDirectory}/sql/product_data.sql</srcFile>
                </srcFiles>
             </configuration>
          </plugin>      

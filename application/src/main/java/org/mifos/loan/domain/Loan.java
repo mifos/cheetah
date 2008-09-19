@@ -22,15 +22,31 @@ package org.mifos.loan.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+
 /**
  *
  */
+@Entity
+@Table(name="loans")
 public class Loan {
 
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer id;
 	private Integer loanProductId;
 	private BigDecimal amount;
 	private BigDecimal interestRate;
+	
+	protected Loan() {
+		// empty constructor for Hibernate
+	}
 	
 	public Loan(BigDecimal amount, BigDecimal interestRate,
 			Integer loanProductId) {
