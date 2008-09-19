@@ -2,9 +2,15 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:aop="http://www.springframework.org/schema/aop"
+         xmlns:tx="http://www.springframework.org/schema/tx"
          xmlns:p="http://www.springframework.org/schema/p"
          xsi:schemaLocation="http://www.springframework.org/schema/beans 
            classpath:xsd/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop 
+           classpath:xsd/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx 
+           classpath:xsd/spring-tx-2.5.xsd
            http://www.springframework.org/schema/context
            classpath:xsd/spring-context-2.5.xsd">
 
@@ -29,4 +35,19 @@
       <property name="validator" ref="validator"/>
    </bean> 
 
+    <bean id="entityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <!-- <property name="persistenceUnitName" value="mifos_cheetah" /> -->
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="databasePlatform"
+                    value="org.hibernate.dialect.MySQLDialect" />
+                <property name="showSql" value="true" />
+                <property name="generateDdl" value="true" />
+            </bean>
+        </property>
+    </bean>
+
+	<bean id="loanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
 </beans>

@@ -36,10 +36,11 @@
     <bean name="/createLoanProduct.ftl" class="org.mifos.ui.loan.controller.LoanProductController">
         <property name="sessionForm"  value="true"/>
         <property name="commandName"  value="loanProduct"/>
-        <property name="commandClass" value="org.mifos.loan.service.LoanProductDto"/>
+        <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductFormBean"/>
         <property name="formView"     value="createLoanProduct"/>
         <property name="successView"  value="home.ftl"/>
         <property name="validator"    ref="beanValidator"/>
+        <property name="loanProductService" ref="loanProductService"/>
     </bean>
 
     <bean name="/home.ftl" class="org.mifos.ui.core.controller.GenericController"/>

@@ -105,15 +105,12 @@ p.boldOrange {
 	background-color: white;
 	padding-left: 5px;
 	padding-right: 5px;
-}
-
-.page-content {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
-		}
+}
 	
 .page-content h2 {
-	color: #CC6601;
-	font-size: x-large;
+	color: red;
+	font-size: medium;
 	font-weight: bold;
 }
 
@@ -319,6 +316,10 @@ form.loan-product fieldset label{
    margin-top: 5px;
    margin-left: 5px; 
    width:500px;  
+}
+
+.content-pane h2 {
+	color: red;
 }
 
 /* create client page */

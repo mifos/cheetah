@@ -27,6 +27,13 @@
         <property name="buildTag" value="${build.tag.appInfo}"/>
         <property name="buildId" value="${build.id.appInfo}"/>
     </bean>
+    
+    <bean id="loanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
+   
+   	<bean id="loanProductService" class="org.mifos.loan.service.StandardLoanProductService">
+		<property name="loanProductDao" ref="loanProductDao"/>
+	</bean>
+    
 
 	<!--     
 	<bean id="BeanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">

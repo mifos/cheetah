@@ -28,8 +28,16 @@ import org.mifos.loan.repository.LoanProductDao;
 //@edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP"})
 public class StandardLoanProductService implements LoanProductService {
 
-	LoanProductDao loanProductDao;
+	private LoanProductDao loanProductDao;
 	
+	public LoanProductDao getLoanProductDao() {
+		return loanProductDao;
+	}
+	
+	public void setLoanProductDao (LoanProductDao dao) {
+		this.loanProductDao = dao;
+	}
+
 	@Override
 	public void deleteLoanProduct(LoanProductDto product) {
 		loanProductDao.deleteLoanProduct(disAssembleLoanProduct(product));
@@ -76,10 +84,6 @@ public class StandardLoanProductService implements LoanProductService {
 	private LoanProduct disAssembleLoanProduct (LoanProductDto dto) {
 		return new LoanProduct(dto.getId(), dto.getLongName(), dto.getShortName(), dto.getMinInterestRate(),
 				               dto.getMaxInterestRate(), dto.getStatus());
-	}
-	
-	void setLoanProductDao (LoanProductDao dao) {
-		this.loanProductDao = dao;
 	}
 	
 	/* implement for a later story

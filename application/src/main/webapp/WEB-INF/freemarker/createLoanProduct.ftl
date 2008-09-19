@@ -7,13 +7,13 @@
 
   <head>
   	<title id="hello.title">[@spring.message "title" /]</title>
-   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
+    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   
   <body>
-  [@mifos.header currentTab="Home" /]
+  [@mifos.header currentTab="Admin" /]
 
-	<div class="page-content">
+	<div class="page-contents">
 	
 		<h2>Create a new loan product</h2>
 				
@@ -26,7 +26,6 @@
 			
 				<label for="loanproduct.form.longname" accesskey="l">Long name:</label>
 					[@form.input path="longName"/]
-					[@form.errors path="longName" cssClass="error-messages"/]
 					<br/>
 			
 				<label  for="loanproduct.form.shortname" accesskey="s">Short name:</label>

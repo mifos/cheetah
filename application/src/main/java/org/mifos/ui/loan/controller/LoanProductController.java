@@ -27,8 +27,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.mifos.loan.domain.LoanProductStatus;
 import org.mifos.loan.service.LoanProductDto;
+import org.mifos.loan.service.LoanProductService;
+import org.mifos.ui.loan.command.LoanProductFormBean;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -36,11 +37,25 @@ public class LoanProductController extends SimpleFormController {
 	
     private static final Log LOG = LogFactory.getLog(LoanProductController.class);
     
-    @Override
+    private LoanProductService loanProductService;
+    
+    public LoanProductService getLoanProductService() {
+		return loanProductService;
+	}
+
+	public void setLoanProductService(LoanProductService loanProductService) {
+		this.loanProductService = loanProductService;
+	}
+
+	@Override
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_UNWRITTEN_FIELD"}, justification="set by Spring dependency injection")
 	protected ModelAndView onSubmit(Object command) throws Exception {
 		LOG.debug ("entered LoanProductController.onSubmit()");
-		return new ModelAndView("loanProductEditSuccess", "model", new HashMap<String, Object>());
+		LoanProductDto product = loanProductService.createLoanProduct((LoanProductFormBean) command);
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("loanProduct", product);
+		return new ModelAndView("loanProductEditSuccess", "model", model);
 	}
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
@@ -57,8 +72,6 @@ public class LoanProductController extends SimpleFormController {
     
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
-    	LoanProductDto loanProduct = new LoanProductDto();
-    	loanProduct.setStatus(LoanProductStatus.ACTIVE);
-    	return loanProduct;
+    	return new LoanProductFormBean();
     }
 }
