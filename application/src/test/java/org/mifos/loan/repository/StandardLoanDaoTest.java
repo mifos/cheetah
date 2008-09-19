@@ -21,14 +21,13 @@
 package org.mifos.loan.repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.mifos.loan.domain.Loan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.Test;
 
 @ContextConfiguration(locations={"classpath:integrationTestContext.xml"})
@@ -39,23 +38,34 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 	@Autowired
 	private LoanDao standardLoanDao;
 
-	@Transactional
-	@Rollback(value=true)
+	private static final Integer LOAN_PRODUCT_ID = 1;
+	private static final BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
+	private static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
+	
 	public void testCreateLoan() {
-		Integer LOAN_PRODUCT_ID = 1;
-		BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
-		BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
-		
+
 		Loan loan = standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		
-		Integer firstId = loan.getId();
-		assert(loan.getId() != null);
+		assert(loan.getId() > 0);
 		assert(loan.getLoanProductId() == 1);
 		assert(loan.getAmount() == LOAN_AMOUNT);
 		assert(loan.getInterestRate() == LOAN_INTEREST_RATE);
+	}
+
+	public void testGetAll() {
+
+		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		List<Loan> loans = standardLoanDao.getAll();
 		
-		loan = standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
-		assert(loan.getId() == firstId + 1);
+		assert(loans.size() == 3);
+		
+		Loan loan = loans.get(0);
+		assert(loan.getId() > 0);
+		assert(loan.getLoanProductId() == 1);
+		assert(loan.getAmount() == LOAN_AMOUNT);
+		assert(loan.getInterestRate() == LOAN_INTEREST_RATE);
 	}
 	
 }
