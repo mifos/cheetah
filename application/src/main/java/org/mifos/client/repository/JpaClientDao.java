@@ -18,36 +18,44 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.loan.repository;
+package org.mifos.client.repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.mifos.loan.domain.Loan;
+import org.joda.time.DateTime;
+import org.mifos.client.domain.Client;
+import org.mifos.core.MifosException;
 import org.springframework.transaction.annotation.Transactional;
 
-public class StandardLoanDao  implements LoanDao {
+public class JpaClientDao implements ClientDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	
+
 	@Override
 	@Transactional
-	public Loan createLoan(BigDecimal loanAmount, BigDecimal interestRate,
-			Integer loanProductId) {
-		Loan loan = new Loan(loanAmount, interestRate, loanProductId);
-		entityManager.persist(loan);
-		return loan;
+	public Client create(String firstName, String lastName, DateTime dateOfBirth)
+			throws MifosException {
+		Client client = new Client(null, firstName, lastName, dateOfBirth);
+		entityManager.persist(client);
+		return entityManager.find(Client.class, client.getId());
 	}
 
-	@Transactional
-	public List<Loan> getAll() {
-		Query query = entityManager.createQuery("from Loan");
+	@Override
+	@Transactional(readOnly=true)
+	public Client get(Integer id) {
+		return entityManager.find(Client.class, id);
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public List<Client> getAll() {
+		Query query = entityManager.createQuery("from Client");
 		return query.getResultList();
 	}
-
+	
 }

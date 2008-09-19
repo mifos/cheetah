@@ -20,6 +20,8 @@
 
 package org.mifos.client.repository;
 
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.joda.time.DateTime;
@@ -49,11 +51,20 @@ public class InMemoryClientDaoTest {
 	}
 
 	public void testGetClient() throws MifosException {
-		Client client = clientDao.create("Buckaroo", "Banzai", new DateTime());
+		Client client = clientDao.create("John", "Careful Walker", new DateTime());
 		Client newClient = clientDao.get(client.getId());
 		Assert.assertEquals(client.getFirstName(), newClient.getFirstName());
 		Assert.assertEquals(client.getLastName(), newClient.getLastName());
 		Assert.assertEquals(client.getDateOfBirth(), newClient.getDateOfBirth());
 	}
+
+	public void testGetAll() throws MifosException {
+		clientDao.create("John", "Icicle Boy", new DateTime());
+		clientDao.create("John", "Starbird", new DateTime());
+		List<Client> clientList = clientDao.getAll();
+		Assert.assertEquals(2, clientList.size());
+	}
+
+	
 	
 }

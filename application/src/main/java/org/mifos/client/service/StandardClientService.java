@@ -61,6 +61,7 @@ public class StandardClientService implements ClientService {
 
 	private ClientDto createClientDto(Client client) {
 		ClientDto clientDto = new ClientDto();
+		clientDto.setId(client.getId());
 		clientDto.setFirstName(client.getFirstName());
 		clientDto.setLastName(client.getLastName());
 		clientDto.setDateTimeOfBirth(client.getDateOfBirth());

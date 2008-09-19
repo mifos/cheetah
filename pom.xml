@@ -73,6 +73,7 @@
                   <srcFile>${project.build.outputDirectory}/sql/create_loans.sql</srcFile>
                   <srcFile>${project.build.outputDirectory}/sql/create_security.sql</srcFile>
                   <srcFile>${project.build.outputDirectory}/sql/security_data.sql</srcFile>
+                  <srcFile>${project.build.outputDirectory}/sql/create_clients.sql</srcFile>
                </srcFiles>
             </configuration>
          </plugin>      

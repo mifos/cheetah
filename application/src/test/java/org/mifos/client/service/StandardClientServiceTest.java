@@ -17,6 +17,7 @@
  * See also http://www.apache.org/licenses/LICENSE-2.0.html for an
  * explanation of the license and how it is applied.
  */
+
 package org.mifos.client.service;
 
 import org.apache.log4j.Logger;
@@ -102,14 +103,15 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     	String expectedFirstName = "Homer";
     	String expectedLastName = "Simpson";
     	DateTime expectedDateOfBirth = new DateTime();
-		ClientDto clientDto = createclientDto(expectedFirstName, expectedLastName, expectedDateOfBirth);
-		ClientDto expectedclientDto = clientService.createClient(clientDto);
-        Integer clientId = expectedclientDto.getId();
+		ClientDto clientDto = createClientDto(expectedFirstName, expectedLastName, expectedDateOfBirth);
+		ClientDto expectedClientDto = clientService.createClient(clientDto);
+        Integer clientId = expectedClientDto.getId();
+        Assert.assertNotNull(clientId);
         ClientDto freshclientDto = clientService.getClient(clientId);
-        Assert.assertEquals(freshclientDto.getId(), expectedclientDto.getId());
-        Assert.assertEquals(freshclientDto.getFirstName(), expectedclientDto.getFirstName());
-        Assert.assertEquals(freshclientDto.getLastName(), expectedclientDto.getLastName());
-        Assert.assertEquals(freshclientDto.getDateTimeOfBirth(), expectedclientDto.getDateTimeOfBirth());
+        Assert.assertEquals(freshclientDto.getId(), expectedClientDto.getId());
+        Assert.assertEquals(freshclientDto.getFirstName(), expectedClientDto.getFirstName());
+        Assert.assertEquals(freshclientDto.getLastName(), expectedClientDto.getLastName());
+        Assert.assertEquals(freshclientDto.getDateTimeOfBirth(), expectedClientDto.getDateTimeOfBirth());
     }
     
     public void testCreateClientGoodDateOfBirth() throws MifosServiceException {
@@ -144,22 +146,22 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
 	private void createClient(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth)
 			throws MifosServiceException {
-		ClientDto clientDto = createclientDto(expectedFirstName, expectedLastName, expectedDateOfBirth);
+		ClientDto clientDto = createClientDto(expectedFirstName, expectedLastName, expectedDateOfBirth);
 		clientService.createClient(clientDto);
 	}
 
     private void createAndVerifyClient(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth) throws MifosServiceException {
-    	ClientDto clientDto = createclientDto(expectedFirstName,
+    	ClientDto clientDto = createClientDto(expectedFirstName,
 				expectedLastName, expectedDateOfBirth);
-    	ClientDto newclientDto  = clientService.createClient(clientDto);
-        Assert.assertNotNull(newclientDto);
-        Assert.assertEquals(newclientDto.getFirstName(), expectedFirstName);
-        Assert.assertEquals(newclientDto.getLastName(), expectedLastName);
-        Assert.assertEquals(newclientDto.getDateTimeOfBirth(), expectedDateOfBirth);
+    	ClientDto newClientDto  = clientService.createClient(clientDto);
+        Assert.assertNotNull(newClientDto);
+        Assert.assertEquals(newClientDto.getFirstName(), expectedFirstName);
+        Assert.assertEquals(newClientDto.getLastName(), expectedLastName);
+        Assert.assertEquals(newClientDto.getDateTimeOfBirth(), expectedDateOfBirth);
 	}
 
-	private ClientDto createclientDto(String expectedFirstName,
+	private ClientDto createClientDto(String expectedFirstName,
 			String expectedLastName, DateTime expectedDateOfBirth) {
 		ClientDto clientDto = new ClientDto();
     	clientDto.setFirstName(expectedFirstName);

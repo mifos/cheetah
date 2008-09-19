@@ -20,7 +20,9 @@
 
 package org.mifos.client.repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
@@ -30,12 +32,12 @@ import org.springframework.validation.Validator;
 
 public class InMemoryClientDao implements ClientDao {
 
+	private int nextId = 1;
 	private final Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
 	
 	@Override
-	public Client create(String firstName, String lastName,
-			DateTime dateOfBirth) throws MifosException {
-		Client client = new Client(firstName, lastName, dateOfBirth);
+	public Client create(String firstName, String lastName, DateTime dateOfBirth) throws MifosException {
+		Client client = new Client(generateNextId(), firstName, lastName, dateOfBirth);
 		clients.put(client.getId(), client);
 		return client;
 	}
@@ -55,6 +57,18 @@ public class InMemoryClientDao implements ClientDao {
 		this.validator = validator;
 	}
 
+	@Override
+	public List<Client> getAll() {
+		ArrayList<Client> clientList = new ArrayList<Client>();
+		clientList.addAll(clients.values());
+		return clientList;
+	}
+	
+	private Integer generateNextId() {
+		synchronized(this) {
+			return Integer.valueOf(nextId++);
+		}
+	}	
 	
 
 }

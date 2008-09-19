@@ -18,18 +18,25 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.client.repository;
+package org.mifos.core;
 
-import java.util.List;
+public class MifosNotImplementedException extends MifosRuntimeException {
 
-import org.joda.time.DateTime;
-import org.mifos.client.domain.Client;
-import org.mifos.core.MifosException;
+	private static final long serialVersionUID = 8710919284125165027L;
 
-public interface ClientDao {
+	public MifosNotImplementedException() {
+		super();
+	}
 	
-	Client create(String firstName, String lastName, DateTime dateOfBirth) throws MifosException;
-	Client get(Integer clientId);
-	List<Client> getAll();
+	public MifosNotImplementedException(String message) {
+		super(message);
+	}
+	
+    public MifosNotImplementedException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
+    public MifosNotImplementedException(Throwable cause) {
+        super(cause);
+    }
 }

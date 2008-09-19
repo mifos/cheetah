@@ -132,6 +132,11 @@
          <version>1.5.2</version>
       </dependency>
       <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time-hibernate</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
          <groupId>commons-logging</groupId>
          <artifactId>commons-logging</artifactId>
          <version>1.1.1</version>
@@ -180,6 +185,16 @@
       	<groupId>net.sf.dozer</groupId>
       	<artifactId>dozer</artifactId>
       	<version>4.2.1</version>
+      </dependency>
+      <dependency>
+         <groupId>asm</groupId>
+         <artifactId>asm-all</artifactId>
+         <version>3.1</version>
+      </dependency>
+      <dependency>
+          <groupId>org.hibernate</groupId>
+          <artifactId>hibernate</artifactId>
+          <version>3.2.6.ga</version>
       </dependency>       
    </dependencies>
    <build>
@@ -205,7 +220,7 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.4.2</version>
             <configuration>         
-               <includedGroups>unit</includedGroups>
+               <includedGroups>unit, integration</includedGroups>
                <excludedGroups>workInProgress, ui</excludedGroups>
             </configuration>
          </plugin>

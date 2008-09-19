@@ -22,16 +22,18 @@ package org.mifos.client.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 @Entity
-@Table(name="products")
+@Table(name="clients")
 public class Client implements Serializable {
 
 	private static final long serialVersionUID = -8583711590279795781L;
@@ -42,9 +44,17 @@ public class Client implements Serializable {
 
 	private String firstName;
 	private String lastName;
+
+	@Column
+	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
 	private DateTime dateOfBirth;
 
-	public Client(String firstName, String lastName, DateTime dateOfBirth) {
+	protected Client() {
+		// empty constructor for Hibernate
+	}
+	
+	public Client(Integer id, String firstName, String lastName, DateTime dateOfBirth) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dateOfBirth = new DateTime(dateOfBirth);

@@ -58,7 +58,7 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 		verifyLoanData(loan);
 	}
 
-	@Test(groups = { "WorkInProgress" })
+	@Test(groups = { "workInProgress" })
 	public void testGetAll() {
 
 		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);

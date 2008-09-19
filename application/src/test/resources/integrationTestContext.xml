@@ -7,16 +7,18 @@
          xmlns:tx="http://www.springframework.org/schema/tx"
          xsi:schemaLocation="http://www.springframework.org/schema/beans 
            classpath:xsd/spring-beans-2.5.xsd
-           http://www.springframework.org/schema/tx
-           classpath:xsd/spring-tx-2.5.xsd
            http://www.springframework.org/schema/context
-           classpath:xsd/spring-context-2.5.xsd">
+           classpath:xsd/spring-context-2.5.xsd
+           http://www.springframework.org/schema/tx
+           classpath:xsd/spring-tx-2.5.xsd">
+
+    <import resource="dataSource.xml"/>
+    
+    <context:component-scan base-package="org.mifos" />
 
     <context:annotation-config />
 
     <tx:annotation-driven />
-
-    <import resource="dataSource.xml"/>
 
     <bean id="configurationLoader" 
       class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" />
@@ -24,14 +26,10 @@
     <bean id="validator" class="org.springmodules.validation.bean.BeanValidator"
         p:configurationLoader-ref="configurationLoader"/>  
 
-   <bean id="standardClientService" class="org.mifos.client.service.StandardClientService">
-      <property name="validator" ref="validator"/>
-   </bean> 
-
-   <bean id="standardLoanService" class="org.mifos.loan.service.StandardLoanService">
-      <property name="validator" ref="validator"/>
-   </bean> 
-    <context:component-scan base-package="org.mifos" />
+    <bean id="transactionManager"
+        class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>    
 
     <bean id="entityManagerFactory"
         class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -47,13 +45,29 @@
         </property>
     </bean>
 
-    <bean id="transactionManager"
-        class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory" />
-    </bean>
-
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
    
+    <context:component-scan base-package="org.mifos" />
+
+    <bean id="jpaClientDao" class="org.mifos.client.repository.JpaClientDao" />
+
+    <bean id="standardClientService" class="org.mifos.client.service.StandardClientService">
+       <property name="validator" ref="validator"/>
+       <property name="clientDao" ref="jpaClientDao"/>
+    </bean> 
+
+    <bean id="standardClientServiceTest" class="org.mifos.client.service.StandardClientServiceTest">
+       <property name="clientService" ref="standardClientService"/>
+    </bean> 
+
+    <bean id="standardLoanService" class="org.mifos.loan.service.StandardLoanService">
+       <property name="validator" ref="validator"/>
+    </bean> 
+
     <bean id="standardLoanDao" class="org.mifos.loan.repository.StandardLoanDao">
     </bean>
+
+
 </beans>
+
+
