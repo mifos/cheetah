@@ -19,14 +19,8 @@
  */
 package org.mifos.loan.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
 import org.mifos.loan.repository.InMemoryLoanProductDao;
-import org.mifos.loan.repository.LoanProductDao;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

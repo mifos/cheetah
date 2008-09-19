@@ -33,7 +33,7 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations={"classpath:unitTestContext.xml"})
 public abstract class AbstractDtoValidationTest  extends AbstractTestNGSpringContextTests{
 	
-	private Validator validator;
+	protected Validator validator;
 		
 	@Autowired
     @Test(enabled = false)
