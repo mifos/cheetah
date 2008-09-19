@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @ContextConfiguration(locations={"classpath:integrationTestContext.xml"})
@@ -42,30 +43,35 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 	private static final BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
 	private static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
 	
+	private void verifyLoanData(Loan loan) {
+		Assert.assertTrue(loan.getId() > 0, "Expected a positive Id to be generated.");
+		Assert.assertEquals(loan.getLoanProductId().intValue(),1,"LoanProductId mismatch.");
+		Assert.assertEquals(loan.getAmount(), LOAN_AMOUNT, "Loan amount mismatch.");
+		Assert.assertEquals(loan.getInterestRate(), LOAN_INTEREST_RATE, "Loan interest rate mismatch.");
+		
+	}
+	
 	public void testCreateLoan() {
 
 		Loan loan = standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		
-		assert(loan.getId() > 0);
-		assert(loan.getLoanProductId() == 1);
-		assert(loan.getAmount() == LOAN_AMOUNT);
-		assert(loan.getInterestRate() == LOAN_INTEREST_RATE);
+		verifyLoanData(loan);
 	}
 
+	@Test(groups = { "WorkInProgress" })
 	public void testGetAll() {
 
 		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		
 		List<Loan> loans = standardLoanDao.getAll();
 		
-		assert(loans.size() == 3);
+		Assert.assertEquals(loans.size(),3,"Returned an unexpected number of loans.");
 		
 		Loan loan = loans.get(0);
-		assert(loan.getId() > 0);
-		assert(loan.getLoanProductId() == 1);
-		assert(loan.getAmount() == LOAN_AMOUNT);
-		assert(loan.getInterestRate() == LOAN_INTEREST_RATE);
+		
+		verifyLoanData(loan);
 	}
 	
 }
