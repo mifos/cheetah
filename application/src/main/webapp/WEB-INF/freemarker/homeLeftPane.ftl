@@ -11,7 +11,7 @@
 	      </div>
 	      <h2>Manage Accounts</h2>
 	      <div class="left-pane-heading-group">
-	         Open new Loan Account<br/>
+	         <a href="createLoan.ftl" >Open new Loan Account</a>
 	      </div>
    	  </div>
 	</div>

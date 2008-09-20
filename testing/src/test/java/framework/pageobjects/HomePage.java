@@ -38,7 +38,8 @@ public class HomePage extends AbstractPage {
 	}
 
 	public CreateLoanPage navigateToCreateLoanPage() {
-		// TODO Auto-generated method stub
+		selenium.click("link=Open new Loan Account");
+		waitForPageToLoad();
 		return null;
 	}
 

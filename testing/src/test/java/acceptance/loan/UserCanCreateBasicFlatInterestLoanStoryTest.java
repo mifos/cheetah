@@ -20,6 +20,7 @@
 package acceptance.loan;
 
 import static org.testng.Assert.assertEquals;
+import junit.framework.Assert;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
@@ -66,9 +67,11 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 		double INTEREST_RATE = 12;
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
-		assertEquals(selenium.getText("createLoanAccount"), "Create Loan Account");
+		Assert.assertTrue(selenium.isTextPresent("Create a new loan"));
+		//assertEquals(selenium.getText("createLoanAccount"), "Create Loan Account");
 		CreateLoanSuccessPage createLoanSuccessPage = createLoanPage.createLoan(LOAN_AMOUNT, INTEREST_RATE);
-		assertEquals(selenium.getText("createLoanAccountResult"), "Loan Account Successfully Created");
+		Assert.assertTrue(selenium.isTextPresent("The loan has been created"));
+
 		createLoanSuccessPage.logout();
 	}
 
