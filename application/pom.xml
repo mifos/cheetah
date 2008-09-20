@@ -28,8 +28,8 @@
             <activeByDefault>false</activeByDefault>
          </activation>
          <properties>
-            <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration</continuous.integration.resources.dir>
-            <database.properties.file>${continuous.integration.resources.dir}/integration/jdbc.local.properties</database.properties.file>
+            <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration/integration</continuous.integration.resources.dir>
+            <database.properties.file>${continuous.integration.resources.dir}/jdbc.local.properties</database.properties.file>
          </properties>
          <build>
             <plugins>
