@@ -4,12 +4,8 @@
 TOMCAT=apache-tomcat-6.0.18
 TOMCAT_DEPLOY=$TOMCAT-mifos-cheetah
 export CATALINA_HOME=$DEPLOY_BASE/$TOMCAT_DEPLOY
-
 PROJECT_BUILD_DIR=`pwd`
 DEPLOY_RESOURCES=$PROJECT_BUILD_DIR/resources/deploy-build
-export CLASSPATH=$DEPLOY_RESOURCES
-echo "classpath: $CLASSPATH"
-
 $CATALINA_HOME/bin/catalina.sh stop
 rm -rf $DEPLOY_BASE
 mkdir $DEPLOY_BASE
