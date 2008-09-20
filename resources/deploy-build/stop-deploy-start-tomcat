@@ -4,6 +4,7 @@
 TOMCAT=apache-tomcat-6.0.18
 TOMCAT_DEPLOY=$TOMCAT-mifos-cheetah
 export CATALINA_HOME=$DEPLOY_BASE/$TOMCAT_DEPLOY
+export CATALINA_PID=$DEPLOY_BASE/mifos-local-deploy-tomcat.pid
 PROJECT_BUILD_DIR=`pwd`
 DEPLOY_RESOURCES=$PROJECT_BUILD_DIR/resources/deploy-build
 $CATALINA_HOME/bin/catalina.sh stop
