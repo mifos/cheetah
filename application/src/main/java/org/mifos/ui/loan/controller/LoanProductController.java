@@ -52,7 +52,7 @@ public class LoanProductController extends SimpleFormController {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_UNWRITTEN_FIELD"}, justification="set by Spring dependency injection")
 	protected ModelAndView onSubmit(Object command) throws Exception {
 		LOG.debug ("entered LoanProductController.onSubmit()");
-		LoanProductDto product = loanProductService.createLoanProduct((LoanProductFormBean) command);
+		LoanProductDto product = loanProductService.createLoanProduct((LoanProductDto) command);
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("loanProduct", product);
 		return new ModelAndView("loanProductEditSuccess", "model", model);

@@ -106,11 +106,4 @@ public class LoanProductDto {
 		this.maxInterestRate = maxInterestRate;
 		this.status = status;
 	}
-	/**
-	 * do nothing
-	 */
-	protected void setDefaults(){
-		//do nothing
-	}
-
 }

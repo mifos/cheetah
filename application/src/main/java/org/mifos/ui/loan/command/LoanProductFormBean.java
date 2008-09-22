@@ -5,7 +5,6 @@ import org.mifos.loan.service.LoanProductDto;
 
 public class LoanProductFormBean extends LoanProductDto {
 
-	@Override
 	protected void setDefaults(){
 		setStatus(LoanProductStatus.ACTIVE);
 	}
