@@ -40,7 +40,7 @@ public class HomePage extends AbstractPage {
 	public CreateLoanPage navigateToCreateLoanPage() {
 		selenium.click("link=Open new Loan Account");
 		waitForPageToLoad();
-		return null;
+		return new CreateLoanPage(selenium);
 	}
 
 }

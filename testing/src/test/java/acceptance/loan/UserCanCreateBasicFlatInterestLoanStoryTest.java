@@ -43,6 +43,7 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 
 	private LoginPage loginPage;
 	
+
 	@BeforeMethod
 	public void setUp() {
 		super.setUp();
@@ -53,38 +54,25 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 	public void logOut() {
 		loginPage.logout();
 	}
-	
-	// do nothing method to leave Selenium in a good state after 
-	// a test class that has no tests to run.  we should fix this
-	// up so it is unnecessary.
-	public void dummyTest() {
-		assert(true);
-	}
 
-	@Test(groups={"workInProgress"})
 	public void createValidLoanTest() {
 		double LOAN_AMOUNT = 1200;
 		double INTEREST_RATE = 12;
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
 		Assert.assertTrue(selenium.isTextPresent("Create a new loan"));
-		//assertEquals(selenium.getText("createLoanAccount"), "Create Loan Account");
-		CreateLoanSuccessPage createLoanSuccessPage = createLoanPage.createLoan(LOAN_AMOUNT, INTEREST_RATE);
+		createLoanPage.createLoan(LOAN_AMOUNT, INTEREST_RATE);
 		Assert.assertTrue(selenium.isTextPresent("The loan has been created"));
-
-		createLoanSuccessPage.logout();
 	}
 
-	@Test(groups={"workInProgress"})
 	public void createInvalidLoanTest() {
 		double LOAN_AMOUNT = 1200;
-		double INTEREST_RATE = -5;
+		double INVALID_INTEREST_RATE = -5;
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
-		assertEquals(selenium.getText("createLoanAccount"), "Create Loan Account");
-		createLoanPage = createLoanPage.createLoanExpectingError(LOAN_AMOUNT, INTEREST_RATE);
-		assertEquals(selenium.getText("createLoan.errormessage"), "Change the interest rate to a valid value.");
-		createLoanPage.logout();
+		Assert.assertTrue(selenium.isTextPresent("Create a new loan"));
+		createLoanPage.createLoanExpectingError(LOAN_AMOUNT, INVALID_INTEREST_RATE);
+		Assert.assertTrue(selenium.isTextPresent("The minimum interest rate must be at least 0"));
 	}
 
 }
