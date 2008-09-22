@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mifos.loan.domain.LoanProductStatus;
 import org.mifos.loan.service.LoanProductDto;
 import org.mifos.loan.service.LoanProductService;
 import org.mifos.ui.loan.command.LoanProductFormBean;
@@ -72,6 +73,8 @@ public class LoanProductController extends SimpleFormController {
     
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
-    	return new LoanProductFormBean();
+    	LoanProductFormBean formBean = new LoanProductFormBean();
+    	formBean.setStatus(LoanProductStatus.ACTIVE);
+    	return formBean;
     }
 }
