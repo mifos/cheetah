@@ -17,36 +17,28 @@
  * See also http://www.apache.org/licenses/LICENSE-2.0.html for an
  * explanation of the license and how it is applied.
  */
+
 package framework.pageobjects;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 
 /**
- * Encapsulates the GUI based actions that can
- * be done from the Home page and the page 
- * that will be navigated to.
  *
  */
-public class HomePage extends AbstractPage {
+public class AdminPage extends AbstractPage {
 
-	public HomePage() {
-		super();
+	/**
+	 * 
+	 */
+	public AdminPage() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public HomePage(DefaultSelenium selenium) {
+	/**
+	 * @param selenium
+	 */
+	public AdminPage(DefaultSelenium selenium) {
 		super(selenium);
 	}
 
-	public CreateLoanPage navigateToCreateLoanPage() {
-		selenium.click("link=Open new Loan Account");
-		waitForPageToLoad();
-		return new CreateLoanPage(selenium);
-	}
-
-	public AdminPage navigateToAdminPage() {
-		selenium.open("/mifos/home.ftl");
-		selenium.click("link=Admin");
-		waitForPageToLoad();
-		return new AdminPage(selenium);		
-	}
 }
