@@ -1,5 +1,6 @@
 CREATE TABLE loans (
   id INTEGER AUTO_INCREMENT,
+  clientId INTEGER,  
   loanProductId INTEGER,
   amount decimal(15,3),
   interestRate decimal(15,3),

@@ -32,6 +32,8 @@ public class LoanDto {
 	private Integer id;
 	
 	@NotNull
+	private Integer clientId;
+	@NotNull
 	private Integer loanProductId;
 	@NotNull
 	@Min(value=0)
@@ -44,8 +46,9 @@ public class LoanDto {
 		// empty constructor for dozer mapping
 	}
 	
-	public LoanDto(BigDecimal amount, BigDecimal interestRate,
+	public LoanDto(Integer clientId, BigDecimal amount, BigDecimal interestRate,
 			Integer loanProductId) {
+		this.clientId = clientId;
 		this.amount = amount;
 		this.interestRate = interestRate;
 		this.loanProductId = loanProductId;
@@ -81,6 +84,14 @@ public class LoanDto {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
 	}
 
 	

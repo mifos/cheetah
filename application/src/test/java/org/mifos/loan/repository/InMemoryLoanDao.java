@@ -38,9 +38,9 @@ public class InMemoryLoanDao implements LoanDao {
 	private final Map<Integer, Loan> clients = new HashMap<Integer, Loan>(); 
 
 	@Override
-	public Loan createLoan(BigDecimal loanAmount, BigDecimal interestRate,
+	public Loan createLoan(Integer clientId, BigDecimal loanAmount, BigDecimal interestRate,
 			Integer loanProductId) {
-		Loan loan = new Loan(loanAmount, interestRate, loanProductId);
+		Loan loan = new Loan(clientId, loanAmount, interestRate, loanProductId);
 		loan.setId(generateNextLoanId());
 		clients.put(loan.getId(), loan);
 		return loan;

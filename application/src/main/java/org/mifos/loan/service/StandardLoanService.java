@@ -40,7 +40,7 @@ public class StandardLoanService implements LoanService {
 	@Override
 	public LoanDto createLoan(LoanDto loanDto) throws MifosServiceException {
 		validate(loanDto);
-		Loan loan = loanDao.createLoan(loanDto.getAmount(),loanDto.getInterestRate(),loanDto.getLoanProductId());
+		Loan loan = loanDao.createLoan(loanDto.getClientId(), loanDto.getAmount(),loanDto.getInterestRate(),loanDto.getLoanProductId());
 
 		// Use a net.sf.dozer.util.mapping.DozerBeanMapper to copy fields 
 		// from the Loan domain object to the LoanDto.  Not so interesting

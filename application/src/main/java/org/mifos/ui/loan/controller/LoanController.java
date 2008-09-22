@@ -73,6 +73,9 @@ public class LoanController extends SimpleFormController {
 	
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
-    	return new LoanDto();
+    	LoanDto loanDto = new LoanDto();
+    	loanDto.setClientId(1);
+    	loanDto.setLoanProductId(1);
+    	return loanDto;
     }
 }

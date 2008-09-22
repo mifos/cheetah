@@ -36,6 +36,8 @@ import org.springframework.validation.Validator;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import com.sun.org.apache.xml.internal.utils.IntVector;
+
 @ContextConfiguration(locations={"classpath:unitTestContext.xml"})
 @Test(groups = { "unit" })
 public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
@@ -44,7 +46,8 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
     Validator validator;
 
     
-	static final int LOAN_PRODUCT_ID = 1;
+	static final int LOAN_PRODUCT_ID = 1;	
+	static final int CLIENT_ID = 1;
 	static final BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
 	static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
 	
@@ -59,55 +62,65 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	
 	public void testCreateValidLoan() throws MifosServiceException {
 
-		LoanDto inputLoanDto = new LoanDto(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		
 		LoanDto loanDto = loanService.createLoan(inputLoanDto);
 		
-		assert(loanDto.getId() == 1);
-		assert(loanDto.getLoanProductId() == LOAN_PRODUCT_ID);
-		assert(loanDto.getAmount() == LOAN_AMOUNT);
-		assert(loanDto.getInterestRate() == LOAN_INTEREST_RATE);
+		Assert.assertEquals("Unexpected loan id assigned.", loanDto.getId().intValue(),1);
+		Assert.assertEquals("Didn't get clientId back.", loanDto.getClientId().intValue(),CLIENT_ID);		
+		Assert.assertEquals("Didn't get loanProductId back.",loanDto.getLoanProductId().intValue(),LOAN_PRODUCT_ID);
+		Assert.assertEquals("Didn't get loan amount back.",loanDto.getAmount(), LOAN_AMOUNT);
+		Assert.assertEquals("Didn't get interestRate back.",loanDto.getInterestRate(), LOAN_INTEREST_RATE);
+	}
+
+	private void assertExpectedError(MifosServiceException mifosServiceException, String fieldName, String defaultErrorMessage) {
+		Assert.assertEquals(mifosServiceException.getErrors().getErrorCount(), 1);
+		FieldError error = (FieldError)mifosServiceException.getErrors().getFieldErrors().get(0);
+		Assert.assertEquals(error.getField(), fieldName);
+		Assert.assertEquals(error.getDefaultMessage(), defaultErrorMessage);		
 	}
 	
+	public void testCreateLoanWithInvalidClient() {
+		LoanDto inputLoanDto = new LoanDto(null, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		
+		try {
+			loanService.createLoan(inputLoanDto);
+			Assert.fail("Null ClientId should have failed validation.");
+		} catch (MifosServiceException mifosServiceException) {
+			assertExpectedError(mifosServiceException, "clientId", "not.null");
+		}
+	}
+
 	public void testCreateLoanWithInvalidLoanProduct() {
-		LoanDto inputLoanDto = new LoanDto(LOAN_AMOUNT, LOAN_INTEREST_RATE, null);
+		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, null);
 		
 		try {
 			loanService.createLoan(inputLoanDto);
 			Assert.fail("Null LoanProductId should have failed validation.");
 		} catch (MifosServiceException mifosServiceException) {
-			assert(mifosServiceException.getErrors().getErrorCount() == 1);
-			FieldError error = (FieldError)mifosServiceException.getErrors().getFieldErrors().get(0);
-			assert(error.getField().equals("loanProductId"));
-			assert(error.getDefaultMessage().equals("not.null"));
+			assertExpectedError(mifosServiceException, "loanProductId", "not.null");
 		}
 	}
 
 	public void testCreateLoanWithInvalidLoanAmount() {
-		LoanDto inputLoanDto = new LoanDto(new BigDecimal("-1"), LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, new BigDecimal("-1"), LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		
 		try {
 			loanService.createLoan(inputLoanDto);
 			Assert.fail("Bad loan amount should have failed validation.");
 		} catch (MifosServiceException mifosServiceException) {
-			assert(mifosServiceException.getErrors().getErrorCount() == 1);
-			FieldError error = (FieldError)mifosServiceException.getErrors().getFieldErrors().get(0);
-			assert(error.getField().equals("amount"));
-			assert(error.getDefaultMessage().equals("min"));
+			assertExpectedError(mifosServiceException, "amount", "min");
 		}
 	}
 
 	public void testCreateLoanWithInvalidInterestRate() {
-		LoanDto inputLoanDto = new LoanDto(LOAN_AMOUNT, new BigDecimal("-1"), LOAN_PRODUCT_ID);
+		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, new BigDecimal("-1"), LOAN_PRODUCT_ID);
 		
 		try {
 			loanService.createLoan(inputLoanDto);
 			Assert.fail("Bad interest rate should have failed validation.");
 		} catch (MifosServiceException mifosServiceException) {
-			assert(mifosServiceException.getErrors().getErrorCount() == 1);
-			FieldError error = (FieldError)mifosServiceException.getErrors().getFieldErrors().get(0);
-			assert(error.getField().equals("interestRate"));
-			assert(error.getDefaultMessage().equals("min"));
+			assertExpectedError(mifosServiceException, "interestRate", "min");
 		}
 	}
 	

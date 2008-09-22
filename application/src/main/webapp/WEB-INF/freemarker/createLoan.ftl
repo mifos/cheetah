@@ -24,10 +24,6 @@
 			
 				<legend>Loan  Details</legend>
 
-				<label for="loan.form.loanProductId" accesskey="p">Loan Product Id:</label>
-					[@form.input path="loanProductId"/]
-					<br/>
-						
 				<label for="loan.form.amount" accesskey="a">Amount:</label>
 					[@form.input path="amount"/]
 					<br/>

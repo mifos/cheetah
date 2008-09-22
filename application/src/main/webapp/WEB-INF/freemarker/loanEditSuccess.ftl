@@ -15,7 +15,7 @@
 	 
 	 <table>
 	 	<tr><td>Amount:</td><td>${model.loan.amount}</td></tr>
-	 	<tr><td>Inteest rate::</td><td>${model.loan.interestRate}</td></tr>
+	 	<tr><td>Interest rate:</td><td>${model.loan.interestRate}</td></tr>
 	 </table>
 	   
 	   </div>

@@ -40,6 +40,7 @@ public class Loan {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
+    private Integer clientId;
 	private Integer loanProductId;
 	private BigDecimal amount;
 	private BigDecimal interestRate;
@@ -48,8 +49,9 @@ public class Loan {
 		// empty constructor for Hibernate
 	}
 	
-	public Loan(BigDecimal amount, BigDecimal interestRate,
+	public Loan(Integer clientId, BigDecimal amount, BigDecimal interestRate,
 			Integer loanProductId) {
+		this.clientId = clientId;
 		this.amount = amount;
 		this.interestRate = interestRate;
 		this.loanProductId = loanProductId;
@@ -78,6 +80,14 @@ public class Loan {
 	}
 	public void setInterestRate(BigDecimal interestRate) {
 		this.interestRate = interestRate;
+	}
+
+	public Integer getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
 	}
 
 	

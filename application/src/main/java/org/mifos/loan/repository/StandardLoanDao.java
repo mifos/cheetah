@@ -37,9 +37,9 @@ public class StandardLoanDao  implements LoanDao {
 	
 	@Override
 	@Transactional
-	public Loan createLoan(BigDecimal loanAmount, BigDecimal interestRate,
+	public Loan createLoan(Integer clientId, BigDecimal loanAmount, BigDecimal interestRate,
 			Integer loanProductId) {
-		Loan loan = new Loan(loanAmount, interestRate, loanProductId);
+		Loan loan = new Loan(clientId, loanAmount, interestRate, loanProductId);
 		entityManager.persist(loan);
 		return loan;
 	}

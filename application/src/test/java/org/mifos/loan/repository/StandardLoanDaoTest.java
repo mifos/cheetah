@@ -39,7 +39,8 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 	@Autowired
 	private LoanDao standardLoanDao;
 
-	private static final Integer LOAN_PRODUCT_ID = 1;
+	private static final Integer LOAN_PRODUCT_ID = 1;	
+	private static final Integer CLIENT_ID = 1;
 	private static final BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
 	private static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
 	
@@ -53,23 +54,24 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 	
 	public void testCreateLoan() {
 
-		Loan loan = standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		Loan loan = standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		
 		verifyLoanData(loan);
 	}
 
-	@Test(groups = { "workInProgress" })
 	public void testGetAll() {
 
-		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
-		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
-		standardLoanDao.createLoan(LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		int initialSize = standardLoanDao.getAll().size();
+		
+		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
 		
 		List<Loan> loans = standardLoanDao.getAll();
 		
-		Assert.assertEquals(loans.size(),3,"Returned an unexpected number of loans.");
+		Assert.assertEquals(loans.size(),initialSize + 3,"Returned an unexpected number of loans.");
 		
-		Loan loan = loans.get(0);
+		Loan loan = loans.get(loans.size()-1);
 		
 		verifyLoanData(loan);
 	}

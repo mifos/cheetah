@@ -29,7 +29,7 @@ import org.mifos.loan.domain.Loan;
  *
  */
 public interface LoanDao {
-	Loan createLoan(BigDecimal loanAmount, BigDecimal interestRate, Integer loanProductId);
+	Loan createLoan(Integer clientId, BigDecimal loanAmount, BigDecimal interestRate, Integer loanProductId);
 	List<Loan> getAll();
 
 }
