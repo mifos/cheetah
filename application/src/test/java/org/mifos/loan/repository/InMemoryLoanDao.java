@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.mifos.loan.domain.Loan;
+import org.mifos.loan.domain.LoanProduct;
 
 
 /**
@@ -35,14 +36,14 @@ public class InMemoryLoanDao implements LoanDao {
 
 	private int nextLoanId = 1;
 	
-	private final Map<Integer, Loan> clients = new HashMap<Integer, Loan>(); 
+	private final Map<Integer, Loan> loans = new HashMap<Integer, Loan>(); 
 
 	@Override
 	public Loan createLoan(Integer clientId, BigDecimal loanAmount, BigDecimal interestRate,
-			Integer loanProductId) {
-		Loan loan = new Loan(clientId, loanAmount, interestRate, loanProductId);
+			LoanProduct loanProduct) {
+		Loan loan = new Loan(clientId, loanAmount, interestRate, loanProduct);
 		loan.setId(generateNextLoanId());
-		clients.put(loan.getId(), loan);
+		loans.put(loan.getId(), loan);
 		return loan;
 	}
 

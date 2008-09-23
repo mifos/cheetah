@@ -19,7 +19,6 @@
  */
 package acceptance.loan;
 
-import static org.testng.Assert.assertEquals;
 import junit.framework.Assert;
 
 import org.springframework.test.context.ContextConfiguration;
@@ -28,7 +27,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import framework.pageobjects.CreateLoanPage;
-import framework.pageobjects.CreateLoanSuccessPage;
 import framework.pageobjects.HomePage;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;

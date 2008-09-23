@@ -13,7 +13,7 @@
   <body>
   [@mifos.header currentTab="Home" /]
 
-	<div class="page-contents">
+	<div id="page-content">
 	
 		<h2>Create a new loan</h2>
 				

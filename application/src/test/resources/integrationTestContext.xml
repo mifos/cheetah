@@ -64,8 +64,9 @@
        <property name="validator" ref="validator"/>
     </bean> 
 
-    <bean id="standardLoanDao" class="org.mifos.loan.repository.StandardLoanDao">
-    </bean>
+    <bean id="standardLoanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
+
+    <bean id="standardLoanDao" class="org.mifos.loan.repository.StandardLoanDao"/>
 
 
 </beans>

@@ -48,6 +48,7 @@ public class StandardLoanProductServiceTest {
 	private LoanProductDto testProduct2;
 
 	@BeforeMethod
+	@Test(groups="unit")
 	private void setUp() {
 		loanProductService = new StandardLoanProductService();
 		loanProductService.setLoanProductDao (new InMemoryLoanProductDao());

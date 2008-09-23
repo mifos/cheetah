@@ -51,6 +51,7 @@
         <property name="successView"  value="home.ftl"/>
         <property name="validator"    ref="beanValidator"/>
         <property name="loanService" ref="loanService"/>
+        <property name="loanProductService" ref="loanProductService"/>
     </bean>
 
     <bean name="/home.ftl" class="org.mifos.ui.core.controller.GenericController"/>

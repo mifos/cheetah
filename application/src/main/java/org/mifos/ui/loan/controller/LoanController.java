@@ -21,6 +21,7 @@
 package org.mifos.ui.loan.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mifos.loan.service.LoanDto;
+import org.mifos.loan.service.LoanProductDto;
+import org.mifos.loan.service.LoanProductService;
 import org.mifos.loan.service.LoanService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
@@ -37,6 +40,7 @@ public class LoanController extends SimpleFormController {
     private static final Log LOG = LogFactory.getLog(LoanController.class);
     
     private LoanService loanService;
+    private LoanProductService loanProductService;
     
     public LoanService getLoanService() {
 		return loanService;
@@ -44,6 +48,10 @@ public class LoanController extends SimpleFormController {
 
 	public void setLoanService(LoanService loanService) {
 		this.loanService = loanService;
+	}
+
+	public void setLoanProductService(LoanProductService loanProductService) {
+		this.loanProductService = loanProductService;
 	}
 
 	@Override
@@ -75,7 +83,15 @@ public class LoanController extends SimpleFormController {
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
     	LoanDto loanDto = new LoanDto();
     	loanDto.setClientId(1);
-    	loanDto.setLoanProductId(1);
+    	
+    	// find the most recently created loan product or leave null if none found.
+    	List<LoanProductDto> loanProductDtos = loanProductService.getAll();
+    	if (loanProductDtos.isEmpty()) {
+        	loanDto.setLoanProductId(null);
+    	} else {
+    		LoanProductDto loanProductDto = loanProductDtos.get(loanProductDtos.size() - 1);
+        	loanDto.setLoanProductId(loanProductDto.getId());
+    	}
     	return loanDto;
     }
 }

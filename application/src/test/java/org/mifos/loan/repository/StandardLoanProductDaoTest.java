@@ -18,6 +18,9 @@ public class StandardLoanProductDaoTest
 	
 	@Test(groups="integration")
 	public void testCreateOneProduct() {
+		// do we need to do these deletes?
+		// it seems like we could make the tests transactional so that they auto-rollback
+        super.deleteFromTables(new String[] {"loans"});
         super.deleteFromTables(new String[] {"loanproducts"});
 		String longName = "long";
 		String shortName = "short";

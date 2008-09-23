@@ -24,6 +24,7 @@ import net.sf.dozer.util.mapping.MapperIF;
 
 import org.mifos.core.MifosServiceException;
 import org.mifos.loan.repository.LoanDao;
+import org.mifos.loan.repository.LoanProductDao;
 import org.springframework.validation.Validator;
 
 
@@ -34,6 +35,8 @@ public interface LoanService {
 	LoanDao getLoanDao();
 
 	void setLoanDao(LoanDao loanDao);
+
+	void setLoanProductDao(LoanProductDao loanProductDao);
 	
 	void setBeanMapper(MapperIF mapper);
 

@@ -36,14 +36,20 @@
     
    
    	<bean id="loanService" class="org.mifos.loan.service.StandardLoanService">
+		<property name="loanProductDao" ref="loanProductDao"/>
 		<property name="loanDao" ref="standardLoanDao"/>
 		<property name="beanMapper" ref="beanMapper"/>
 		<property name="validator" ref="validator"/>
 	</bean>
     
    
-	<bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper"/>
-
+	<bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>dozerBeanMappings.xml</value>
+			</list>
+		</property>
+	</bean>
 	<!-- 
 		<bean id="BeanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
 		<property name="mappingFiles">

@@ -50,4 +50,12 @@
     </bean>
 
 	<bean id="loanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
+	
+	<bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>dozerBeanMappings.xml</value>
+			</list>
+		</property>
+	</bean>	
 </beans>

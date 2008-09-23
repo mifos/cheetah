@@ -23,6 +23,8 @@ package org.mifos.loan.repository;
 import java.math.BigDecimal;
 
 import org.mifos.loan.domain.Loan;
+import org.mifos.loan.domain.LoanProduct;
+import org.mifos.loan.domain.LoanProductStatus;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -47,13 +49,15 @@ public class InMemoryLoanDaoTest {
 		BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
 		BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
 		
-		Loan loan = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		LoanProduct loanProduct = new LoanProduct(LOAN_PRODUCT_ID,"long name", "name", 0.0, 20.0, LoanProductStatus.ACTIVE);
+		
+		Loan loan = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProduct);
 		Assert.assertEquals(loan.getId().intValue(), 1, "Unexpected loan id.");
-		Assert.assertEquals(loan.getLoanProductId().intValue(),1,"LoanProductId mismatch.");
+		Assert.assertEquals(loan.getLoanProduct().getId().intValue(),1,"LoanProductId mismatch.");
 		Assert.assertEquals(loan.getAmount(), LOAN_AMOUNT, "Loan amount mismatch.");
 		Assert.assertEquals(loan.getInterestRate(), LOAN_INTEREST_RATE, "Loan interest rate mismatch.");
 		
-		loan = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		loan = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProduct);
 		Assert.assertEquals(loan.getId().intValue(),2,"Unexpected loan id.");
 	}
 }

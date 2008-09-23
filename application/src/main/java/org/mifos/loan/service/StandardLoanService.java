@@ -24,7 +24,9 @@ import net.sf.dozer.util.mapping.MapperIF;
 
 import org.mifos.core.MifosServiceException;
 import org.mifos.loan.domain.Loan;
+import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.repository.LoanDao;
+import org.mifos.loan.repository.LoanProductDao;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
 
@@ -34,13 +36,15 @@ import org.springframework.validation.Validator;
  */
 public class StandardLoanService implements LoanService {
 	private LoanDao loanDao;
+	private LoanProductDao loanProductDao;
 	private MapperIF beanMapper;
 	private Validator validator;
 	
 	@Override
 	public LoanDto createLoan(LoanDto loanDto) throws MifosServiceException {
 		validate(loanDto);
-		Loan loan = loanDao.createLoan(loanDto.getClientId(), loanDto.getAmount(),loanDto.getInterestRate(),loanDto.getLoanProductId());
+		LoanProduct loanProduct = loanProductDao.get(loanDto.getLoanProductId());
+		Loan loan = loanDao.createLoan(loanDto.getClientId(), loanDto.getAmount(),loanDto.getInterestRate(),loanProduct);
 
 		// Use a net.sf.dozer.util.mapping.DozerBeanMapper to copy fields 
 		// from the Loan domain object to the LoanDto.  Not so interesting
@@ -80,6 +84,10 @@ public class StandardLoanService implements LoanService {
 	@Override
 	public void setValidator(Validator validator) {
 		this.validator = validator;
+	}
+
+	public void setLoanProductDao(LoanProductDao loanProductDao) {
+		this.loanProductDao = loanProductDao;
 	}
 
 	

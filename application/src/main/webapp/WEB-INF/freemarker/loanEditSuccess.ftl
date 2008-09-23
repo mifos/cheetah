@@ -14,6 +14,7 @@
 	 <h2>The loan has been created</h2>
 	 
 	 <table>
+	 	<tr><td>Loan Product:</td><td>${model.loan.loanProductDto.longName}</td></tr>
 	 	<tr><td>Amount:</td><td>${model.loan.amount}</td></tr>
 	 	<tr><td>Interest rate:</td><td>${model.loan.interestRate}</td></tr>
 	 </table>

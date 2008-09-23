@@ -42,6 +42,8 @@ public class LoanDto {
 	@Min(value=0)
 	private BigDecimal interestRate;
 	
+	private LoanProductDto loanProductDto;
+	
 	public LoanDto() {
 		// empty constructor for dozer mapping
 	}
@@ -94,5 +96,14 @@ public class LoanDto {
 		this.clientId = clientId;
 	}
 
+	public LoanProductDto getLoanProductDto() {
+		return loanProductDto;
+	}
+
+	public void setLoanProductDto(LoanProductDto loanProductDto) {
+		this.loanProductDto = loanProductDto;
+	}
+
+	
 	
 }

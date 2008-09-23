@@ -28,6 +28,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.mifos.loan.domain.Loan;
+import org.mifos.loan.domain.LoanProduct;
 import org.springframework.transaction.annotation.Transactional;
 
 public class StandardLoanDao  implements LoanDao {
@@ -38,8 +39,8 @@ public class StandardLoanDao  implements LoanDao {
 	@Override
 	@Transactional
 	public Loan createLoan(Integer clientId, BigDecimal loanAmount, BigDecimal interestRate,
-			Integer loanProductId) {
-		Loan loan = new Loan(clientId, loanAmount, interestRate, loanProductId);
+			LoanProduct loanProduct) {
+		Loan loan = new Loan(clientId, loanAmount, interestRate, loanProduct);
 		entityManager.persist(loan);
 		return loan;
 	}

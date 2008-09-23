@@ -26,6 +26,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -41,7 +43,9 @@ public class Loan {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     private Integer clientId;
-	private Integer loanProductId;
+    @ManyToOne
+    @JoinColumn(name = "LOAN_PRODUCT_ID", nullable = false)
+	private LoanProduct loanProduct;
 	private BigDecimal amount;
 	private BigDecimal interestRate;
 	
@@ -50,11 +54,11 @@ public class Loan {
 	}
 	
 	public Loan(Integer clientId, BigDecimal amount, BigDecimal interestRate,
-			Integer loanProductId) {
+			LoanProduct loanProduct) {
 		this.clientId = clientId;
 		this.amount = amount;
 		this.interestRate = interestRate;
-		this.loanProductId = loanProductId;
+		this.loanProduct = loanProduct;
 	}
 	
 	public Integer getId() {
@@ -63,11 +67,11 @@ public class Loan {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getLoanProductId() {
-		return loanProductId;
+	public LoanProduct getLoanProduct() {
+		return loanProduct;
 	}
-	public void setLoanProductId(Integer loanProductId) {
-		this.loanProductId = loanProductId;
+	public void setLoanProduct(LoanProduct loanProduct) {
+		this.loanProduct = loanProduct;
 	}
 	public BigDecimal getAmount() {
 		return amount;

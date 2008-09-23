@@ -23,11 +23,14 @@ package org.mifos.loan.service;
 import java.math.BigDecimal;
 
 import junit.framework.Assert;
-
-import net.sf.dozer.util.mapping.DozerBeanMapper;
+import net.sf.dozer.util.mapping.MapperIF;
 
 import org.mifos.core.MifosServiceException;
+import org.mifos.loan.domain.LoanProduct;
+import org.mifos.loan.domain.LoanProductStatus;
 import org.mifos.loan.repository.InMemoryLoanDao;
+import org.mifos.loan.repository.InMemoryLoanProductDao;
+import org.mifos.loan.repository.LoanProductDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -36,8 +39,6 @@ import org.springframework.validation.Validator;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.sun.org.apache.xml.internal.utils.IntVector;
-
 @ContextConfiguration(locations={"classpath:unitTestContext.xml"})
 @Test(groups = { "unit" })
 public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
@@ -45,8 +46,10 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	private LoanService loanService;
     Validator validator;
 
-    
-	static final int LOAN_PRODUCT_ID = 1;	
+    @Autowired
+    private MapperIF beanMapper;
+
+	int loanProductId = 1;	
 	static final int CLIENT_ID = 1;
 	static final BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
 	static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
@@ -54,21 +57,26 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	@SuppressWarnings("PMD.UrF")
 	@BeforeMethod
 	public void setUp() {
+		LoanProductDao loanProductDao = new InMemoryLoanProductDao();
+		LoanProduct loanProduct = loanProductDao.createLoanProduct("loan prod 1", "prod1", 0.0, 20.0, LoanProductStatus.ACTIVE);
+		loanProductId = loanProduct.getId();
+		
 		loanService = new StandardLoanService();
 		loanService.setLoanDao(new InMemoryLoanDao());
-		loanService.setBeanMapper(new DozerBeanMapper());
+		loanService.setLoanProductDao(loanProductDao);
+		loanService.setBeanMapper(beanMapper);
 		loanService.setValidator(validator);
 	}
 	
 	public void testCreateValidLoan() throws MifosServiceException {
 
-		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProductId);
 		
 		LoanDto loanDto = loanService.createLoan(inputLoanDto);
 		
 		Assert.assertEquals("Unexpected loan id assigned.", loanDto.getId().intValue(),1);
 		Assert.assertEquals("Didn't get clientId back.", loanDto.getClientId().intValue(),CLIENT_ID);		
-		Assert.assertEquals("Didn't get loanProductId back.",loanDto.getLoanProductId().intValue(),LOAN_PRODUCT_ID);
+		Assert.assertEquals("Didn't get loanProductId back.",loanDto.getLoanProductId().intValue(),loanProductId);
 		Assert.assertEquals("Didn't get loan amount back.",loanDto.getAmount(), LOAN_AMOUNT);
 		Assert.assertEquals("Didn't get interestRate back.",loanDto.getInterestRate(), LOAN_INTEREST_RATE);
 	}
@@ -81,7 +89,7 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	}
 	
 	public void testCreateLoanWithInvalidClient() {
-		LoanDto inputLoanDto = new LoanDto(null, LOAN_AMOUNT, LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		LoanDto inputLoanDto = new LoanDto(null, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProductId);
 		
 		try {
 			loanService.createLoan(inputLoanDto);
@@ -103,7 +111,7 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	}
 
 	public void testCreateLoanWithInvalidLoanAmount() {
-		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, new BigDecimal("-1"), LOAN_INTEREST_RATE, LOAN_PRODUCT_ID);
+		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, new BigDecimal("-1"), LOAN_INTEREST_RATE, loanProductId);
 		
 		try {
 			loanService.createLoan(inputLoanDto);
@@ -114,7 +122,7 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	}
 
 	public void testCreateLoanWithInvalidInterestRate() {
-		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, new BigDecimal("-1"), LOAN_PRODUCT_ID);
+		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, new BigDecimal("-1"), loanProductId);
 		
 		try {
 			loanService.createLoan(inputLoanDto);

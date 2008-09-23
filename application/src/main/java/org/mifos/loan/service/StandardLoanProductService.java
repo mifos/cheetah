@@ -77,8 +77,10 @@ public class StandardLoanProductService implements LoanProductService {
 	*/
 	
 	private LoanProductDto assembleDto (LoanProduct loanProduct) {
-		return new LoanProductDto(loanProduct.getLongName(), loanProduct.getShortName(), loanProduct.getMinInterestRate(),
+		LoanProductDto loanProductDto = new LoanProductDto(loanProduct.getLongName(), loanProduct.getShortName(), loanProduct.getMinInterestRate(),
 				                                loanProduct.getMaxInterestRate(), loanProduct.getStatus());
+		loanProductDto.setId(loanProduct.getId());
+		return loanProductDto;
 	}
 	
 	private LoanProduct disAssembleLoanProduct (LoanProductDto dto) {
