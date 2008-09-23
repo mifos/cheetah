@@ -1,9 +1,13 @@
 CREATE TABLE loans (
-  id INTEGER AUTO_INCREMENT,
-  clientId INTEGER,  
-  loanProductId INTEGER,
-  amount decimal(15,3),
-  interestRate decimal(15,3),
-  primary key (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-CREATE INDEX loans_id ON loans(id);
+	id INT NOT NULL AUTO_INCREMENT,
+	amount DECIMAL(10 , 2),
+	clientId INT,
+	interestRate DECIMAL(10 , 2),
+	LOAN_PRODUCT_ID INT NOT NULL,
+	PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE INDEX FK625D983185434A3 ON loans (LOAN_PRODUCT_ID ASC);
+
+ALTER TABLE loans ADD CONSTRAINT FK625D983185434A3 FOREIGN KEY (LOAN_PRODUCT_ID)
+	REFERENCES loanproducts (id);
