@@ -99,31 +99,37 @@ p.boldOrange {
 	font-weight: bold;	
 }
 	
-.page-content {
+div#page-content {
 	padding-top: 15px;
 	min-height: 480px;
 	background-color: white;
 	padding-left: 5px;
 	padding-right: 5px;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 9pt;
 }
 	
-.page-content h2 {
-	color: red;
-	font-size: medium;
-	font-weight: bold;
-}
-
-.page-content h3 {
+div#page-content h2 {
 	color: #CC6601;
-	font-size: large;
+	font-size: 11pt;
 	font-weight: bold;
 }
 
-.page-content h4 {
-	color: black;
-	font-size: medium;
+div#page-content h3 {
+	color: #CC6601;
+	font-size: 11pt;
 	font-weight: bold;
+}
+
+div#page-content h4 {
+	color: black;
+	font-size: small;
+	font-weight: bold;
+}
+
+div#page-content table {
+		font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 9pt;
 }
 
 #login {
@@ -212,7 +218,7 @@ fieldset {  /* Setting border-color for the tag alone does not work in Firefox *
 }
 
 fieldset legend {
-	font-size:medium; /* bump up legend font size, not too large or it'll overwrite border on left */
+	font-size:10pt; /* bump up legend font size, not too large or it'll overwrite border on left */
                        /* be careful with padding, it'll shift the nice offset on top of border  */
 }
 

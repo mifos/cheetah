@@ -9,9 +9,9 @@
   <body>
   [@mifos.header currentTab="Admin" /]
       
-	<div class="page-content">
+	<div id="page-content">
 	
-		<h2>Administrative Tasks</h2>
+		<h2 id="adminHome.heading">Administrative Tasks</h2>
 		
 			<p>
 			Welcome to the mifos administrative area. Click on a link below to begin.

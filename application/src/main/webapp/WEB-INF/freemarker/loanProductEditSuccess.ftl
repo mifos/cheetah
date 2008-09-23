@@ -9,9 +9,9 @@
   <body>
   [@mifos.header currentTab="Home" /]
       
-	<div style="page-content">
+	<div id="page-content">
 	
-	 <h2>The loan product "${model.loanProduct.shortName}" has been created</h2>
+	 <h2>Loan product created. ${model.loanProduct.shortName}</h2>
 	 
 	 <table>
 	 	<tr><td>Long name:</td><td>${model.loanProduct.longName}</td></tr>

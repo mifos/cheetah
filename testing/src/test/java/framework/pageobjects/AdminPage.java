@@ -31,7 +31,7 @@ public class AdminPage extends AbstractPage {
 	 * 
 	 */
 	public AdminPage() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	/**
@@ -41,4 +41,9 @@ public class AdminPage extends AbstractPage {
 		super(selenium);
 	}
 
+	public CreateLoanProductPage navigateToCreateLoanProductPage() {
+		selenium.click("link=Define a new loan product");
+		waitForPageToLoad();
+		return new CreateLoanProductPage(selenium);
+	}
 }
