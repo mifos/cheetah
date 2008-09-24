@@ -36,7 +36,8 @@
 				<h4>Manage Loan Products</h4>
 		
 					<ul>
-						<li>View loan products | <a href="createLoanProduct.ftl">Define a new loan product</a></li>
+						<li> <a href="viewLoanProducts.ftl">View loan products</a>
+						     | <a href="createLoanProduct.ftl">Define a new loan product</a></li>
 					</ul>
 			
 	</div>

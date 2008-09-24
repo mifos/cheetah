@@ -34,9 +34,9 @@ import org.mifos.ui.loan.command.LoanProductFormBean;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-public class LoanProductController extends SimpleFormController {
+public class LoanProductFormController extends SimpleFormController {
 	
-    private static final Log LOG = LogFactory.getLog(LoanProductController.class);
+    private static final Log LOG = LogFactory.getLog(LoanProductFormController.class);
     
     private LoanProductService loanProductService;
     
