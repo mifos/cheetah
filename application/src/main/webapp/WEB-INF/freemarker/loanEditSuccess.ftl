@@ -9,7 +9,7 @@
   <body>
   [@mifos.header currentTab="Home" /]
       
-	<div style="page-content">
+	<div id="page-content">
 	
 	 <h2>The loan has been created</h2>
 	 
