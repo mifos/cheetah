@@ -69,7 +69,7 @@ public class ClientDto {
 		this.lastName = lastName;
 	}
 
-	// needed because valang can only validate Date, not DateTime
+	// java.util.Date because valang can only validate Date, not DateTime
 	public Date getDateOfBirth() {
 		return getDate(this.dateOfBirth);
 	}
@@ -78,26 +78,30 @@ public class ClientDto {
 		return new DateTime(dateOfBirth);
 	}
 
+	public void setDateOfBirth(DateTime dateOfBirth) {
+		this.dateOfBirth = getDateTime(dateOfBirth);
+	}
+
 	public void setDateTimeOfBirth(DateTime dateOfBirth) {
 		this.dateOfBirth = getDateTime(dateOfBirth);
 	}
 	
-	@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+	@SuppressWarnings("PMD.OnlyOneReturn")
 	private Date getDate(DateTime dateTime) {
-		Date result = null;
-		if (dateTime != null) {
-			result = dateTime.toDate();
+		if (dateTime == null) {
+			return null;
+		} else {
+			return dateTime.toDate();
 		}
-		return result;
 	}
 
-	@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+	@SuppressWarnings("PMD.OnlyOneReturn")
 	private DateTime getDateTime(DateTime date) {
-		DateTime result = null;
-		if (date != null) {
-			result = new DateTime(date);
+		if (date == null) {
+			return null;
+		} else {
+			return new DateTime(date);
 		}
-		return result;
 	}
 	
 }

@@ -49,11 +49,11 @@
    
     <context:component-scan base-package="org.mifos" />
 
-    <bean id="jpaClientDao" class="org.mifos.client.repository.JpaClientDao" />
+    <bean id="standardClientDao" class="org.mifos.client.repository.StandardClientDao" />
 
     <bean id="standardClientService" class="org.mifos.client.service.StandardClientService">
        <property name="validator" ref="validator"/>
-       <property name="clientDao" ref="jpaClientDao"/>
+       <property name="clientDao" ref="standardClientDao"/>
     </bean> 
 
     <bean id="standardClientServiceTest" class="org.mifos.client.service.StandardClientServiceTest">

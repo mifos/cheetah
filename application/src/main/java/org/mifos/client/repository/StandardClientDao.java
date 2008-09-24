@@ -31,7 +31,7 @@ import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
 import org.springframework.transaction.annotation.Transactional;
 
-public class JpaClientDao implements ClientDao {
+public class StandardClientDao implements ClientDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
