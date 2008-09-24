@@ -1,3 +1,16 @@
+CREATE TABLE loanproducts (
+	id INT NOT NULL AUTO_INCREMENT,
+	longName VARCHAR(255),
+	maxInterestRate DOUBLE,
+	minInterestRate DOUBLE,
+	shortName VARCHAR(255),
+	status INT,
+	PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE UNIQUE INDEX shortName ON loanproducts (shortName ASC);
+
+
 CREATE TABLE loans (
 	id INT NOT NULL AUTO_INCREMENT,
 	amount DECIMAL(10 , 2),
