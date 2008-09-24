@@ -12,7 +12,7 @@
   
   <div id="page-content">
   	<div id="homePageContent">
-      <h2>[@spring.message "welcomeToMifos" /]</h2>
+      <h2 id="hello.heading">[@spring.message "welcomeToMifos" /]</h2>
     </div>
   </div>
 
