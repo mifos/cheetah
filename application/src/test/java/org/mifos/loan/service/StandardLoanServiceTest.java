@@ -50,15 +50,24 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
     private MapperIF beanMapper;
 
 	int loanProductId = 1;	
+	LoanProductDto loanProductDto = null;
 	static final int CLIENT_ID = 1;
 	static final BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
 	static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
+	
+	static final String LOAN_PRODUCT_LONG_NAME = "loan prod 1";
+	static final String LOAN_PRODUCT_SHORT_NAME = "lp1";
+	static final Double lOAN_PRODUCT_MIN_INTEREST = 1.0;
+	static final Double lOAN_PRODUCT_MAX_INTEREST = 20.0;
 	
 	@SuppressWarnings("PMD.UrF")
 	@BeforeMethod
 	public void setUp() {
 		LoanProductDao loanProductDao = new InMemoryLoanProductDao();
-		LoanProduct loanProduct = loanProductDao.createLoanProduct("loan prod 1", "prod1", 0.0, 20.0, LoanProductStatus.ACTIVE);
+		LoanProduct loanProduct = loanProductDao.createLoanProduct(LOAN_PRODUCT_LONG_NAME, LOAN_PRODUCT_SHORT_NAME,
+				lOAN_PRODUCT_MIN_INTEREST, lOAN_PRODUCT_MAX_INTEREST, LoanProductStatus.ACTIVE);
+		loanProductDto = new LoanProductDto(loanProduct.getLongName(), loanProduct.getShortName(), loanProduct.getMinInterestRate(),
+				loanProduct.getMaxInterestRate(), loanProduct.getStatus());
 		loanProductId = loanProduct.getId();
 		
 		loanService = new StandardLoanService();
@@ -68,9 +77,15 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 		loanService.setValidator(validator);
 	}
 	
+	private LoanDto createValidLoanDto() {
+		LoanDto loanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProductId);
+		loanDto.setLoanProductDto(loanProductDto);
+		return loanDto;
+	}
+	
 	public void testCreateValidLoan() throws MifosServiceException {
 
-		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProductId);
+		LoanDto inputLoanDto = createValidLoanDto();
 		
 		LoanDto loanDto = loanService.createLoan(inputLoanDto);
 		
@@ -82,14 +97,15 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	}
 
 	private void assertExpectedError(MifosServiceException mifosServiceException, String fieldName, String defaultErrorMessage) {
-		Assert.assertEquals(mifosServiceException.getErrors().getErrorCount(), 1);
+		Assert.assertEquals(1, mifosServiceException.getErrors().getErrorCount());
 		FieldError error = (FieldError)mifosServiceException.getErrors().getFieldErrors().get(0);
 		Assert.assertEquals(error.getField(), fieldName);
 		Assert.assertEquals(error.getDefaultMessage(), defaultErrorMessage);		
 	}
 	
 	public void testCreateLoanWithInvalidClient() {
-		LoanDto inputLoanDto = new LoanDto(null, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProductId);
+		LoanDto inputLoanDto = createValidLoanDto();
+		inputLoanDto.setClientId(null);
 		
 		try {
 			loanService.createLoan(inputLoanDto);
@@ -100,7 +116,8 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	}
 
 	public void testCreateLoanWithInvalidLoanProduct() {
-		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, null);
+		LoanDto inputLoanDto = createValidLoanDto();
+		inputLoanDto.setLoanProductId(null);
 		
 		try {
 			loanService.createLoan(inputLoanDto);
@@ -111,7 +128,8 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	}
 
 	public void testCreateLoanWithInvalidLoanAmount() {
-		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, new BigDecimal("-1"), LOAN_INTEREST_RATE, loanProductId);
+		LoanDto inputLoanDto = createValidLoanDto();
+		inputLoanDto.setAmount(new BigDecimal("-1"));
 		
 		try {
 			loanService.createLoan(inputLoanDto);
@@ -121,14 +139,27 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 		}
 	}
 
-	public void testCreateLoanWithInvalidInterestRate() {
-		LoanDto inputLoanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, new BigDecimal("-1"), loanProductId);
+	public void testCreateLoanWithInvalidLowInterestRate() {
+		LoanDto inputLoanDto = createValidLoanDto();
+		inputLoanDto.setInterestRate(new BigDecimal("0.5"));
 		
 		try {
 			loanService.createLoan(inputLoanDto);
 			Assert.fail("Bad interest rate should have failed validation.");
 		} catch (MifosServiceException mifosServiceException) {
-			assertExpectedError(mifosServiceException, "interestRate", "min");
+			assertExpectedError(mifosServiceException, "interestRate", "LoanDto.interestRateIsTooLow");
+		}
+	}
+
+	public void testCreateLoanWithInvalidHighInterestRate() {
+		LoanDto inputLoanDto = createValidLoanDto();
+		inputLoanDto.setInterestRate(new BigDecimal("30"));
+		
+		try {
+			loanService.createLoan(inputLoanDto);
+			Assert.fail("Bad interest rate should have failed validation.");
+		} catch (MifosServiceException mifosServiceException) {
+			assertExpectedError(mifosServiceException, "interestRate", "LoanDto.interestRateIsTooHigh");
 		}
 	}
 	

@@ -43,7 +43,8 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 
 	private LoginPage loginPage;
 	
-
+	private static final String MIN_INTEREST_RATE = "5";
+	
 	@BeforeMethod
 	public void setUp() {
 		super.setUp();
@@ -75,14 +76,14 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
 		Assert.assertTrue(selenium.isTextPresent("Create a new loan"));
 		createLoanPage.createLoanExpectingError(LOAN_AMOUNT, INVALID_INTEREST_RATE);
-		Assert.assertTrue(selenium.isTextPresent("The minimum interest rate must be at least 0"));
+		Assert.assertTrue(selenium.isTextPresent("Please enter an interest rate greater than or equal to the minimum of " +
+				MIN_INTEREST_RATE + " allowed by loan product."));
 	}
 
 	private void ensureLoanProductExists() {
 		DateTime now = new DateTime();
 		String LONG_NAME = "Loan Product " + now.getMillis();
 		String SHORT_NAME = Long.toString(now.getMillis());
-		String MIN_INTEREST_RATE = "5";
 		String MAX_INTEREST_RATE = "100";
 		
 		loginPage

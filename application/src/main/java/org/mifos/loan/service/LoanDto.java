@@ -24,10 +24,12 @@ import java.math.BigDecimal;
 
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Validator;
 
 /**
  *
  */
+@Validator(LoanDtoValidator.class)
 public class LoanDto {
 	private Integer id;
 	
@@ -39,7 +41,6 @@ public class LoanDto {
 	@Min(value=0)
 	private BigDecimal amount;
 	@NotNull
-	@Min(value=0)
 	private BigDecimal interestRate;
 	
 	private LoanProductDto loanProductDto;
