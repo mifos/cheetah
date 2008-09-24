@@ -25,8 +25,6 @@ import java.math.BigDecimal;
 import org.apache.log4j.Logger;
 import org.mifos.core.AbstractDtoValidationTest;
 import org.mifos.loan.domain.LoanProductStatus;
-import org.springframework.validation.Errors;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -56,6 +54,12 @@ public class LoanDtoValidationTest  extends AbstractDtoValidationTest {
 		verifyFieldError(loanDto, "amount", "not.null");
 	}
 
+	public void testNullInterestRate () {
+		loanDto.setInterestRate(null);
+		verifyFieldError(loanDto, "interestRate", "not.null");
+	}
+
+	
 	public void testLowInterestRate() {
 		loanDto.setInterestRate(BigDecimal.ONE);
 		verifyFieldError(loanDto, "interestRate", "LoanDto.interestRateIsTooLow");

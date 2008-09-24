@@ -43,17 +43,21 @@ public class LoanDtoValidator implements Validator {
     public void validate(Object obj, Errors errors) {
         LoanDto loanDto = (LoanDto) obj;
         if (loanDto == null) {
-            errors.rejectValue("interestRate", "error.not-specified", null, "Value required.");
-        }
-        else {
+            errors.rejectValue("loanDto", "error.not-specified", null, "error.not-specified");
+        } else {
             LOG.info("Validating using LoanDtoValidator");
-            if (loanDto.getInterestRate().doubleValue() > loanDto.getLoanProductDto().getMaxInterestRate()) {
-                errors.rejectValue("interestRate", "LoanDto.interestRateIsTooHigh",
-                    new Object[] {loanDto.getLoanProductDto().getMaxInterestRate()},"LoanDto.interestRateIsTooHigh");
-            }
-            if (loanDto.getInterestRate().doubleValue() < loanDto.getLoanProductDto().getMinInterestRate()) {
-                errors.rejectValue("interestRate", "LoanDto.interestRateIsTooLow",
-                    new Object[] {loanDto.getLoanProductDto().getMinInterestRate()},"LoanDto.interestRateIsTooLow");
+            if (loanDto.getInterestRate() == null) {
+                LOG.info("Found null interest rate-- this should be covered by an annotation based check.");
+            	return;
+            } else {
+            	if (loanDto.getInterestRate().doubleValue() > loanDto.getLoanProductDto().getMaxInterestRate()) {
+            		errors.rejectValue("interestRate", "LoanDto.interestRateIsTooHigh",
+            				new Object[] {loanDto.getLoanProductDto().getMaxInterestRate()},"LoanDto.interestRateIsTooHigh");
+            	}
+            	if (loanDto.getInterestRate().doubleValue() < loanDto.getLoanProductDto().getMinInterestRate()) {
+            		errors.rejectValue("interestRate", "LoanDto.interestRateIsTooLow",
+            				new Object[] {loanDto.getLoanProductDto().getMinInterestRate()},"LoanDto.interestRateIsTooLow");
+            	}
             }
         }
     }
