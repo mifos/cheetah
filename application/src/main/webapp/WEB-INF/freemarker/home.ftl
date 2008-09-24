@@ -10,8 +10,10 @@
   [@mifos.header currentTab="Home" /]
   [#include "homeLeftPane.ftl" ]  
   
-  <div id="homePageContent">      
-    <p id="hello.heading" class="boldOrange">[@spring.message "welcomeToMifos" /]</p>
+  <div id="page-content">
+  	<div id="homePageContent">
+      <h2>[@spring.message "welcomeToMifos" /]</h2>
+    </div>
   </div>
 
   </body>
