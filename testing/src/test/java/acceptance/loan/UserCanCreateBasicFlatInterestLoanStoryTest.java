@@ -21,6 +21,7 @@ package acceptance.loan;
 
 import junit.framework.Assert;
 
+import org.joda.time.DateTime;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -30,6 +31,7 @@ import framework.pageobjects.CreateLoanPage;
 import framework.pageobjects.HomePage;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
+import framework.util.UiTestUtils;
 
 /*
  * Corresponds to story 675 in mingle
@@ -56,6 +58,9 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 	public void createValidLoanTest() {
 		double LOAN_AMOUNT = 1200;
 		double INTEREST_RATE = 12;
+		
+		ensureLoanProductExists();
+		
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
 		Assert.assertTrue(selenium.isTextPresent("Create a new loan"));
@@ -73,5 +78,20 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 		Assert.assertTrue(selenium.isTextPresent("The minimum interest rate must be at least 0"));
 	}
 
+	private void ensureLoanProductExists() {
+		DateTime now = new DateTime();
+		String LONG_NAME = "Loan Product " + now.getMillis();
+		String SHORT_NAME = Long.toString(now.getMillis());
+		double MIN_INTEREST_RATE = 5;
+		double MAX_INTEREST_RATE = 100;
+		
+		loginPage
+			.loginAs("mifos", "testmifos")
+			.navigateToAdminPage()
+			.navigateToCreateLoanProductPage()
+			.createValidLoanProduct(LONG_NAME, SHORT_NAME, MIN_INTEREST_RATE, MAX_INTEREST_RATE);
+		loginPage.logout();
+	}
+	
 }
 

@@ -73,7 +73,6 @@ public class AdminUserCanCreateLoanProductStoryTest extends UiTestCaseBase {
 		
 		navigateToCreateLoanProductPage()
 			.createValidLoanProduct(LONG_NAME, SHORT_NAME, MIN_INTEREST_RATE, MAX_INTEREST_RATE);
-		UiTestUtils.sleep(5000);
 		
 		assertTextFoundOnPage("Loan product created.");
 	}
@@ -86,7 +85,6 @@ public class AdminUserCanCreateLoanProductStoryTest extends UiTestCaseBase {
 		
 		navigateToCreateLoanProductPage()
 			.createInvalidLoanProduct(LONG_NAME, SHORT_NAME, MIN_INTEREST_RATE, MAX_INTEREST_RATE);
-		UiTestUtils.sleep(5000);
 		assertTextFoundOnPage("Minimum interest rate must be 0 or more.");
 		assertTextFoundOnPage(SHORT_NAME);
 		

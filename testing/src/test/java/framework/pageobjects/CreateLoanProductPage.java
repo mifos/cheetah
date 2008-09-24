@@ -35,6 +35,7 @@ public class CreateLoanProductPage extends AbstractPage {
 		selenium.type("minInterestRate", minInterestRate.toString());
 		selenium.type("maxInterestRate", maxInterestRate.toString());
 		selenium.click("login.form.submit");
+		waitForPageToLoad();
 		return new CreateLoanProductSuccessPage(selenium);
 	}
 
@@ -45,6 +46,7 @@ public class CreateLoanProductPage extends AbstractPage {
 		selenium.type("minInterestRate", minInterestRate.toString());
 		selenium.type("maxInterestRate", maxInterestRate.toString());
 		selenium.click("login.form.submit");
+		waitForPageToLoad();
 		return new CreateLoanProductPage(selenium);
 	}
 }
