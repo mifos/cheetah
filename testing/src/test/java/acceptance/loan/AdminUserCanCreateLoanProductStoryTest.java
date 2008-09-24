@@ -45,7 +45,12 @@ import framework.util.UiTestUtils;
 public class AdminUserCanCreateLoanProductStoryTest extends UiTestCaseBase {
 
 	private LoginPage loginPage;
-	
+	private static final String LONG_NAME = "Simple Loan Product";
+	private static final String SHORT_NAME = "SLP";
+	private static final String MIN_INTEREST_RATE = "5";
+	private static final String MAX_INTEREST_RATE = "100";
+	private static final String ERROR_ELEMENT_ID = "*.errors";
+	private static final String STATUS = "ACTIVE";
 
 	@BeforeMethod
 	public void setUp() {
@@ -58,38 +63,62 @@ public class AdminUserCanCreateLoanProductStoryTest extends UiTestCaseBase {
 		loginPage.logout();
 	}
 
-	/**
-	 * This test is disabled until a framework is in place to clear out the loanproducts
-	 * table prior to running it. Because LoanProduct.shortName is required to be unique,
-	 * this test will faile the second time it is run without clearing the table before
-	 * the second run.
-	 */
-	@Test(enabled=false)
 	public void createValidLoanProductTest() {
-		String LONG_NAME = "Simple Loan Product";
-		String SHORT_NAME = "SLP";
-		double MIN_INTEREST_RATE = 5;
-		double MAX_INTEREST_RATE = 100;
 		
 		navigateToCreateLoanProductPage()
-			.createValidLoanProduct(LONG_NAME, SHORT_NAME, MIN_INTEREST_RATE, MAX_INTEREST_RATE);
-		
-		assertTextFoundOnPage("Loan product created.");
+			.createValidLoanProduct(LONG_NAME, SHORT_NAME, MIN_INTEREST_RATE, MAX_INTEREST_RATE);		
+		assertElementTextExactMatch("Loan product created. " + SHORT_NAME, "page-content-heading");
+		assertElementTextExactMatch(LONG_NAME, "longName");
+		assertElementTextExactMatch(SHORT_NAME, "shortName");
+		assertElementTextExactMatch(MIN_INTEREST_RATE, "minInterestRate");
+		assertElementTextExactMatch(MAX_INTEREST_RATE, "maxInterestRate");
+		assertElementTextExactMatch(STATUS, "status");
 	}
 	
 	public void createLoanProductMissingShortName() {
-		String LONG_NAME = "Simple Loan Product";
-		String SHORT_NAME = "";
-		double MIN_INTEREST_RATE = -5;
-		double MAX_INTEREST_RATE = 5000;
-		
 		navigateToCreateLoanProductPage()
-			.createInvalidLoanProduct(LONG_NAME, SHORT_NAME, MIN_INTEREST_RATE, MAX_INTEREST_RATE);
-		assertTextFoundOnPage("Minimum interest rate must be 0 or more.");
-		assertTextFoundOnPage(SHORT_NAME);
+			.createInvalidLoanProduct(LONG_NAME, "", MIN_INTEREST_RATE, MAX_INTEREST_RATE);
+		assertErrorTextExactMatch("Please enter a short name.");
+	}
+		
+	public void createLoanProductMissingLongName() {
+		navigateToCreateLoanProductPage()
+			.createInvalidLoanProduct("", SHORT_NAME, MIN_INTEREST_RATE, MAX_INTEREST_RATE);
+		assertErrorTextExactMatch("Please enter a long name.");
 		
 	}
-	
+		
+	public void createLoanProductNegativeMinInterestRate() {		
+		navigateToCreateLoanProductPage()
+			.createInvalidLoanProduct(LONG_NAME, SHORT_NAME, "-5", MAX_INTEREST_RATE);
+		assertErrorTextExactMatch("Minimum interest rate must be 0 or more.");
+		
+	}
+		
+	public void createLoanProductNegativeMaxInterestRate() {
+		navigateToCreateLoanProductPage()
+			.createInvalidLoanProduct(LONG_NAME, SHORT_NAME, MIN_INTEREST_RATE, "-5");
+		assertErrorTextIncludes("Maximum interest rate must be 0 or more.");		
+	}
+		
+	public void createLoanProductMinInterestRateExceedsMaxInterestRate() {
+		navigateToCreateLoanProductPage()
+			.createInvalidLoanProduct(LONG_NAME, SHORT_NAME, "5", "4");
+		assertErrorTextExactMatch("The minimum interest rate cannot exceed the maximum interest rate.");
+	}
+		
+	public void createLoanProductMissingMaxInterestRate() {
+		navigateToCreateLoanProductPage()
+			.createInvalidLoanProduct(LONG_NAME, SHORT_NAME, "5", "");
+		assertErrorTextIncludes("Please enter the maximum annual interest rate.");
+	}
+		
+	public void createLoanProductMissingMinInterestRate() {
+		navigateToCreateLoanProductPage()
+			.createInvalidLoanProduct(LONG_NAME, SHORT_NAME, "", "5");
+		assertErrorTextExactMatch("Please enter the minimum annual interest rate.");		
+	}
+
 	private CreateLoanProductPage navigateToCreateLoanProductPage (){
 		return
 			loginPage
@@ -98,9 +127,29 @@ public class AdminUserCanCreateLoanProductStoryTest extends UiTestCaseBase {
 				.navigateToCreateLoanProductPage();
 	}
 
+	/*
 	private void assertTextFoundOnPage (String text) {
 		Assert.assertTrue(selenium.isTextPresent(text));
-
+	}
+	*/
+	
+	private void assertElementTextExactMatch(String text, String elementId) {
+		Assert.assertEquals("Text \"" + text + "\" does not match element \"" + elementId + "\":",
+				text,
+				selenium.getText(elementId));
+	}
+	
+	private void assertErrorTextExactMatch(String text) {
+		assertElementTextExactMatch(text, ERROR_ELEMENT_ID);
+	}
+	
+	private void assertElementTextIncludes(String text, String elementId) {
+		Assert.assertTrue("Expected text \"" + text + "\" not included in element \"" + elementId + "\"", 
+						  selenium.getText(elementId).indexOf(text) >= 0);
+	}
+	
+	private void assertErrorTextIncludes(String text) {
+		assertElementTextIncludes(text, ERROR_ELEMENT_ID);
 	}
 }
 

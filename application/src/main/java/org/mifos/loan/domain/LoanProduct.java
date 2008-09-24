@@ -20,7 +20,6 @@
 
 package org.mifos.loan.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,7 +35,8 @@ public class LoanProduct {
 	private Integer id;
 	private String longName;
 	
-	@Column(unique=true)
+	//Removed until a story requires unique short names
+	//@Column(unique=true)
 	private String shortName;
 	private Double minInterestRate;
 	private Double maxInterestRate;

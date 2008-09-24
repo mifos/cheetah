@@ -82,8 +82,8 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 		DateTime now = new DateTime();
 		String LONG_NAME = "Loan Product " + now.getMillis();
 		String SHORT_NAME = Long.toString(now.getMillis());
-		double MIN_INTEREST_RATE = 5;
-		double MAX_INTEREST_RATE = 100;
+		String MIN_INTEREST_RATE = "5";
+		String MAX_INTEREST_RATE = "100";
 		
 		loginPage
 			.loginAs("mifos", "testmifos")

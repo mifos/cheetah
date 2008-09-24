@@ -11,14 +11,14 @@
       
 	<div id="page-content">
 	
-	 <h2>Loan product created. ${model.loanProduct.shortName}</h2>
+	 <h2 id="page-content-heading">Loan product created. ${model.loanProduct.shortName}</h2>
 	 
 	 <table>
-	 	<tr><td>Long name:</td><td>${model.loanProduct.longName}</td></tr>
-	 	<tr><td>Short name:</td><td>${model.loanProduct.shortName}</td></tr>
-	 	<tr><td>Minimum interest rate:</td><td>${model.loanProduct.minInterestRate}</td></tr>
-	 	<tr><td>Maximum interest rate:</td><td>${model.loanProduct.maxInterestRate}</td></tr>
-	 	<tr><td>Status:</td><td>${model.loanProduct.status}</td></tr>
+	 	<tr><td>Long name:</td><td id="longName">${model.loanProduct.longName}</td></tr>
+	 	<tr><td>Short name:</td><td id="shortName">${model.loanProduct.shortName}</td></tr>
+	 	<tr><td>Minimum interest rate:</td><td id="minInterestRate">${model.loanProduct.minInterestRate}</td></tr>
+	 	<tr><td>Maximum interest rate:</td><td id="maxInterestRate">${model.loanProduct.maxInterestRate}</td></tr>
+	 	<tr><td>Status:</td><td id = "status">${model.loanProduct.status}</td></tr>
 	 </table>
 	   
 	   </div>

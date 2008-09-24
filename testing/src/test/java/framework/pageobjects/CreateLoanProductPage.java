@@ -28,23 +28,23 @@ public class CreateLoanProductPage extends AbstractPage {
 		super(selenium);
 	}
 
-	public CreateLoanProductSuccessPage createValidLoanProduct (String longName, String shortName, Double minInterestRate,
-														 Double maxInterestRate) {
+	public CreateLoanProductSuccessPage createValidLoanProduct (String longName, String shortName, String minInterestRate,
+														 String maxInterestRate) {
 		selenium.type("longName", longName);
 		selenium.type("shortName", shortName);
-		selenium.type("minInterestRate", minInterestRate.toString());
-		selenium.type("maxInterestRate", maxInterestRate.toString());
+		selenium.type("minInterestRate", minInterestRate);
+		selenium.type("maxInterestRate", maxInterestRate);
 		selenium.click("login.form.submit");
 		waitForPageToLoad();
 		return new CreateLoanProductSuccessPage(selenium);
 	}
 
-	public CreateLoanProductPage createInvalidLoanProduct (String longName, String shortName, Double minInterestRate,
-														 Double maxInterestRate) {
+	public CreateLoanProductPage createInvalidLoanProduct (String longName, String shortName, String minInterestRate,
+														 String maxInterestRate) {
 		selenium.type("longName", longName);
 		selenium.type("shortName", shortName);
-		selenium.type("minInterestRate", minInterestRate.toString());
-		selenium.type("maxInterestRate", maxInterestRate.toString());
+		selenium.type("minInterestRate", minInterestRate);
+		selenium.type("maxInterestRate", maxInterestRate);
 		selenium.click("login.form.submit");
 		waitForPageToLoad();
 		return new CreateLoanProductPage(selenium);
