@@ -28,24 +28,33 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mifos.loan.service.LoanProductService;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.Controller;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 /**
  *
  */
-public class LoanProductController implements Controller {
+public class LoanProductController extends MultiActionController {
 
 	private LoanProductService loanProductService;
 	
-	@Override
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
-	public ModelAndView handleRequest(HttpServletRequest arg0,
+	public ModelAndView viewLoanProducts(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
 		
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("loanProducts", getLoanProductService().getAll());
         
-        return new ModelAndView("successViewLoanProducts", "model", model);
+        return new ModelAndView("viewLoanProducts", "model", model);
+	}
+	
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+	public ModelAndView viewLoanProduct(HttpServletRequest request,
+			HttpServletResponse response1) throws Exception {
+		
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("loanProduct", getLoanProductService().getLoanProduct(Integer.valueOf(request.getParameter("id"))));
+        
+        return new ModelAndView("viewLoanProduct", "model", model);
 	}
 
 	public LoanProductService getLoanProductService() {

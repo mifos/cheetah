@@ -7,7 +7,7 @@
    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-  [@mifos.header currentTab="Home" /]
+  [@mifos.header currentTab="Admin" /]
       
 	<div id="page-content">
 	

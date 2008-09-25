@@ -35,6 +35,10 @@
     	<property name="loanProductService" ref="loanProductService"/>
     </bean>
     
+    <bean name="/viewLoanProduct.ftl" class="org.mifos.ui.loan.controller.LoanProductController">
+    	<property name="loanProductService" ref="loanProductService"/>
+    </bean>
+    
     <bean name="/createLoanProduct.ftl" class="org.mifos.ui.loan.controller.LoanProductFormController">
         <property name="sessionForm"  value="true"/>
         <property name="commandName"  value="loanProduct"/>
