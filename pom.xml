@@ -76,6 +76,14 @@
                   <srcFile>${project.build.outputDirectory}/sql/create_clients.sql</srcFile>
                </srcFiles>
             </configuration>
+            <executions>
+              <execution>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>execute</goal>
+                </goals>
+              </execution>
+            </executions>
          </plugin>      
       </plugins>
    </build>
