@@ -47,11 +47,4 @@ public class GenericController extends AbstractController {
 	public String getPageToDisplay(HttpServletRequest request) {
 		return request.getRequestURI().replace("mifos/","").replace("/", "").replace(".ftl", "");
 	}
-
-	/*
-	@Override
-	public void setBeanName(String beanName) {
-		setPageToDisplay(beanName.replace("/", "").replace(".ftl", ""));
-	}
-    */
 }
