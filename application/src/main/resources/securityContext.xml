@@ -22,7 +22,6 @@
         <intercept-url pattern="/accessDenied.ftl" access="ROLE_ANONYMOUS,ROLE_GUEST,ROLE_USER,ROLE_ADMIN" />
         <intercept-url pattern="/home.ftl" access="ROLE_USER" />
         <intercept-url pattern="/appInfo.ftl" access="ROLE_USER" />
-        <intercept-url pattern="/priceincrease.ftl" access="ROLE_ADMIN" />
         <intercept-url pattern="/adminHome.ftl" access="ROLE_ADMIN" />
         <intercept-url pattern="/createClient.ftl" access="ROLE_ADMIN,ROLE_USER" />
         <http-basic/>  
