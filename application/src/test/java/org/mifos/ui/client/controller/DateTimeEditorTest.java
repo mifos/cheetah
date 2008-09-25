@@ -10,7 +10,7 @@ public class DateTimeEditorTest {
 	
 	public void testGetAsTextNull() {
 		
-		DateTimeEditor dateTimeEditor = new DateTimeEditor();
+		LocalDateEditor dateTimeEditor = new LocalDateEditor();
 		DateTime dateTime = null;
 		dateTimeEditor.setSource(dateTime);
 		Assert.assertEquals("", dateTimeEditor.getAsText());

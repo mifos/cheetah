@@ -2,18 +2,18 @@ package org.mifos.ui.client.controller;
 
 import java.beans.PropertyEditorSupport;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
-public class DateTimeEditor extends PropertyEditorSupport {
+public class LocalDateEditor extends PropertyEditorSupport {
 
 	public void setAsText(String text) throws java.lang.IllegalArgumentException {
-        DateTime dateTime = new DateTime(text);
-        this.setValue(dateTime);
+        LocalDate localDate = new LocalDate(text);
+        this.setValue(localDate);
     }
 
 	@SuppressWarnings("PMD.OnlyOneReturn")
     public String getAsText() {
-    	DateTime dateTime = (DateTime) getValue();
+		LocalDate dateTime = (LocalDate) getValue();
 		if (dateTime == null) {
     	    return "";
     	} else {

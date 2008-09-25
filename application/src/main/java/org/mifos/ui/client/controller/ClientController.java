@@ -26,7 +26,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.mifos.client.service.ClientDto;
 import org.mifos.client.service.ClientService;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -63,7 +63,7 @@ public class ClientController extends SimpleFormController {
     @InitBinder
     protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder)
     throws ServletException {
-        binder.registerCustomEditor(DateTime.class, new DateTimeEditor());
+        binder.registerCustomEditor(LocalDate.class, new LocalDateEditor());
     }
 
 }
