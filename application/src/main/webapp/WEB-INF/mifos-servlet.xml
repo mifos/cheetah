@@ -30,8 +30,6 @@
     <bean name="/languages.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/adminHome.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     <bean name="/clientsAndAccounts.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-    <bean name="/createClient.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-    <bean name="/createClientSuccess.ftl" class="org.mifos.ui.core.controller.GenericController"/>
     
     <bean name="/viewLoanProducts.ftl" class="org.mifos.ui.loan.controller.LoanProductController">
     	<property name="loanProductService" ref="loanProductService"/>
@@ -57,6 +55,19 @@
         <property name="loanService" ref="loanService"/>
         <property name="loanProductService" ref="loanProductService"/>
     </bean>
+
+    <bean name="/createClient.ftl" class="org.mifos.ui.client.controller.ClientController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="client"/>
+        <property name="commandClass" value="org.mifos.client.service.ClientDto"/>
+        <property name="formView"     value="createClient"/>
+        <property name="successView"  value="createClientSuccess.ftl"/>
+        <property name="validator"    ref="beanValidator"/>
+        <property name="clientService" ref="clientService"/>
+    </bean>
+    <bean name="/createClientSuccess.ftl" class="org.mifos.ui.core.controller.GenericController"/>
+
+
 
     <bean name="/home.ftl" class="org.mifos.ui.core.controller.GenericController"/>
 

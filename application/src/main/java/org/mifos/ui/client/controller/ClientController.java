@@ -36,8 +36,6 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 
 public class ClientController extends SimpleFormController {
 	
-    //private static final Logger logger = Logger.getLogger(ClientController.class);
-    
     private ClientService clientService;
     
     public ClientService getClientService() {

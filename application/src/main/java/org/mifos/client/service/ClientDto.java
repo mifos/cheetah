@@ -75,7 +75,7 @@ public class ClientDto {
 	}
 
 	public DateTime getDateTimeOfBirth() {
-		return new DateTime(dateOfBirth);
+		return getDateTime(this.dateOfBirth);
 	}
 
 	public void setDateOfBirth(DateTime dateOfBirth) {

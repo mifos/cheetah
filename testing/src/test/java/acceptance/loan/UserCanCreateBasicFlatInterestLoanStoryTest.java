@@ -31,7 +31,6 @@ import framework.pageobjects.CreateLoanPage;
 import framework.pageobjects.HomePage;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
-import framework.util.UiTestUtils;
 
 /*
  * Corresponds to story 675 in mingle

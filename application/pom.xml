@@ -60,6 +60,12 @@
          <layout>default</layout>
       </repository>
       <repository>
+         <id>maven2-jboss-repository</id>
+         <name>JBoss maven2 repository</name>
+         <url>http://repository.jboss.com/maven2</url>
+         <layout>default</layout>
+      </repository>
+      <repository>
          <id>ibiblio-maven2-repository</id>
          <name>Ibiblio maven2 repository</name>
          <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
@@ -195,7 +201,7 @@
           <groupId>org.hibernate</groupId>
           <artifactId>hibernate</artifactId>
           <version>3.2.6.ga</version>
-      </dependency>       
+      </dependency>
    </dependencies>
    <build>
       <finalName>mifos</finalName>
