@@ -6,7 +6,7 @@ CREATE TABLE loanproducts (
 	shortName VARCHAR(255),
 	status INT,
 	PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE UNIQUE INDEX shortName ON loanproducts (shortName ASC);
 
@@ -18,7 +18,7 @@ CREATE TABLE loans (
 	interestRate DECIMAL(10 , 2),
 	LOAN_PRODUCT_ID INT NOT NULL,
 	PRIMARY KEY (id)
-) ENGINE=InnoDB;
+);
 
 CREATE INDEX FK625D983185434A3 ON loans (LOAN_PRODUCT_ID ASC);
 

@@ -4,4 +4,4 @@ CREATE TABLE `clients` (
   `lastName` varchar(80) default NULL,
   `dateOfBirth` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+);
