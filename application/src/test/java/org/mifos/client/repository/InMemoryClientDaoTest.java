@@ -25,6 +25,7 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
 import org.testng.annotations.BeforeMethod;
@@ -43,7 +44,7 @@ public class InMemoryClientDaoTest {
 	public void testCreateClient() throws MifosException {
 		String expectedFirstName = "John";
 		String expectedLastName = "Smith";
-		DateTime expectedDateOfBirth = new DateTime();
+		LocalDate expectedDateOfBirth = new LocalDate();
 		Client client = clientDao.create(expectedFirstName, expectedLastName, expectedDateOfBirth);
 		Assert.assertEquals(expectedFirstName, client.getFirstName());
 		Assert.assertEquals(expectedLastName, client.getLastName());
@@ -51,7 +52,7 @@ public class InMemoryClientDaoTest {
 	}
 
 	public void testGetClient() throws MifosException {
-		Client client = clientDao.create("John", "Careful Walker", new DateTime());
+		Client client = clientDao.create("John", "Careful Walker", new LocalDate());
 		Client newClient = clientDao.get(client.getId());
 		Assert.assertEquals(client.getFirstName(), newClient.getFirstName());
 		Assert.assertEquals(client.getLastName(), newClient.getLastName());
@@ -59,8 +60,8 @@ public class InMemoryClientDaoTest {
 	}
 
 	public void testGetAll() throws MifosException {
-		clientDao.create("John", "Icicle Boy", new DateTime());
-		clientDao.create("John", "Starbird", new DateTime());
+		clientDao.create("John", "Icicle Boy", new LocalDate());
+		clientDao.create("John", "Starbird", new LocalDate());
 		List<Client> clientList = clientDao.getAll();
 		Assert.assertEquals(2, clientList.size());
 	}

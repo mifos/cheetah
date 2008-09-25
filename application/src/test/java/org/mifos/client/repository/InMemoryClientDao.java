@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
 import org.springframework.validation.Validator;
@@ -36,7 +36,7 @@ public class InMemoryClientDao implements ClientDao {
 	private final Map<Integer, Client> clients = new HashMap<Integer, Client>(); 
 	
 	@Override
-	public Client create(String firstName, String lastName, DateTime dateOfBirth) throws MifosException {
+	public Client create(String firstName, String lastName, LocalDate dateOfBirth) throws MifosException {
 		Client client = new Client(generateNextId(), firstName, lastName, dateOfBirth);
 		clients.put(client.getId(), client);
 		return client;

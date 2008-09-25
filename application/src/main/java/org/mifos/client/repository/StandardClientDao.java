@@ -26,7 +26,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +38,7 @@ public class StandardClientDao implements ClientDao {
 
 	@Override
 	@Transactional
-	public Client create(String firstName, String lastName, DateTime dateOfBirth)
+	public Client create(String firstName, String lastName, LocalDate dateOfBirth)
 			throws MifosException {
 		Client client = new Client(null, firstName, lastName, dateOfBirth);
 		entityManager.persist(client);

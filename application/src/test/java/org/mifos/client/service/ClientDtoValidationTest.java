@@ -21,6 +21,7 @@
 package org.mifos.client.service;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.mifos.core.AbstractDtoValidationTest;
@@ -85,40 +86,40 @@ public class ClientDtoValidationTest  extends AbstractDtoValidationTest {
 	}
 
 	public void testNullDateOfBirth () {
-		clientDto.setDateTimeOfBirth(null);
+		clientDto.setLocalDateOfBirth(null);
 		verifyFieldError(clientDto, "dateOfBirth", "not.null");
 	}
 
 	public void testValidDateOfBirth () {
-		clientDto.setDateTimeOfBirth(new DateTime());
+		clientDto.setLocalDateOfBirth(new LocalDate());
 		verifyNoErrors(clientDto);
 	}
 
 	public void testValidDateOfBirthBoundary () {
-		clientDto.setDateTimeOfBirth(getDateTime("1800-01-01"));
+		clientDto.setLocalDateOfBirth(getLocalDate("1800-01-01"));
 		verifyNoErrors(clientDto);
 	}
 
 	public void testInvalidDateOfBirthBoundary () {
-		clientDto.setDateTimeOfBirth(getDateTime("1799-12-31"));
+		clientDto.setLocalDateOfBirth(getLocalDate("1799-12-31"));
 		verifyFieldError(clientDto, "dateOfBirth", "expression");
 	}
 
 	public void testInValidDateOfBirth () {
-		clientDto.setDateTimeOfBirth(getDateTime("1753-01-01"));
+		clientDto.setLocalDateOfBirth(getLocalDate("1753-01-01"));
 		verifyFieldError(clientDto, "dateOfBirth", "expression");
 	}
 
-	private DateTime getDateTime(String date) {
+	private LocalDate getLocalDate(String date) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-		return dateTimeFormatter.parseDateTime(date);
+		return dateTimeFormatter.parseDateTime(date).toLocalDate();
 	}
 	
 	private ClientDto validClientDto() {
 		clientDto = new ClientDto();
 		clientDto.setFirstName("Jane");
 		clientDto.setLastName("Doe");
-		clientDto.setDateTimeOfBirth(new DateTime());
+		clientDto.setLocalDateOfBirth(new LocalDate());
 		return clientDto;
 	}
 

@@ -22,6 +22,7 @@ package org.mifos.client.service;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.mifos.client.repository.ClientDao;
@@ -55,14 +56,14 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     public void testCreateClient() throws MifosServiceException {
     	String expectedFirstName = "Jane";
     	String expectedLastName = "Smith";
-    	DateTime expectedDateOfBirth = new DateTime();
+    	LocalDate expectedDateOfBirth = new LocalDate();
         createAndVerifyClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
     }
     
     public void testCreateClientEmptyName() throws MifosException {
     	String expectedFirstName = "Foo";
     	String expectedLastName = "";
-    	DateTime expectedDateOfBirth = new DateTime();
+    	LocalDate expectedDateOfBirth = new LocalDate();
     	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for empty names.");
     	expectedFirstName = "";
     	expectedLastName = "Bar";
@@ -73,7 +74,7 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     	String eightyCharName = "01234567890123456789012345678901234567890123456789012345678901234567890123456789";
 		String expectedFirstName80Chars = eightyCharName;
     	String expectedLastName = "Bar";
-    	DateTime expectedDateOfBirth = new DateTime();
+    	LocalDate expectedDateOfBirth = new LocalDate();
     	createClient(expectedFirstName80Chars, expectedLastName, expectedDateOfBirth);
 		String expectedFirstName = "Foo";
     	String expectedLastName80Chars = eightyCharName;
@@ -84,7 +85,7 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     	String eightyOneCharName = "012345678901234567890123456789012345678901234567890123456789012345678901234567891";
 		String expectedFirstName81Chars = eightyOneCharName;
     	String expectedLastName = "Bar";
-    	DateTime expectedDateOfBirth = new DateTime();
+    	LocalDate expectedDateOfBirth = new LocalDate();
     	verifyMifosServiceException(expectedFirstName81Chars, expectedLastName, expectedDateOfBirth, "Should throw exception for empty names.");
 		String expectedFirstName = "Foo";
     	String expectedLastName81Chars = eightyOneCharName;
@@ -95,14 +96,14 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     public void testCreateClientNullDate() {
     	String expectedFirstName = "Foo";
     	String expectedLastName = "Bar";
-    	DateTime expectedDateOfBirth = null;
+    	LocalDate expectedDateOfBirth = null;
     	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for null date.");
     }
 
     public void testGetClient() throws MifosException, MifosServiceException {
     	String expectedFirstName = "Homer";
     	String expectedLastName = "Simpson";
-    	DateTime expectedDateOfBirth = new DateTime();
+    	LocalDate expectedDateOfBirth = new LocalDate();
 		ClientDto clientDto = createClientDto(expectedFirstName, expectedLastName, expectedDateOfBirth);
 		ClientDto expectedClientDto = clientService.createClient(clientDto);
         Integer clientId = expectedClientDto.getId();
@@ -111,12 +112,12 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
         Assert.assertEquals(freshclientDto.getId(), expectedClientDto.getId());
         Assert.assertEquals(freshclientDto.getFirstName(), expectedClientDto.getFirstName());
         Assert.assertEquals(freshclientDto.getLastName(), expectedClientDto.getLastName());
-        Assert.assertEquals(freshclientDto.getDateTimeOfBirth(), expectedClientDto.getDateTimeOfBirth());
+        Assert.assertEquals(freshclientDto.getLocalDateOfBirth(), expectedClientDto.getLocalDateOfBirth());
     }
     
     public void testCreateClientGoodDateOfBirth() throws MifosServiceException {
     	DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-    	DateTime expectedDateOfBirth = dateTimeFormatter.parseDateTime("1880-01-01");
+    	LocalDate expectedDateOfBirth = dateTimeFormatter.parseDateTime("1880-01-01").toLocalDate();
     	String expectedFirstName = "Yeung";
     	String expectedLastName = "Enough";
        	createClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
@@ -124,14 +125,14 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     
     public void testCreateClientBadDateOfBirth() throws MifosServiceException {
     	DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-    	DateTime expectedDateOfBirth = dateTimeFormatter.parseDateTime("1753-01-01");
+    	LocalDate expectedDateOfBirth = dateTimeFormatter.parseDateTime("1753-01-01").toLocalDate();
     	String expectedFirstName = "Far";
     	String expectedLastName = "Too-Old";
        	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for date older than 1 January 1880");
     }
 
     private void verifyMifosServiceException(String expectedFirstName, String expectedLastName, 
-    		DateTime expectedDateOfBirth, String message ) {
+    		LocalDate expectedDateOfBirth, String message ) {
     	try {
     		createClient(expectedFirstName, expectedLastName,
 					expectedDateOfBirth);
@@ -144,29 +145,29 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     }
 
 	private void createClient(String expectedFirstName,
-			String expectedLastName, DateTime expectedDateOfBirth)
+			String expectedLastName, LocalDate expectedDateOfBirth)
 			throws MifosServiceException {
 		ClientDto clientDto = createClientDto(expectedFirstName, expectedLastName, expectedDateOfBirth);
 		clientService.createClient(clientDto);
 	}
 
     private void createAndVerifyClient(String expectedFirstName,
-			String expectedLastName, DateTime expectedDateOfBirth) throws MifosServiceException {
+			String expectedLastName, LocalDate expectedDateOfBirth) throws MifosServiceException {
     	ClientDto clientDto = createClientDto(expectedFirstName,
 				expectedLastName, expectedDateOfBirth);
     	ClientDto newClientDto  = clientService.createClient(clientDto);
         Assert.assertNotNull(newClientDto);
         Assert.assertEquals(newClientDto.getFirstName(), expectedFirstName);
         Assert.assertEquals(newClientDto.getLastName(), expectedLastName);
-        Assert.assertEquals(newClientDto.getDateTimeOfBirth(), expectedDateOfBirth);
+        Assert.assertEquals(newClientDto.getLocalDateOfBirth(), expectedDateOfBirth);
 	}
 
 	private ClientDto createClientDto(String expectedFirstName,
-			String expectedLastName, DateTime expectedDateOfBirth) {
+			String expectedLastName, LocalDate expectedDateOfBirth) {
 		ClientDto clientDto = new ClientDto();
     	clientDto.setFirstName(expectedFirstName);
     	clientDto.setLastName(expectedLastName);
-    	clientDto.setDateTimeOfBirth(expectedDateOfBirth);
+    	clientDto.setLocalDateOfBirth(expectedDateOfBirth);
 		return clientDto;
 	}
 

@@ -21,7 +21,7 @@
 package org.mifos.client.service;
 
 import java.util.Date;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Length;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
@@ -43,7 +43,7 @@ public class ClientDto {
 	
 	@NotNull
 	@Expression("dateOfBirth >= [1799-12-31]")
-	private DateTime dateOfBirth;
+	private LocalDate dateOfBirth;
 	
 	public Integer getId() {
 		return id;
@@ -74,33 +74,33 @@ public class ClientDto {
 		return getDate(this.dateOfBirth);
 	}
 
-	public DateTime getDateTimeOfBirth() {
-		return getDateTime(this.dateOfBirth);
+	public LocalDate getLocalDateOfBirth() {
+		return getLocalDate(this.dateOfBirth);
 	}
 
-	public void setDateOfBirth(DateTime dateOfBirth) {
-		this.dateOfBirth = getDateTime(dateOfBirth);
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = getLocalDate(dateOfBirth);
 	}
 
-	public void setDateTimeOfBirth(DateTime dateOfBirth) {
-		this.dateOfBirth = getDateTime(dateOfBirth);
+	public void setLocalDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = getLocalDate(dateOfBirth);
 	}
 	
 	@SuppressWarnings("PMD.OnlyOneReturn")
-	private Date getDate(DateTime dateTime) {
-		if (dateTime == null) {
+	private Date getDate(LocalDate localDate) {
+		if (localDate == null) {
 			return null;
 		} else {
-			return dateTime.toDate();
+			return localDate.toDateMidnight().toDate();
 		}
 	}
 
 	@SuppressWarnings("PMD.OnlyOneReturn")
-	private DateTime getDateTime(DateTime date) {
-		if (date == null) {
+	private LocalDate getLocalDate(LocalDate localDate) {
+		if (localDate == null) {
 			return null;
 		} else {
-			return new DateTime(date);
+			return new LocalDate(localDate);
 		}
 	}
 	

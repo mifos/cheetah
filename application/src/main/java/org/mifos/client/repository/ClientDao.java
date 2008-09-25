@@ -22,13 +22,13 @@ package org.mifos.client.repository;
 
 import java.util.List;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
 
 public interface ClientDao {
 	
-	Client create(String firstName, String lastName, DateTime dateOfBirth) throws MifosException;
+	Client create(String firstName, String lastName, LocalDate dateOfBirth) throws MifosException;
 	Client get(Integer clientId);
 	List<Client> getAll();
 

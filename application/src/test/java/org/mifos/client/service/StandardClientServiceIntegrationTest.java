@@ -20,7 +20,7 @@
 
 package org.mifos.client.service;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.mifos.core.MifosServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,12 +45,12 @@ public class StandardClientServiceIntegrationTest extends AbstractTransactionalT
     public void testCreateClient() throws MifosServiceException {
     	String expectedFirstName = "Jane";
     	String expectedLastName = "Smith";
-    	DateTime expectedDateOfBirth = new DateTime();
+    	LocalDate expectedDateOfBirth = new LocalDate();
         createAndVerifyClient(expectedFirstName, expectedLastName, expectedDateOfBirth);
     }
     
     private void createAndVerifyClient(String expectedFirstName,
-			String expectedLastName, DateTime expectedDateOfBirth) throws MifosServiceException {
+			String expectedLastName, LocalDate expectedDateOfBirth) throws MifosServiceException {
     	ClientDto clientDto = createclientDto(expectedFirstName,
 				expectedLastName, expectedDateOfBirth);
     	ClientDto newClient  = clientService.createClient(clientDto);
@@ -58,15 +58,15 @@ public class StandardClientServiceIntegrationTest extends AbstractTransactionalT
         Assert.assertNotNull(newClient.getId());
         Assert.assertEquals(newClient.getFirstName(), expectedFirstName);
         Assert.assertEquals(newClient.getLastName(), expectedLastName);
-        Assert.assertEquals(newClient.getDateTimeOfBirth(), expectedDateOfBirth);
+        Assert.assertEquals(newClient.getLocalDateOfBirth(), expectedDateOfBirth);
 	}
 
 	private ClientDto createclientDto(String expectedFirstName,
-			String expectedLastName, DateTime expectedDateOfBirth) {
+			String expectedLastName, LocalDate expectedDateOfBirth) {
 		ClientDto clientDto = new ClientDto();
     	clientDto.setFirstName(expectedFirstName);
     	clientDto.setLastName(expectedLastName);
-    	clientDto.setDateTimeOfBirth(expectedDateOfBirth);
+    	clientDto.setLocalDateOfBirth(expectedDateOfBirth);
 		return clientDto;
 	}
 

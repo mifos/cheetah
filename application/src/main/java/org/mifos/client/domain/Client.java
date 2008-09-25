@@ -30,7 +30,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 @Entity
 @Table(name="clients")
@@ -46,18 +46,18 @@ public class Client implements Serializable {
 	private String lastName;
 
 	@Column
-	@Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
-	private DateTime dateOfBirth;
+	@Type(type="org.joda.time.contrib.hibernate.PersistentLocalDate")
+	private LocalDate dateOfBirth;
 
 	protected Client() {
 		// empty constructor for Hibernate
 	}
 	
-	public Client(Integer id, String firstName, String lastName, DateTime dateOfBirth) {
+	public Client(Integer id, String firstName, String lastName, LocalDate dateOfBirth) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.dateOfBirth = new DateTime(dateOfBirth);
+		this.dateOfBirth = new LocalDate(dateOfBirth);
 	}
 
     public Integer getId() {
@@ -84,12 +84,12 @@ public class Client implements Serializable {
 		this.lastName = lastName;
 	}
 	
-	public DateTime getDateOfBirth() {
-		return new DateTime(this.dateOfBirth);
+	public LocalDate getDateOfBirth() {
+		return new LocalDate(this.dateOfBirth);
 	}
 	
-	public void setDateOfBirth(DateTime dateOfBirth) {
-		this.dateOfBirth = new DateTime(dateOfBirth);
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = new LocalDate(dateOfBirth);
 	}
 	
 }
