@@ -27,13 +27,10 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
-public class GenericController extends AbstractController implements BeanNameAware {
-
-	private String pageToDisplay = "";
+public class GenericController extends AbstractController {
 
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)  {
@@ -42,22 +39,19 @@ public class GenericController extends AbstractController implements BeanNameAwa
         	Map<String, Object> status = new HashMap<String, Object>();
         	List<String> errorMessages = new ArrayList<String>();
         	status.put("errorMessages", errorMessages);
-        	ModelAndView modelAndView = new ModelAndView(pageToDisplay, "model", model);
+        	ModelAndView modelAndView = new ModelAndView(getPageToDisplay(request), "model", model);
         	modelAndView.addObject("status", status);
         	return modelAndView;
 	}
 	
-	public String getPageToDisplay() {
-		return pageToDisplay;
+	public String getPageToDisplay(HttpServletRequest request) {
+		return request.getRequestURI().replace("mifos/","").replace("/", "").replace(".ftl", "");
 	}
 
-	public void setPageToDisplay(String pageToDisplay) {
-		this.pageToDisplay = pageToDisplay;
-	}
-
+	/*
 	@Override
 	public void setBeanName(String beanName) {
 		setPageToDisplay(beanName.replace("/", "").replace(".ftl", ""));
 	}
-    
+    */
 }

@@ -15,7 +15,76 @@
         	</list>
         </property>
     </bean>
+    
+    <bean id="redirectionController" class="org.mifos.ui.core.controller.RedirectionController">
+        <property name="viewToRedirectTo" value="index"/>
+    </bean>
 
+    <bean id="genericController" class="org.mifos.ui.core.controller.GenericController"/>
+    
+    <bean id="loanProductController" class="org.mifos.ui.loan.controller.LoanProductController">
+    	<property name="loanProductService" ref="loanProductService"/>
+    </bean>
+    
+    <bean id="loanController" class="org.mifos.ui.loan.controller.LoanController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="loan"/>
+        <property name="commandClass" value="org.mifos.loan.service.LoanDto"/>
+        <property name="formView"     value="createLoan"/>
+        <property name="successView"  value="home.ftl"/>
+        <property name="validator"    ref="beanValidator"/>
+        <property name="loanService" ref="loanService"/>
+        <property name="loanProductService" ref="loanProductService"/>
+    </bean>
+    
+    <bean name="loanProductFormController" class="org.mifos.ui.loan.controller.LoanProductFormController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="loanProduct"/>
+        <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductFormBean"/>
+        <property name="formView"     value="createLoanProduct"/>
+        <property name="successView"  value="home.ftl"/>
+        <property name="validator"    ref="beanValidator"/>
+        <property name="loanProductService" ref="loanProductService"/>
+    </bean>
+
+    <bean id="clientController" class="org.mifos.ui.client.controller.ClientController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="client"/>
+        <property name="commandClass" value="org.mifos.client.service.ClientDto"/>
+        <property name="formView"     value="createClient"/>
+        <property name="successView"  value="createClientSuccess.ftl"/>
+        <property name="validator"    ref="beanValidator"/>
+        <property name="clientService" ref="clientService"/>
+    </bean>
+
+    <bean id="appInfoController" class="org.mifos.ui.core.controller.AppInfoController">
+        <property name="appInfo" ref="appInfo"/>
+    </bean>
+     
+    
+    <bean id="publicUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+    	<property name="mappings">
+    		<value>
+    			/=redirectionController
+    			/index.ftl=redirectionController
+    			/login.ftl=genericController
+    			/accessDenied.ftl=genericController
+    			/languages.ftl=genericController
+    			/adminHome.ftl=genericController
+    			/clientsAndAccounts.ftl=genericController
+    			/viewLoanProducts.ftl=loanProductController
+    			/viewLoanProduct.ftl=loanProductController
+    			/createLoanProduct.ftl=loanProductFormController
+    			/createLoan.ftl=loanController
+    			/createClient.ftl=clientController
+    			/createClientSuccess.ftl=genericController
+    			/home.ftl=genericController
+    			/appInfo.ftl=appInfoController
+    		</value>
+    	</property>
+    </bean>
+
+<!-- obsolete bean mappings
     <bean name="/" class="org.mifos.ui.core.controller.RedirectionController">
         <property name="viewToRedirectTo" value="index"/>
     </bean>
@@ -79,6 +148,7 @@
         <property name="appInfo" ref="appInfo"/>
     </bean>
 
+-->
     <!-- freemarker config -->
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 	  <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
