@@ -19,7 +19,7 @@
  */
 package framework.pageobjects;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
 
 /**
  * Encapsulates the GUI based actions that can
@@ -30,13 +30,13 @@ import com.thoughtworks.selenium.DefaultSelenium;
 public class AbstractPage {
 
 	private static final String MAX_WAIT_FOR_PAGE_TO_LOAD_IN_MILLISECONDS = "30000";
-	protected DefaultSelenium selenium;
+	protected Selenium selenium;
 
 	public AbstractPage() {
 		// do nothing
 	}
 	
-	public AbstractPage(DefaultSelenium selenium) {
+	public AbstractPage(Selenium selenium) {
 		this.selenium = selenium;
 	}
 	
@@ -44,11 +44,11 @@ public class AbstractPage {
 		selenium.waitForPageToLoad(MAX_WAIT_FOR_PAGE_TO_LOAD_IN_MILLISECONDS);
 	}
 	
-	final public void setSelenium(DefaultSelenium selenium) {
+	final public void setSelenium(Selenium selenium) {
 		this.selenium = selenium;
 	}
 
-	public DefaultSelenium getSelenium() {
+	public Selenium getSelenium() {
 		return this.selenium;
 	}
 

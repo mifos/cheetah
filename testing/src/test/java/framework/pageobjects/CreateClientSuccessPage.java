@@ -2,11 +2,11 @@ package framework.pageobjects;
 
 import junit.framework.Assert;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
 
 public class CreateClientSuccessPage extends AbstractPage {
 
-	public CreateClientSuccessPage(DefaultSelenium selenium) {
+	public CreateClientSuccessPage(Selenium selenium) {
 		super(selenium);
 	}
 

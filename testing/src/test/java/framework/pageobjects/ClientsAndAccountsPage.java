@@ -1,10 +1,10 @@
 package framework.pageobjects;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
 
 public class ClientsAndAccountsPage extends AbstractPage {
 
-	public ClientsAndAccountsPage(DefaultSelenium selenium) {
+	public ClientsAndAccountsPage(Selenium selenium) {
 		super(selenium);
 	}
 

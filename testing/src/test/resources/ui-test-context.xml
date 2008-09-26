@@ -1,8 +1,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        classpath:xsd/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/aop 
+        classpath:xsd/spring-aop-2.5.xsd">
 
-    <bean id="seleniumTestUtils" class="framework.util.SeleniumTestUtils" />
-        
+    <aop:aspectj-autoproxy />
+    
+    <bean id="seleniumSpeedControl" class="framework.util.SeleniumSpeedControl" />
+
+    <bean id="selenium" class="com.thoughtworks.selenium.DefaultSelenium" >
+        <constructor-arg type="java.lang.String" value="localhost" />
+        <constructor-arg type="int" value="4444" />
+        <constructor-arg type="java.lang.String" value="*firefox" />
+        <constructor-arg type="java.lang.String" value="http://localhost:8080/mifos/" />
+    </bean>
+
 </beans>

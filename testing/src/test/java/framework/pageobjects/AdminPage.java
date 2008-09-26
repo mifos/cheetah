@@ -20,16 +20,10 @@
 
 package framework.pageobjects;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
 
-/**
- *
- */
 public class AdminPage extends AbstractPage {
 
-	/**
-	 * 
-	 */
 	public AdminPage() {
 		super();
 	}
@@ -37,7 +31,7 @@ public class AdminPage extends AbstractPage {
 	/**
 	 * @param selenium
 	 */
-	public AdminPage(DefaultSelenium selenium) {
+	public AdminPage(Selenium selenium) {
 		super(selenium);
 	}
 

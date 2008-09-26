@@ -20,11 +20,11 @@
 
 package framework.pageobjects;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
 
 public class CreateLoanProductPage extends AbstractPage {
 
-	public CreateLoanProductPage(DefaultSelenium selenium) {
+	public CreateLoanProductPage(Selenium selenium) {
 		super(selenium);
 	}
 

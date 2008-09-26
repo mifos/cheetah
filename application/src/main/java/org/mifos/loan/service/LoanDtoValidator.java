@@ -33,7 +33,6 @@ import org.springframework.validation.Validator;
  */
 public class LoanDtoValidator implements Validator {
 
-    /** Logger for this class and subclasses */
     private static final Log LOG = LogFactory.getLog(LoanDtoValidator.class);
 
     public boolean supports(Class clazz) {

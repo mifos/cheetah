@@ -8,7 +8,7 @@
          xsi:schemaLocation="http://www.springframework.org/schema/beans 
            classpath:xsd/spring-beans-2.5.xsd
            http://www.springframework.org/schema/aop 
-           classpath:xsd/spring-aop-2.0.xsd
+           classpath:xsd/spring-aop-2.5.xsd
            http://www.springframework.org/schema/tx 
            classpath:xsd/spring-tx-2.5.xsd
            http://www.springframework.org/schema/context

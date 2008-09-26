@@ -19,42 +19,52 @@
  */
 package framework.test;
 
-import static org.testng.Assert.assertNotNull;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterGroups;
+import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.thoughtworks.selenium.DefaultSelenium;
-
-import framework.util.SeleniumTestUtils;
+import com.thoughtworks.selenium.Selenium;
 	
 @ContextConfiguration(locations={"classpath:test-context.xml", "classpath:ui-test-context.xml"})
 @Test(sequential=true)
 public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
 
-	protected SeleniumTestUtils seleniumTestUtils;
-	protected DefaultSelenium selenium;
+    private static final Log LOG = LogFactory.getLog(UiTestCaseBase.class);
+    private static Boolean seleniumServerIsRunning = Boolean.FALSE;
+    
+	protected Selenium selenium;
 	
 	@BeforeMethod
 	public void setUp() {
-		selenium = this.seleniumTestUtils.getSelenium();
+		// do nothing
 	}
 	
-	@AfterSuite(groups={"acceptance", "ui"})
+	@AfterGroups(groups={"ui"})
 	public void stopSelenium() {
-		if (selenium != null) {
-			selenium.stop();
-		}
+		this.selenium.stop();
 	}
 
 	@Autowired
 	@Test(enabled=false)
-	public void setSeleniumTestUtils(SeleniumTestUtils seleniumTestUtils) {
-		this.seleniumTestUtils = seleniumTestUtils;
-		assertNotNull(this.seleniumTestUtils);
+	public void setSelenium(Selenium selenium) {
+		this.selenium = selenium;
+		synchronized(UiTestCaseBase.class) {
+			if (!seleniumServerIsRunning.booleanValue()) {
+				selenium.start();
+				seleniumServerIsRunning = Boolean.TRUE;
+			}
+		}
 	}
+
+	@Test(enabled=false)
+	public Selenium getSelenium() {
+			return selenium;
+	}
+	
 }

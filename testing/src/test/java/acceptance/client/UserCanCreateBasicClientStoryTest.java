@@ -36,7 +36,7 @@ import framework.test.UiTestCaseBase;
  * http://mingle.mifos.org:7070/projects/cheetah/cards/683
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
-@Test(groups={"basicFlatInterestLoanStory","acceptance","ui"})
+@Test(groups={"userCanCreateBasicClientStoryTest","acceptance","ui"})
 public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase {
 
 	private LoginPage loginPage;
@@ -63,6 +63,7 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase {
 		CreateClientSuccessPage createClientSuccessPage = createClientPage.createValidClient(firstName, lastName, dateOfBirth);
 		createClientSuccessPage.verifyPage();
 	}
+
 
 }
 

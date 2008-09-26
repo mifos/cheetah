@@ -19,7 +19,7 @@
  */
 package framework.pageobjects;
 
-import com.thoughtworks.selenium.DefaultSelenium;
+import com.thoughtworks.selenium.Selenium;
 
 /**
  * Encapsulates the GUI based actions that can
@@ -33,7 +33,7 @@ public class LoginPage extends AbstractPage {
 		super();
 	}
 	
-	public LoginPage(DefaultSelenium selenium) {
+	public LoginPage(Selenium selenium) {
 		super(selenium);
 	}
 	
