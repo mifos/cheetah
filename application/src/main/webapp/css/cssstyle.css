@@ -2,6 +2,10 @@
 /* BEGIN ADDITIONS FOR CHEETAH */
 /********************************/
 
+#loanProductName {
+   text-align: left;
+}
+
 .left-pane-heading-group {
 	margin:0 0 0 10px;
 }

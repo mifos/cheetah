@@ -65,6 +65,22 @@ public class LoanController extends SimpleFormController {
 		return new ModelAndView("loanEditSuccess", "model", model);
 	}
 	
+	@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", // rationale: it is ok to reassign loanProductName
+		"PMD.SignatureDeclareThrowsException"}) //rationale: This is the signature of the superclass's method that we're overriding	
+	@Override
+	protected Map referenceData(HttpServletRequest request) throws Exception {   	
+    	// find the most recently created loan product or leave null if none found.
+    	String loanProductName = "No loan products found";
+    	List<LoanProductDto> loanProductDtos = loanProductService.getAll();
+    	if (!loanProductDtos.isEmpty()) {
+    		loanProductName = loanProductDtos.get(loanProductDtos.size() - 1).getLongName();
+    	}
+        Map<String, Object> referenceData = new HashMap<String, Object>();
+        referenceData.put("loanProductName",loanProductName);
+
+        return referenceData;
+	}
+	
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
     	LoanDto loanDto = new LoanDto();

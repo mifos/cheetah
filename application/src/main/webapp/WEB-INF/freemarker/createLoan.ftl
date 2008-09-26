@@ -22,7 +22,10 @@
 		
 			<fieldset>
 			
-				<legend>Loan  Details</legend>
+				<legend>Loan Details</legend>
+
+				<label id="loanProductLabel">Loan Product:<label id="loanProductName">${loanProductName}</label></label>
+					<br/>
 
 				<label for="loan.form.amount" accesskey="a">Amount:</label>
 					[@form.input path="amount"/]
