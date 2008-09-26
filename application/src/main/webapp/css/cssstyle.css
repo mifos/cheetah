@@ -26,6 +26,10 @@
 	margin:0 0 0 200px;
 }
 
+#adminPageContent {
+	margin:0 0 0 200px;
+}
+
 #logo { 
    float:left; 
 }
@@ -118,6 +122,7 @@ div#page-content {
 	padding-right: 5px;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 9pt;
+	margin: 0 0 0 10px;
 }
 	
 div#page-content h2 {
@@ -291,7 +296,7 @@ form.loan-product fieldset label{
 #left-pane {
    margin-top: 5px;
    float: left;
-   height: 300px;
+   height: 400px;
    background:#F2D1A6;
    width: 180px;
 }

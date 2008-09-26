@@ -8,7 +8,7 @@
   </head>
   <body>
   [@mifos.header currentTab="Admin" /]
-  [#include "homeLeftPane.ftl" ]  
+  [#include "adminLeftPane.ftl" ]  
   
   <div id="page-content">      
     <h2>Loan Products</h2>

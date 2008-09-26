@@ -66,5 +66,25 @@
            </beans:bean>
        </beans:property>
     </beans:bean>
-    
+<!-- Additional bean definitions for using https.  Tomcat configuration changes are needed along with the changes below.
+    <beans:bean id="channelDecisionManager" class="org.springframework.security.securechannel.ChannelDecisionManagerImpl">
+    	<beans:property name="channelProcessors">
+    		<beans:list>
+    			<beans:bean class="org.springframework.security.securechannel.SecureChannelProcessor"/>
+    			<beans:bean class="org.springframework.security.securechannel.InsecureChannelProcessor"/>
+    		</beans:list>
+    	</beans:property>
+    </beans:bean>
+        
+    <beans:bean id="channelProcessingFilter" class="org.springframework.security.securechannel.ChannelProcessingFilter" >
+    	<beans:property name="filterInvocationDefinitionSource">
+    		<beans:value>
+    			CONVERT_URL_TO_LOWERCASE_BEFORE_COMPARISON
+    			PATTERN_TYPE_APACHE_ANT
+    			/**=REQUIRES_SECURE_CHANNEL
+    		</beans:value>
+    	</beans:property>
+    	<beans:property name="channelDecisionManager" ref="channelDecisionManager"/>
+    </beans:bean>
+-->
 </beans:beans>

@@ -8,9 +8,10 @@
   </head>
   <body>
   [@mifos.header currentTab="Admin" /]
-      
+  [#include "adminLeftPane.ftl" ] 
+        
 	<div id="page-content">
-	
+	  <div id ="adminPageContent">
 		<h2 id="adminHome.heading">Administrative Tasks</h2>
 		
 			<p>
@@ -40,7 +41,7 @@
 						<li> <a href="viewLoanProducts.ftl">View loan products</a> </li>
 						<li> <a href="createLoanProduct.ftl">Define a new loan product</a></li>
 					</ul>
-			
+		</div>	
 	</div>
 </body>
 </html>
