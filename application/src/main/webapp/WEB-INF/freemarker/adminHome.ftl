@@ -21,13 +21,14 @@
 			
 				<h4>Users</h4>
 				
-					<ul>
-					<li>View users | <a href="createLoanAccount.ftl">Define a new user</a></li>
+					<ul class="navigation-list">
+					<li>View users</li>
+					<li><a href="createLoanAccount.ftl">Define a new user</a></li>
 					</ul>
 		
 				<h4>System Information</h4>
 				
-					<ul>
+					<ul class="navigation-list">
 						<li><a href="appInfo.ftl">View System Information</a></li>
 					</ul>
 				
@@ -35,9 +36,9 @@
 	
 				<h4>Manage Loan Products</h4>
 		
-					<ul>
-						<li> <a href="viewLoanProducts.ftl">View loan products</a>
-						     | <a href="createLoanProduct.ftl">Define a new loan product</a></li>
+					<ul class="navigation-list">
+						<li> <a href="viewLoanProducts.ftl">View loan products</a> </li>
+						<li> <a href="createLoanProduct.ftl">Define a new loan product</a></li>
 					</ul>
 			
 	</div>

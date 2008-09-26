@@ -366,6 +366,25 @@ form fieldset.createClient label {
    font-size: 11pt;
 }
 
+/* Display a list on one line, each entry separated by "|" */
+.navigation-list
+{
+list-style: none;
+padding: 0;
+margin: 0 0 0 10pt;
+}
+
+.navigation-list li
+{
+display: inline;
+padding: 0;
+margin: 0;
+}
+
+.navigation-list li:before { content: "| "; }
+.navigation-list li:first-child:before { content: ""; }
+}
+
 
 /******************************/
 /* END ADDITIONS FOR CHEETAH */
