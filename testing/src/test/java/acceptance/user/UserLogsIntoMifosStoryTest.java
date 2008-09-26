@@ -30,12 +30,15 @@ import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
 
 /*
- * Corresponds to story 661 in mingle
- * http://mingle.mifos.org:7070/projects/cheetah/cards/661
+ * Corresponds to story 660 in mingle
+ * http://mingle.mifos.org:7070/projects/cheetah/cards/660
+ * 
+ * Note that other acceptance tests are already covered in 
+ * {@link}DefaultAdminUserCanLoginStoryTest
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
 @Test(sequential=true, groups={"userLoginStory","acceptance","ui"})
-public class DefaultAdminUserCanLoginStoryTest extends UiTestCaseBase {
+public class UserLogsIntoMifosStoryTest extends UiTestCaseBase {
 
 	private LoginPage loginPage;
 	
@@ -50,16 +53,10 @@ public class DefaultAdminUserCanLoginStoryTest extends UiTestCaseBase {
 		loginPage.logout();
 	}
 	
-	public void userLoginSuccessTest() {
-		loginPage.loginAs("mifos", "testmifos");
-		Assert.assertEquals(selenium.getText("hello.heading"), "Welcome to Mifos");
-		loginPage.logout();
-	}
-
-	public void userLoginFailureBadPasswordTest() {
-		loginPage.loginAs("mifos", "mifos3");
+	public void userLoginFailureBadUserNameTest() {
+		loginPage.loginAs("zzz", "zzz");
 		Assert.assertEquals(selenium.getText("login.errormessage"), "Your username or password is incorrect");
 	}
-
+	
 }
 
