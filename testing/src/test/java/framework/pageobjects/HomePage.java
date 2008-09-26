@@ -49,4 +49,11 @@ public class HomePage extends AbstractPage {
 		waitForPageToLoad();
 		return new AdminPage(selenium);		
 	}
+
+	public ClientsAndAccountsPage navigateToClientsAndAccountsPage() {
+		selenium.open("/mifos/home.ftl");
+		selenium.click("id=header.tab.clientsAndAccounts");
+		waitForPageToLoad();
+		return new ClientsAndAccountsPage(selenium);		
+	}
 }

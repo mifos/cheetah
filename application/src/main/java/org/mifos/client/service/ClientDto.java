@@ -69,17 +69,13 @@ public class ClientDto {
 		this.lastName = lastName;
 	}
 
-	// java.util.Date because valang can only validate Date, not DateTime
+	// java.util.Date because valang can only validate Date, not LocalDate
 	public Date getDateOfBirth() {
 		return getDate(this.dateOfBirth);
 	}
 
 	public LocalDate getLocalDateOfBirth() {
 		return getLocalDate(this.dateOfBirth);
-	}
-
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = getLocalDate(dateOfBirth);
 	}
 
 	public void setLocalDateOfBirth(LocalDate dateOfBirth) {

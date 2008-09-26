@@ -88,6 +88,13 @@ ul#simple-menu li a.current:hover {
    text-align: right;
 }
 
+a#settings {
+   height:20px;
+   margin:0 0 0 0;
+   font-family: Arial, Verdana, Helvetica, sans-serif;  
+   font-size: 9pt;
+}
+
 a#logout {
    height:20px;
    margin:8px 18px 0 0;
