@@ -12,8 +12,7 @@
   [#include "clientsAndAccountsLeftPane.ftl"]
     <div id="content-pane">
       [@form.form action="createClient.ftl" commandName="client"]
-        [@form.errors path="*" cssClass="error-messages"/]
-    
+         [@form.errors path="*" cssClass="error-messages"/]
          <fieldset class="createClient">
            <legend>[@spring.message "createClient" /]</legend>
               <label for="createClient.form.first.name" accesskey="n">[@spring.message "firstName" /]:</label>
@@ -27,7 +26,7 @@
          </fieldset>
       [/@form.form]
      
-  </div> <!-- main pane content -->
+  </div> <!-- content-pane -->
   
 </body>
 </html>

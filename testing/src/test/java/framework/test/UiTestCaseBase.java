@@ -41,7 +41,7 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
 	protected Selenium selenium;
 	
 	@BeforeMethod
-	public void setUp() {
+	public void setUp() throws Exception {
 		// do nothing
 	}
 	

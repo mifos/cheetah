@@ -42,7 +42,7 @@ public class ClientDto {
 	private String lastName;
 	
 	@NotNull
-	@Expression("dateOfBirth >= [1799-12-31]")
+	@Expression("dateOfBirth >= [1879-12-31]")
 	private LocalDate dateOfBirth;
 	
 	public Integer getId() {

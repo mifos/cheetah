@@ -20,7 +20,6 @@
 
 package org.mifos.client.service;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -96,12 +95,12 @@ public class ClientDtoValidationTest  extends AbstractDtoValidationTest {
 	}
 
 	public void testValidDateOfBirthBoundary () {
-		clientDto.setLocalDateOfBirth(getLocalDate("1800-01-01"));
+		clientDto.setLocalDateOfBirth(getLocalDate("1880-01-01"));
 		verifyNoErrors(clientDto);
 	}
 
 	public void testInvalidDateOfBirthBoundary () {
-		clientDto.setLocalDateOfBirth(getLocalDate("1799-12-31"));
+		clientDto.setLocalDateOfBirth(getLocalDate("1879-12-31"));
 		verifyFieldError(clientDto, "dateOfBirth", "expression");
 	}
 

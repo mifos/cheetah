@@ -40,7 +40,7 @@ public class DefaultAdminUserCanLoginStoryTest extends UiTestCaseBase {
 	private LoginPage loginPage;
 	
 	@BeforeMethod
-	public void setUp() {
+	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
 	}

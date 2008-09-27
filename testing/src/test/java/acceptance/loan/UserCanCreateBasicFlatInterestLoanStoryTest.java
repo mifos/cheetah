@@ -45,7 +45,7 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 	private static final String MIN_INTEREST_RATE = "5";
 	
 	@BeforeMethod
-	public void setUp() {
+	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
 	}

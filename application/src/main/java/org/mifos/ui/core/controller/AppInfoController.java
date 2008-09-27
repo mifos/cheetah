@@ -29,13 +29,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.mifos.core.AppInfo;
-import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
-public class AppInfoController extends AbstractController implements BeanNameAware {
+public class AppInfoController extends AbstractController {
 
-	private String pageToDisplay = "";
 	private AppInfo appInfo = null;
 
 	@Override
@@ -46,19 +44,11 @@ public class AppInfoController extends AbstractController implements BeanNameAwa
         	Map<String, Object> status = new HashMap<String, Object>();
         	List<String> errorMessages = new ArrayList<String>();
         	status.put("errorMessages", errorMessages);
-        	ModelAndView modelAndView = new ModelAndView(pageToDisplay, "model", model);
+        	ModelAndView modelAndView = new ModelAndView("appInfo", "model", model);
         	modelAndView.addObject("status", status);
         	return modelAndView;
 	}
 	
-	public String getPageToDisplay() {
-		return pageToDisplay;
-	}
-
-	public void setPageToDisplay(String pageToDisplay) {
-		this.pageToDisplay = pageToDisplay;
-	}
-
 	public AppInfo getAppInfo() {
 		return appInfo;
 	}
@@ -66,12 +56,5 @@ public class AppInfoController extends AbstractController implements BeanNameAwa
 	public void setAppInfo(AppInfo appInfo) {
 		this.appInfo = appInfo;
 	}
-
-	@Override
-	public void setBeanName(String beanName) {
-		setPageToDisplay(beanName.replace("/", "").replace(".ftl", ""));
-	}
-	
-	
     
 }

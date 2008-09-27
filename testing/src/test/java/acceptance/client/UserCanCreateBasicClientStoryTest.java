@@ -19,6 +19,21 @@
  */
 package acceptance.client;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.database.DatabaseDataSourceConnection;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.operation.DatabaseOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -37,14 +52,17 @@ import framework.test.UiTestCaseBase;
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
 @Test(groups={"userCanCreateBasicClientStoryTest","acceptance","ui"})
-public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase {
+public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 
 	private LoginPage loginPage;
-	
+	private DriverManagerDataSource dataSource;
+    private static final Log LOG = LogFactory.getLog(UserCanCreateBasicClientStoryTest.class);
+
 	@BeforeMethod
-	public void setUp() {
+	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
+        deleteDataFromClientsTable();
 	}
 
 	@AfterMethod
@@ -53,15 +71,68 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase {
 	}
 
 	public void createValidClientTest() {
+		String dateOfBirth = "1971-01-19";
+		createAndVerifyValidClient(dateOfBirth);
+	}
+
+	public void createValidClientEdgeTest() {
+		String dateOfBirth = "1880-01-01";
+		createAndVerifyValidClient(dateOfBirth);
+	}
+
+	public void createInvalidClientTest() {
+		String dateOfBirth = "1753-01-01";
+		createAndVerifyInvalidClient(dateOfBirth);		
+	}
+
+	public void createInvalidClientTestEdge() {
+		String dateOfBirth = "1879-12-31";
+		createAndVerifyInvalidClient(dateOfBirth);		
+	}
+
+	private void createAndVerifyValidClient(String dateOfBirth) {
 		String firstName = "John";
 		String lastName = "Ya-ya";
-		String dateOfBirth = "1971-01-19";
+		CreateClientPage createClientPage = loginAndNavigateToCreateClientPage();
+		CreateClientSuccessPage createClientSuccessPage = createClientPage.createValidClient(firstName, lastName, dateOfBirth);
+		createClientSuccessPage.verifyPage();
+	}
+
+	private void createAndVerifyInvalidClient(String dateOfBirth) {
+		String firstName = "John";
+		String lastName = "Ready To Fly";
+		CreateClientPage createClientPage = loginAndNavigateToCreateClientPage();
+		CreateClientPage createClientPage2 = createClientPage.createClientExpectingError(firstName, lastName, dateOfBirth);
+		createClientPage2.verifyPage();
+		createClientPage2.verifyErrorExists("Please enter a valid date of birth.");
+	}
+
+	private CreateClientPage loginAndNavigateToCreateClientPage() {
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		ClientsAndAccountsPage clientsAndAccountsPage = homePage.navigateToClientsAndAccountsPage();
 		CreateClientPage createClientPage = clientsAndAccountsPage.navigateToCreateClientPage();
 		createClientPage.verifyPage();
-		CreateClientSuccessPage createClientSuccessPage = createClientPage.createValidClient(firstName, lastName, dateOfBirth);
-		createClientSuccessPage.verifyPage();
+		return createClientPage;
+	}
+
+	private void deleteDataFromClientsTable() throws IOException,
+		DataSetException, SQLException, DatabaseUnitException {
+		String datasetFilename = this.getClass().getSimpleName() + "Dataset.xml";
+		InputStream datasetXmlStream = UserCanCreateBasicClientStoryTest.class.getClassLoader().getResourceAsStream(datasetFilename);
+		IDataSet dataSet = new FlatXmlDataSet(datasetXmlStream);
+		IDatabaseConnection databaseConnection = new DatabaseDataSourceConnection(this.getDataSource());
+		DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
+	}
+	
+	@Test(enabled=false)
+	public DriverManagerDataSource getDataSource() {
+		return dataSource;
+	}
+
+	@Autowired
+	@Test(enabled=false)
+	public void setDataSource(DriverManagerDataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 
 

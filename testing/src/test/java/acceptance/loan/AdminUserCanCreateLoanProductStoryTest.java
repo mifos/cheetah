@@ -47,7 +47,7 @@ public class AdminUserCanCreateLoanProductStoryTest extends UiTestCaseBase {
 	private static final String STATUS = "ACTIVE";
 
 	@BeforeMethod
-	public void setUp() {
+	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
 	}

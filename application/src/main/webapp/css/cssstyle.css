@@ -227,10 +227,10 @@ form {  /* set width in form, not fieldset (still takes up more room w/ fieldset
 fieldset {  /* Setting border-color for the tag alone does not work in Firefox */
 	border-color: #d7deee;
 	border-width: 2px;
-  border-style: solid;
-  padding: 10px;
-  margin: 0;
-  width: 600px;
+   border-style: solid;
+   padding: 10px;
+   margin: 0;
+   width: 600px;
 }
 
 fieldset legend {
@@ -337,7 +337,7 @@ form.loan-product fieldset label{
 #content-pane {
    margin-top: 5px;
    margin-left: 5px; 
-   width:500px;  
+   width:800px;  
 }
 
 .content-pane h2 {
@@ -349,9 +349,6 @@ form.loan-product fieldset label{
   font-family:verdana,arial,sans-serif;
   margin: 0;
   padding: 0;
-  min-width: 400px;
-  max-width: 800px;
-  width: 4500px;
 }
 
 form fieldset.createClient {
