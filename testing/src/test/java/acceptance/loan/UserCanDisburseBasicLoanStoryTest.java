@@ -38,7 +38,7 @@ import framework.test.UiTestCaseBase;
  * http://mingle.mifos.org:7070/projects/cheetah/cards/675
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
-@Test(groups={"userCanDisburseBasicLoanStory","acceptance","ui"})
+@Test(groups={"userCanDisburseBasicLoanStory","acceptance","ui", "workInProgress"})
 public class UserCanDisburseBasicLoanStoryTest extends UiTestCaseBase {
 
 	private LoginPage loginPage;
@@ -46,7 +46,7 @@ public class UserCanDisburseBasicLoanStoryTest extends UiTestCaseBase {
 	private static final String LOAN_NAME = "test loan";
 	
 	@BeforeMethod
-	public void setUp() {
+	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
 	}
@@ -56,7 +56,6 @@ public class UserCanDisburseBasicLoanStoryTest extends UiTestCaseBase {
 		loginPage.logout();
 	}
 
-	@Test(groups="workInProgress")
 	public void disburseBasicLoanTest() {
 		// preconditions: a loan created for a loan product and a client name "test client" must exist
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
