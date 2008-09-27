@@ -19,6 +19,7 @@
  */
 package framework.pageobjects;
 
+
 import com.thoughtworks.selenium.Selenium;
 
 /**
@@ -55,5 +56,10 @@ public class HomePage extends AbstractPage {
 		selenium.click("id=header.tab.clientsAndAccounts");
 		waitForPageToLoad();
 		return new ClientsAndAccountsPage(selenium);		
+	}
+
+	public ClientDetailPage searchForClient(String clientName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
