@@ -10,11 +10,11 @@
   [@mifos.header currentTab="ClientsAndAccounts" /]
   [#include "clientsAndAccountsLeftPane.ftl" ]
     <div id="page-content">
-    	<div id="clientsAndAccountsPage">
-	    	<h2>Clients and Accounts</h2>
+    	<div id="loanDetailPage">
+	    	<h2>Loan Detail</h2>
       	</div>
     </div> <!-- main pane content -->
   
-
+  
 </body>
 </html>

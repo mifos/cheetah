@@ -47,8 +47,15 @@ public class HomeController extends SimpleFormController {
 		LOG.debug ("entered LoanProductController.onSubmit()");
 		List<ClientDto> clientDtos = clientService.findClients(((SearchCommand)command).getSearchString());
         Map<String, Object> model = new HashMap<String, Object>();
-        model.put("clients", clientDtos);
-		return new ModelAndView("clientSearchSuccess", "model", model);
+        //model.put("clients", clientDtos);
+        ClientDto client;
+        if (clientDtos.isEmpty()) {
+            client = new ClientDto();
+        } else {
+            client = clientDtos.get(0);
+        }
+        model.put("client", client);
+		return new ModelAndView("clientDetail", "model", model);
 	}
 		
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding

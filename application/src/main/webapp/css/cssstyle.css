@@ -2,6 +2,33 @@
 /* BEGIN ADDITIONS FOR CHEETAH */
 /********************************/
 
+#clientsAndAccountsPage {
+	margin: 0 0 0 200px;
+}
+
+#loanDetailPage {
+	margin: 0 0 0 200px;
+}
+
+#clientDetailPage-loanList {
+	margin: 0 0 0 20px;
+}
+
+#clientDetailPage-loanSectionHeading {
+	margin: 0 0 0 10px;
+}
+
+#clientDetailPage-loanSection {
+	background-color: #d7deee;
+	width: 400px;
+	height: 200px;
+	margin: 0 0 0 0px;	
+}
+
+#clientDetailPage {
+	margin: 0 0 0 200px;
+}
+
 #loanProductName {
    text-align: left;
 }
@@ -294,7 +321,7 @@ form.loan-product fieldset label{
 /* Left pane */
 
 #left-pane {
-   margin-top: 5px;
+   margin-top: 2px;
    float: left;
    height: 400px;
    background:#F2D1A6;

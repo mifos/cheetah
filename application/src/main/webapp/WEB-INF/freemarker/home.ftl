@@ -15,7 +15,7 @@
   
   <div id="page-content">
   	<div id="homePageContent">
-	  [@form.form action="clientSearchSuccess.ftl" commandName="searchString"]
+	  [@form.form action="clientDetail.ftl" commandName="searchString"]
 	  [@form.errors path="*" cssClass="error-messages"/]
 
       <h2 id="hello.heading">[@spring.message "welcomeToMifos" /]</h2>
