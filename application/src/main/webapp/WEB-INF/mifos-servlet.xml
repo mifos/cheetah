@@ -88,6 +88,7 @@
     			/createLoan.ftl=loanController
     			/createClient.ftl=clientController
     			/createClientSuccess.ftl=genericController
+    			/clientSearchSuccess.ftl=genericController
     			/home.ftl=homeController
     			/appInfo.ftl=appInfoController
     		</value>

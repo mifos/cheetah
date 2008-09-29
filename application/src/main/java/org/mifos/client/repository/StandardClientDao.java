@@ -20,6 +20,7 @@
 
 package org.mifos.client.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -60,8 +61,7 @@ public class StandardClientDao implements ClientDao {
 
 	@Override
 	public List<Client> findClients(String clientName) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Client>();
 	}
 	
 }
