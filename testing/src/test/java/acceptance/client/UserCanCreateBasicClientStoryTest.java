@@ -21,6 +21,7 @@ package acceptance.client;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.sql.SQLException;
 
 import org.apache.commons.logging.Log;
@@ -115,11 +116,9 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 		return createClientPage;
 	}
 
-	private void deleteDataFromClientsTable() throws IOException,
-		DataSetException, SQLException, DatabaseUnitException {
-		String datasetFilename = this.getClass().getSimpleName() + "Dataset.xml";
-		InputStream datasetXmlStream = UserCanCreateBasicClientStoryTest.class.getClassLoader().getResourceAsStream(datasetFilename);
-		IDataSet dataSet = new FlatXmlDataSet(datasetXmlStream);
+	private void deleteDataFromClientsTable() throws IOException, DataSetException, SQLException, DatabaseUnitException {
+		StringReader dataSetXmlStream = new StringReader("<dataset><clients/></dataset>");
+		IDataSet dataSet = new FlatXmlDataSet(dataSetXmlStream);
 		IDatabaseConnection databaseConnection = new DatabaseDataSourceConnection(this.getDataSource());
 		DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
 	}

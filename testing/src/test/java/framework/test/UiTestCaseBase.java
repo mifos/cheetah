@@ -25,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterGroups;
-import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -47,7 +46,11 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
 	
 	@AfterGroups(groups={"ui"})
 	public void stopSelenium() {
-		this.selenium.stop();
+        synchronized(UiTestCaseBase.class) {
+            if (seleniumServerIsRunning.booleanValue() && this.selenium != null) {
+                this.selenium.stop();
+            }
+        }
 	}
 
 	@Autowired
@@ -64,7 +67,9 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
 
 	@Test(enabled=false)
 	public Selenium getSelenium() {
-			return selenium;
+        synchronized(UiTestCaseBase.class) {
+            return selenium;
+        }
 	}
 	
 }
