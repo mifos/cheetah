@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.joda.time.LocalDate;
 import org.mifos.client.domain.Client;
@@ -68,6 +69,19 @@ public class InMemoryClientDao implements ClientDao {
 		synchronized(this) {
 			return Integer.valueOf(nextId++);
 		}
+	}
+
+	@Override
+	public List<Client> findClients(String searchString) {
+		ArrayList clientList = new ArrayList<Client>();
+		for (Entry<Integer,Client> entry : clients.entrySet()) {
+			if (entry.getValue().getFirstName().contains(searchString) ||
+					entry.getValue().getLastName().contains(searchString)	) {
+				clientList.add(entry.getValue());
+			}			
+		}
+
+		return clientList;
 	}	
 	
 

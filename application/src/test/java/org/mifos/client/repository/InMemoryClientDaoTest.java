@@ -66,6 +66,28 @@ public class InMemoryClientDaoTest {
 		Assert.assertEquals(2, clientList.size());
 	}
 
+	public void testFindClientSuccess() throws MifosException {
+		clientDao.create("John", "Icicle Boy", new LocalDate());
+		clientDao.create("Sue", "Ohloh", new LocalDate());
+		List<Client> clients = clientDao.findClients("John");
+		Assert.assertEquals(1, clients.size());
+
+		clients = clientDao.findClients("Boy");
+		Assert.assertEquals(1, clients.size());
+
+		clients = clientDao.findClients("cic");
+		Assert.assertEquals(1, clients.size());
+
+		clients = clientDao.findClients("oh");
+		Assert.assertEquals(2, clients.size());
+	}
 	
-	
+	public void testFindClientFailure() throws MifosException {
+		clientDao.create("John", "Icicle Boy", new LocalDate());
+		List<Client> clients = clientDao.findClients("Joe");
+		Assert.assertEquals(0, clients.size());
+
+		clients = clientDao.findClients("John Icicle Boy");
+		Assert.assertEquals(0, clients.size());
+	}
 }

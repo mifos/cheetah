@@ -57,5 +57,11 @@ public class StandardClientDao implements ClientDao {
 		Query query = entityManager.createQuery("from Client");
 		return query.getResultList();
 	}
+
+	@Override
+	public List<Client> findClients(String clientName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

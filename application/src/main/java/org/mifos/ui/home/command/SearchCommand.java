@@ -18,19 +18,21 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.client.repository;
+package org.mifos.ui.home.command;
 
-import java.util.List;
+/**
+ *
+ */
+public class SearchCommand {
 
-import org.joda.time.LocalDate;
-import org.mifos.client.domain.Client;
-import org.mifos.core.MifosException;
+	String searchString;
 
-public interface ClientDao {
+	public String getSearchString() {
+		return searchString;
+	}
+
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
 	
-	Client create(String firstName, String lastName, LocalDate dateOfBirth) throws MifosException;
-	Client get(Integer clientId);
-	List<Client> getAll();
-	List<Client> findClients(String clientName);
-
 }

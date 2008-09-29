@@ -20,6 +20,9 @@
 
 package org.mifos.client.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mifos.client.domain.Client;
 import org.mifos.client.repository.ClientDao;
 import org.mifos.core.MifosException;
@@ -68,7 +71,16 @@ public class StandardClientService implements ClientService {
 		return clientDto;
 	}
 
-
+	@Override
+	public List<ClientDto> findClients(String searchString) {
+		List<Client> clients = clientDao.findClients(searchString);
+		List<ClientDto> clientDtos = new ArrayList<ClientDto>();
+		for (Client client : clients) {
+			clientDtos.add(createClientDto(client));
+		}
+		return clientDtos;
+	}
+	
 	@Override
 	public void setClientDao(ClientDao clientDao) {
 		this.clientDao = clientDao;

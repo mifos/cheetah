@@ -36,6 +36,16 @@
         <property name="loanService" ref="loanService"/>
         <property name="loanProductService" ref="loanProductService"/>
     </bean>
+
+    <bean id="homeController" class="org.mifos.ui.home.controller.HomeController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="searchString"/>
+        <property name="commandClass" value="org.mifos.ui.home.command.SearchCommand"/>
+        <property name="formView"     value="home"/>
+        <property name="successView"  value="clientSearchSuccess.ftl"/>
+        <property name="validator"    ref="beanValidator"/>
+        <property name="clientService" ref="clientService"/>
+    </bean>
     
     <bean name="loanProductFormController" class="org.mifos.ui.loan.controller.LoanProductFormController">
         <property name="sessionForm"  value="true"/>
@@ -78,7 +88,7 @@
     			/createLoan.ftl=loanController
     			/createClient.ftl=clientController
     			/createClientSuccess.ftl=genericController
-    			/home.ftl=genericController
+    			/home.ftl=homeController
     			/appInfo.ftl=appInfoController
     		</value>
     	</property>
