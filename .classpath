@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" output="application/target/mifos/css" path="application/src/main/webapp/css"/>
+	<classpathentry kind="src" output="testFramework/target/test-classes" path="testFramework/src/test/java"/>
 	<classpathentry kind="src" output="testFramework/target/classes" path="testFramework/src/main/java"/>
 	<classpathentry kind="src" output="application/target/mifos/WEB-INF/classes" path="application/src/main/java"/>
 	<classpathentry kind="src" output="application/target/mifos/WEB-INF/freemarker" path="application/src/main/webapp/WEB-INF/freemarker"/>

@@ -22,13 +22,12 @@ package org.mifos.test.framework.util;
 
 import junit.framework.Assert;
 
-import org.mifos.core.MifosException;
 import org.testng.annotations.Test;
 
 @Test(groups = { "unit" })
 public class DatabaseTestUtilsTest {
 
-	public void testCreateClient() throws MifosException {
+	public void testCreateClient() throws Exception {
 		Assert.assertEquals(true, true);
 	}
 
