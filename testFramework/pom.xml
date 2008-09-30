@@ -187,7 +187,7 @@
             <version>2.4.2</version>
             <configuration>         
                <includedGroups>unit, integration</includedGroups>
-               <excludedGroups>workInProgress, ui</excludedGroups>
+               <excludedGroups>workInProgress</excludedGroups>
             </configuration>
          </plugin>
          <plugin>
