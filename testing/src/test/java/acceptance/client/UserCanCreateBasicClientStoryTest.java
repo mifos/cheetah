@@ -19,6 +19,7 @@
  */
 package acceptance.client;
 
+import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,7 +33,6 @@ import framework.pageobjects.CreateClientSuccessPage;
 import framework.pageobjects.HomePage;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
-import framework.util.AcceptanceDatabaseTestUtils;
 
 /*
  * Corresponds to story 683 in mingle
@@ -44,7 +44,7 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 
 	private LoginPage loginPage;
 	private DriverManagerDataSource dataSource;
-    private AcceptanceDatabaseTestUtils databaseTestUtils;
+    private DatabaseTestUtils databaseTestUtils;
 
 	@BeforeMethod
 	public void setUp() throws Exception {
@@ -116,7 +116,7 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 
     @Autowired
     @Test(enabled=false)
-    public void setDatabaseTestUtils(AcceptanceDatabaseTestUtils databaseTestUtils) {
+    public void setDatabaseTestUtils(DatabaseTestUtils databaseTestUtils) {
         this.databaseTestUtils = databaseTestUtils;
     }
 

@@ -1,4 +1,4 @@
-package framework.util;
+package org.mifos.test.framework.util;
 
 import java.io.IOException;
 import java.io.StringReader;

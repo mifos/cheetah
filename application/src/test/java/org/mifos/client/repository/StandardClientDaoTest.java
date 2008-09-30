@@ -29,7 +29,7 @@ import org.dbunit.dataset.DataSetException;
 import org.joda.time.LocalDate;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
-import org.mifos.util.DatabaseTestUtils;
+import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
