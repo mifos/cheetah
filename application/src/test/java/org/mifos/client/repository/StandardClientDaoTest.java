@@ -20,16 +20,23 @@
 
 package org.mifos.client.repository;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
 import org.joda.time.LocalDate;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
+import org.mifos.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 @ContextConfiguration(locations={"classpath:integrationTestContext.xml"})
@@ -39,6 +46,13 @@ public class StandardClientDaoTest extends AbstractTransactionalTestNGSpringCont
 
 	@Autowired
 	private ClientDao clientDao;
+	private DriverManagerDataSource dataSource;
+    private DatabaseTestUtils databaseTestUtils;
+
+	@BeforeMethod
+	public void setUp() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+	    this.databaseTestUtils.deleteDataFromTable("clients", this.getDataSource());
+	}
 	
     public void testCreateClient() throws MifosException {
         String expectedFirstName = "John";
@@ -97,5 +111,22 @@ public class StandardClientDaoTest extends AbstractTransactionalTestNGSpringCont
         //Assert.assertEquals(0, clients.size());
         
     }
-	
+    
+    @Test(enabled=false)
+    public DriverManagerDataSource getDataSource() {
+        return dataSource;
+    }
+
+    @Autowired
+    @Test(enabled=false)
+    public void setDataSource(DriverManagerDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    @Autowired
+    @Test(enabled=false)
+    public void setDatabaseTestUtils(DatabaseTestUtils databaseTestUtils) {
+        this.databaseTestUtils = databaseTestUtils;
+    }
+
 }

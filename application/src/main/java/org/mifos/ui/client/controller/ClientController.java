@@ -21,22 +21,26 @@
 package org.mifos.ui.client.controller;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.LocalDate;
 import org.mifos.client.service.ClientDto;
 import org.mifos.client.service.ClientService;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 public class ClientController extends SimpleFormController {
-	
+    
     private ClientService clientService;
+    private LocalDateEditor localDateEditor;
     
     public ClientService getClientService() {
 		return clientService;
@@ -46,13 +50,30 @@ public class ClientController extends SimpleFormController {
 		this.clientService = clientService;
 	}
 
+   @Override
+    protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors)  {
+            Map<String, Object> model = errors.getModel();
+            model.put("datePattern", localDateEditor.getDatePattern());
+            model.put("client", new ClientDto());
+            return new ModelAndView("createClient", model);
+    }
+	
+   @Override
+   @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+   protected Map referenceData(HttpServletRequest request) throws Exception {      
+    HashMap<String, Object> referenceData = new HashMap<String, Object>();
+    referenceData.put("client", new ClientDto());
+    return referenceData;
+   }
+   
 	@Override
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
 	protected ModelAndView onSubmit(Object command) throws Exception {
 		ClientDto clientDto = clientService.createClient((ClientDto) command);
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("client", clientDto);
-		return new ModelAndView("createClientSuccess", model);
+        model.put("datePattern", localDateEditor.getDatePattern());
+		return new ModelAndView("createClientSuccess", "model", model);
 	}
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
@@ -60,10 +81,11 @@ public class ClientController extends SimpleFormController {
     	return new ClientDto();
     }
 
-    @InitBinder
     protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder)
     throws ServletException {
-        binder.registerCustomEditor(LocalDate.class, new LocalDateEditor());
+        Locale locale = RequestContextUtils.getLocale(request);
+        localDateEditor = new LocalDateEditor(locale);
+        binder.registerCustomEditor(LocalDate.class, localDateEditor);
     }
 
 }

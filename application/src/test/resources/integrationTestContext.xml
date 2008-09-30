@@ -68,6 +68,7 @@
 
     <bean id="standardLoanDao" class="org.mifos.loan.repository.StandardLoanDao"/>
 
+    <bean id="databaseTestUtils" class="org.mifos.util.DatabaseTestUtils" />
 
 </beans>
 

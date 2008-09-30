@@ -70,9 +70,20 @@
     <bean id="appInfoController" class="org.mifos.ui.core.controller.AppInfoController">
         <property name="appInfo" ref="appInfo"/>
     </bean>
-     
     
+    
+    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="siteLanguage"/>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver"/>
+
     <bean id="publicUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+      <property name="interceptors">
+           <list>
+               <ref bean="localeChangeInterceptor"/>
+           </list>
+      </property>
     	<property name="mappings">
     		<value>
     			/=redirectionController

@@ -37,7 +37,7 @@ public class StandardClientServiceIntegrationTest extends AbstractTransactionalT
 
     private ClientService clientService;
         
-	@BeforeMethod(groups = { "integration" })
+	@BeforeMethod
     protected void setUp() {
 		// do nothing
     }

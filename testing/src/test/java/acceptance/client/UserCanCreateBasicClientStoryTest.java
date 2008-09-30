@@ -19,20 +19,6 @@
  */
 package acceptance.client;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.sql.SQLException;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.dbunit.DatabaseUnitException;
-import org.dbunit.database.DatabaseDataSourceConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.DataSetException;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
@@ -46,24 +32,25 @@ import framework.pageobjects.CreateClientSuccessPage;
 import framework.pageobjects.HomePage;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
+import framework.util.AcceptanceDatabaseTestUtils;
 
 /*
  * Corresponds to story 683 in mingle
  * http://mingle.mifos.org:7070/projects/cheetah/cards/683
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
-@Test(groups={"userCanCreateBasicClientStoryTest","acceptance","ui"})
+@Test(sequential=true, groups={"userCanCreateBasicClientStoryTest","acceptance","ui"})
 public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 
 	private LoginPage loginPage;
 	private DriverManagerDataSource dataSource;
-    private static final Log LOG = LogFactory.getLog(UserCanCreateBasicClientStoryTest.class);
+    private AcceptanceDatabaseTestUtils databaseTestUtils;
 
 	@BeforeMethod
 	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
-        deleteDataFromClientsTable();
+        this.databaseTestUtils.deleteDataFromTable("clients", this.getDataSource());
 	}
 
 	@AfterMethod
@@ -72,22 +59,22 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 	}
 
 	public void createValidClientTest() {
-		String dateOfBirth = "1971-01-19";
+		String dateOfBirth = "01/19/1971";
 		createAndVerifyValidClient(dateOfBirth);
 	}
 
 	public void createValidClientEdgeTest() {
-		String dateOfBirth = "1880-01-01";
+		String dateOfBirth = "01/01/1880";
 		createAndVerifyValidClient(dateOfBirth);
 	}
 
 	public void createInvalidClientTest() {
-		String dateOfBirth = "1753-01-01";
+		String dateOfBirth = "01/01/1753";
 		createAndVerifyInvalidClient(dateOfBirth);		
 	}
 
 	public void createInvalidClientTestEdge() {
-		String dateOfBirth = "1879-12-31";
+		String dateOfBirth = "12/31/1879";
 		createAndVerifyInvalidClient(dateOfBirth);		
 	}
 
@@ -115,13 +102,6 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 		createClientPage.verifyPage();
 		return createClientPage;
 	}
-
-	private void deleteDataFromClientsTable() throws IOException, DataSetException, SQLException, DatabaseUnitException {
-		StringReader dataSetXmlStream = new StringReader("<dataset><clients/></dataset>");
-		IDataSet dataSet = new FlatXmlDataSet(dataSetXmlStream);
-		IDatabaseConnection databaseConnection = new DatabaseDataSourceConnection(this.getDataSource());
-		DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
-	}
 	
 	@Test(enabled=false)
 	public DriverManagerDataSource getDataSource() {
@@ -134,6 +114,11 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 		this.dataSource = dataSource;
 	}
 
+    @Autowired
+    @Test(enabled=false)
+    public void setDatabaseTestUtils(AcceptanceDatabaseTestUtils databaseTestUtils) {
+        this.databaseTestUtils = databaseTestUtils;
+    }
 
 }
 
