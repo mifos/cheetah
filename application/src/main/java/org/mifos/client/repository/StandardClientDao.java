@@ -20,7 +20,6 @@
 
 package org.mifos.client.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -59,9 +58,13 @@ public class StandardClientDao implements ClientDao {
 		return query.getResultList();
 	}
 
+	// TODO: handle null searchString
 	@Override
-	public List<Client> findClients(String clientName) {
-		return new ArrayList<Client>();
+	public List<Client> findClients(String searchString) {
+	    String queryString = "SELECT client from Client client WHERE client.firstName LIKE :pattern OR client.lastName LIKE :pattern";
+	        Query query = entityManager.createQuery(queryString);
+	        query.setParameter("pattern", "%" + searchString + "%");
+	        return query.getResultList();
 	}
 	
 }

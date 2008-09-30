@@ -24,7 +24,6 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
@@ -80,6 +79,9 @@ public class InMemoryClientDaoTest {
 
 		clients = clientDao.findClients("oh");
 		Assert.assertEquals(2, clients.size());
+		
+        clients = clientDao.findClients("");
+        Assert.assertEquals(2, clients.size());		
 	}
 	
 	public void testFindClientFailure() throws MifosException {
@@ -89,5 +91,10 @@ public class InMemoryClientDaoTest {
 
 		clients = clientDao.findClients("John Icicle Boy");
 		Assert.assertEquals(0, clients.size());
+
+		// TODO: handle null
+        //clients = clientDao.findClients(null);
+        //Assert.assertEquals(0, clients.size());
+		
 	}
 }

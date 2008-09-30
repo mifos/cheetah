@@ -21,7 +21,6 @@
 package org.mifos.client.service;
 
 import org.apache.log4j.Logger;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -129,6 +128,16 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
     	String expectedFirstName = "Far";
     	String expectedLastName = "Too-Old";
        	verifyMifosServiceException(expectedFirstName, expectedLastName, expectedDateOfBirth, "Should throw exception for date older than 1 January 1880");
+    }
+    
+    public void testFindClient() throws MifosServiceException {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        createClient("Will", "Do", dateTimeFormatter.parseDateTime("2000-01-01").toLocalDate());
+        createClient("Cant", "Wait", dateTimeFormatter.parseDateTime("2000-01-01").toLocalDate());
+        
+        Assert.assertEquals(clientService.findClients("Do").size(),1);
+        Assert.assertEquals(clientService.findClients("W").size(),2);
+        Assert.assertEquals(clientService.findClients("ya").size(),0);
     }
 
     private void verifyMifosServiceException(String expectedFirstName, String expectedLastName, 

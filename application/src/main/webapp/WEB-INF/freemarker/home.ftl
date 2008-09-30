@@ -22,6 +22,7 @@
       <h4>To quickly find a client you can...</h4>
       <label id="clientSearch">Search by name:</label> 
       [@form.input path="searchString"/]
+	  <input type="submit" value="Search" class="buttn" id="login.form.submit" tabindex="6">
       
       [/@form.form]
     </div>

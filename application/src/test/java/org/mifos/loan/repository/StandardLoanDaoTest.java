@@ -47,7 +47,6 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 	
 	private LoanProduct loanProduct;
 	
-	private static final Integer LOAN_PRODUCT_ID = 1;	
 	private static final Integer CLIENT_ID = 1;
 	private static final BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
 	private static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
@@ -60,6 +59,8 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 		
 	}
 	
+	@java.lang.SuppressWarnings("PMD.UnusedPrivateMethod")
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"UPM"}, justification="@BeforeMethod & @AfterMethod methods are called by testNG")
 	@BeforeMethod
 	private void setUp() {
 		loanProduct = standardLoanProductDao.createLoanProduct("loan prod 1", "prod1", 0.0, 20.0, LoanProductStatus.ACTIVE);		
