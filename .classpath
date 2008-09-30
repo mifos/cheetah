@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" output="application/target/mifos/css" path="application/src/main/webapp/css"/>
 	<classpathentry kind="src" output="application/target/mifos/WEB-INF/classes" path="application/src/main/java"/>
+	<classpathentry kind="src" output="application/target/mifos/css" path="application/src/main/webapp/css"/>
 	<classpathentry kind="src" output="application/target/mifos/WEB-INF/freemarker" path="application/src/main/webapp/WEB-INF/freemarker"/>
 	<classpathentry kind="src" output="testing/target/test-classes" path="testing/src/test/resources"/>
 	<classpathentry kind="src" output="testing/target/test-classes" path="testing/src/test/java"/>

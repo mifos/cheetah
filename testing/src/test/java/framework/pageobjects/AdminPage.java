@@ -40,4 +40,10 @@ public class AdminPage extends AbstractPage {
 		waitForPageToLoad();
 		return new CreateLoanProductPage(selenium);
 	}
+
+    public ViewLoanProductsPage navigateToViewLoanProductsPage() {
+        selenium.click("link=View loan products");
+        waitForPageToLoad();
+        return new ViewLoanProductsPage(selenium);
+    }
 }

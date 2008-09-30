@@ -12,21 +12,31 @@
   
   <div id="page-content">      
     <h2>Loan Products</h2>
+   
+[#if model.loanProducts?size == 0] 
+    	
+    	<p> No loan products have been defined </p>
+    	
+[#else]
     
+    	[#assign lpnum = 0]
+    	
         <table id="loan-product-table">
 	    <tr>
 	    	<td>Short Name</td>
 	    	<td>Long Name</td>
 	    </tr>
 	     [#list model.loanProducts as product]
+	     [#assign lpnum = lpnum + 1]
 		 <tr>
-	        <td><a href="viewLoanProduct.ftl?id=${product.id}">${product.shortName}</a></td>
-	        <td><a href="viewLoanProduct.ftl?id=${product.id}">${product.longName}</a></td>
+	        <td id="short-name-${lpnum}"><a href="viewLoanProduct.ftl?id=${product.id}">${product.shortName}</a></td>
+	        <td id="long-name-${lpnum}"><a href="viewLoanProduct.ftl?id=${product.id}">${product.longName}</a></td>
 	     </tr>
 	    [/#list]
     <table>
     
-    
+[/#if]
+
   </div>
 
   </body>
