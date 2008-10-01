@@ -24,6 +24,9 @@
 			
 				<legend>Loan Details</legend>
 
+				<label id="clientLabel">Client:<label id="clientName">${clientName}</label></label>
+					<br/>
+
 				<label id="loanProductLabel">Loan Product:<label id="loanProductName">${loanProductName}</label></label>
 					<br/>
 

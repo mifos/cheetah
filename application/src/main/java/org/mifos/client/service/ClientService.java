@@ -44,8 +44,10 @@ public interface ClientService {
 	 * @return a list of client DTOs for clients matching the search string. 
 	 */
 	List<ClientDto> findClients(String searchString);
-	
+    List<ClientDto> getAll();
+    
 	void setClientDao(ClientDao clientDao);
 	void setValidator(Validator validator);
+
 	
 }

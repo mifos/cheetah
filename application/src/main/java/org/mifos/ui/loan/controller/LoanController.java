@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mifos.client.service.ClientDto;
+import org.mifos.client.service.ClientService;
 import org.mifos.loan.service.LoanDto;
 import org.mifos.loan.service.LoanProductDto;
 import org.mifos.loan.service.LoanProductService;
@@ -41,6 +43,7 @@ public class LoanController extends SimpleFormController {
     
     private LoanService loanService;
     private LoanProductService loanProductService;
+    private ClientService clientService;
     
     public LoanService getLoanService() {
 		return loanService;
@@ -54,7 +57,11 @@ public class LoanController extends SimpleFormController {
 		this.loanProductService = loanProductService;
 	}
 
-	@Override
+	public void setClientService(ClientService clientService) {
+        this.clientService = clientService;
+    }
+
+    @Override
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_UNWRITTEN_FIELD"}, justification="set by Spring dependency injection")
 	protected ModelAndView onSubmit(Object command) throws Exception {
@@ -68,7 +75,14 @@ public class LoanController extends SimpleFormController {
 	@SuppressWarnings({"PMD.DataflowAnomalyAnalysis", // rationale: it is ok to reassign loanProductName
 		"PMD.SignatureDeclareThrowsException"}) //rationale: This is the signature of the superclass's method that we're overriding	
 	@Override
-	protected Map referenceData(HttpServletRequest request) throws Exception {   	
+	protected Map referenceData(HttpServletRequest request) throws Exception {
+        // find the most recently created client or leave null if none found.
+	    String clientName = "No clients found";
+        List<ClientDto> clientDtos = clientService.getAll();
+        if (!clientDtos.isEmpty()) {
+            ClientDto clientDto = clientDtos.get(clientDtos.size() - 1); 
+            clientName = clientDto.getFirstName() + clientDto.getLastName();
+        }
     	// find the most recently created loan product or leave null if none found.
     	String loanProductName = "No loan products found";
     	List<LoanProductDto> loanProductDtos = loanProductService.getAll();
@@ -76,6 +90,7 @@ public class LoanController extends SimpleFormController {
     		loanProductName = loanProductDtos.get(loanProductDtos.size() - 1).getLongName();
     	}
         Map<String, Object> referenceData = new HashMap<String, Object>();
+        referenceData.put("clientName",clientName);
         referenceData.put("loanProductName",loanProductName);
 
         return referenceData;
@@ -84,7 +99,14 @@ public class LoanController extends SimpleFormController {
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
     	LoanDto loanDto = new LoanDto();
-    	loanDto.setClientId(1);
+        // find the most recently created client or leave null if none found.
+        List<ClientDto> clientDtos = clientService.getAll();
+        if (clientDtos.isEmpty()) {
+            loanDto.setClientId(null);
+        } else {
+            ClientDto clientDto = clientDtos.get(clientDtos.size() - 1);
+            loanDto.setClientId(clientDto.getId());
+        }
     	
     	// find the most recently created loan product or leave null if none found.
     	List<LoanProductDto> loanProductDtos = loanProductService.getAll();

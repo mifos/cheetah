@@ -20,6 +20,8 @@
 
 package org.mifos.client.service;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -138,6 +140,19 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
         Assert.assertEquals(clientService.findClients("Do").size(),1);
         Assert.assertEquals(clientService.findClients("W").size(),2);
         Assert.assertEquals(clientService.findClients("ya").size(),0);
+    }
+    
+    public void testGetAll() throws MifosServiceException {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        List<ClientDto> noClients = clientService.getAll();
+        Assert.assertEquals(noClients.size(), 0,"Got unexpected number of clients");
+
+        createClient("Cant", "Wait", dateTimeFormatter.parseDateTime("2000-01-01").toLocalDate());
+        createClient("Too", "Much", dateTimeFormatter.parseDateTime("2000-01-01").toLocalDate());
+        
+        List<ClientDto> clients = clientService.getAll();
+        Assert.assertEquals(clients.size(), 2,"Got unexpected number of clients");
+        
     }
 
     private void verifyMifosServiceException(String expectedFirstName, String expectedLastName, 

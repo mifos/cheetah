@@ -28,6 +28,7 @@
 
     <bean id="clientDetailController" class="org.mifos.ui.client.controller.ClientDetailController">
     	<property name="clientService" ref="clientService"/>
+    	<property name="loanService" ref="loanService"/>
     </bean>
     
     
@@ -40,6 +41,7 @@
         <property name="validator"    ref="beanValidator"/>
         <property name="loanService" ref="loanService"/>
         <property name="loanProductService" ref="loanProductService"/>
+    	<property name="clientService" ref="clientService"/>
     </bean>
 
     <bean id="clientSearchController" class="org.mifos.ui.client.controller.ClientSearchController">

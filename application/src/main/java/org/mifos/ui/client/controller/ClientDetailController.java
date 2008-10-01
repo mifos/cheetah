@@ -21,6 +21,7 @@
 package org.mifos.ui.client.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.mifos.client.service.ClientDto;
 import org.mifos.client.service.ClientService;
+import org.mifos.loan.service.LoanDto;
 import org.mifos.loan.service.LoanService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
@@ -44,9 +46,13 @@ public class ClientDetailController extends MultiActionController {
 	public ModelAndView clientDetail(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		
+        Integer clientId = Integer.valueOf(request.getParameter("id"));
         Map<String, Object> model = new HashMap<String, Object>();
-        ClientDto clientDto = getClientService().getClient(Integer.valueOf(request.getParameter("id"))); 
+        ClientDto clientDto = getClientService().getClient(clientId); 
         model.put("client", clientDto);
+        
+        List<LoanDto> loans = getLoanService().findLoansForClient(clientId);
+        model.put("loans", loans);
 
         return new ModelAndView("clientDetail", "model", model);
 	}

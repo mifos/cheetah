@@ -79,13 +79,25 @@ public class StandardClientService implements ClientService {
 	@Override
 	public List<ClientDto> findClients(String searchString) {
 		List<Client> clients = clientDao.findClients(searchString);
-		List<ClientDto> clientDtos = new ArrayList<ClientDto>();
-		for (Client client : clients) {
-			clientDtos.add(createClientDto(client));
-		}
-		return clientDtos;
+
+		return mapClientList(clients);
 	}
-	
+
+    @Override
+    public List<ClientDto> getAll() {
+        List<Client> clients = clientDao.getAll();
+
+        return mapClientList(clients);
+    }
+
+    private List<ClientDto> mapClientList(List<Client> clients) {
+        List<ClientDto> clientDtos = new ArrayList<ClientDto>();
+        for (Client client : clients) {
+            clientDtos.add(createClientDto(client));
+        }
+        return clientDtos;
+    }
+    
 	@Override
 	public void setClientDao(ClientDao clientDao) {
 		this.clientDao = clientDao;
@@ -95,5 +107,6 @@ public class StandardClientService implements ClientService {
 	public void setValidator(Validator validator) {
 		this.validator = validator;
 	}
+
 
 }

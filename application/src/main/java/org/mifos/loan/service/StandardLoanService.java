@@ -30,6 +30,7 @@ import org.mifos.loan.domain.Loan;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.repository.LoanDao;
 import org.mifos.loan.repository.LoanProductDao;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
 
@@ -43,6 +44,7 @@ public class StandardLoanService implements LoanService {
 	private MapperIF beanMapper;
 	private Validator validator;
 	
+    @Transactional
 	@Override
 	public LoanDto createLoan(LoanDto loanDto) throws MifosServiceException {
 		validate(loanDto);
@@ -57,6 +59,7 @@ public class StandardLoanService implements LoanService {
 		return newLoanDto;
 	}
 
+	@Transactional
     @Override
     public List<LoanDto> findLoansForClient(Integer clientId) {
         List<Loan> loans = loanDao.findLoansForClient(clientId);
