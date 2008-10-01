@@ -59,34 +59,46 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 	}
 
 	public void createValidClientTest() {
-		String dateOfBirth = "01/19/1971";
-		createAndVerifyValidClient(dateOfBirth);
+		createAndVerifyValidClient("01/19/1971");
 	}
 
 	public void createValidClientEdgeTest() {
-		String dateOfBirth = "01/01/1880";
-		createAndVerifyValidClient(dateOfBirth);
+		createAndVerifyValidClient("01/01/1880");
 	}
 
 	public void createInvalidClientTest() {
-		String dateOfBirth = "01/01/1753";
-		createAndVerifyInvalidClient(dateOfBirth);		
+		createAndVerifyInvalidClient("01/01/1753");		
 	}
 
 	public void createInvalidClientTestEdge() {
-		String dateOfBirth = "12/31/1879";
-		createAndVerifyInvalidClient(dateOfBirth);		
+		createAndVerifyInvalidClient("12/31/1879");		
 	}
+
+    public void createValidClientFrenchLocaleTest() {
+        createAndVerifyValidClientWithLocale("19/01/1971", "dd/MM/yyyy", "fr_Fr");
+    }
+
+    public void createValidClientPhilipinesLocaleTest() {
+        createAndVerifyValidClientWithLocale("1/19/1971", "M/d/yyyy", "en_PH");
+    }
 
 	private void createAndVerifyValidClient(String dateOfBirth) {
-		String firstName = "John";
-		String lastName = "Ya-ya";
-		CreateClientPage createClientPage = loginAndNavigateToCreateClientPage();
-		CreateClientSuccessPage createClientSuccessPage = createClientPage.createValidClient(firstName, lastName, dateOfBirth);
-		createClientSuccessPage.verifyPage();
+	    createAndVerifyValidClientWithLocale(dateOfBirth, "M/d/yyyy", null);
 	}
 
-	private void createAndVerifyInvalidClient(String dateOfBirth) {
+    private void createAndVerifyValidClientWithLocale(String dateOfBirth, String datePattern, String locale) {
+        String firstName = "John";
+        String lastName = "Ya-ya";
+        CreateClientPage createClientPage = loginAndNavigateToCreateClientPage();
+        if (locale != null) {
+          createClientPage = createClientPage.changeLocale(locale);
+        }
+        createClientPage.verifyDatePatternMessage(datePattern);
+        CreateClientSuccessPage createClientSuccessPage = createClientPage.createValidClient(firstName, lastName, dateOfBirth);
+        createClientSuccessPage.verifyPage();
+    }
+
+    private void createAndVerifyInvalidClient(String dateOfBirth) {
 		String firstName = "John";
 		String lastName = "Ready To Fly";
 		CreateClientPage createClientPage = loginAndNavigateToCreateClientPage();
@@ -99,7 +111,8 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		ClientsAndAccountsPage clientsAndAccountsPage = homePage.navigateToClientsAndAccountsPage();
 		CreateClientPage createClientPage = clientsAndAccountsPage.navigateToCreateClientPage();
-		createClientPage.verifyPage();
+        createClientPage.verifyPage();
+        createClientPage = createClientPage.changeLocale("en_US");
 		return createClientPage;
 	}
 	
