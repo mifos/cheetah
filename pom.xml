@@ -15,110 +15,105 @@
    </modules>
 
    <properties>
-      <modules.root.dir>${basedir}</modules.root.dir>
-      <database.properties.file>${modules.root.dir}/application/src/main/resources/jdbc.properties</database.properties.file>
+      <database.properties.file>${basedir}/../application/src/main/resources/jdbc.properties</database.properties.file>
    </properties>
    
-   <dependencyManagement>
-      <dependencies>
-         <dependency>
-            <groupId>org.mifos</groupId>
-            <artifactId>cheetahTestFramework</artifactId>
-            <version>0.0.3-SNAPSHOT</version>
-         </dependency>      
-         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>2.5.5</version>
-         </dependency>
-         <dependency>
-             <groupId>org.aspectj</groupId>
-             <artifactId>aspectjrt</artifactId>
-             <version>1.5.4</version>
-         </dependency> 
-         <dependency>
-             <groupId>org.aspectj</groupId>
-             <artifactId>aspectjweaver</artifactId>
-             <version>1.5.4</version>
-         </dependency> 
-         <dependency>
-             <groupId>org.dbunit</groupId>
-             <artifactId>dbunit</artifactId>
-             <version>2.3.0</version>
-         </dependency>   
-      </dependencies>
-   </dependencyManagement>
+   <dependencies>
+      <dependency>
+         <groupId>org.mifos</groupId>
+         <artifactId>cheetahTestFramework</artifactId>
+         <version>0.0.3-SNAPSHOT</version>
+      </dependency>      <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-aop</artifactId>
+         <version>2.5.5</version>
+      </dependency>
+      <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjrt</artifactId>
+          <version>1.5.4</version>
+      </dependency> 
+      <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjweaver</artifactId>
+          <version>1.5.4</version>
+      </dependency> 
+      <dependency>
+          <groupId>org.dbunit</groupId>
+          <artifactId>dbunit</artifactId>
+          <version>2.3.0</version>
+      </dependency>   
+   </dependencies>
+
    <build>
       <resources>
          <resource>
-           <directory>${modules.root.dir}/application/sql</directory>
+           <directory>${basedir}/../application/sql</directory>
            <filtering>true</filtering>
            <targetPath>sql</targetPath>
          </resource>
          <resource>
-           <directory>${modules.root.dir}/application/src/main/resources</directory>
+           <directory>${basedir}/../application/src/main/resources</directory>
          </resource>
       </resources>
-      <pluginManagement>
-         <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-help-plugin</artifactId>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>properties-maven-plugin</artifactId>
-              <version>1.0-SNAPSHOT</version>
-              <executions>
-                <execution>
-                  <phase>initialize</phase>
-                  <goals>
-                    <goal>read-project-properties</goal>
-                  </goals>
-                  <configuration>
-                    <files>
-                      <file>${database.properties.file}</file>
-                    </files>
-                  </configuration>
-                </execution>
-              </executions>
-            </plugin>
-            <plugin>
-               <groupId>org.codehaus.mojo</groupId>
-               <artifactId>sql-maven-plugin</artifactId>
-               <version>1.1</version>
-               <dependencies>
-                  <dependency>
-                     <groupId>mysql</groupId>
-                     <artifactId>mysql-connector-java</artifactId>
-                     <version>5.1.6</version>
-                  </dependency>
-               </dependencies>
+      <plugins>
+         <plugin>
+           <groupId>org.apache.maven.plugins</groupId>
+           <artifactId>maven-help-plugin</artifactId>
+         </plugin>
+         <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>properties-maven-plugin</artifactId>
+           <version>1.0-SNAPSHOT</version>
+           <executions>
+             <execution>
+               <phase>initialize</phase>
+               <goals>
+                 <goal>read-project-properties</goal>
+               </goals>
                <configuration>
-                  <driver>com.mysql.jdbc.Driver</driver>
-                  <url><![CDATA[jdbc:mysql://localhost:3306?useUnicode=true&characterEncoding=UTF-8]]></url>
-                  <username>root</username>
-                  <password>mysql</password>
-                  <autocommit>true</autocommit>
-                  <srcFiles>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/create_database.sql</srcFile>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/create_loans.sql</srcFile>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/create_security.sql</srcFile>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/security_data.sql</srcFile>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/create_clients.sql</srcFile>
-                  </srcFiles>
+                 <files>
+                   <file>${database.properties.file}</file>
+                 </files>
                </configuration>
-               <executions>
-                 <execution>
-                   <phase>integration-test</phase>
-                   <goals>
-                     <goal>execute</goal>
-                   </goals>
-                 </execution>
-               </executions>
-            </plugin>      
-         </plugins>
-      </pluginManagement>
-    </build>
+             </execution>
+           </executions>
+         </plugin>
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sql-maven-plugin</artifactId>
+            <version>1.1</version>
+            <dependencies>
+               <dependency>
+                  <groupId>mysql</groupId>
+                  <artifactId>mysql-connector-java</artifactId>
+                  <version>5.1.6</version>
+               </dependency>
+            </dependencies>
+            <configuration>
+               <driver>com.mysql.jdbc.Driver</driver>
+               <url><![CDATA[jdbc:mysql://localhost:3306?useUnicode=true&characterEncoding=UTF-8]]></url>
+               <username>root</username>
+               <password>mysql</password>
+               <autocommit>true</autocommit>
+               <srcFiles>
+                  <srcFile>${project.build.outputDirectory}/sql/create_database.sql</srcFile>
+                  <srcFile>${project.build.outputDirectory}/sql/create_loans.sql</srcFile>
+                  <srcFile>${project.build.outputDirectory}/sql/create_security.sql</srcFile>
+                  <srcFile>${project.build.outputDirectory}/sql/security_data.sql</srcFile>
+                  <srcFile>${project.build.outputDirectory}/sql/create_clients.sql</srcFile>
+               </srcFiles>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>execute</goal>
+                </goals>
+              </execution>
+            </executions>
+         </plugin>      
+      </plugins>
+   </build>
 
 </project>

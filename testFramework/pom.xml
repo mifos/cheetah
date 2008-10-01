@@ -5,7 +5,7 @@
    <artifactId>cheetahTestFramework</artifactId>
    <packaging>jar</packaging>
    <version>0.0.3-SNAPSHOT</version>
-   <name>Mifos - Cheetah Test Framework</name>
+   <name>Mifos - Cheetah</name>
    <url>http://www.mifos.org</url>
   <repositories>
       <repository>
