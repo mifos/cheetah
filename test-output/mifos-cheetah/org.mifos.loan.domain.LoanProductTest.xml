@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.mifos.loan.domain.LoanProductTest" failures="0" tests="1" time="0.047" errors="0">
-  <properties/>
-  <testcase name="testConstructAValidLoanProduct" time="0.016" classname="org.mifos.loan.domain.LoanProductTest"/>
-</testsuite>
