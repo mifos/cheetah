@@ -7,11 +7,17 @@
    <version>0.0.3-SNAPSHOT</version>
    <name>Mifos - Cheetah</name>
    <url>http://www.mifos.org</url>
+
+   <properties>
+      <modules.root.dir>${basedir}/..</modules.root.dir>
+   </properties>
+   
    <parent>
      <groupId>org.mifos</groupId>
      <artifactId>cheetah-parent</artifactId>
      <version>0.0.3-SNAPSHOT</version>
    </parent>
+   
    <profiles>
       <profile>
          <id>deploy-build</id>
@@ -19,7 +25,7 @@
             <activeByDefault>false</activeByDefault>
          </activation>
          <properties>
-            <database.properties.file>${basedir}/../resources/deploy-build/jdbc.local.properties</database.properties.file>
+            <database.properties.file>${modules.root.dir}/resources/deploy-build/jdbc.local.properties</database.properties.file>
          </properties>
       </profile>
       <profile>
@@ -28,7 +34,7 @@
             <activeByDefault>false</activeByDefault>
          </activation>
          <properties>
-            <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration/integration</continuous.integration.resources.dir>
+            <continuous.integration.resources.dir>${modules.root.dir}/resources/continuous-integration/integration</continuous.integration.resources.dir>
             <database.properties.file>${continuous.integration.resources.dir}/jdbc.local.properties</database.properties.file>
          </properties>
          <build>
@@ -89,6 +95,30 @@
       </pluginRepository>
    </pluginRepositories>
    <dependencies>
+   
+      <!-- from parent pom -->
+      <dependency>
+         <groupId>org.mifos</groupId>
+         <artifactId>cheetahTestFramework</artifactId>
+      </dependency>      
+      <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-aop</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjrt</artifactId>
+      </dependency> 
+      <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjweaver</artifactId>
+      </dependency> 
+      <dependency>
+          <groupId>org.dbunit</groupId>
+          <artifactId>dbunit</artifactId>
+      </dependency>   
+
+      <!-- for this module -->
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring</artifactId>
@@ -201,11 +231,11 @@
    <build>
       <finalName>mifos</finalName>
       <defaultGoal>war:war</defaultGoal>
-      <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-      <scriptSourceDirectory>${basedir}/src/main/scripts</scriptSourceDirectory>
-      <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
-      <outputDirectory>${basedir}/target/mifos/WEB-INF/classes</outputDirectory>
-      <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
+      <sourceDirectory>${modules.root.dir}/application/src/main/java</sourceDirectory>
+      <scriptSourceDirectory>${modules.root.dir}/application/src/main/scripts</scriptSourceDirectory>
+      <testSourceDirectory>${modules.root.dir}/application/src/test/java</testSourceDirectory>
+      <outputDirectory>${modules.root.dir}/application/target/mifos/WEB-INF/classes</outputDirectory>
+      <testOutputDirectory>${modules.root.dir}/application/target/test-classes</testOutputDirectory>
       <plugins>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -246,7 +276,7 @@
                <failOnError>true</failOnError>
                <effort>Max</effort>
                <threshold>Low</threshold>
-               <excludeFilterFile>${basedir}/../findbugs.excludes.xml</excludeFilterFile>
+               <excludeFilterFile>${modules.root.dir}/findbugs.excludes.xml</excludeFilterFile>
             </configuration>
             <executions>
                <execution>
@@ -263,7 +293,7 @@
             <version>2.4</version>
             <configuration>
                <rulesets>
-                  <ruleset>${basedir}/../.ruleset</ruleset>
+                  <ruleset>${modules.root.dir}/.ruleset</ruleset>
                </rulesets>
             </configuration>
             <executions>
@@ -280,7 +310,7 @@
             <artifactId>maven-war-plugin</artifactId>
             <configuration>
                <dependentWarIncludes>**/*.ftl</dependentWarIncludes>
-               <workDirectory>${basedir}/target</workDirectory>
+               <workDirectory>${modules.root.dir}/application/target</workDirectory>
             </configuration>
          </plugin>
       </plugins>
@@ -300,7 +330,7 @@
                <sourceEncoding>utf-8</sourceEncoding>
                <targetJdk>1.6</targetJdk>
                <rulesets>
-                  <ruleset>${basedir}/../.ruleset</ruleset>
+                  <ruleset>${modules.root.dir}/.ruleset</ruleset>
                </rulesets>
             </configuration>
          </plugin>

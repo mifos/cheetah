@@ -13,7 +13,8 @@
       <version>0.0.3-SNAPSHOT</version>
    </parent>
    <properties>
-      <cargo.install.directory>${project.build.directory}/installs</cargo.install.directory>
+      <modules.root.dir>${basedir}/..</modules.root.dir>
+      <cargo.install.directory>${modules.root.dir}/target/installs</cargo.install.directory>
       <selenium.port>4444</selenium.port>
       <servlet.port>8080</servlet.port>
       <selenium.background>true</selenium.background>
@@ -99,7 +100,7 @@
                            <tasks>
                               <copy todir="${tomcat.home.directory}/conf"
                                  overwrite="true">
-                                 <fileset dir="${basedir}/src/test/containers/${container.name}" />
+                                 <fileset dir="${modules.root.dir}/testing/src/test/containers/${container.name}" />
                               </copy>
                            </tasks>
                         </configuration>
@@ -142,7 +143,7 @@
             <activeByDefault>false</activeByDefault>
          </activation>
          <properties>
-            <continuous.integration.resources.dir>${basedir}/../resources/continuous-integration/acceptance</continuous.integration.resources.dir>
+            <continuous.integration.resources.dir>${modules.root.dir}/resources/continuous-integration/acceptance</continuous.integration.resources.dir>
             <database.properties.file>${continuous.integration.resources.dir}/jdbc.local.properties</database.properties.file>
             <tomcat.container.url>file:///home/hudson/arc/apache-tomcat-${tomcat.version}.zip</tomcat.container.url>
          </properties>
@@ -227,6 +228,29 @@
       </pluginRepository>
    </pluginRepositories>
    <dependencies>
+      <!-- from parent pom -->
+      <dependency>
+         <groupId>org.mifos</groupId>
+         <artifactId>cheetahTestFramework</artifactId>
+      </dependency>      
+      <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-aop</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjrt</artifactId>
+      </dependency> 
+      <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjweaver</artifactId>
+      </dependency> 
+      <dependency>
+          <groupId>org.dbunit</groupId>
+          <artifactId>dbunit</artifactId>
+      </dependency>   
+
+      <!-- for this module -->
       <dependency>
          <groupId>org.mifos</groupId>
          <artifactId>cheetah</artifactId>
@@ -275,11 +299,11 @@
    <build>
       <finalName>cheetah-testing</finalName>
       <defaultGoal>integration-test</defaultGoal>
-      <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-      <scriptSourceDirectory>${basedir}/src/main/scripts</scriptSourceDirectory>
-      <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
-      <outputDirectory>${basedir}/target/cheetah-testing/WEB-INF/classes</outputDirectory>
-      <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
+      <sourceDirectory>${modules.root.dir}/testing/src/main/java</sourceDirectory>
+      <scriptSourceDirectory>${modules.root.dir}/testing/src/main/scripts</scriptSourceDirectory>
+      <testSourceDirectory>${modules.root.dir}/testing/src/test/java</testSourceDirectory>
+      <outputDirectory>${modules.root.dir}/testing/target/cheetah-testing/WEB-INF/classes</outputDirectory>
+      <testOutputDirectory>${modules.root.dir}/testing/test-classes</testOutputDirectory>
       <plugins>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -335,7 +359,7 @@
             <version>2.4</version>
             <configuration>
                <rulesets>
-                  <ruleset>${basedir}/../pmd.xml</ruleset>
+                  <ruleset>${modules.root.dir}/.ruleset</ruleset>
                </rulesets>
             </configuration>
             <executions>
@@ -396,8 +420,8 @@
                <wait>${cargo.wait}</wait>
                <container>
                   <containerId>${container.name}</containerId>
-                  <log>${project.build.directory}/logs/${container.name}.log</log>
-                  <output>${project.build.directory}/logs/${container.name}.out</output>
+                  <log>${modules.root.dir}/testing/target/logs/${container.name}.log</log>
+                  <output>${modules.root.dir}/testing/target/logs/${container.name}.out</output>
                   <timeout>600000</timeout>
                </container>
                <configuration>
@@ -437,7 +461,7 @@
                <sourceEncoding>utf-8</sourceEncoding>
                <targetJdk>1.6</targetJdk>
                <rulesets>
-                  <ruleset>${basedir}/../pmd.xml</ruleset>
+                  <ruleset>${modules.root.dir}/pmd.xml</ruleset>
                </rulesets>
             </configuration>
          </plugin>
