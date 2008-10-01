@@ -1,7 +1,7 @@
-#Tue Sep 30 12:59:56 PDT 2008
+#Tue Sep 30 17:38:08 PDT 2008
 DELEGATES_PREFERENCE=delegateValidatorList
-USER_BUILD_PREFERENCE=enabledBuildValidatorListorg.eclipse.wst.common.componentcore.internal.ModuleCoreValidator;org.eclipse.wst.wsi.ui.internal.WSIMessageValidator;org.eclipse.jst.jsf.validation.internal.appconfig.AppConfigValidator;org.eclipse.jst.j2ee.internal.classpathdep.ClasspathDependencyValidator;org.eclipse.jst.j2ee.internal.web.validation.UIWarValidator;
-USER_MANUAL_PREFERENCE=enabledManualValidatorListorg.eclipse.wst.common.componentcore.internal.ModuleCoreValidator;org.eclipse.wst.wsi.ui.internal.WSIMessageValidator;org.eclipse.jst.jsf.validation.internal.appconfig.AppConfigValidator;org.eclipse.jst.j2ee.internal.classpathdep.ClasspathDependencyValidator;org.eclipse.jst.j2ee.internal.web.validation.UIWarValidator;
+USER_BUILD_PREFERENCE=enabledBuildValidatorListorg.eclipse.jst.j2ee.internal.classpathdep.ClasspathDependencyValidator;org.eclipse.jst.j2ee.internal.web.validation.UIWarValidator;org.eclipse.wst.common.componentcore.internal.ModuleCoreValidator;org.eclipse.jst.jsf.validation.internal.appconfig.AppConfigValidator;org.eclipse.wst.wsi.ui.internal.WSIMessageValidator;
+USER_MANUAL_PREFERENCE=enabledManualValidatorListorg.eclipse.jst.j2ee.internal.classpathdep.ClasspathDependencyValidator;org.eclipse.jst.j2ee.internal.web.validation.UIWarValidator;org.eclipse.wst.common.componentcore.internal.ModuleCoreValidator;org.eclipse.jst.jsf.validation.internal.appconfig.AppConfigValidator;org.eclipse.wst.wsi.ui.internal.WSIMessageValidator;
 USER_PREFERENCE=overrideGlobalPreferencestruedisableAllValidationfalseversion1.2.0.v200806051402
 eclipse.preferences.version=1
 override=true
@@ -12,5 +12,5 @@ vals/org.eclipse.wst.html.ui.HTMLValidator/groups=0107include06111contentType136
 vals/org.eclipse.wst.xml.core.xml/global=TT03
 vals/org.eclipse.wst.xml.core.xml/groups=0107include07111contentType128org.eclipse.core.runtime.xmlT111contentType134org.eclipse.wst.xml.core.xmlsourceT111contentType134org.eclipse.wst.xml.core.xslsourceT111contentType134org.eclipse.jst.jsp.core.tldsourceT07fileext03xmlF07fileext03gphF07fileext115wdo-connectionsF0107exclude113113projectNature134org.eclipse.jst.j2ee.ejb.EJBNature113projectNature130org.eclipse.jst.j2ee.EARNature04file08.projectT0104file110.classpathT0104file110.settings/T0204file111test-outputF0204file123target/surefire-reportsF0204file06targetF0204file121findbugs.excludes.xmlF0104file118application/targetF0204file135application/target/surefire-reportsF0204file114testing/targetF0204file131testing/target/surefire-reportsF02
 vals/org.eclipse.wst.xsd.core.xsd/global=TT02162org.eclipse.wst.xsd.core.internal.validation.eclipse.Validator
-vals/org.eclipse.wst.xsd.core.xsd/groups=0107include0107fileext03xsdF0107exclude0504file06targetF0204file118application/targetF0204file07pmd.xmlF0104file114testing/targetF0204file134application/src/main/resources/xsdF02
+vals/org.eclipse.wst.xsd.core.xsd/groups=0107include0107fileext03xsdF0107exclude0604file06targetF0204file118application/targetF0204file07pmd.xmlF0104file114testing/targetF0204file134application/src/main/resources/xsdF0204file136testFramework/src/main/resources/xsdF02
 vf.version=3
