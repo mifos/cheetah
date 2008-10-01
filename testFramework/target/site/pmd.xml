@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<pmd version="4.2.2" timestamp="2008-10-01T13:15:25.265">
-<suppressedviolation filename="C:\eclipse-workspace\mifos-cheetah\testFramework\src\main\java\org\mifos\test\framework\util\DatabaseTestUtils.java" suppressiontype="annotation" msg="Found 'DD'-anomaly for variable 'jdbcConnection' (lines '60'-'63')." usermsg=""/>
-</pmd>
