@@ -51,4 +51,11 @@ public class StandardLoanDao  implements LoanDao {
 		return query.getResultList();
 	}
 
+    @Override
+    public List<Loan> findLoansForClient(Integer clientId) {
+        Query query = entityManager.createQuery("SELECT loan from Loan loan where loan.clientId = :clientId");
+        query.setParameter("clientId", clientId);
+        return query.getResultList();
+    }
+
 }

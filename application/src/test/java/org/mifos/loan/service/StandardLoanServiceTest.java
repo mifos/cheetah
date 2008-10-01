@@ -21,8 +21,8 @@
 package org.mifos.loan.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-import junit.framework.Assert;
 import net.sf.dozer.util.mapping.MapperIF;
 
 import org.mifos.core.MifosServiceException;
@@ -36,6 +36,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.Validator;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -77,10 +78,22 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 		loanService.setValidator(validator);
 	}
 	
+	private LoanDto createValidLoanDto(BigDecimal amount) {
+        LoanDto loanDto = new LoanDto(CLIENT_ID, amount, LOAN_INTEREST_RATE, loanProductId);
+        loanDto.setLoanProductDto(loanProductDto);
+        return loanDto;	    
+	}
+	
 	private LoanDto createValidLoanDto() {
-		LoanDto loanDto = new LoanDto(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProductId);
-		loanDto.setLoanProductDto(loanProductDto);
-		return loanDto;
+	    return createValidLoanDto(LOAN_AMOUNT);
+	}
+	
+	private void validateLoan(LoanDto loanDto, BigDecimal loanAmount) {
+        Assert.assertEquals(loanDto.getId().intValue(),1,"Unexpected loan id assigned.");
+        Assert.assertEquals(loanDto.getClientId().intValue(),CLIENT_ID,"Didn't get clientId back.");        
+        Assert.assertEquals(loanDto.getLoanProductId().intValue(),loanProductId,"Didn't get loanProductId back.");
+        Assert.assertEquals(loanDto.getAmount(), loanAmount,"Didn't get loan amount back.");
+        Assert.assertEquals(loanDto.getInterestRate(), LOAN_INTEREST_RATE,"Didn't get interestRate back.");	    
 	}
 	
 	public void testCreateValidLoan() throws MifosServiceException {
@@ -89,11 +102,7 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 		
 		LoanDto loanDto = loanService.createLoan(inputLoanDto);
 		
-		Assert.assertEquals("Unexpected loan id assigned.", loanDto.getId().intValue(),1);
-		Assert.assertEquals("Didn't get clientId back.", loanDto.getClientId().intValue(),CLIENT_ID);		
-		Assert.assertEquals("Didn't get loanProductId back.",loanDto.getLoanProductId().intValue(),loanProductId);
-		Assert.assertEquals("Didn't get loan amount back.",loanDto.getAmount(), LOAN_AMOUNT);
-		Assert.assertEquals("Didn't get interestRate back.",loanDto.getInterestRate(), LOAN_INTEREST_RATE);
+		validateLoan(loanDto, LOAN_AMOUNT);
 	}
 
 	private void assertExpectedError(MifosServiceException mifosServiceException, String fieldName, String defaultErrorMessage) {
@@ -162,6 +171,20 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 			assertExpectedError(mifosServiceException, "interestRate", "LoanDto.interestRateIsTooHigh");
 		}
 	}
+
+	public void testFindLoansForClientNone() {	    
+	    List<LoanDto> emptyLoans = loanService.findLoansForClient(CLIENT_ID);
+	    
+	    Assert.assertEquals(emptyLoans.size(), 0, "No loans should have been found.");
+	}
+
+    public void testFindLoansForClient() throws MifosServiceException {      
+        loanService.createLoan(createValidLoanDto());
+        loanService.createLoan(createValidLoanDto());
+        List<LoanDto> loans = loanService.findLoansForClient(CLIENT_ID);
+        
+        Assert.assertEquals(loans.size(), 2, "Didn't find expected number of loans");
+    }
 	
 	@Autowired
     @Test(enabled = false)

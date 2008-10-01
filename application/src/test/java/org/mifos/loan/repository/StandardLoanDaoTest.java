@@ -48,16 +48,27 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 	private LoanProduct loanProduct;
 	
 	private static final Integer CLIENT_ID = 1;
-	private static final BigDecimal LOAN_AMOUNT = new BigDecimal("1200");
+    private static final Integer UNUSED_CLIENT_ID = 8;
+    private static final BigDecimal LOAN_AMOUNT1 = new BigDecimal("1200");
+    private static final BigDecimal LOAN_AMOUNT2 = new BigDecimal("100");
 	private static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
 	
 	private void verifyLoanData(Loan loan) {
 		Assert.assertTrue(loan.getId() > 0, "Expected a positive Id to be generated.");
 		Assert.assertEquals(loan.getLoanProduct().getId(), loanProduct.getId(),"LoanProductId mismatch.");
-		Assert.assertEquals(loan.getAmount(), LOAN_AMOUNT, "Loan amount mismatch.");
+		Assert.assertEquals(loan.getAmount(), LOAN_AMOUNT1, "Loan amount mismatch.");
 		Assert.assertEquals(loan.getInterestRate(), LOAN_INTEREST_RATE, "Loan interest rate mismatch.");
 		
 	}
+	
+    private void verifyLoanData(Loan loan, BigDecimal loanAmount) {
+        Assert.assertTrue(loan.getId() > 0, "Expected a positive Id to be generated.");
+        Assert.assertEquals(loan.getLoanProduct().getId(),loanProduct.getId(),"LoanProductId mismatch.");
+        Assert.assertEquals(loan.getAmount(), loanAmount, "Loan amount mismatch.");
+        Assert.assertEquals(loan.getInterestRate(), LOAN_INTEREST_RATE, "Loan interest rate mismatch.");
+        Assert.assertEquals(loan.getClientId(), CLIENT_ID,"Client id mismatch");
+    }
+    
 	
 	@java.lang.SuppressWarnings("PMD.UnusedPrivateMethod")
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"UPM"}, justification="@BeforeMethod & @AfterMethod methods are called by testNG")
@@ -67,7 +78,7 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 	}
 	
 	public void testCreateLoan() {
-		Loan loan = standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProduct);
+		Loan loan = standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
 		
 		verifyLoanData(loan);
 	}
@@ -76,9 +87,9 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 
 		int initialSize = standardLoanDao.getAll().size();
 		
-		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProduct);
-		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProduct);
-		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT, LOAN_INTEREST_RATE, loanProduct);
+		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
 		
 		List<Loan> loans = standardLoanDao.getAll();
 		
@@ -88,5 +99,22 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 		
 		verifyLoanData(loan);
 	}
+	
+    public void testLoanLookupByClientId() {      
+        List<Loan> loanCheck = standardLoanDao.findLoansForClient(CLIENT_ID);
+        Assert.assertEquals(loanCheck.size(), 0);
+        
+        standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+        standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT2, LOAN_INTEREST_RATE, loanProduct);
+        
+        List<Loan> loans = standardLoanDao.findLoansForClient(CLIENT_ID);
+        Assert.assertEquals(loans.size(), 2);
+        verifyLoanData(loans.get(0),LOAN_AMOUNT1);
+        verifyLoanData(loans.get(1),LOAN_AMOUNT2);
+
+        List<Loan> loansNone = standardLoanDao.findLoansForClient(UNUSED_CLIENT_ID);
+        Assert.assertEquals(loansNone.size(), 0);
+        
+    }
 	
 }

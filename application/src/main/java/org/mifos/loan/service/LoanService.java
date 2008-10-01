@@ -20,6 +20,8 @@
 
 package org.mifos.loan.service;
 
+import java.util.List;
+
 import net.sf.dozer.util.mapping.MapperIF;
 
 import org.mifos.core.MifosServiceException;
@@ -41,5 +43,7 @@ public interface LoanService {
 	void setBeanMapper(MapperIF mapper);
 
 	void setValidator(Validator validator);
+
+    List<LoanDto> findLoansForClient(Integer clientId);
 
 }

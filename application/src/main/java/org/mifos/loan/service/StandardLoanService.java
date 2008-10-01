@@ -20,6 +20,9 @@
 
 package org.mifos.loan.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.sf.dozer.util.mapping.MapperIF;
 
 import org.mifos.core.MifosServiceException;
@@ -53,6 +56,18 @@ public class StandardLoanService implements LoanService {
 
 		return newLoanDto;
 	}
+
+    @Override
+    public List<LoanDto> findLoansForClient(Integer clientId) {
+        List<Loan> loans = loanDao.findLoansForClient(clientId);
+        
+        List<LoanDto> loanDtos = new ArrayList<LoanDto>();
+        for (Loan loan : loans) {
+            loanDtos.add((LoanDto)beanMapper.map(loan,LoanDto.class));            
+        }
+        
+        return loanDtos;
+    }
 
 	private void validate(LoanDto loanDto) throws MifosServiceException {
 		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanDto, "loanDto");

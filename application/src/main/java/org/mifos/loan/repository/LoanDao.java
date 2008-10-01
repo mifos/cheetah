@@ -32,5 +32,6 @@ import org.mifos.loan.domain.LoanProduct;
 public interface LoanDao {
 	Loan createLoan(Integer clientId, BigDecimal loanAmount, BigDecimal interestRate, LoanProduct loanProduct);
 	List<Loan> getAll();
+    List<Loan> findLoansForClient(Integer clientId);
 
 }

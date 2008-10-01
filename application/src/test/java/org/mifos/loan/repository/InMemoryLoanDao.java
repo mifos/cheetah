@@ -21,10 +21,13 @@
 package org.mifos.loan.repository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.mifos.client.domain.Client;
 import org.mifos.loan.domain.Loan;
 import org.mifos.loan.domain.LoanProduct;
 
@@ -58,4 +61,15 @@ public class InMemoryLoanDao implements LoanDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+    @Override
+    public List<Loan> findLoansForClient(Integer clientId) {
+        ArrayList loanList = new ArrayList<Loan>();
+        for (Entry<Integer,Loan> entry : loans.entrySet()) {
+            if (entry.getValue().getClientId().equals(clientId)) {
+                loanList.add(entry.getValue());
+            }           
+        }
+        return loanList;
+    }
 }
