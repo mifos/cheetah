@@ -187,7 +187,7 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
 	}
 
     @Test(enabled = false)
-    public void setClientService(StandardClientService clientService) {
+    public void setClientService(ClientService clientService) {
 		this.clientService = clientService;
 	}
 

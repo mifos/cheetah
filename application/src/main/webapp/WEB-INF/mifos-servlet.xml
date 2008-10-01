@@ -25,6 +25,11 @@
     <bean id="loanProductController" class="org.mifos.ui.loan.controller.LoanProductController">
     	<property name="loanProductService" ref="loanProductService"/>
     </bean>
+
+    <bean id="clientDetailController" class="org.mifos.ui.client.controller.ClientDetailController">
+    	<property name="clientService" ref="clientService"/>
+    </bean>
+    
     
     <bean id="loanController" class="org.mifos.ui.loan.controller.LoanController">
         <property name="sessionForm"  value="true"/>
@@ -37,12 +42,12 @@
         <property name="loanProductService" ref="loanProductService"/>
     </bean>
 
-    <bean id="homeController" class="org.mifos.ui.home.controller.HomeController">
+    <bean id="clientSearchController" class="org.mifos.ui.client.controller.ClientSearchController">
         <property name="sessionForm"  value="true"/>
         <property name="commandName"  value="searchString"/>
         <property name="commandClass" value="org.mifos.ui.home.command.SearchCommand"/>
         <property name="formView"     value="home"/>
-        <property name="successView"  value="clientDetail.ftl"/>
+        <property name="successView"  value="clientSearchResults"/>
         <property name="validator"    ref="beanValidator"/>
         <property name="clientService" ref="clientService"/>
     </bean>
@@ -102,9 +107,10 @@
     			/createLoan.ftl=loanController
     			/createClient.ftl=clientController
     			/createClientSuccess.ftl=genericController
-    			/clientDetail.ftl=genericController
+    			/clientSearchResults.ftl=clientSearchController
+    			/clientDetail.ftl=clientDetailController
     			/loanDetail.ftl=genericController
-    			/home.ftl=homeController
+    			/home.ftl=clientSearchController
     			/appInfo.ftl=appInfoController
     		</value>
     	</property>

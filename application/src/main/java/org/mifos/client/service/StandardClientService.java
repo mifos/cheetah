@@ -27,14 +27,17 @@ import org.mifos.client.domain.Client;
 import org.mifos.client.repository.ClientDao;
 import org.mifos.core.MifosException;
 import org.mifos.core.MifosServiceException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
+
 
 public class StandardClientService implements ClientService {
 
 	private ClientDao clientDao;
 	private Validator validator;
 	
+	@Transactional
 	@Override
 	public ClientDto createClient(ClientDto clientDto) throws MifosServiceException {
 		validate(clientDto);
@@ -56,6 +59,7 @@ public class StandardClientService implements ClientService {
 		
 	}
 
+	@Transactional
 	@Override
 	public ClientDto getClient(Integer clientId) {
 		Client client = clientDao.get(clientId);
@@ -71,6 +75,7 @@ public class StandardClientService implements ClientService {
 		return clientDto;
 	}
 
+    @Transactional
 	@Override
 	public List<ClientDto> findClients(String searchString) {
 		List<Client> clients = clientDao.findClients(searchString);

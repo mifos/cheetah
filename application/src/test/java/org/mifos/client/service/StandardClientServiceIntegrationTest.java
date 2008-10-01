@@ -72,7 +72,7 @@ public class StandardClientServiceIntegrationTest extends AbstractTransactionalT
 
 	@Autowired
     @Test(enabled = false)
-    public void setClientService(StandardClientService clientService) {
+    public void setClientService(ClientService clientService) {
 		this.clientService = clientService;
 	}
 

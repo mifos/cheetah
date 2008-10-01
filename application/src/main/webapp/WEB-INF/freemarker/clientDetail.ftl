@@ -11,7 +11,7 @@
   [#include "clientsAndAccountsLeftPane.ftl" ]
     <div id="page-content">
     	<div id="clientDetailPage">
-	    	<h2>Client Name</h2>
+	    	<h2>${model.client.firstName} ${model.client.lastName}</h2>
 	      	<h2>Account Information</h2>
 	      	<div id="clientDetailPage-loanSection">
 	    		<h4 id="clientDetailPage-loanSectionHeading">Loan</h4>

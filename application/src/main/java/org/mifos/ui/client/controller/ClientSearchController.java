@@ -18,7 +18,7 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.ui.home.controller;
+package org.mifos.ui.client.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,12 +34,9 @@ import org.mifos.ui.home.command.SearchCommand;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-
-// TODO: the class should be able to be removed.  Will remove it
-// after next commit.  --Van
-public class HomeController extends SimpleFormController {
+public class ClientSearchController extends SimpleFormController {
 	
-    private static final Log LOG = LogFactory.getLog(HomeController.class);
+    private static final Log LOG = LogFactory.getLog(ClientSearchController.class);
     
     private ClientService clientService;
 
@@ -47,18 +44,11 @@ public class HomeController extends SimpleFormController {
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_UNWRITTEN_FIELD"}, justification="set by Spring dependency injection")
 	protected ModelAndView onSubmit(Object command) throws Exception {
-		LOG.debug ("entered LoanProductController.onSubmit()");
+		LOG.debug ("entered ClientDetailController.onSubmit()");
 		List<ClientDto> clientDtos = clientService.findClients(((SearchCommand)command).getSearchString());
         Map<String, Object> model = new HashMap<String, Object>();
-        //model.put("clients", clientDtos);
-        ClientDto client;
-        if (clientDtos.isEmpty()) {
-            client = new ClientDto();
-        } else {
-            client = clientDtos.get(0);
-        }
-        model.put("client", client);
-		return new ModelAndView("clientDetail", "model", model);
+        model.put("clients", clientDtos);
+ 		return new ModelAndView("clientSearchResults", "model", model);
 	}
 		
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
