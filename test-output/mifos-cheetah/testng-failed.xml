@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="5" skipfailedinvocationCounts="false" verbose="1" name="Failed suite [mifos-cheetah]" junit="false" annotations="JDK">
+  <test name="org.mifos.loan.repository.StandardLoanProductDaoTest(failed)" junit="false" annotations="JDK">
+    <classes>
+      <class name="org.mifos.loan.repository.StandardLoanProductDaoTest">
+        <methods>
+          <include name="springTestContextBeforeTestMethod"/>
+          <include name="testGetTwoProducts"/>
+          <include name="springTestContextAfterTestMethod"/>
+          <include name="springTestContextPrepareTestInstance"/>
+          <include name="clearData"/>
+        </methods>
+      </class>
+    </classes>
+  </test>
+</suite>

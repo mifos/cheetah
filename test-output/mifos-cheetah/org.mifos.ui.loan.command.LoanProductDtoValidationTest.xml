@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.mifos.ui.loan.command.LoanProductDtoValidationTest" failures="0" tests="1" time="0.484" errors="0">
+  <properties/>
+  <testcase name="testValidInputs" time="0.015" classname="org.mifos.ui.loan.command.LoanProductDtoValidationTest"/>
+</testsuite>

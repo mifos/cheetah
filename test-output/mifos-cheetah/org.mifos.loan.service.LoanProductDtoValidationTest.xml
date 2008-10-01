@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.mifos.loan.service.LoanProductDtoValidationTest" failures="0" tests="9" time="0.719" errors="0">
+  <properties/>
+  <testcase name="testValidInputs" time="0.141" classname="org.mifos.loan.service.LoanProductDtoValidationTest"/>
+  <testcase name="testNullStatus" time="0.0" classname="org.mifos.loan.service.LoanProductDtoValidationTest"/>
+  <testcase name="testBlankLongName" time="0.0" classname="org.mifos.loan.service.LoanProductDtoValidationTest"/>
+  <testcase name="testNullMaxInterestRate" time="0.0" classname="org.mifos.loan.service.LoanProductDtoValidationTest"/>
+  <testcase name="testNullMinInterestRate" time="0.0" classname="org.mifos.loan.service.LoanProductDtoValidationTest"/>
+  <testcase name="testNegativeMaxInterestRate" time="0.0" classname="org.mifos.loan.service.LoanProductDtoValidationTest"/>
+  <testcase name="testNegativeMinInterestRate" time="0.0" classname="org.mifos.loan.service.LoanProductDtoValidationTest"/>
+  <testcase name="testMinGreaterThanMaxInterestRate" time="0.0" classname="org.mifos.loan.service.LoanProductDtoValidationTest"/>
+  <testcase name="testNullLongName" time="0.0" classname="org.mifos.loan.service.LoanProductDtoValidationTest"/>
+</testsuite>

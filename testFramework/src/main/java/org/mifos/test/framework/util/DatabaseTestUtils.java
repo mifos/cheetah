@@ -22,23 +22,51 @@ package org.mifos.test.framework.util;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.dbunit.DatabaseUnitException;
-import org.dbunit.database.DatabaseDataSourceConnection;
+import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class DatabaseTestUtils {
 
-    public void deleteDataFromTable(String tableName, DriverManagerDataSource dataSource) throws IOException, DataSetException, SQLException, DatabaseUnitException {
-        StringReader dataSetXmlStream = new StringReader("<dataset><" + tableName + "/></dataset>");
-        IDataSet dataSet = new FlatXmlDataSet(dataSetXmlStream);
-        IDatabaseConnection databaseConnection = new DatabaseDataSourceConnection(dataSource);
-        DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
+    public void deleteDataFromTable(String tableName, DriverManagerDataSource dataSource) 
+                    throws IOException, DataSetException, SQLException, DatabaseUnitException {
+        cleanAndInsertDataSet("<dataset><" + tableName + "/></dataset>", dataSource);
+    }
+
+    /**
+     * Execute a DbUnit CLEAN_INSERT. Parameter xmlString must be formatted as a DBUnit
+     * xml dataset. This method can be safely invoked inside a Spring-managed transaction.
+     * @param xmlString
+     * @param dataSource
+     * @throws IOException
+     * @throws DataSetException
+     * @throws SQLException
+     * @throws DatabaseUnitException
+     */
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+    //Rationale: You cannot define new local variables in the try block because the finally block must reference it.
+    public void cleanAndInsertDataSet(String xmlString, DriverManagerDataSource dataSource) 
+                    throws IOException, DataSetException, SQLException, DatabaseUnitException {
+        StringReader dataSetXmlStream = new StringReader(xmlString);
+        Connection jdbcConnection = null;
+        try {
+            IDataSet dataSet = new FlatXmlDataSet(dataSetXmlStream);
+            jdbcConnection = DataSourceUtils.getConnection(dataSource);
+            IDatabaseConnection databaseConnection = new DatabaseConnection(jdbcConnection);
+            DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
+        }
+        finally {
+            jdbcConnection.close();
+            DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
+        }
     }
 }

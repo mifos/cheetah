@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.mifos.loan.service.StandardLoanServiceTest" failures="0" tests="4" time="0.984" errors="0">
+  <properties/>
+  <testcase name="testCreateLoanWithInvalidLoanAmount" time="0.031" classname="org.mifos.loan.service.StandardLoanServiceTest"/>
+  <testcase name="testCreateLoanWithInvalidLoanProduct" time="0.016" classname="org.mifos.loan.service.StandardLoanServiceTest"/>
+  <testcase name="testCreateValidLoan" time="0.172" classname="org.mifos.loan.service.StandardLoanServiceTest"/>
+  <testcase name="testCreateLoanWithInvalidInterestRate" time="0.0" classname="org.mifos.loan.service.StandardLoanServiceTest"/>
+</testsuite>

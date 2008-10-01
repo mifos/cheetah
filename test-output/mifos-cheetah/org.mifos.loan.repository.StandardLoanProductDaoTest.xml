@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.mifos.loan.repository.StandardLoanProductDaoTest" failures="0" tests="3" time="2.891" errors="0">
+  <properties/>
+  <testcase name="testCreateOneProduct" time="0.047" classname="org.mifos.loan.repository.StandardLoanProductDaoTest"/>
+  <testcase name="testGetProducts" time="0.234" classname="org.mifos.loan.repository.StandardLoanProductDaoTest"/>
+  <testcase name="testGet" time="0.016" classname="org.mifos.loan.repository.StandardLoanProductDaoTest"/>
+</testsuite>
