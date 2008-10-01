@@ -28,17 +28,25 @@ public class LocalDateEditorTest {
     }
 
     public void testGetDatePattern() {
-        Locale locale = new Locale("en", "US");
-        LocalDateEditor localDateEditor = new LocalDateEditor(locale);
-        String actualDatePattern = localDateEditor.getDatePattern();
-        Assert.assertEquals("M/d/yyyy", actualDatePattern);
+        verifyDatePatternForLocale("en", "US","M/d/yyyy");
     }
 
-    public void testGetDatePatternFrLocale() {
-        Locale locale = new Locale("fr", "FR");
-        LocalDateEditor localDateEditor = new LocalDateEditor(locale);
-        String actualDatePattern = localDateEditor.getDatePattern();
-        Assert.assertEquals("dd/MM/yyyy", actualDatePattern);
+    public void testGetDatePatternFrenchLanguageFrenchCountryLocale() {
+        verifyDatePatternForLocale("fr", "FR","dd/MM/yyyy");
     }
 
+    public void testGetDatePatternEnglishLanguagePhilipineCountryLocale() {
+        verifyDatePatternForLocale("en", "PH","M/d/yyyy");
+    }
+
+    public void testGetDatePatternSpanishLanguagePhilipineCountryLocale() {
+        verifyDatePatternForLocale("es", "PH","d/MM/yyyy");
+    }
+
+    private void verifyDatePatternForLocale(String languageCode, String countryCode, String expectedDatePattern) {
+        Locale locale = new Locale(languageCode, countryCode);
+        LocalDateEditor localDateEditor = new LocalDateEditor(locale);
+        String actualDatePattern = localDateEditor.getDatePattern();
+        Assert.assertEquals(expectedDatePattern, actualDatePattern);
+    }
 }

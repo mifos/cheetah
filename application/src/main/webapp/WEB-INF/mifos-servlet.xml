@@ -71,12 +71,15 @@
         <property name="appInfo" ref="appInfo"/>
     </bean>
     
-    
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+       <property name="cookieName" value="mifos.client.language"/>
+       <!-- in seconds. If set to -1, the cookie is not persisted (deleted when browser shuts down) -->
+       <property name="cookieMaxAge" value="100000" />
+    </bean>
+
     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <property name="paramName" value="siteLanguage"/>
     </bean>
-
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver"/>
 
     <bean id="publicUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
       <property name="interceptors">
@@ -107,71 +110,6 @@
     	</property>
     </bean>
 
-<!-- obsolete bean mappings
-    <bean name="/" class="org.mifos.ui.core.controller.RedirectionController">
-        <property name="viewToRedirectTo" value="index"/>
-    </bean>
-
-    <bean name="/index.ftl" class="org.mifos.ui.core.controller.RedirectionController">
-        <property name="viewToRedirectTo" value="index"/>
-    </bean>
-    
-    <bean name="/login.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-    <bean name="/login2.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-    <bean name="/accessDenied.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-    <bean name="/languages.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-    <bean name="/adminHome.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-    <bean name="/clientsAndAccounts.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-    
-    <bean name="/viewLoanProducts.ftl" class="org.mifos.ui.loan.controller.LoanProductController">
-    	<property name="loanProductService" ref="loanProductService"/>
-    </bean>
-    
-    <bean name="/viewLoanProduct.ftl" class="org.mifos.ui.loan.controller.LoanProductController">
-    	<property name="loanProductService" ref="loanProductService"/>
-    </bean>
-    
-    <bean name="/createLoanProduct.ftl" class="org.mifos.ui.loan.controller.LoanProductFormController">
-        <property name="sessionForm"  value="true"/>
-        <property name="commandName"  value="loanProduct"/>
-        <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductFormBean"/>
-        <property name="formView"     value="createLoanProduct"/>
-        <property name="successView"  value="home.ftl"/>
-        <property name="validator"    ref="beanValidator"/>
-        <property name="loanProductService" ref="loanProductService"/>
-    </bean>
-
-    <bean name="/createLoan.ftl" class="org.mifos.ui.loan.controller.LoanController">
-        <property name="sessionForm"  value="true"/>
-        <property name="commandName"  value="loan"/>
-        <property name="commandClass" value="org.mifos.loan.service.LoanDto"/>
-        <property name="formView"     value="createLoan"/>
-        <property name="successView"  value="home.ftl"/>
-        <property name="validator"    ref="beanValidator"/>
-        <property name="loanService" ref="loanService"/>
-        <property name="loanProductService" ref="loanProductService"/>
-    </bean>
-
-    <bean name="/createClient.ftl" class="org.mifos.ui.client.controller.ClientController">
-        <property name="sessionForm"  value="true"/>
-        <property name="commandName"  value="client"/>
-        <property name="commandClass" value="org.mifos.client.service.ClientDto"/>
-        <property name="formView"     value="createClient"/>
-        <property name="successView"  value="createClientSuccess.ftl"/>
-        <property name="validator"    ref="beanValidator"/>
-        <property name="clientService" ref="clientService"/>
-    </bean>
-    <bean name="/createClientSuccess.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-
-
-
-    <bean name="/home.ftl" class="org.mifos.ui.core.controller.GenericController"/>
-
-    <bean name="/appInfo.ftl" class="org.mifos.ui.core.controller.AppInfoController">
-        <property name="appInfo" ref="appInfo"/>
-    </bean>
-
--->
     <!-- freemarker config -->
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 	  <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
