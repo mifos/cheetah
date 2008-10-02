@@ -11,4 +11,16 @@ public class ViewLoanProductsPage extends AbstractPage {
         super(selenium);
     }
 
+    public ViewLoanProductDetailsPage navigateToViewLoanProductDetailsPage(int id) {
+        selenium.click("id=short-name-" + id);
+        waitForPageToLoad();
+        return new ViewLoanProductDetailsPage(selenium);
+    }
+
+    public ViewLoanProductDetailsPage navigateToViewLoanProductDetailsPage(String linkName) {
+        selenium.click("link=" + linkName);
+        waitForPageToLoad();
+        return new ViewLoanProductDetailsPage(selenium);
+    }
+
 }

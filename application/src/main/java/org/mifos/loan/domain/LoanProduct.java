@@ -81,4 +81,13 @@ public class LoanProduct {
 		this.status = status;
 	}
 	
+	public void update (String longName, String shortName, Double minInterestRate,
+						Double maxInterestRate, LoanProductStatus status) {
+        this.longName = longName;
+        this.shortName = shortName;
+        this.minInterestRate = minInterestRate;
+        this.maxInterestRate = maxInterestRate;
+        this.status = status;
+	}
+	
 }

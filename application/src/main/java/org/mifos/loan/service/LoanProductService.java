@@ -28,4 +28,5 @@ public interface LoanProductService {
 	LoanProductDto createLoanProduct(LoanProductDto product);
 	//LoanProductDto updateLoanProduct (LoanProductDto product);
 	void deleteLoanProduct (LoanProductDto product);
+	LoanProductDto updateLoanProduct (LoanProductDto product);
 }

@@ -59,11 +59,21 @@
         <property name="clientService" ref="clientService"/>
     </bean>
     
-    <bean name="loanProductFormController" class="org.mifos.ui.loan.controller.LoanProductFormController">
+    <bean name="createLoanProductFormController" class="org.mifos.ui.loan.controller.CreateLoanProductFormController">
         <property name="sessionForm"  value="true"/>
         <property name="commandName"  value="loanProduct"/>
         <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductFormBean"/>
         <property name="formView"     value="createLoanProduct"/>
+        <property name="successView"  value="home.ftl"/>
+        <property name="validator"    ref="beanValidator"/>
+        <property name="loanProductService" ref="loanProductService"/>
+    </bean>
+    
+    <bean name="editLoanProductFormController" class="org.mifos.ui.loan.controller.EditLoanProductFormController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="loanProduct"/>
+        <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductFormBean"/>
+        <property name="formView"     value="editLoanProduct"/>
         <property name="successView"  value="home.ftl"/>
         <property name="validator"    ref="beanValidator"/>
         <property name="loanProductService" ref="loanProductService"/>
@@ -110,7 +120,8 @@
     			/clientsAndAccounts.ftl=genericController
     			/viewLoanProducts.ftl=loanProductController
     			/viewLoanProduct.ftl=loanProductController
-    			/createLoanProduct.ftl=loanProductFormController
+    			/createLoanProduct.ftl=createLoanProductFormController
+    			/updateLoanProduct.ftl=editLoanProductFormController
     			/createLoan.ftl=loanController
     			/createClient.ftl=clientController
     			/createClientSuccess.ftl=genericController

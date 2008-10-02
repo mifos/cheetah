@@ -35,11 +35,11 @@
 		 		<td id = "status">${model.loanProduct.status}</td>
 		 	</tr>
 		</table>
-		 
-		<div class="button-list">
+		  
+		<div class="navigation-list">
 			<ul>
-				<li> <input type="submit" value="Edit" class="buttn"></li>   
-				<li> <input type="submit" value="Delete" class="buttn"></li>
+				<li> <a href="updateLoanProduct.ftl?id=${model.loanProduct.id}" id="update-loan-product">Update</a></li>   
+				<li> <a href="deleteLoanProduct.ftl?id=${model.loanProduct.id}" id="delete-loan-product">Delete</a></li>
 			<ul>
 		</div> 
 	</div>

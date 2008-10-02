@@ -28,27 +28,27 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 @SuppressWarnings("CPD")
 public class LoanProductDto {
 
-	private Integer id;
+	protected Integer id;
 	
 	@NotBlank
 	@NotNull
-	private String longName;
+	protected String longName;
 
 	@NotBlank
 	@NotNull
-	private String shortName;
+	protected String shortName;
 
 	@NotNull
 	@Min(0)
 	@Expression("maxInterestRate not null and minInterestRate <= maxInterestRate")  // first clause stops evaluation of the expression if maxInterestRate is null
-	private Double minInterestRate;
+	protected Double minInterestRate;
 
 	@NotNull
 	@Min(0)
-	private Double maxInterestRate;
+	protected Double maxInterestRate;
 
 	@NotNull
-	private LoanProductStatus status;
+	protected LoanProductStatus status;
 
 	public Integer getId() {
 		return id;

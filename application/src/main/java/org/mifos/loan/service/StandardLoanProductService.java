@@ -66,15 +66,15 @@ public class StandardLoanProductService implements LoanProductService {
 		return assembleDto(product);
 	}
 
-	/* implement for a later story
 	@Override
-	public LoanProductDto updateLoanProduct(LoanProductDto loanProductDto) {
-		LoanProduct currentLoanProduct = loanProductDao.get(loanProductDto.getId());
-		LoanProduct changedLoanProduct = updateLoanProductFromDto(currentLoanProduct, loanProductDto);
-		loanProductDao.updateLoanProduct(changedLoanProduct);
-		return assembleDto(changedLoanProduct);
+	public LoanProductDto updateLoanProduct(LoanProductDto dto) {
+		LoanProduct product = loanProductDao.get(dto.getId());
+		product.update(dto.getLongName(), dto.getShortName(), 
+		               dto.getMinInterestRate(), dto.getMaxInterestRate(),
+		               dto.getStatus());
+		loanProductDao.updateLoanProduct(product);
+		return assembleDto(product);
 	}
-	*/
 	
 	private LoanProductDto assembleDto (LoanProduct loanProduct) {
 		LoanProductDto loanProductDto = new LoanProductDto(loanProduct.getLongName(), loanProduct.getShortName(), loanProduct.getMinInterestRate(),
@@ -87,13 +87,4 @@ public class StandardLoanProductService implements LoanProductService {
 		return new LoanProduct(dto.getId(), dto.getLongName(), dto.getShortName(), dto.getMinInterestRate(),
 				               dto.getMaxInterestRate(), dto.getStatus());
 	}
-	
-	/* implement for a later story
-		current.setLongName(changedDto.getLongName());
-		current.setMinInterestRate(changedDto.getMinInterestRate());
-		current.setMaxInterestRate(changedDto.getMaxInterestRate());
-		current.setStatus(changedDto.getStatus());
-		return current;
-	}
-	*/
 }

@@ -28,6 +28,7 @@ import org.testng.annotations.Test;
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 
 @SuppressWarnings(value={"UrF"})
+@Test(groups="unit")
 public class StandardLoanProductServiceTest {
 
 	private StandardLoanProductService loanProductService;
@@ -48,7 +49,6 @@ public class StandardLoanProductServiceTest {
 	private LoanProductDto testProduct2;
 
 	@BeforeMethod
-	@Test(groups="unit")
 	private void setUp() {
 		loanProductService = new StandardLoanProductService();
 		loanProductService.setLoanProductDao (new InMemoryLoanProductDao());
@@ -56,7 +56,6 @@ public class StandardLoanProductServiceTest {
 		testProduct2 = new LoanProductDto(longName2, shortName2, minInt2, maxInt2, status2);
 	}
 	
-	@Test(groups="unit")
 	public void testCreateLoanProduct() {
 		assertSameState (loanProductService.createLoanProduct(testProduct1),
 							  testProduct1);
@@ -76,20 +75,17 @@ public class StandardLoanProductServiceTest {
 	}
 	*/
 	
-	//@Test(groups="unit")
 	public void testDeleteLoanProduct() {
 		LoanProductDto testLoanProductDto = createTestLoanProductDto1();
 		loanProductService.deleteLoanProduct(testLoanProductDto);
 		Assert.assertEquals(loanProductService.getAll().size(), 0);		
 	}
 	
-	//@Test(groups="unit")
 	public void testGetAllEmptyRepository() {
 		Assert.assertEquals(loanProductService.getAll().size(), 0);
 	}
 	
-	//@Test(groups="unit")
-	public void testGetAllWithOneMember() {
+	public void testGetWithOneMember() {
 		LoanProductDto testLoanProductDto = createTestLoanProductDto1();
 		LoanProductDto retrievedLoanProductDto = loanProductService.createLoanProduct(testLoanProductDto);
 		Assert.assertEquals(loanProductService.getAll().size(), 1);
@@ -97,8 +93,7 @@ public class StandardLoanProductServiceTest {
 									   testLoanProductDto);
 	}
 	
-	//@Test(groups="unit")
-	public void testGetAllWithTwoMembers() {
+	public void testGetWithTwoMembers() {
 		LoanProductDto testLoanProductDto1 = createTestLoanProductDto1();
 		LoanProductDto testLoanProductDto2 = createTestLoanProductDto2();
 		LoanProductDto retrievedLoanProductDto1 = loanProductService.createLoanProduct(testLoanProductDto1);

@@ -50,4 +50,10 @@ public class MockLoanProductServiceTestBase implements LoanProductService {
 		return null;
 	}
 
+    @Override
+    public LoanProductDto updateLoanProduct(LoanProductDto product) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

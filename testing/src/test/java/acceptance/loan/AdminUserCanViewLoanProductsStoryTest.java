@@ -33,7 +33,9 @@ import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -42,6 +44,7 @@ import org.testng.annotations.Test;
 
 import framework.pageobjects.CreateLoanProductPage;
 import framework.pageobjects.LoginPage;
+import framework.pageobjects.ViewLoanProductDetailsPage;
 import framework.pageobjects.ViewLoanProductsPage;
 import framework.test.UiTestCaseBase;
 
@@ -57,7 +60,9 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
 	private LoginPage loginPage;
 
 	@Autowired
-	private DataSource dataSource;
+	private DriverManagerDataSource dataSource;
+    
+    private static final DatabaseTestUtils dbTestUtils = new DatabaseTestUtils();
 	    
     private static final String loanProductDataSetTwoProductsXml = 
     		"<dataset>\r\n" + 
@@ -84,30 +89,34 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
         loginPage.logout();
     }
 
-	private void primeLoanProductData (String xmlString) throws IOException, DataSetException, SQLException, DatabaseUnitException {
-		StringReader dataSetXmlStream = new StringReader(xmlString);
-		IDataSet dataSet = new FlatXmlDataSet(dataSetXmlStream);
-		IDatabaseConnection databaseConnection = new DatabaseDataSourceConnection(this.getDataSource());
-		DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
-	}
-		
-	@Test(enabled=false)
-	public void testLoadLoanProductsFromString() throws IOException, DataSetException, SQLException, DatabaseUnitException {
-		primeLoanProductData(loanProductDataSetTwoProductsXml);
-	}
-	
 	public void viewTwoLoanProducts() throws Exception {
-	    primeLoanProductData(loanProductDataSetTwoProductsXml);
+	    dbTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
 	    navigateToViewLoanProductsPage();
 	    assertElementTextIncludes("short1", "short-name-1");
 	    assertElementTextIncludes("short2", "short-name-2");
 	}
 
 	public void viewZeroLoanProducts() throws Exception {
-	    primeLoanProductData(loanProductDataSetZeroProductsXml);
+	    dbTestUtils.cleanAndInsertDataSet(loanProductDataSetZeroProductsXml, dataSource);
 	    navigateToViewLoanProductsPage();
 	    Assert.assertTrue(selenium.isTextPresent("No loan products have been defined"));
 	}
+
+    public void canReachViewLoanProductDetailsPage () {
+        navigateToViewLoanProductDetailsPage("short1");
+        assertElementTextIncludes("Details for loan product \"" + "long1", "page-content-heading");
+        assertElementTextIncludes("short1", "shortName");
+    }
+    
+    private ViewLoanProductDetailsPage navigateToViewLoanProductDetailsPage (String linkName){
+        return
+            loginPage
+                .loginAs("mifos", "testmifos")
+                .navigateToAdminPage()
+                .navigateToViewLoanProductsPage()
+                .navigateToViewLoanProductDetailsPage(linkName);
+    }
+
 	
     private ViewLoanProductsPage navigateToViewLoanProductsPage (){
         return
@@ -123,12 +132,12 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
     }
 
 	@Test(enabled=false)
-	public DataSource getDataSource() {
+	public DriverManagerDataSource getDataSource() {
 		return dataSource;
 	}
 
 	@Test(enabled=false)
-	public void setDataSource(DataSource datasource) {
+	public void setDataSource(DriverManagerDataSource datasource) {
 		this.dataSource = datasource;
 	}
 }
