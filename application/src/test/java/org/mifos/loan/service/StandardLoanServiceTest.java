@@ -185,7 +185,22 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
         
         Assert.assertEquals(loans.size(), 2, "Didn't find expected number of loans");
     }
-	
+
+    public void testGetLoan() throws MifosServiceException {      
+        LoanDto loanDto = loanService.createLoan(createValidLoanDto());
+        LoanDto retrievedLoanDto = loanService.getLoan(loanDto.getId());
+        
+        validateLoan(retrievedLoanDto, loanDto.getAmount());
+    }
+
+    public void testGetLoanNotFound() throws MifosServiceException {      
+        LoanDto loanDto = loanService.createLoan(createValidLoanDto());
+        LoanDto retrievedLoanDto = loanService.getLoan(loanDto.getId()+1);
+        
+        Assert.assertNull(retrievedLoanDto.getId());
+    }
+    
+
 	@Autowired
     @Test(enabled = false)
 	public void setValidator(Validator validator) {

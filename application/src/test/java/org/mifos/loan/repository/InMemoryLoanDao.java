@@ -72,4 +72,9 @@ public class InMemoryLoanDao implements LoanDao {
         }
         return loanList;
     }
+
+    @Override
+    public Loan getLoan(Integer id) {
+        return loans.get(id);
+    }
 }

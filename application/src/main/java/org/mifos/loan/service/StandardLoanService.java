@@ -59,7 +59,7 @@ public class StandardLoanService implements LoanService {
 		return newLoanDto;
 	}
 
-	@Transactional
+    @Transactional(readOnly=true)
     @Override
     public List<LoanDto> findLoansForClient(Integer clientId) {
         List<Loan> loans = loanDao.findLoansForClient(clientId);
@@ -72,6 +72,19 @@ public class StandardLoanService implements LoanService {
         return loanDtos;
     }
 
+    @Transactional(readOnly=true)
+    @Override
+    public LoanDto getLoan(Integer id) {
+        Loan loan = loanDao.getLoan(id);
+        LoanDto loanDto;
+        if (loan == null) {
+            loanDto = new LoanDto();
+        } else {
+            loanDto = (LoanDto) beanMapper.map(loan, LoanDto.class);
+        }
+        return loanDto;        
+    }
+	
 	private void validate(LoanDto loanDto) throws MifosServiceException {
 		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanDto, "loanDto");
 		validator.validate(loanDto, errors);
@@ -107,6 +120,5 @@ public class StandardLoanService implements LoanService {
 	public void setLoanProductDao(LoanProductDao loanProductDao) {
 		this.loanProductDao = loanProductDao;
 	}
-
 	
 }

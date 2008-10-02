@@ -83,7 +83,26 @@ public class InMemoryLoanDaoTest {
         assertLoanIsExpected(loans.get(1),2,LOAN_AMOUNT2);
 
         List<Loan> loansNone = loanDao.findLoansForClient(UNUSED_CLIENT_ID);
-        Assert.assertEquals(loansNone.size(), 0);
-        
+        Assert.assertEquals(loansNone.size(), 0);      
 	}
+	
+	public void testGetLoan() {
+        LoanProduct loanProduct = new LoanProduct(LOAN_PRODUCT_ID,"long name", "name", 0.0, 20.0, LoanProductStatus.ACTIVE);     
+        Loan loanCreated = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+        
+        Loan loanRetrieved = loanDao.getLoan(loanCreated.getId());
+
+        Assert.assertNotNull(loanRetrieved);
+        assertLoanIsExpected(loanRetrieved,loanCreated.getId(),LOAN_AMOUNT1);
+	}
+	
+    public void testGetLoanNotFound() {
+        LoanProduct loanProduct = new LoanProduct(LOAN_PRODUCT_ID,"long name", "name", 0.0, 20.0, LoanProductStatus.ACTIVE);     
+        Loan loanCreated = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+        
+        Loan loanRetrieved = loanDao.getLoan(loanCreated.getId()+1);
+
+        Assert.assertNull(loanRetrieved);
+    }
+	
 }

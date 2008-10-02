@@ -114,7 +114,22 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 
         List<Loan> loansNone = standardLoanDao.findLoansForClient(UNUSED_CLIENT_ID);
         Assert.assertEquals(loansNone.size(), 0);
-        
+    }
+    
+    public void testGetLoan() {
+        Loan loanCreated = standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+        Loan loanRetrieved = standardLoanDao.getLoan(loanCreated.getId());
+
+        Assert.assertNotNull(loanRetrieved);
+        Assert.assertEquals(loanRetrieved.getId(), loanCreated.getId(), "Loan ids do not match.");
+        verifyLoanData(loanRetrieved,LOAN_AMOUNT1);
     }
 	
+    public void testGetLoanNotFound() {
+        Loan loanCreated = standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+        Loan loanRetrieved = standardLoanDao.getLoan(loanCreated.getId()+1);
+        
+        Assert.assertNull(loanRetrieved);
+    }
+    
 }

@@ -46,4 +46,6 @@ public interface LoanService {
 
     List<LoanDto> findLoansForClient(Integer clientId);
 
+    LoanDto getLoan(Integer id);
+
 }

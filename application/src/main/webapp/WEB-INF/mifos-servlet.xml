@@ -31,6 +31,11 @@
     	<property name="loanService" ref="loanService"/>
     </bean>
     
+    <bean id="viewLoanController" class="org.mifos.ui.loan.controller.ViewLoanController">
+    	<property name="clientService" ref="clientService"/>
+    	<property name="loanService" ref="loanService"/>
+    </bean>
+    
     
     <bean id="loanController" class="org.mifos.ui.loan.controller.LoanController">
         <property name="sessionForm"  value="true"/>
@@ -111,7 +116,7 @@
     			/createClientSuccess.ftl=genericController
     			/clientSearchResults.ftl=clientSearchController
     			/clientDetail.ftl=clientDetailController
-    			/loanDetail.ftl=genericController
+    			/loanDetail.ftl=viewLoanController
     			/home.ftl=clientSearchController
     			/appInfo.ftl=appInfoController
     		</value>

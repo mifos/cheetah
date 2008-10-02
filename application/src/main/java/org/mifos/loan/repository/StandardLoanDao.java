@@ -45,17 +45,24 @@ public class StandardLoanDao  implements LoanDao {
 		return loan;
 	}
 
-	@Transactional
+    @Transactional(readOnly=true)
 	public List<Loan> getAll() {
 		Query query = entityManager.createQuery("from Loan");
 		return query.getResultList();
 	}
 
     @Override
+    @Transactional(readOnly=true)
     public List<Loan> findLoansForClient(Integer clientId) {
         Query query = entityManager.createQuery("SELECT loan from Loan loan where loan.clientId = :clientId");
         query.setParameter("clientId", clientId);
         return query.getResultList();
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public Loan getLoan(Integer id) {
+        return entityManager.find(Loan.class, id);
     }
 
 }
