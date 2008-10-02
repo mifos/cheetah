@@ -16,11 +16,11 @@
          <fieldset class="createClient">
            <legend>[@spring.message "createClient" /]</legend>
               <label for="createClient.form.first.name" accesskey="n">[@spring.message "firstName" /]:</label>
-                [@form.input path="firstName"/]
+                [@form.input path="firstName"/]<br/>
               <label for="createClient.form.last.name" accesskey="l">[@spring.message "lastName" /]: </label>
-                [@form.input path="lastName"/]
+                [@form.input path="lastName"/]<br/>
               <label for="createClient.form.date.of.birth" accesskey="l">[@spring.message "dateOfBirth" /] (<span id="datePattern">${datePattern}</span>):</label>
-                [@form.input path="localDateOfBirth"/]
+                [@form.input path="localDateOfBirth"/]<br/>
               <label for="kludge"></label>
                  <input type="submit" value="Create" class="buttn" id="client.form.submit" tabindex="4">
          </fieldset>

@@ -52,6 +52,11 @@ public class ViewLoanController extends MultiActionController {
         model.put("loan", loanDto);
         ClientDto clientDto = getClientService().getClient(loanDto.getClientId());
         model.put("clientName", clientDto.getFirstName() + " " + clientDto.getLastName());
+        if (loanDto.getDisbursalDate() == null) {
+            model.put("loanDisbursalDate", "None");
+        } else {
+            model.put("loanDisbursalDate", loanDto.getDisbursalDate().toDateMidnight().toDate());
+        }
         
         return new ModelAndView("loanDetail", "model", model);
 	}

@@ -19,10 +19,10 @@
 	  [@form.errors path="*" cssClass="error-messages"/]
 
       <h2 id="hello.heading">[@spring.message "welcomeToMifos" /]</h2>
-      <h4>To quickly find a client you can...</h4>
-      <label id="clientSearch">Search by name:</label> 
+      <h4>[@spring.message "toQuicklyFindAClientYouCan"/]</h4>
+      <label id="clientSearch">[@spring.message "searchByName" /]</label> 
       [@form.input path="searchString"/]
-	  <input type="submit" value="Search" class="buttn" id="login.form.submit" tabindex="6">
+	  <input type="submit" value="[@spring.message "search" /]" class="buttn" id="login.form.submit" tabindex="6">
       
       [/@form.form]
     </div>

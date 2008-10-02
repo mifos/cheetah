@@ -23,9 +23,6 @@ package org.mifos.loan.repository;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.joda.time.LocalDate;
 import org.mifos.loan.domain.Loan;
 import org.mifos.loan.domain.LoanProduct;
