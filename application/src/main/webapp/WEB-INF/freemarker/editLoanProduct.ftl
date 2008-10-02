@@ -15,7 +15,7 @@
 
 	<div id="page-content">
 	
-		<h2>Modify a loan product</h2>
+		<h2 id="page-content-header">Modify a loan product</h2>
 				
 		 [@form.form action="updateLoanProduct.ftl" commandName="loanProduct"]
 		 [@form.errors path="*" cssClass="error-messages"/]

@@ -126,11 +126,6 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
                 .navigateToViewLoanProductsPage();
     }
 
-    private void assertElementTextIncludes(String text, String elementId) {
-        Assert.assertTrue(selenium.getText(elementId).indexOf(text) >= 0, 
-                          "Expected text \"" + text + "\" not included in element \"" + elementId + "\"");
-    }
-
 	@Test(enabled=false)
 	public DriverManagerDataSource getDataSource() {
 		return dataSource;

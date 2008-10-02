@@ -19,6 +19,8 @@
  */
 package framework.test;
 
+import junit.framework.Assert;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
 
     private static final Log LOG = LogFactory.getLog(UiTestCaseBase.class);
     private static Boolean seleniumServerIsRunning = Boolean.FALSE;
+    private static final String ERROR_ELEMENT_ID = "*.errors";
+
     
 	protected Selenium selenium;
 	
@@ -71,5 +75,29 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
             return selenium;
         }
 	}
-	
+
+    protected void assertTextFoundOnPage (String text) {
+        Assert.assertTrue(selenium.isTextPresent(text));
+    }
+
+    
+    protected void assertElementTextExactMatch(String text, String elementId) {
+        Assert.assertEquals("Text \"" + text + "\" does not match element \"" + elementId + "\":",
+                text,
+                selenium.getText(elementId));
+    }
+    
+    protected void assertErrorTextExactMatch(String text) {
+        assertElementTextExactMatch(text, ERROR_ELEMENT_ID);
+    }
+    
+    protected void assertElementTextIncludes(String text, String elementId) {
+        Assert.assertTrue("Expected text \"" + text + "\" not included in element \"" + elementId + "\"", 
+                          selenium.getText(elementId).indexOf(text) >= 0);
+    }
+    
+    protected void assertErrorTextIncludes(String text) {
+        assertElementTextIncludes(text, ERROR_ELEMENT_ID);
+    }
+
 }

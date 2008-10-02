@@ -5,7 +5,7 @@ import com.thoughtworks.selenium.Selenium;
 public class ViewLoanProductDetailsPage extends AbstractPage {
     
     public EditLoanProductPage navigateToEditLoanProductPage() {
-        selenium.click("id=edit-loan-product");
+        selenium.click("link=Update");
         return new EditLoanProductPage(selenium);
     }
 

@@ -87,6 +87,17 @@ public class StandardLoanProductDaoTest
         Assert.assertEquals(product2.getLongName(), "long2", "Didn't get expected loan product");
 	}
 	
+	public void testUpdate() throws Exception {
+        dbTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
+        LoanProduct product = new LoanProduct(new Integer(1), "long3", "short3", 9.0, 10.0, LoanProductStatus.INACTIVE);
+        loanProductDao.updateLoanProduct(product);
+        LoanProduct retrievedProduct = loanProductDao.get(1);
+        Assert.assertEquals(retrievedProduct.getLongName(), "long3", "Didn't update long name");
+        Assert.assertEquals(retrievedProduct.getShortName(), "short3", "Didn't update short name");
+        Assert.assertEquals(retrievedProduct.getMaxInterestRate(), 10.0, "Didn't update maxInterestRate");
+        Assert.assertEquals(retrievedProduct.getMinInterestRate(), 9.0, "Didn't update maxInterestRate");
+        Assert.assertEquals(retrievedProduct.getStatus(), LoanProductStatus.INACTIVE, "Didn't update status");
+	}
 		
 
 	private void assertSameState (LoanProduct actual, LoanProduct expected) {

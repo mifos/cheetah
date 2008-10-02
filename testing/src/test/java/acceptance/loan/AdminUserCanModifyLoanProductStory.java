@@ -81,9 +81,24 @@ public class AdminUserCanModifyLoanProductStory extends UiTestCaseBase {
         loginPage.logout();
     }            
 
-    private void assertElementTextIncludes(String text, String elementId) {
-        Assert.assertTrue(selenium.getText(elementId).indexOf(text) >= 0, 
-                          "Expected text \"" + text + "\" not included in element \"" + elementId + "\"");
+    
+    @Test(enabled=false)
+    public void canNavigateToEditLoanProductPage () throws Exception{
+        (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
+        navigateToViewLoanProductDetailsPage("short1");
+        assertElementTextExactMatch("Modify a loan product", "page-content-header");
     }
+    
+    private EditLoanProductPage navigateToViewLoanProductDetailsPage (String linkName){
+        return
+            loginPage
+                .loginAs("mifos", "testmifos")
+                .navigateToAdminPage()
+                .navigateToViewLoanProductsPage()
+                .navigateToViewLoanProductDetailsPage(linkName)
+                .navigateToEditLoanProductPage();
+                
+    }
+
 
 }

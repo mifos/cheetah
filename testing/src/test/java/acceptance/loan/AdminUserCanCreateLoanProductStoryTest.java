@@ -120,30 +120,5 @@ public class AdminUserCanCreateLoanProductStoryTest extends UiTestCaseBase {
 				.navigateToAdminPage()
 				.navigateToCreateLoanProductPage();
 	}
-
-	/*
-	private void assertTextFoundOnPage (String text) {
-		Assert.assertTrue(selenium.isTextPresent(text));
-	}
-	*/
-	
-	private void assertElementTextExactMatch(String text, String elementId) {
-		Assert.assertEquals("Text \"" + text + "\" does not match element \"" + elementId + "\":",
-				text,
-				selenium.getText(elementId));
-	}
-	
-	private void assertErrorTextExactMatch(String text) {
-		assertElementTextExactMatch(text, ERROR_ELEMENT_ID);
-	}
-	
-	private void assertElementTextIncludes(String text, String elementId) {
-		Assert.assertTrue("Expected text \"" + text + "\" not included in element \"" + elementId + "\"", 
-						  selenium.getText(elementId).indexOf(text) >= 0);
-	}
-	
-	private void assertErrorTextIncludes(String text) {
-		assertElementTextIncludes(text, ERROR_ELEMENT_ID);
-	}
 }
 
