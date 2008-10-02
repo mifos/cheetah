@@ -22,6 +22,7 @@ package org.mifos.loan.domain;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +30,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
 
 
 
@@ -48,6 +52,10 @@ public class Loan {
 	private LoanProduct loanProduct;
 	private BigDecimal amount;
 	private BigDecimal interestRate;
+	
+    @Column
+    @Type(type="org.joda.time.contrib.hibernate.PersistentLocalDate")
+    private LocalDate disbursalDate;
 	
 	protected Loan() {
 		// empty constructor for Hibernate
@@ -93,6 +101,15 @@ public class Loan {
 	public void setClientId(Integer clientId) {
 		this.clientId = clientId;
 	}
+
+    public LocalDate getDisbursalDate() {
+        return disbursalDate;
+    }
+
+    public void setDisbursalDate(LocalDate disbursalDate) {
+        this.disbursalDate = disbursalDate;
+    }
+
 
 	
 }

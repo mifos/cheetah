@@ -23,6 +23,10 @@ package org.mifos.loan.repository;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.joda.time.LocalDate;
 import org.mifos.loan.domain.Loan;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
@@ -130,6 +134,17 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
         Loan loanRetrieved = standardLoanDao.getLoan(loanCreated.getId()+1);
         
         Assert.assertNull(loanRetrieved);
+    }
+
+    public void testUpdateLoanDisbursalDate() {
+        Loan loanCreated = standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+
+        LocalDate now = new LocalDate();
+        loanCreated.setDisbursalDate(now);
+        standardLoanDao.updateLoan(loanCreated);
+               
+        Loan loanRetrieved = standardLoanDao.getLoan(loanCreated.getId());
+        Assert.assertEquals(loanRetrieved.getDisbursalDate(), loanCreated.getDisbursalDate());
     }
     
 }

@@ -34,5 +34,6 @@ public interface LoanDao {
 	List<Loan> getAll();
     List<Loan> findLoansForClient(Integer clientId);
     Loan getLoan(Integer id);
+    void updateLoan(Loan loan);
 
 }

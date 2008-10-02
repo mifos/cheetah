@@ -23,6 +23,7 @@ package org.mifos.loan.repository;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.mifos.loan.domain.Loan;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
@@ -44,18 +45,20 @@ public class InMemoryLoanDaoTest {
     private static final BigDecimal LOAN_AMOUNT1 = new BigDecimal("1200");
     private static final BigDecimal LOAN_AMOUNT2 = new BigDecimal("100");
     private static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
+    private static final LocalDate NO_DISBURSAL_DATE = null;
 	
 	@BeforeMethod
 	void setUp() {
 		loanDao = new InMemoryLoanDao();
 	}
 	
-	private void assertLoanIsExpected(Loan loan, int id, BigDecimal loanAmount) {
+	private void assertLoanIsExpected(Loan loan, int id, BigDecimal loanAmount, LocalDate disbursalDate) {
         Assert.assertEquals(loan.getId().intValue(), id, "Unexpected loan id.");
         Assert.assertEquals(loan.getLoanProduct().getId(),LOAN_PRODUCT_ID,"LoanProductId mismatch.");
         Assert.assertEquals(loan.getAmount(), loanAmount, "Loan amount mismatch.");
         Assert.assertEquals(loan.getInterestRate(), LOAN_INTEREST_RATE, "Loan interest rate mismatch.");
 	    Assert.assertEquals(loan.getClientId(), CLIENT_ID,"Client id mismatch");
+	    Assert.assertEquals(loan.getDisbursalDate(), disbursalDate, "Disbursal date mismatch");
 	}
 	
 	public void testCreateLoan() {
@@ -63,7 +66,7 @@ public class InMemoryLoanDaoTest {
 		LoanProduct loanProduct = new LoanProduct(LOAN_PRODUCT_ID,"long name", "name", 0.0, 20.0, LoanProductStatus.ACTIVE);
 		
 		Loan loan = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
-		assertLoanIsExpected(loan, 1, LOAN_AMOUNT1);
+		assertLoanIsExpected(loan, 1, LOAN_AMOUNT1, NO_DISBURSAL_DATE);
 		
 		loan = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT2, LOAN_INTEREST_RATE, loanProduct);
 		Assert.assertEquals(loan.getId().intValue(),2,"Unexpected loan id.");
@@ -79,30 +82,44 @@ public class InMemoryLoanDaoTest {
         
         List<Loan> loans = loanDao.findLoansForClient(CLIENT_ID);
         Assert.assertEquals(loans.size(), 2);
-        assertLoanIsExpected(loans.get(0),1,LOAN_AMOUNT1);
-        assertLoanIsExpected(loans.get(1),2,LOAN_AMOUNT2);
+        assertLoanIsExpected(loans.get(0),1,LOAN_AMOUNT1,NO_DISBURSAL_DATE);
+        assertLoanIsExpected(loans.get(1),2,LOAN_AMOUNT2, NO_DISBURSAL_DATE);
 
         List<Loan> loansNone = loanDao.findLoansForClient(UNUSED_CLIENT_ID);
         Assert.assertEquals(loansNone.size(), 0);      
 	}
 	
 	public void testGetLoan() {
-        LoanProduct loanProduct = new LoanProduct(LOAN_PRODUCT_ID,"long name", "name", 0.0, 20.0, LoanProductStatus.ACTIVE);     
-        Loan loanCreated = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+        Loan loanCreated = createStandardLoan();
         
         Loan loanRetrieved = loanDao.getLoan(loanCreated.getId());
 
         Assert.assertNotNull(loanRetrieved);
-        assertLoanIsExpected(loanRetrieved,loanCreated.getId(),LOAN_AMOUNT1);
+        assertLoanIsExpected(loanRetrieved,loanCreated.getId(),LOAN_AMOUNT1, NO_DISBURSAL_DATE);
 	}
 	
     public void testGetLoanNotFound() {
-        LoanProduct loanProduct = new LoanProduct(LOAN_PRODUCT_ID,"long name", "name", 0.0, 20.0, LoanProductStatus.ACTIVE);     
-        Loan loanCreated = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
-        
+        Loan loanCreated = createStandardLoan();
+            
         Loan loanRetrieved = loanDao.getLoan(loanCreated.getId()+1);
 
         Assert.assertNull(loanRetrieved);
     }
-	
+
+    private Loan createStandardLoan() {
+        LoanProduct loanProduct = new LoanProduct(LOAN_PRODUCT_ID,"long name", "name", 0.0, 20.0, LoanProductStatus.ACTIVE);     
+        return loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
+    }
+    
+    public void testUpdateLoanDisbursalDate() {
+        Loan loanCreated = createStandardLoan();
+
+        LocalDate now = new LocalDate();
+        loanCreated.setDisbursalDate(now);
+        loanDao.updateLoan(loanCreated);
+        
+        Loan loanRetrieved = loanDao.getLoan(loanCreated.getId());
+        Assert.assertEquals(loanRetrieved.getDisbursalDate(), loanCreated.getDisbursalDate());
+    }
+
 }

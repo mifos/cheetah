@@ -25,6 +25,7 @@ import java.util.List;
 
 import net.sf.dozer.util.mapping.MapperIF;
 
+import org.joda.time.LocalDate;
 import org.mifos.core.MifosServiceException;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
@@ -87,13 +88,18 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	private LoanDto createValidLoanDto() {
 	    return createValidLoanDto(LOAN_AMOUNT);
 	}
-	
-	private void validateLoan(LoanDto loanDto, BigDecimal loanAmount) {
+
+    private void validateLoan(LoanDto loanDto, BigDecimal loanAmount) {
+        validateLoan(loanDto, loanAmount, null);
+    }
+
+	private void validateLoan(LoanDto loanDto, BigDecimal loanAmount, LocalDate disbursalDate) {
         Assert.assertEquals(loanDto.getId().intValue(),1,"Unexpected loan id assigned.");
         Assert.assertEquals(loanDto.getClientId().intValue(),CLIENT_ID,"Didn't get clientId back.");        
         Assert.assertEquals(loanDto.getLoanProductId().intValue(),loanProductId,"Didn't get loanProductId back.");
         Assert.assertEquals(loanDto.getAmount(), loanAmount,"Didn't get loan amount back.");
-        Assert.assertEquals(loanDto.getInterestRate(), LOAN_INTEREST_RATE,"Didn't get interestRate back.");	    
+        Assert.assertEquals(loanDto.getInterestRate(), LOAN_INTEREST_RATE,"Didn't get interestRate back.");	  
+        Assert.assertEquals(loanDto.getDisbursalDate(), disbursalDate, "Disbursal dates don't match");
 	}
 	
 	public void testCreateValidLoan() throws MifosServiceException {
@@ -200,6 +206,18 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(retrievedLoanDto.getId());
     }
     
+    public void testUpdateLoanDisbursalDate() throws MifosServiceException {
+        LoanDto loanDto = loanService.createLoan(createValidLoanDto());
+        
+        LocalDate disbursalDate = new LocalDate();
+        loanDto.setDisbursalDate(disbursalDate);
+        loanService.updateLoan(loanDto);
+
+        LoanDto retrievedLoanDto = loanService.getLoan(loanDto.getId());
+        
+        validateLoan(retrievedLoanDto, loanDto.getAmount(), disbursalDate);
+        
+    }
 
 	@Autowired
     @Test(enabled = false)

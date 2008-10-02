@@ -77,4 +77,12 @@ public class InMemoryLoanDao implements LoanDao {
     public Loan getLoan(Integer id) {
         return loans.get(id);
     }
+
+    @Override
+    public void updateLoan(Loan loan) {
+        Loan loanRetrieved = getLoan(loan.getId());
+        loanRetrieved.setAmount(loan.getAmount());
+        loanRetrieved.setDisbursalDate(loan.getDisbursalDate());
+        loanRetrieved.setInterestRate(loan.getInterestRate());
+    }
 }

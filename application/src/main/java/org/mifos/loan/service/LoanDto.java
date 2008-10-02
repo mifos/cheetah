@@ -22,6 +22,7 @@ package org.mifos.loan.service;
 
 import java.math.BigDecimal;
 
+import org.joda.time.LocalDate;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Validator;
@@ -42,7 +43,8 @@ public class LoanDto {
 	private BigDecimal amount;
 	@NotNull
 	private BigDecimal interestRate;
-	
+    private LocalDate disbursalDate;
+
 	private LoanProductDto loanProductDto;
 	
 	public LoanDto() {
@@ -104,6 +106,14 @@ public class LoanDto {
 	public void setLoanProductDto(LoanProductDto loanProductDto) {
 		this.loanProductDto = loanProductDto;
 	}
+
+    public LocalDate getDisbursalDate() {
+        return disbursalDate;
+    }
+
+    public void setDisbursalDate(LocalDate disbursalDate) {
+        this.disbursalDate = disbursalDate;
+    }
 
 	
 	

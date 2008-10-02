@@ -65,4 +65,12 @@ public class StandardLoanDao  implements LoanDao {
         return entityManager.find(Loan.class, id);
     }
 
+    @Override
+    @Transactional
+    public void updateLoan(Loan loan) {
+        // seems like merge is only needed if the Loan came from outside 
+        // the current transaction.  So unclear if we need merge here.
+        entityManager.merge(loan);
+    }
+
 }

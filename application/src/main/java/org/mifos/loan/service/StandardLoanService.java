@@ -84,7 +84,17 @@ public class StandardLoanService implements LoanService {
         }
         return loanDto;        
     }
-	
+
+    @Transactional
+    @Override
+    public void updateLoan(LoanDto loanDto) {
+        Loan loan = loanDao.getLoan(loanDto.getId());
+        loan.setAmount(loanDto.getAmount());
+        loan.setDisbursalDate(loanDto.getDisbursalDate());
+        loan.setInterestRate(loanDto.getInterestRate());
+        loanDao.updateLoan(loan);
+    }
+        
 	private void validate(LoanDto loanDto) throws MifosServiceException {
 		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanDto, "loanDto");
 		validator.validate(loanDto, errors);
@@ -120,5 +130,6 @@ public class StandardLoanService implements LoanService {
 	public void setLoanProductDao(LoanProductDao loanProductDao) {
 		this.loanProductDao = loanProductDao;
 	}
-	
+
+
 }

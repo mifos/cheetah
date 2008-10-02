@@ -48,4 +48,6 @@ public interface LoanService {
 
     LoanDto getLoan(Integer id);
 
+    void updateLoan(LoanDto loanDto);
+
 }
