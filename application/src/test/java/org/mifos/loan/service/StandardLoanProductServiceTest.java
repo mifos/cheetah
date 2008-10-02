@@ -63,17 +63,15 @@ public class StandardLoanProductServiceTest {
 		assertSameState ((LoanProductDto)loanProductService.getAll().get(0), testProduct1);
 	}
 	
-	//@Test(groups="unit")
-	/* implement later
 	public void testUpdateLoanProduct() {
 		LoanProductDto retrievedOnCreate = loanProductService.createLoanProduct(testProduct1);
 		//change all attributes
 		LoanProductDto changed = new LoanProductDto("new long name", "new short name",
 													 3.5, 4.5, LoanProductStatus.INACTIVE);
+		changed.setId(retrievedOnCreate.getId());											 
 		assertSameState(loanProductService.updateLoanProduct(changed), changed);
 		assertSameState(loanProductService.getLoanProduct(retrievedOnCreate.getId()), changed);
 	}
-	*/
 	
 	public void testDeleteLoanProduct() {
 		LoanProductDto testLoanProductDto = createTestLoanProductDto1();
