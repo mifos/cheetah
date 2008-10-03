@@ -50,9 +50,12 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 	private LoanDao standardLoanDao;
 	@Autowired
 	private LoanProductDao standardLoanProductDao;
-	private LoanProduct loanProduct;
+    @Autowired
     private DriverManagerDataSource dataSource;
+    @Autowired
     private DatabaseTestUtils databaseTestUtils;
+
+    private LoanProduct loanProduct;
 	
 	private static final Integer CLIENT_ID = 1;
     private static final Integer UNUSED_CLIENT_ID = 8;
@@ -153,19 +156,4 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
         Assert.assertEquals(loanRetrieved.getDisbursalDate(), loanCreated.getDisbursalDate());
     }
 
-    @Autowired
-    @Test(enabled=false)
-    public void setDataSource(DriverManagerDataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    @Autowired
-    @Test(enabled=false)
-    public void setDatabaseTestUtils(DatabaseTestUtils databaseTestUtils) {
-        this.databaseTestUtils = databaseTestUtils;
-    }
-    
-    
-    
-    
 }
