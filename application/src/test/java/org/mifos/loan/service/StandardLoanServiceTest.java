@@ -61,6 +61,10 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
 	static final String LOAN_PRODUCT_SHORT_NAME = "lp1";
 	static final Double lOAN_PRODUCT_MIN_INTEREST = 1.0;
 	static final Double lOAN_PRODUCT_MAX_INTEREST = 20.0;
+
+    private static final int YEAR = 1998;
+    private static final int MONTH = 12;
+    private static final int DAY_OF_MONTH = 3;
 	
 	@SuppressWarnings("PMD.UrF")
 	@BeforeMethod
@@ -209,7 +213,7 @@ public class StandardLoanServiceTest extends AbstractTestNGSpringContextTests {
     public void testUpdateLoanDisbursalDate() throws MifosServiceException {
         LoanDto loanDto = loanService.createLoan(createValidLoanDto());
         
-        LocalDate disbursalDate = new LocalDate();
+        LocalDate disbursalDate = new LocalDate(YEAR,MONTH,DAY_OF_MONTH);
         loanDto.setDisbursalDate(disbursalDate);
         loanService.updateLoan(loanDto);
 

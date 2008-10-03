@@ -31,11 +31,21 @@
     	<property name="loanService" ref="loanService"/>
     </bean>
     
+    
     <bean id="viewLoanController" class="org.mifos.ui.loan.controller.ViewLoanController">
     	<property name="clientService" ref="clientService"/>
     	<property name="loanService" ref="loanService"/>
     </bean>
     
+    
+    <bean id="disburseLoanController" class="org.mifos.ui.loan.controller.DisburseLoanController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="loan"/>
+        <property name="commandClass" value="org.mifos.loan.service.LoanDto"/>
+        <property name="formView"     value="disburseLoan"/>
+        <property name="validator"    ref="beanValidator"/>
+        <property name="loanService" ref="loanService"/>
+    </bean>
     
     <bean id="loanController" class="org.mifos.ui.loan.controller.LoanController">
         <property name="sessionForm"  value="true"/>
@@ -128,6 +138,7 @@
     			/clientSearchResults.ftl=clientSearchController
     			/clientDetail.ftl=clientDetailController
     			/loanDetail.ftl=viewLoanController
+    			/disburseLoan.ftl=disburseLoanController
     			/home.ftl=clientSearchController
     			/appInfo.ftl=appInfoController
     		</value>

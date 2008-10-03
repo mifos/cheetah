@@ -14,6 +14,10 @@
         <a>loanProduct.id</a>
         <b>loanProductId</b>
       </field>
+      <field copy-by-reference="true">
+      	<a>disbursalDate</a>
+      	<b>disbursalDate</b>
+      </field>
   </mapping> 
                               
 </mappings>

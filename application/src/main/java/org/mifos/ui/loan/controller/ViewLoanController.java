@@ -20,6 +20,7 @@
 
 package org.mifos.ui.loan.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,9 +54,10 @@ public class ViewLoanController extends MultiActionController {
         ClientDto clientDto = getClientService().getClient(loanDto.getClientId());
         model.put("clientName", clientDto.getFirstName() + " " + clientDto.getLastName());
         if (loanDto.getDisbursalDate() == null) {
-            model.put("loanDisbursalDate", "None");
+            model.put("loanDisbursalDate", null);
         } else {
-            model.put("loanDisbursalDate", loanDto.getDisbursalDate().toDateMidnight().toDate());
+            Date date = loanDto.getDisbursalDate().toDateMidnight().toDate();
+            model.put("loanDisbursalDate", date);
         }
         
         return new ModelAndView("loanDetail", "model", model);

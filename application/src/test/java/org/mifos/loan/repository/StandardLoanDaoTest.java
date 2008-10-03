@@ -53,6 +53,10 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
     private static final BigDecimal LOAN_AMOUNT1 = new BigDecimal("1200");
     private static final BigDecimal LOAN_AMOUNT2 = new BigDecimal("100");
 	private static final BigDecimal LOAN_INTEREST_RATE = new BigDecimal("12");
+
+    private static final int YEAR = 1998;
+    private static final int MONTH = 12;
+    private static final int DAY_OF_MONTH = 3;
 	
 	private void verifyLoanData(Loan loan) {
 		Assert.assertTrue(loan.getId() > 0, "Expected a positive Id to be generated.");
@@ -136,7 +140,7 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
     public void testUpdateLoanDisbursalDate() {
         Loan loanCreated = standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
 
-        LocalDate now = new LocalDate();
+        LocalDate now = new LocalDate(YEAR,MONTH,DAY_OF_MONTH);
         loanCreated.setDisbursalDate(now);
         standardLoanDao.updateLoan(loanCreated);
                

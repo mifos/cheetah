@@ -15,7 +15,7 @@
 	    	<p>Client: ${model.clientName}</p>
 	    	<p>Loan Amount: ${model.loan.amount}</p>
 	    	<p>Interest Rate: ${model.loan.interestRate}</p>
-	    	<p>Disbursal Date: ${model.loanDisbursalDate}</p>
+	    	<p>Disbursal Date: ${(model.loanDisbursalDate?date?string.short)!"None"}</p>
 	    	<p><a href="disburseLoan.ftl?id=${model.loan.id}">Disburse Loan</a></p>
       	</div>
     </div> <!-- main pane content -->
