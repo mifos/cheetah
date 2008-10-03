@@ -20,14 +20,20 @@
 
 package org.mifos.loan.repository;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.List;
 
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
 import org.joda.time.LocalDate;
 import org.mifos.loan.domain.Loan;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
+import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
@@ -42,11 +48,11 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 
 	@Autowired
 	private LoanDao standardLoanDao;
-
 	@Autowired
 	private LoanProductDao standardLoanProductDao;
-	
 	private LoanProduct loanProduct;
+    private DriverManagerDataSource dataSource;
+    private DatabaseTestUtils databaseTestUtils;
 	
 	private static final Integer CLIENT_ID = 1;
     private static final Integer UNUSED_CLIENT_ID = 8;
@@ -58,6 +64,12 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
     private static final int MONTH = 12;
     private static final int DAY_OF_MONTH = 3;
 	
+    @BeforeMethod
+    public void setUp() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        this.databaseTestUtils.deleteDataFromTable("loans", this.dataSource);
+        loanProduct = standardLoanProductDao.createLoanProduct("loan prod 1", "prod1", 0.0, 20.0, LoanProductStatus.ACTIVE);        
+    }
+    
 	private void verifyLoanData(Loan loan) {
 		Assert.assertTrue(loan.getId() > 0, "Expected a positive Id to be generated.");
 		Assert.assertEquals(loan.getLoanProduct().getId(), loanProduct.getId(),"LoanProductId mismatch.");
@@ -74,13 +86,6 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
         Assert.assertEquals(loan.getClientId(), CLIENT_ID,"Client id mismatch");
     }
     
-	
-	@java.lang.SuppressWarnings("PMD.UnusedPrivateMethod")
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"UPM"}, justification="@BeforeMethod & @AfterMethod methods are called by testNG")
-	@BeforeMethod
-	private void setUp() {
-		loanProduct = standardLoanProductDao.createLoanProduct("loan prod 1", "prod1", 0.0, 20.0, LoanProductStatus.ACTIVE);		
-	}
 	
 	public void testCreateLoan() {
 		Loan loan = standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
@@ -147,5 +152,20 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
         Loan loanRetrieved = standardLoanDao.getLoan(loanCreated.getId());
         Assert.assertEquals(loanRetrieved.getDisbursalDate(), loanCreated.getDisbursalDate());
     }
+
+    @Autowired
+    @Test(enabled=false)
+    public void setDataSource(DriverManagerDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    @Autowired
+    @Test(enabled=false)
+    public void setDatabaseTestUtils(DatabaseTestUtils databaseTestUtils) {
+        this.databaseTestUtils = databaseTestUtils;
+    }
+    
+    
+    
     
 }
