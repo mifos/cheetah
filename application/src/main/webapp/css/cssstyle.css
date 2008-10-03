@@ -57,6 +57,10 @@
    border-bottom: 6px #FF9600 solid; 
 }
 
+#standardPageContent {
+	margin:0 0 0 200px;
+}
+	
 #homePageContent {
 	margin:0 0 0 200px;
 }

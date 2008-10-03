@@ -8,12 +8,17 @@
   </head>
   <body>
   [@mifos.header currentTab="Admin" /]
-    <h1>[@spring.message "systemInformation" /]</h1>
-    <ul>
-      <li>[@spring.message "svnRevision" /]: ${model.appInfo.svnRevision}</li>
-      <li>[@spring.message "buildTag" /]: ${model.appInfo.buildTag} </li>
-      <li>[@spring.message "buildId" /]: ${model.appInfo.buildId} </li>
-    </ul>
-    [#include "footer.ftl"]    
+  [#include "adminLeftPane.ftl" ] 
+        
+	<div id="page-content">
+	  <div id="standardPageContent">
+	    <h2>[@spring.message "systemInformation" /]</h2>
+	    <ul>
+	      <li>[@spring.message "svnRevision" /]: ${model.appInfo.svnRevision}</li>
+	      <li>[@spring.message "buildTag" /]: ${model.appInfo.buildTag} </li>
+	      <li>[@spring.message "buildId" /]: ${model.appInfo.buildId} </li>
+	    </ul>
+	  </div>
+	</div>
   </body>
 </html>
