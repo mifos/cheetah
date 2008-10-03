@@ -21,12 +21,16 @@ package acceptance.loan;
 
 import junit.framework.Assert;
 
+import org.mifos.test.framework.util.DatabaseTestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import framework.pageobjects.ClientDetailPage;
+import framework.pageobjects.ClientSearchResultsPage;
 import framework.pageobjects.DisburseLoanPage;
 import framework.pageobjects.HomePage;
 import framework.pageobjects.LoanDetailPage;
@@ -38,17 +42,32 @@ import framework.test.UiTestCaseBase;
  * http://mingle.mifos.org:7070/projects/cheetah/cards/675
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
-@Test(groups={"userCanDisburseBasicLoanStory","acceptance","ui", "workInProgress"})
+@Test(groups={"userCanDisburseBasicLoanStory","acceptance","ui"})
 public class UserCanDisburseBasicLoanStoryTest extends UiTestCaseBase {
 
+    @Autowired
+    private DriverManagerDataSource dataSource;
+        
+    private static final DatabaseTestUtils dbTestUtils = new DatabaseTestUtils();
+    
+    private static final String dataSetXml = 
+            "<dataset>\r\n" + 
+            "  <loanproducts id=\"1\" longName=\"loanProd1\" maxInterestRate=\"10.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"0\"/>\r\n" + 
+            "  <clients id=\"1\" firstName=\"Sue\" lastName=\"Smith\" dateOfBirth=\"2000-12-30\"/>\r\n" + 
+            "  <loans id=\"1\" clientId=\"1\" LOAN_PRODUCT_ID=\"1\" amount=\"100\" interestRate=\"5\"/>\r\n" + 
+            "</dataset>\r\n";
+
+    
 	private LoginPage loginPage;
-	private static final String CLIENT_NAME = "test client";
-	private static final String LOAN_NAME = "test loan";
+    private static final String CLIENT_FIRST_NAME = "Sue";
+    private static final String CLIENT_FULL_NAME = "Sue Smith";
+	private static final String LOAN_NAME = "loanProd1";
 	
 	@BeforeMethod
 	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
+        dbTestUtils.cleanAndInsertDataSet(dataSetXml, dataSource); 
 	}
 
 	@AfterMethod
@@ -57,19 +76,22 @@ public class UserCanDisburseBasicLoanStoryTest extends UiTestCaseBase {
 	}
 
 	public void disburseBasicLoanTest() {
-		// preconditions: a loan created for a loan product and a client name "test client" must exist
+		// preconditions: a loan created for a loan product and a client name "Sue Smith" must exist
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
-		ClientDetailPage clientDetailPage = homePage.searchForClient(CLIENT_NAME);
-		// verify that we landed on the client detail page
-		Assert.assertTrue(selenium.isTextPresent(CLIENT_NAME));
-		LoanDetailPage loanDetailPage = clientDetailPage.navigateToLoanDetailPageForLoan(LOAN_NAME);
+		ClientSearchResultsPage clientSearchResultsPage = homePage.searchForClient(CLIENT_FIRST_NAME);
+		// verify that we landed on the client search list result with the client listed
+		assertElementTextExactMatch(CLIENT_FULL_NAME, "client-name-1");
+		
+		ClientDetailPage clientDetailPage = clientSearchResultsPage.navigateToClientDetailPageForClient(1);
+		LoanDetailPage loanDetailPage = clientDetailPage.navigateToLoanDetailPageForLoan(1);
 		// verify that we landed on the loan detail page
-		Assert.assertTrue(selenium.isTextPresent(LOAN_NAME));
+        assertElementTextExactMatch(LOAN_NAME, "loanProductName");
+
 		DisburseLoanPage disburseLoanPage = loanDetailPage.navigateToDisburseLoanPage();
-		// verify that we landed on the disburse loan page
-		// TODO: add verification
-		disburseLoanPage.disburseLoan();
-		Assert.assertTrue(selenium.isTextPresent("Loan has been disbursed"));
+        String dateInput = "12/1/2000";
+        String dateOutput = "12/1/00";
+		disburseLoanPage.disburseLoan(dateInput);
+		assertElementTextExactMatch(dateOutput, "disbursalDate");
 	}
 
 }

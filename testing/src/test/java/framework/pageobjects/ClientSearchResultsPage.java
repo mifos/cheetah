@@ -22,21 +22,23 @@ package framework.pageobjects;
 
 import com.thoughtworks.selenium.Selenium;
 
-
 /**
  *
  */
-public class LoanDetailPage extends AbstractPage {
+public class ClientSearchResultsPage extends AbstractPage {
 
-	public LoanDetailPage(Selenium selenium) {
-		super(selenium);
-	}
+    /**
+     * @param selenium
+     */
+    public ClientSearchResultsPage(Selenium selenium) {
+        super(selenium);
+    }
 
-	public DisburseLoanPage navigateToDisburseLoanPage() {
-	    selenium.click("disburseLoan");
+    public ClientDetailPage navigateToClientDetailPageForClient(int clientNum) {
+        selenium.click("//td[@id='client-name-" + clientNum + "']/a");
         waitForPageToLoad();
 
-		return new DisburseLoanPage(selenium);
-	}
+        return new ClientDetailPage(selenium);
+    }
 
 }

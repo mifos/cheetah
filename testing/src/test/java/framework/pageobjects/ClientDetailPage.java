@@ -24,17 +24,32 @@ import com.thoughtworks.selenium.Selenium;
 
 
 /**
- *
+ * The Class ClientDetailPage.
  */
 public class ClientDetailPage extends AbstractPage {
 
+	/**
+	 * Instantiates a new client detail page.
+	 * 
+	 * @param selenium
+	 */
 	public ClientDetailPage(Selenium selenium) {
 		super(selenium);
 	}
 
-	public LoanDetailPage navigateToLoanDetailPageForLoan(String loanName) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	/**
+	 * Navigate to loan detail page for loan.
+	 * 
+	 * @param loanIndex the 1 based loan index
+	 * 
+	 * @return the loan detail page
+	 */
+	public LoanDetailPage navigateToLoanDetailPageForLoan(int loanIndex) {
+        selenium.click("//td[@id='loan-" + loanIndex + "']/a");
+        waitForPageToLoad();
+
+        return new LoanDetailPage(selenium);
 	}
 
 }

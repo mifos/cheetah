@@ -58,8 +58,11 @@ public class HomePage extends AbstractPage {
 		return new ClientsAndAccountsPage(selenium);		
 	}
 
-	public ClientDetailPage searchForClient(String clientName) {
-		// TODO Auto-generated method stub
-		return null;
+	public ClientSearchResultsPage searchForClient(String clientName) {
+        selenium.type("//input[@id='searchString']", clientName);
+        selenium.click("clientSearch.form.submit");
+        waitForPageToLoad();
+        
+		return new ClientSearchResultsPage(selenium);
 	}
 }

@@ -11,12 +11,12 @@
   [#include "clientsAndAccountsLeftPane.ftl" ]
     <div id="page-content">
     	<div id="loanDetailPage">
-	    	<h2>${model.loan.loanProductDto.longName}</h2>
+	    	<h2 id="loanProductName">${model.loan.loanProductDto.longName}</h2>
 	    	<p>Client: ${model.clientName}</p>
 	    	<p>Loan Amount: ${model.loan.amount}</p>
 	    	<p>Interest Rate: ${model.loan.interestRate}</p>
-	    	<p>Disbursal Date: ${(model.loanDisbursalDate?date?string.short)!"None"}</p>
-	    	<p><a href="disburseLoan.ftl?id=${model.loan.id}">Disburse Loan</a></p>
+	    	<p>Disbursal Date: <span id="disbursalDate">${(model.loanDisbursalDate?date?string.short)!"None"}</span></p>
+	    	<p><a id="disburseLoan" href="disburseLoan.ftl?id=${model.loan.id}">Disburse Loan</a></p>
       	</div>
     </div> <!-- main pane content -->
   </body>

@@ -35,8 +35,10 @@ public class DisburseLoanPage extends AbstractPage {
 		super(selenium);
 	}
 
-	public LoanDetailPage disburseLoan() {
-		// TODO Auto-generated method stub
+	public LoanDetailPage disburseLoan(String disbursalDate) {
+        selenium.type("disbursalDate", disbursalDate);
+        selenium.click("disburseLoan.form.submit");
+        waitForPageToLoad();
 		return new LoanDetailPage(selenium);
 	}
 

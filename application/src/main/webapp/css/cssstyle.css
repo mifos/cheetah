@@ -33,6 +33,10 @@
    text-align: left;
 }
 
+#loanAmount {
+   text-align: left;
+}
+
 #clientName {
    text-align: left;
 }

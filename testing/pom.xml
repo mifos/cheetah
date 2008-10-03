@@ -303,7 +303,7 @@
       <scriptSourceDirectory>${modules.root.dir}/testing/src/main/scripts</scriptSourceDirectory>
       <testSourceDirectory>${modules.root.dir}/testing/src/test/java</testSourceDirectory>
       <outputDirectory>${modules.root.dir}/testing/target/cheetah-testing/WEB-INF/classes</outputDirectory>
-      <testOutputDirectory>${modules.root.dir}/testing/test-classes</testOutputDirectory>
+      <testOutputDirectory>${modules.root.dir}/testing/target/test-classes</testOutputDirectory>
       <plugins>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
