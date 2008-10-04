@@ -10,7 +10,7 @@
   <body>
   [@mifos.header currentTab="ClientsAndAccounts" /]
   [#include "clientsAndAccountsLeftPane.ftl"]
-    <div id="content-pane">
+    <div class="content-pane">
       [@form.form action="createClient.ftl" commandName="client"]
          [@form.errors path="*" cssClass="error-messages"/]
          <fieldset class="createClient">

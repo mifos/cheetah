@@ -9,7 +9,7 @@
   <body>
   [@mifos.header currentTab="ClientsAndAccounts" /]
   [#include "clientsAndAccountsLeftPane.ftl" ]
-    <div id="content-pane">
+    <div class="content-pane">
       [@spring.message "createClientSuccess.clientCreatedSuccessfully" /]
     </div> <!-- main pane content -->
   
