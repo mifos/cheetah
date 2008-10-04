@@ -16,6 +16,49 @@
         </property>
     </bean>
     
+   <!-- freemarker config -->
+   <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+     <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+     <property name="defaultEncoding" value="UTF-8" />
+     <property name="freemarkerVariables">
+        <map>
+           <entry key="xml_escape" value-ref="fmXmlEscape"/>
+        </map>
+       </property>
+   </bean>
+   <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+   
+   <!-- 
+     View resolvers can also be configured with ResourceBundles or XML files. If you need
+     different view resolving based on Locale, you have to use the resource bundle resolver.
+   -->
+   <bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+     <property name="cache" value="true"/>
+     <property name="prefix" value=""/>
+     <property name="suffix" value=".ftl"/>
+     <property name="contentType" value="text/html; charset=UTF-8" />
+     <!-- if you want to use the Spring FreeMarker macros, set this property to true -->
+     <property name="exposeSpringMacroHelpers" value="true"/>
+   </bean>
+   
+   <bean id="beanValidator" class="org.springmodules.validation.bean.BeanValidator">
+      <property name="configurationLoader" ref="configurationLoader"/>
+   </bean>
+   
+   <bean id="configurationLoader" class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" />
+       
+   <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+       <property name="cookieName" value="mifos.client.language"/>
+       <!-- in seconds. If set to -1, the cookie is not persisted (deleted when browser shuts down) -->
+       <property name="cookieMaxAge" value="100000" />
+    </bean>
+
+    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="siteLanguage"/>
+    </bean>
+
+    
+    
     <bean id="redirectionController" class="org.mifos.ui.core.controller.RedirectionController">
         <property name="viewToRedirectTo" value="index"/>
     </bean>
@@ -103,16 +146,6 @@
         <property name="appInfo" ref="appInfo"/>
     </bean>
     
-    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
-       <property name="cookieName" value="mifos.client.language"/>
-       <!-- in seconds. If set to -1, the cookie is not persisted (deleted when browser shuts down) -->
-       <property name="cookieMaxAge" value="100000" />
-    </bean>
-
-    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-        <property name="paramName" value="siteLanguage"/>
-    </bean>
-
     <bean id="publicUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
       <property name="interceptors">
            <list>
@@ -141,39 +174,10 @@
     			/disburseLoan.ftl=disburseLoanController
     			/home.ftl=clientSearchController
     			/appInfo.ftl=appInfoController
+            /deleteLoanProduct.ftl=genericController
+            /deleteLoanProductResults.ftl=genericController
     		</value>
     	</property>
     </bean>
 
-    <!-- freemarker config -->
-	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-	  <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
-	  <property name="defaultEncoding" value="UTF-8" />
-	  <property name="freemarkerVariables">
-	     <map>
-	        <entry key="xml_escape" value-ref="fmXmlEscape"/>
-	     </map>
-       </property>
-	</bean>
-	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
-	
-	<!-- 
-	  View resolvers can also be configured with ResourceBundles or XML files. If you need
-	  different view resolving based on Locale, you have to use the resource bundle resolver.
-	-->
-	<bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
-	  <property name="cache" value="true"/>
-	  <property name="prefix" value=""/>
-	  <property name="suffix" value=".ftl"/>
-	  <property name="contentType" value="text/html; charset=UTF-8" />
-	  <!-- if you want to use the Spring FreeMarker macros, set this property to true -->
-	  <property name="exposeSpringMacroHelpers" value="true"/>
-	</bean>
-	
-	<bean id="beanValidator" class="org.springmodules.validation.bean.BeanValidator">
-		<property name="configurationLoader" ref="configurationLoader"/>
-	</bean>
-	
-	<bean id="configurationLoader" class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" />
-	
 </beans>

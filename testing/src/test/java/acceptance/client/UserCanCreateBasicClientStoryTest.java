@@ -23,8 +23,6 @@ package acceptance.client;
 import java.io.StringReader;
 import java.sql.Connection;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dbunit.Assertion;
 import org.dbunit.DataSourceDatabaseTester;
 import org.dbunit.IDatabaseTester;
@@ -57,7 +55,6 @@ import framework.test.UiTestCaseBase;
 @Test(sequential=true, groups={"userCanCreateBasicClientStoryTest","acceptance","ui"})
 public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 
-    private static final Log LOG = LogFactory.getLog(UserCanCreateBasicClientStoryTest.class);
 	private LoginPage loginPage;
 	private DriverManagerDataSource dataSource;
     private DatabaseTestUtils databaseTestUtils;
@@ -163,7 +160,6 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 	
 	private String getIso8601Date(String date, String datePattern) {
         String iso8601Date = DateTimeFormat.forPattern(datePattern).parseDateTime(date).toDateMidnight().toLocalDate().toString();
-        LOG.info("**** date: " + date + " datePattern: " + datePattern + " iso date: " + iso8601Date);
         return iso8601Date;
 	}
 	

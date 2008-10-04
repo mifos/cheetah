@@ -390,7 +390,7 @@ form.loan-product fieldset label{
   padding: 0;
 }
 
-form fieldset.createClient {
+form fieldset.noborder {
   border-width: 1px;
   border-style: none;
   padding: 10px;

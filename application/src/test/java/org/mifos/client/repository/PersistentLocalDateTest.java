@@ -47,8 +47,6 @@ import org.testng.annotations.Test;
 @Test(groups = { "integration" })
 public class PersistentLocalDateTest extends AbstractTransactionalTestNGSpringContextTests {
 
-    private static final Log LOG = LogFactory.getLog(PersistentLocalDateTest.class);
-
 	@Autowired
 	private ClientDao clientDao;
 	private DriverManagerDataSource dataSource;
@@ -81,13 +79,11 @@ public class PersistentLocalDateTest extends AbstractTransactionalTestNGSpringCo
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement("insert into clients (dateOfBirth, firstName, lastName) values (?, ?, ?)");
         persistentLocalDate.nullSafeSet(preparedStatement, localDate, 1);
-        LOG.info("**** statement: " + preparedStatement.toString());
         String[] statementParts = preparedStatement.toString().split(" ");
         String actualDate = statementParts[8];
         actualDate = actualDate.replaceAll("\\(", "");
         actualDate = actualDate.replaceAll("'", "");
         actualDate = actualDate.replaceAll(",", "");
-        LOG.info("**** statement parts: " + actualDate);
         Assert.assertEquals(actualDate, expectedDate);
     }
     

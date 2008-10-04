@@ -13,7 +13,7 @@
     <div class="content-pane">
       [@form.form action="createClient.ftl" commandName="client"]
          [@form.errors path="*" cssClass="error-messages"/]
-         <fieldset class="createClient">
+         <fieldset class="noborder">
            <legend>[@spring.message "createClient" /]</legend>
               <label for="createClient.form.first.name" accesskey="n">[@spring.message "firstName" /]:</label>
                 [@form.input path="firstName"/]<br/>
