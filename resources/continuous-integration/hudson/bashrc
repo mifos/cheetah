@@ -1,0 +1,57 @@
+f_pushd() 
+{
+    pushd $1 > /dev/null
+    dirs -v
+}
+
+function f_popd() 
+{
+    popd $1 > /dev/null
+    dirs -v
+}
+f_pushd() 
+{
+    pushd $1 > /dev/null
+    dirs -v
+}
+
+function f_popd() 
+{
+    popd $1 > /dev/null
+    dirs -v
+}
+shopt -s nocaseglob
+
+alias vi=vim
+alias ls='ls -FA --color=auto'
+alias ll='ls -FAl'
+alias dirs='dirs -v'
+alias pd=f_pushd
+alias pop=f_popd
+alias popd=f_popd
+alias 0="pd"
+alias 1="pd +1"
+alias 2="pd +2"
+alias 3="pd +3"
+alias 4="pd +4"
+alias 5="pd +5"
+alias 6="pd +6"
+alias 7="pd +7"
+alias 8="pd +8"
+alias 9="pd +9"
+alias d=dirs
+alias py='python'
+alias scrub='rm -f *.pyc *~ .*~ .#*'
+alias hgr='history | grep '
+alias f='find . -iname '
+
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/share/apps/firefox:/usr/local/mysql/bin:/sw/bin:$PATH
+export EDITOR='vim'
+
+export LD_LIBRARY_PATH=/home/adam/apps/jprofiler5/bin/linux-x86
+export HISTSIZE=10000
+shopt -s histappend
+
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+export M2_HOME=/usr/local/src/apache-maven-2.0.9
+
