@@ -234,8 +234,8 @@
       <sourceDirectory>${modules.root.dir}/application/src/main/java</sourceDirectory>
       <scriptSourceDirectory>${modules.root.dir}/application/src/main/scripts</scriptSourceDirectory>
       <testSourceDirectory>${modules.root.dir}/application/src/test/java</testSourceDirectory>
-      <outputDirectory>${modules.root.dir}/application/target/mifos/WEB-INF/classes</outputDirectory>
-      <testOutputDirectory>${modules.root.dir}/application/target/test-classes</testOutputDirectory>
+      <outputDirectory>${project.build.directory}/mifos/WEB-INF/classes</outputDirectory>
+      <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
       <plugins>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -249,10 +249,11 @@
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.4.2</version>
+            <version>2.4.3</version>
             <configuration>
                <includedGroups>unit</includedGroups>
                <excludedGroups>integration, workInProgress</excludedGroups>
+               <reportsDirectory>${project.build.directory}/surefire-reports/unit</reportsDirectory>
             </configuration>
             <executions>
                <execution>
@@ -263,6 +264,7 @@
                   <configuration>
                      <includedGroups>integration</includedGroups>
                      <excludedGroups>unit, workInProgress</excludedGroups>
+                     <reportsDirectory>${project.build.directory}/surefire-reports/integration</reportsDirectory>
                   </configuration>
                </execution>
             </executions>
@@ -310,7 +312,7 @@
             <artifactId>maven-war-plugin</artifactId>
             <configuration>
                <dependentWarIncludes>**/*.ftl</dependentWarIncludes>
-               <workDirectory>${modules.root.dir}/application/target</workDirectory>
+               <workDirectory>${project.build.directory}</workDirectory>
             </configuration>
          </plugin>
       </plugins>
