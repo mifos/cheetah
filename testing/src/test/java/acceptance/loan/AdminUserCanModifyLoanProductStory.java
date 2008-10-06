@@ -20,32 +20,17 @@
 
 package acceptance.loan;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import org.dbunit.DatabaseUnitException;
-import org.dbunit.database.DatabaseDataSourceConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.DataSetException;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
+//import java.io.IOException;
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import framework.pageobjects.EditLoanProductPage;
 import framework.pageobjects.LoginPage;
-import framework.pageobjects.ViewLoanProductDetailsPage;
-import framework.pageobjects.ViewLoanProductsPage;
 import framework.test.UiTestCaseBase;
 
 /*
@@ -82,14 +67,20 @@ public class AdminUserCanModifyLoanProductStory extends UiTestCaseBase {
     }            
 
     
-    @Test(enabled=false)
     public void canNavigateToEditLoanProductPage () throws Exception{
         (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
-        navigateToViewLoanProductDetailsPage("short1");
+        navigateToEditLoanProductDetailsPage("short1");
         assertElementTextExactMatch("Modify a loan product", "page-content-header");
     }
     
-    private EditLoanProductPage navigateToViewLoanProductDetailsPage (String linkName){
+    public void testModifyLoanProduct () throws Exception{
+        (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
+        EditLoanProductPage editPage = navigateToEditLoanProductDetailsPage("short1");
+        editPage.modifyLoanProduct("long2", "short2","9.0", "10.0", "INACTIVE");      
+        assertElementTextExactMatch("Loan product successfully modified: " + "long2", "page-content-heading");
+    }
+    
+    private EditLoanProductPage navigateToEditLoanProductDetailsPage (String linkName){
         return
             loginPage
                 .loginAs("mifos", "testmifos")
@@ -100,5 +91,6 @@ public class AdminUserCanModifyLoanProductStory extends UiTestCaseBase {
                 
     }
 
+    
 
 }

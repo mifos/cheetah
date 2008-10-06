@@ -20,9 +20,6 @@
 
 package org.mifos.ui.loan.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.logging.Log;
@@ -50,11 +47,11 @@ public class CreateLoanProductFormController extends AbstractLoanProductFormCont
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_UNWRITTEN_FIELD"}, justification="set by Spring dependency injection")
 	protected ModelAndView onSubmit(Object command) throws Exception {
+	    
 		LOG.debug ("entered LoanProductController.onSubmit()");
-		LoanProductDto product = loanProductService.createLoanProduct((LoanProductDto) command);
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("loanProduct", product);
-		return new ModelAndView("loanProductEditSuccess", "model", model);
+		
+		return createModelAndView(loanProductService.createLoanProduct((LoanProductDto) command),
+		                          "loanProductCreateSuccess");
 	}
     
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding

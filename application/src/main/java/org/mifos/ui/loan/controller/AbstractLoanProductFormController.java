@@ -25,6 +25,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mifos.loan.service.LoanProductDto;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /**
@@ -43,4 +45,10 @@ public class AbstractLoanProductFormController extends SimpleFormController {
         return model;
     }
 
+    protected ModelAndView createModelAndView (LoanProductDto product, String view) {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("loanProduct", product);
+        return new ModelAndView(view, "model", model);
+
+    }
 }

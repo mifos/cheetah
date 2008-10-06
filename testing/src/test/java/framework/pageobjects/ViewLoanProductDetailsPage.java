@@ -6,6 +6,7 @@ public class ViewLoanProductDetailsPage extends AbstractPage {
     
     public EditLoanProductPage navigateToEditLoanProductPage() {
         selenium.click("link=Update");
+        waitForPageToLoad();
         return new EditLoanProductPage(selenium);
     }
 

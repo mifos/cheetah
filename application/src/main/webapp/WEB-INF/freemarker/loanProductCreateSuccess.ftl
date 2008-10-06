@@ -11,7 +11,7 @@
       
 	<div id="page-content">
 	
-	 <h2 id="page-content-heading">Loan product successfully modified: ${model.loanProduct.longName}</h2>
+	 <h2 id="page-content-heading">Loan product successfully created: ${model.loanProduct.longName}</h2>
 	 
 	 <table>
 	 	<tr><td>Long name:</td><td id="longName">${model.loanProduct.longName}</td></tr>

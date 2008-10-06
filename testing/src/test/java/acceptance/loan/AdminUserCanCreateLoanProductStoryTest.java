@@ -61,7 +61,7 @@ public class AdminUserCanCreateLoanProductStoryTest extends UiTestCaseBase {
 		
 		navigateToCreateLoanProductPage()
 			.createValidLoanProduct(LONG_NAME, SHORT_NAME, MIN_INTEREST_RATE, MAX_INTEREST_RATE);		
-		assertElementTextExactMatch("Loan product created. " + SHORT_NAME, "page-content-heading");
+		assertElementTextExactMatch("Loan product successfully created: " + LONG_NAME, "page-content-heading");
 		assertElementTextExactMatch(LONG_NAME, "longName");
 		assertElementTextExactMatch(SHORT_NAME, "shortName");
 		assertElementTextExactMatch(MIN_INTEREST_RATE, "minInterestRate");
