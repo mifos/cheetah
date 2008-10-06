@@ -12,6 +12,7 @@
   
   <body>
   [@mifos.header currentTab="Admin" /]
+  [#include "adminLeftPane.ftl" ] 
 
 	<div id="page-content">
 	

@@ -9,6 +9,7 @@
   </head>
   <body>
   [@mifos.header currentTab="Admin" /]
+  [#include "adminLeftPane.ftl" ] 
       
 	<div id="page-content">
 	<h2 id="page-content-heading">Delete loan product XXX</h2>

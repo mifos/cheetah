@@ -227,6 +227,11 @@
           <artifactId>hibernate</artifactId>
           <version>3.2.6.ga</version>
       </dependency>
+	  <dependency>
+		  <groupId>org.springframework.security</groupId>
+		  <artifactId>spring-security-taglibs</artifactId>
+		  <version>2.0.2</version>
+	  </dependency>    
    </dependencies>
    <build>
       <finalName>mifos</finalName>

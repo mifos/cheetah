@@ -1,6 +1,7 @@
 [#ftl]
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
+[#assign security=JspTaglibs["/WEB-INF/tld/security.tld"]]
 <html>
   <head>
   	<title id="hello.title">[@spring.message "title" /]</title>
@@ -8,6 +9,7 @@
   </head>
   <body>
   [@mifos.header currentTab="Admin" /]
+  [#include "adminLeftPane.ftl" ] 
       
 	<div id="page-content">
 	
@@ -36,12 +38,15 @@
 		 	</tr>
 		</table>
 		  
+		[@security.authorize ifAnyGranted="ROLE_ADMIN"]
 		<div class="navigation-list">
 			<ul>
 				<li> <a href="updateLoanProduct.ftl?id=${model.loanProduct.id}" id="update-loan-product">Update</a></li>   
 				<li> <a href="deleteLoanProduct.ftl?id=${model.loanProduct.id}" id="delete-loan-product">Delete</a></li>
 			<ul>
 		</div> 
+		[/@security.authorize]
+		
 	</div>
   </body>
 </html>
