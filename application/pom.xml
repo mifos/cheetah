@@ -5,7 +5,7 @@
    <artifactId>cheetah</artifactId>
    <packaging>war</packaging>
    <version>0.0.3-SNAPSHOT</version>
-   <name>Mifos - Cheetah application</name>
+   <name>Mifos - Cheetah Application</name>
    <url>http://www.mifos.org</url>
 
    <properties>
@@ -242,6 +242,10 @@
       <outputDirectory>${project.build.directory}/mifos/WEB-INF/classes</outputDirectory>
       <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
       <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sql-maven-plugin</artifactId>
+         </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
