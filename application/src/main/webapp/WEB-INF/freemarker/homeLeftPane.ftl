@@ -11,7 +11,7 @@
 	      </div>
 	      <h2>[@spring.message "manageAccounts" /]</h2>
 	      <div class="left-pane-heading-group">
-	         <a href="createLoan.ftl" >[@spring.message "openNewLoanAccount" /]</a>
+	         <a href="createLoan.ftl" id="left.pane.create.loan">[@spring.message "openNewLoanAccount" /]</a>
 	      </div>
    	  </div>
 	</div>

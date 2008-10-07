@@ -18,7 +18,7 @@ public class ViewLoanProductsPage extends AbstractPage {
     }
 
     public ViewLoanProductDetailsPage navigateToViewLoanProductDetailsPage(String linkName) {
-        selenium.click("link=" + linkName);
+        selenium.click("id=" + linkName);
         waitForPageToLoad();
         return new ViewLoanProductDetailsPage(selenium);
     }

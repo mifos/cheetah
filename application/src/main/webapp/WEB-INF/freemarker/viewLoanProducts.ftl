@@ -32,8 +32,8 @@
 	     [#list model.loanProducts as product]
 	     [#assign lpnum = lpnum + 1]
 		 <tr>
-	        <td id="short-name-${lpnum}"><a href="viewLoanProduct.ftl?id=${product.id}">${product.shortName}</a></td>
-	        <td id="long-name-${lpnum}"><a href="viewLoanProduct.ftl?id=${product.id}">${product.longName}</a></td>
+	        <td id="short-name-${lpnum}"><a href="viewLoanProduct.ftl?id=${product.id}" id="${product.shortName}">${product.shortName}</a></td>
+	        <td id="long-name-${lpnum}"><a href="viewLoanProduct.ftl?id=${product.id}" id="${product.shortName}">${product.longName}</a></td>
 	     </tr>
 	    [/#list]
     <table>

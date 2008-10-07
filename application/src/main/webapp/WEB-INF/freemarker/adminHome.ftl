@@ -30,7 +30,7 @@
 				<h4>System Information</h4>
 				
 					<ul class="navigation-list">
-						<li><a href="appInfo.ftl">View System Information</a></li>
+						<li><a href="appInfo.ftl" id="appinfo">View System Information</a></li>
 					</ul>
 				
 			<h3>Manage Products</h3>
@@ -38,8 +38,8 @@
 				<h4>Manage Loan Products</h4>
 		
 					<ul class="navigation-list">
-						<li> <a href="viewLoanProducts.ftl">View loan products</a> </li>
-						<li> <a href="createLoanProduct.ftl">Define a new loan product</a></li>
+						<li> <a href="viewLoanProducts.ftl" id="view.loan.products">View loan products</a> </li>
+						<li> <a href="createLoanProduct.ftl"id="create.loan.product">Define a new loan product</a></li>
 					</ul>
 		</div>	
 	</div>

@@ -39,14 +39,14 @@ public class HomePage extends AbstractPage {
 	}
 
 	public CreateLoanPage navigateToCreateLoanPage() {
-		selenium.click("link=Open new Loan Account");
+		selenium.click("id=left.pane.create.loan");
 		waitForPageToLoad();
 		return new CreateLoanPage(selenium);
 	}
 
 	public AdminPage navigateToAdminPage() {
 		selenium.open("/mifos/home.ftl");
-		selenium.click("link=Admin");
+		selenium.click("id=header.tab.admin");
 		waitForPageToLoad();
 		return new AdminPage(selenium);		
 	}

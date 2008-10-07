@@ -36,13 +36,13 @@ public class AdminPage extends AbstractPage {
 	}
 
 	public CreateLoanProductPage navigateToCreateLoanProductPage() {
-		selenium.click("link=Define a new loan product");
+		selenium.click("id=create.loan.product");
 		waitForPageToLoad();
 		return new CreateLoanProductPage(selenium);
 	}
 
     public ViewLoanProductsPage navigateToViewLoanProductsPage() {
-        selenium.click("link=View loan products");
+        selenium.click("id=view.loan.products");
         waitForPageToLoad();
         return new ViewLoanProductsPage(selenium);
     }
