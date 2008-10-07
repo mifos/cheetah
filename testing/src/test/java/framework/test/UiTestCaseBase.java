@@ -19,7 +19,7 @@
  */
 package framework.test;
 
-import junit.framework.Assert;
+import org.testng.Assert;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -76,15 +76,20 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
         }
 	}
 
+    protected void assertTextFoundOnPage (String text, String message) {
+        Assert.assertTrue(selenium.isTextPresent(text), message);
+    }
+
     protected void assertTextFoundOnPage (String text) {
-        Assert.assertTrue(selenium.isTextPresent(text));
+        assertTextFoundOnPage(text, "Text \"" + text + "\" was not found.");
     }
 
     
     protected void assertElementTextExactMatch(String text, String elementId) {
-        Assert.assertEquals("Text \"" + text + "\" does not match element \"" + elementId + "\":",
+        Assert.assertEquals(
+                selenium.getText(elementId),
                 text,
-                selenium.getText(elementId));
+                "Text \"" + text + "\" does not match element \"" + elementId + "\":");
     }
     
     protected void assertErrorTextExactMatch(String text) {
@@ -92,8 +97,9 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
     }
     
     protected void assertElementTextIncludes(String text, String elementId) {
-        Assert.assertTrue("Expected text \"" + text + "\" not included in element \"" + elementId + "\"", 
-                          selenium.getText(elementId).indexOf(text) >= 0);
+        Assert.assertTrue(
+                selenium.getText(elementId).indexOf(text) >= 0,
+                "Expected text \"" + text + "\" not included in element \"" + elementId + "\"");
     }
     
     protected void assertErrorTextIncludes(String text) {

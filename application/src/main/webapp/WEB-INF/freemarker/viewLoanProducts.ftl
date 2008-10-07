@@ -15,7 +15,7 @@
    
 [#if model.loanProducts?size == 0] 
     	
-    	<p> No loan products have been defined </p>
+    	<p> [@spring.message "viewLoanProductsNoneDefined" /] </p>
     	
 [#else]
     

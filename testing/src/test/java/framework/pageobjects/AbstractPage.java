@@ -57,5 +57,10 @@ public class AbstractPage {
 		waitForPageToLoad();
 		return new LoginPage(selenium);
 	}
+	
+	public void openUri (String uri) {
+	    selenium.open(uri);
+	    waitForPageToLoad();
+	}
 
 }
