@@ -1,5 +1,7 @@
 package framework.pageobjects;
 
+import junit.framework.Assert;
+
 import com.thoughtworks.selenium.Selenium;
 
 public class DeleteLoanProductPage extends AbstractPage {
@@ -8,10 +10,15 @@ public class DeleteLoanProductPage extends AbstractPage {
         super(selenium);
     }
     
-    public DeleteLoanProductSuccessPage deleteLoanProduct (String shortName) {
-        selenium.click("id=delete");
+    public DeleteLoanProductSuccessPage deleteLoanProduct () {
+        selenium.click("id=client.form.submit.delete");
         waitForPageToLoad();
         return new DeleteLoanProductSuccessPage(selenium);
     }
+
+    public void verifyPage() {
+        Assert.assertEquals(selenium.getTitle(), "Delete Loan Product");
+    }
+
 
 }

@@ -31,6 +31,7 @@ import org.testng.annotations.Test;
 import framework.pageobjects.DeleteLoanProductPage;
 import framework.pageobjects.EditLoanProductPage;
 import framework.pageobjects.LoginPage;
+import framework.pageobjects.ViewLoanProductDetailsPage;
 import framework.test.UiTestCaseBase;
 
 /*
@@ -68,19 +69,20 @@ public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
 
     public void testDeleteLoanProduct () throws Exception{
         (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
-        DeleteLoanProductPage editPage = navigateToEditLoanProductDetailsPage("short1");
-        editPage.deleteLoanProduct("short2");      
+        ViewLoanProductDetailsPage viewLoanProductDetailsPage = navigateToViewLoanProductDetailsPage("short1");
+        DeleteLoanProductPage deleteLoanProductPage = viewLoanProductDetailsPage.navigateToDeleteLoanProductPage();
+        deleteLoanProductPage.verifyPage();
+        deleteLoanProductPage.deleteLoanProduct();      
         assertTextFoundOnPage("Loan product \"long2\" was successfully deleted.", "Didn't get to loanProductDeleteSuccess.ftl");
     }
     
-    private DeleteLoanProductPage navigateToEditLoanProductDetailsPage (String linkName){
+    private ViewLoanProductDetailsPage navigateToViewLoanProductDetailsPage (String linkName){
         return
             loginPage
                 .loginAs("mifos", "testmifos")
                 .navigateToAdminPage()
                 .navigateToViewLoanProductsPage()
-                .navigateToViewLoanProductDetailsPage(linkName)
-                .navigateToDeleteLoanProductPage();
+                .navigateToViewLoanProductDetailsPage(linkName);
     }
 
     

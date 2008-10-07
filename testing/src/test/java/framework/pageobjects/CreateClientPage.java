@@ -35,9 +35,9 @@ public class CreateClientPage extends AbstractPage {
         waitForPageToLoad();
     }
 
-	public void verifyPage() {
-		Assert.assertTrue(selenium.isTextPresent("Create client"));
-	}
+    public void verifyPage() {
+        Assert.assertEquals(selenium.getTitle(), "Create Client");
+    }
 
 	public void verifyErrorExists(String errorMessage) {
 		Assert.assertTrue(selenium.isTextPresent(errorMessage));

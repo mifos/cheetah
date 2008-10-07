@@ -4,17 +4,17 @@
 [#assign form=JspTaglibs["/WEB-INF/tld/spring-form.tld"]]
 <html>
   <head>
-  	<title id="clientsAndAccounts.title">[@spring.message "clientsAndAccounts.title" /]</title>
+  	<title id="createClient.title">[@spring.message "createClient.title" /]</title>
    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-  [@mifos.header currentTab="ClientsAndAccounts" /]
-  [#include "clientsAndAccountsLeftPane.ftl"]
+   </head>
+   <body>
+   [@mifos.header currentTab="ClientsAndAccounts" /]
+   [#include "clientsAndAccountsLeftPane.ftl"]
     <div class="content-pane">
       [@form.form action="createClient.ftl" commandName="client"]
          [@form.errors path="*" cssClass="error-messages"/]
          <fieldset class="noborder">
-           <legend>[@spring.message "createClient" /]</legend>
+           <legend id="form.legend">[@spring.message "createClient.title" /]</legend>
               <label for="createClient.form.first.name" accesskey="n">[@spring.message "firstName" /]:</label>
                 [@form.input path="firstName"/]<br/>
               <label for="createClient.form.last.name" accesskey="l">[@spring.message "lastName" /]: </label>

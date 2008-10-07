@@ -4,7 +4,7 @@
 [#assign form=JspTaglibs["/WEB-INF/tld/spring-form.tld"]]
 <html>
   <head>
-  	<title id="hello.title">[@spring.message "title" /]</title>
+  	<title id="hello.title">[@spring.message "deleteLoanProduct.title" /]</title>
    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
@@ -16,12 +16,12 @@
       [@form.form action="deleteLoanProduct.ftl" commandName="deleteLoanProduct"]
          [@form.errors path="*" cssClass="error-messages"/]
          <fieldset class="noborder">
-           <legend>[@spring.message "deleteLoanProduct" /]</legend>
+           <legend>[@spring.message "deleteLoanProduct.title" /]</legend>
               [@spring.message "deleteLoanProductAreYouSure" /] XXX?<br/>
               <label for="kludge"></label>
-                 <input type="submit" value="[@spring.message "delete"/]" class="buttn" id="client.form.submit" tabindex="4">
+                 <input type="submit" value="[@spring.message "delete"/]" class="buttn" id="client.form.submit.delete" tabindex="4">
               <label for="kludge"></label>
-                 <input type="submit" value="[@spring.message "cancel"/]" class="buttn" id="client.form.submit" tabindex="4">
+                 <input type="submit" value="[@spring.message "cancel"/]" class="buttn" id="client.form.submit.cancel" tabindex="4">
          </fieldset>
       [/@form.form]
 	</div>
