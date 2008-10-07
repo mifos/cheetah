@@ -33,8 +33,19 @@
    <!-- should only apply to fields
    <rule ref="rulesets/controversial.xml/DefaultPackage"/>  -->
    <rule ref="rulesets/controversial.xml/BooleanInversion"/>
+   <!--
+   		This rule complains about constructs that have no alternative, such as
+   			SomeClass foo = null;
+   			try {
+   				foo = somevalue;
+   			finally {
+   				cleanup(foo);
+   			}
+   		For a specific Cheetah example, see discussion at http://tinyurl.com/4ltc6t
+   		
    <rule ref="rulesets/controversial.xml/DataflowAnomalyAnalysis"/>
-   <rule ref="rulesets/controversial.xml/AvoidFinalLocalVariable"/>
+   -->
+      <rule ref="rulesets/controversial.xml/AvoidFinalLocalVariable"/>
    <rule ref="rulesets/controversial.xml/AvoidUsingShortType"/>
    <rule ref="rulesets/controversial.xml/AvoidUsingVolatile"/>
    <rule ref="rulesets/controversial.xml/AvoidUsingNativeCode"/>
