@@ -29,7 +29,7 @@
         <intercept-url pattern="/createLoanProduct.ftl*" access="ROLE_ADMIN" />
         <intercept-url pattern="/updateLoanProduct.ftl*" access="ROLE_ADMIN" />
         <intercept-url pattern="/deleteLoanProduct.ftl*" access="ROLE_ADMIN" />
-        <intercept-url pattern="/deleteLoanProductResults.ftl*" access="ROLE_ADMIN" />
+        <intercept-url pattern="/deleteLoanProductSuccess.ftl*" access="ROLE_ADMIN" />
         <http-basic/>  
         <form-login login-page="/login.ftl"
             default-target-url="/home.ftl"

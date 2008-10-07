@@ -175,7 +175,7 @@
     			/home.ftl=clientSearchController
     			/appInfo.ftl=appInfoController
             /deleteLoanProduct.ftl=genericController
-            /deleteLoanProductResults.ftl=genericController
+            /deleteLoanProductSuccess.ftl=genericController
     		</value>
     	</property>
     </bean>

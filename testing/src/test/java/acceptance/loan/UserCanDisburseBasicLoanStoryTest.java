@@ -17,9 +17,8 @@
  * See also http://www.apache.org/licenses/LICENSE-2.0.html for an
  * explanation of the license and how it is applied.
  */
-package acceptance.loan;
 
-import junit.framework.Assert;
+package acceptance.loan;
 
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;

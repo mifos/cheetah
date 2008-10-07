@@ -28,17 +28,18 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import framework.pageobjects.DeleteLoanProductPage;
 import framework.pageobjects.EditLoanProductPage;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
 
 /*
- * Corresponds to story 680 in Mingle
- * http://mingle.mifos.org:7070/projects/cheetah/cards/680
+ * Corresponds to story 681 in Mingle
+ * {@link http://mingle.mifos.org:7070/projects/cheetah/cards/681 }
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
-@Test(groups={"ModifyLoanProductsStory","acceptance","ui"})
-public class AdminUserCanModifyLoanProductStory extends UiTestCaseBase {
+@Test(groups={"ModifyLoanProductsStory","acceptance","ui", "workInProgress"})
+public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
 
     private LoginPage loginPage;
 
@@ -65,29 +66,21 @@ public class AdminUserCanModifyLoanProductStory extends UiTestCaseBase {
         loginPage.logout();
     }            
 
-    
-    public void canNavigateToEditLoanProductPage () throws Exception{
+    public void testDeleteLoanProduct () throws Exception{
         (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
-        navigateToEditLoanProductDetailsPage("short1");
-        assertTextFoundOnPage("Update loan product \"long1\"", "Didn't reach page editLoanProduct.ftl");
+        DeleteLoanProductPage editPage = navigateToEditLoanProductDetailsPage("short1");
+        editPage.deleteLoanProduct("short2");      
+        assertTextFoundOnPage("Loan product \"long2\" was successfully deleted.", "Didn't get to loanProductDeleteSuccess.ftl");
     }
     
-    public void testModifyLoanProduct () throws Exception{
-        (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
-        EditLoanProductPage editPage = navigateToEditLoanProductDetailsPage("short1");
-        editPage.modifyLoanProduct("long2", "short2","9.0", "10.0", "INACTIVE");      
-        assertTextFoundOnPage("Loan product \"long2\" was successfully updated.", "Didn't get to loanProductEditSuccess.ftl");
-    }
-    
-    private EditLoanProductPage navigateToEditLoanProductDetailsPage (String linkName){
+    private DeleteLoanProductPage navigateToEditLoanProductDetailsPage (String linkName){
         return
             loginPage
                 .loginAs("mifos", "testmifos")
                 .navigateToAdminPage()
                 .navigateToViewLoanProductsPage()
                 .navigateToViewLoanProductDetailsPage(linkName)
-                .navigateToEditLoanProductPage();
-                
+                .navigateToDeleteLoanProductPage();
     }
 
     

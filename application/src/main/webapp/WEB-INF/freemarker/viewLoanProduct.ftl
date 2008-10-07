@@ -46,8 +46,8 @@
 		[@security.authorize ifAnyGranted="ROLE_ADMIN"]
 		<div class="navigation-list">
 			<ul>
-				<li> <a href="updateLoanProduct.ftl?id=${model.loanProduct.id}" id="update-loan-product">Update</a></li>   
-				<li> <a href="deleteLoanProduct.ftl?id=${model.loanProduct.id}" id="delete-loan-product">Delete</a></li>
+				<li> <a href="updateLoanProduct.ftl?id=${model.loanProduct.id}" id="update">Update</a></li>   
+				<li> <a href="deleteLoanProduct.ftl?id=${model.loanProduct.id}" id="delete">Delete</a></li>
 			<ul>
 		</div> 
 		[/@security.authorize]

@@ -2,8 +2,6 @@ package framework.pageobjects;
 
 import com.thoughtworks.selenium.Selenium;
 
-import framework.util.UiTestUtils;
-
 public class EditLoanProductPage extends AbstractPage {
 
     public EditLoanProductPage(Selenium selenium) {
@@ -22,6 +20,5 @@ public class EditLoanProductPage extends AbstractPage {
         waitForPageToLoad();
         return new EditLoanProductSuccessPage(selenium);
     }
-
 
 }
