@@ -7,15 +7,18 @@
    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
+  
+  <!-- page: viewLoanProducts.ftl -->
+  
   [@mifos.header currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ]  
   
   <div id="page-content">      
-    <h2>Loan Products</h2>
+    <h2>[@spring.message "loanProducts.view.heading" /]</h2>
    
 [#if model.loanProducts?size == 0] 
     	
-    	<p> [@spring.message "viewLoanProductsNoneDefined" /] </p>
+    	<p> [@spring.message "loanProducts.view.noneDefined" /] </p>
     	
 [#else]
     
@@ -23,8 +26,8 @@
     	
         <table id="loan-product-table">
 	    <tr>
-	    	<td>Short Name</td>
-	    	<td>Long Name</td>
+	    	<th>[@spring.message "loanProducts.view.tableHeading.shortName" /]</th>
+	    	<th>[@spring.message "loanProducts.view.tableHeading.longName" /]</th>
 	    </tr>
 	     [#list model.loanProducts as product]
 	     [#assign lpnum = lpnum + 1]

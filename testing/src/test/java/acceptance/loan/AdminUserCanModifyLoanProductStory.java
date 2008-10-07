@@ -70,14 +70,14 @@ public class AdminUserCanModifyLoanProductStory extends UiTestCaseBase {
     public void canNavigateToEditLoanProductPage () throws Exception{
         (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
         navigateToEditLoanProductDetailsPage("short1");
-        assertElementTextExactMatch("Modify a loan product", "page-content-header");
+        assertTextFoundOnPage("Update loan product \"long1\"", "Didn't reach page editLoanProduct.ftl");
     }
     
     public void testModifyLoanProduct () throws Exception{
         (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
         EditLoanProductPage editPage = navigateToEditLoanProductDetailsPage("short1");
         editPage.modifyLoanProduct("long2", "short2","9.0", "10.0", "INACTIVE");      
-        assertElementTextExactMatch("Loan product successfully modified: " + "long2", "page-content-heading");
+        assertTextFoundOnPage("Loan product \"long2\" was successfully updated.", "Didn't get to loanProductEditSuccess.ftl");
     }
     
     private EditLoanProductPage navigateToEditLoanProductDetailsPage (String linkName){

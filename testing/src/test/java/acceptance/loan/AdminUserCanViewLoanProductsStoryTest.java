@@ -47,6 +47,7 @@ import framework.pageobjects.LoginPage;
 import framework.pageobjects.ViewLoanProductDetailsPage;
 import framework.pageobjects.ViewLoanProductsPage;
 import framework.test.UiTestCaseBase;
+import framework.util.UiTestUtils;
 
 /*
  * Corresponds to story 679 in mingle
@@ -104,7 +105,8 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
 
     public void canReachViewLoanProductDetailsPage () {
         navigateToViewLoanProductDetailsPage("short1");
-        assertElementTextIncludes("Details for loan product \"" + "long1", "page-content-heading");
+        //UiTestUtils.sleep(20000);
+        //assertTextFoundOnPage("viewLoanProduct.ftl", "Didn't reach viewLoanProduct.ftl");
         assertElementTextIncludes("short1", "shortName");
     }
     

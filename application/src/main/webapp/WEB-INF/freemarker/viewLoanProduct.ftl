@@ -8,12 +8,17 @@
    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
+  
+  <!-- page: viewLoanProduct.ftl -->
+  
   [@mifos.header currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
       
 	<div id="page-content">
 	
-			<h2 id="page-content-heading">Details for loan product "${model.loanProduct.longName}"</h2>
+			[#assign arguments = ["${model.loanProduct.longName}"]]
+	
+			<h2 id="page-content-heading">[@spring.messageArgs "loanProduct.view.heading" arguments/]</h2>
 		 
 		<table>
 		 	<tr>

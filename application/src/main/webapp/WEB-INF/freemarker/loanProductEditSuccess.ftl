@@ -7,12 +7,17 @@
    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
+  
+  <!-- page: loanProductEditSuccess.ftl -->
+  
   [@mifos.header currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
       
 	<div id="page-content">
 	
-	 <h2 id="page-content-heading">Loan product successfully modified: ${model.loanProduct.longName}</h2>
+	[#assign productName = ["${model.loanProduct.longName}"]]
+			
+	 <h2 id="page-content-heading">[@spring.messageArgs "loanProduct.edit.success.heading" productName/]</h2>
 	 
 	 <table>
 	 	<tr><td>Long name:</td><td id="longName">${model.loanProduct.longName}</td></tr>
