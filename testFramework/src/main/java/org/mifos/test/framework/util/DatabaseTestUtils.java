@@ -37,6 +37,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class DatabaseTestUtils {
 
+    // Note: to avoid database constraint violations, list tables in reverse order you want them to be deleted.
     @SuppressWarnings("PMD.InsufficientStringBufferDeclaration") // test method doesn't need performance optimization yet
     public void deleteDataFromTables(DriverManagerDataSource dataSource, String...tableNames) 
     throws IOException, DataSetException, SQLException, DatabaseUnitException {
