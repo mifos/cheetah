@@ -79,6 +79,16 @@ public class StandardLoanProductServiceIntegrationTest extends AbstractTransacti
         assertSameState ((LoanProductDto)loanProductService.getAll().get(1), testProduct2);
     }
     
+    public void testDeleteLoanProductWithNoLoans() {
+        LoanProductDto testProduct1WithId = loanProductService.createLoanProduct(testProduct1);
+        LoanProductDto testProduct2WithId = loanProductService.createLoanProduct(testProduct2);
+        Assert.assertEquals(loanProductService.getAll().size(), 2, "Expected two loan products");
+        loanProductService.deleteLoanProduct(testProduct1WithId);
+        Assert.assertEquals(loanProductService.getAll().size(), 1, "Expected one loan product");
+        loanProductService.deleteLoanProduct(testProduct2WithId);
+        Assert.assertEquals(loanProductService.getAll().size(), 0, "Expected zero loan products");
+    }
+
     private void assertSameState (LoanProductDto actual, LoanProductDto expected) {
         Assert.assertEquals(actual.getLongName(), expected.getLongName(), "Wrong long name");
         Assert.assertEquals(actual.getShortName(), expected.getShortName(), "Wrong short name");
