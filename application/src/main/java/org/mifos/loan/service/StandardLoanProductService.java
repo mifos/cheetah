@@ -25,7 +25,6 @@ import java.util.List;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.repository.LoanProductDao;
 
-//@edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP"})
 public class StandardLoanProductService implements LoanProductService {
 
 	private LoanProductDao loanProductDao;

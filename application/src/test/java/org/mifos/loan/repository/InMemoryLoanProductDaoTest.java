@@ -33,9 +33,9 @@ public class InMemoryLoanProductDaoTest {
 
 	private LoanProductDao loanProductDao;
 
-    private String longName = "long name 1";
-    private Double maxInterestRate = 1.0;
-    private Double minInterestRate = 2.0;
+    private static final String longName = "long name 1";
+    private static final Double maxInterestRate = 1.0;
+    private static final Double minInterestRate = 2.0;
 
 	
 	@BeforeMethod
@@ -62,7 +62,7 @@ public class InMemoryLoanProductDaoTest {
 		assert(anotherLoanProduct.getId().equals(2));
 		}
 
-    @Test(groups = { "unit", "workInProgress" })
+    @Test(groups = { "unit" })
     public void testDeleteLoanProduct() {
         LoanProductStatus status = LoanProductStatus.ACTIVE;
         LoanProduct newLoanProduct = loanProductDao.createLoanProduct(longName, "short-name-1", minInterestRate, 

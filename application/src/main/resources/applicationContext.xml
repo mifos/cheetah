@@ -28,14 +28,13 @@
         <property name="buildId" value="${build.id.appInfo}"/>
     </bean>
     
-    <bean id="loanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
+   <bean id="loanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
    
-   	<bean id="loanProductService" class="org.mifos.loan.service.StandardLoanProductService">
+   <bean id="loanProductService" class="org.mifos.loan.service.StandardLoanProductService">
 		<property name="loanProductDao" ref="loanProductDao"/>
 	</bean>
     
-   
-   	<bean id="loanService" class="org.mifos.loan.service.StandardLoanService">
+   <bean id="loanService" class="org.mifos.loan.service.StandardLoanService">
 		<property name="loanProductDao" ref="loanProductDao"/>
 		<property name="loanDao" ref="standardLoanDao"/>
 		<property name="beanMapper" ref="beanMapper"/>

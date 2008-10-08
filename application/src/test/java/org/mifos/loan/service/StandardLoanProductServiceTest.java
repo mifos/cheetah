@@ -33,16 +33,16 @@ public class StandardLoanProductServiceTest {
 
 	private StandardLoanProductService loanProductService;
 	
-	private final String longName1 = "long name 1";
-	private final String shortName1 = "short name 1";
-	private final Double maxInt1 = 1.0;
-	private final Double minInt1 = 2.0;
+	private static final String longName1 = "long name 1";
+	private static final String shortName1 = "short name 1";
+	private static final Double maxInt1 = 1.0;
+	private static final Double minInt1 = 2.0;
 	private final LoanProductStatus status1 = LoanProductStatus.ACTIVE;
 
-	private final String longName2 = "long name 2";
-	private final String shortName2 = "short name 2";
-	private final Double maxInt2 = 3.0;
-	private final Double minInt2 = 4.0;
+	private static  final String longName2 = "long name 2";
+	private static  final String shortName2 = "short name 2";
+	private static final Double maxInt2 = 3.0;
+	private static final Double minInt2 = 4.0;
 	private final LoanProductStatus status2 = LoanProductStatus.INACTIVE;
 	
 	private LoanProductDto testProduct1;

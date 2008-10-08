@@ -34,11 +34,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 
-
-
-/**
- *
- */
 @Entity
 @Table(name="loans")
 public class Loan {

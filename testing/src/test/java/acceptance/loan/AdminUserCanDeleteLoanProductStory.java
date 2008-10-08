@@ -38,7 +38,7 @@ import framework.test.UiTestCaseBase;
  * {@link http://mingle.mifos.org:7070/projects/cheetah/cards/681 }
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
-@Test(groups={"ModifyLoanProductsStory","acceptance","ui", "workInProgress"})
+@Test(groups={"DeleteLoanProductStory","acceptance","ui", "workInProgress"})
 public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
 
     private LoginPage loginPage;

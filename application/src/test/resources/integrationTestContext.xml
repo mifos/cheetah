@@ -13,7 +13,7 @@
            classpath:xsd/spring-tx-2.5.xsd">
 
     <import resource="dataSource.xml"/>
-    
+
     <context:component-scan base-package="org.mifos" />
 
     <context:annotation-config />
@@ -48,27 +48,28 @@
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
    
     <context:component-scan base-package="org.mifos" />
+    <bean id="databaseTestUtils" class="org.mifos.test.framework.util.DatabaseTestUtils" />
 
     <bean id="standardClientDao" class="org.mifos.client.repository.StandardClientDao" />
-
     <bean id="standardClientService" class="org.mifos.client.service.StandardClientService">
        <property name="validator" ref="validator"/>
        <property name="clientDao" ref="standardClientDao"/>
     </bean> 
-
     <bean id="standardClientServiceTest" class="org.mifos.client.service.StandardClientServiceTest">
        <property name="clientService" ref="standardClientService"/>
     </bean> 
 
+    <bean id="standardLoanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
+    <bean id="standardLoanDao" class="org.mifos.loan.repository.StandardLoanDao"/>
     <bean id="standardLoanService" class="org.mifos.loan.service.StandardLoanService">
        <property name="validator" ref="validator"/>
     </bean> 
 
-    <bean id="standardLoanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
-
-    <bean id="standardLoanDao" class="org.mifos.loan.repository.StandardLoanDao"/>
-
-    <bean id="databaseTestUtils" class="org.mifos.test.framework.util.DatabaseTestUtils" />
+    <bean id="loanProductService" class="org.mifos.loan.service.StandardLoanProductService">
+      <property name="loanProductDao" ref="standardLoanProductDao"/>
+    </bean> 
+    
+    <bean id="standardLoanProductServiceIntegrationTest" class="org.mifos.loan.service.StandardLoanProductServiceIntegrationTest"/>
 
 </beans>
 

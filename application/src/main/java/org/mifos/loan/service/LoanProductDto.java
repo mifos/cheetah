@@ -17,6 +17,7 @@
  * See also http://www.apache.org/licenses/LICENSE-2.0.html for an
  * explanation of the license and how it is applied.
  */
+
 package org.mifos.loan.service;
 
 import org.mifos.loan.domain.LoanProductStatus;
@@ -93,9 +94,7 @@ public class LoanProductDto {
 	 */
 	@SuppressWarnings("PMD.UnnecessaryConstructor")
 	public LoanProductDto() {
-		//Spring framework needs a no-argument constructor
-		//By including this comment, PMD will not flag the empty constructor
-		//status = ""; //I had to add this to prevent PMD from flagging this constructor as unnecessary
+		// PMD requires a comment here
 	}
 
 	public LoanProductDto (String longName, String shortName, Double minInterestRate, 

@@ -27,9 +27,6 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Validator;
 
-/**
- *
- */
 @Validator(LoanDtoValidator.class)
 public class LoanDto {
 	private Integer id;

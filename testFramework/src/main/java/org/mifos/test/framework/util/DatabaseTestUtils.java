@@ -42,6 +42,18 @@ public class DatabaseTestUtils {
         cleanAndInsertDataSet("<dataset><" + tableName + "/></dataset>", dataSource);
     }
 
+    @SuppressWarnings("PMD.InsufficientStringBufferDeclaration") // test method doesn't need performance optimization yet
+    public void deleteDataFromTables(DriverManagerDataSource dataSource, String...tableNames) 
+    throws IOException, DataSetException, SQLException, DatabaseUnitException {
+        StringBuffer dataSet = new StringBuffer();
+        dataSet.append("<dataset>");
+        for (String tableName:tableNames) {
+            dataSet.append("<" + tableName + "/>");
+        }
+        dataSet.append("</dataset>");
+        cleanAndInsertDataSet(dataSet.toString(), dataSource);
+    }
+
     /**
      * Execute a DbUnit CLEAN_INSERT. Parameter xmlString must be formatted as a DBUnit
      * xml dataset. This method can be safely invoked inside a Spring-managed transaction.

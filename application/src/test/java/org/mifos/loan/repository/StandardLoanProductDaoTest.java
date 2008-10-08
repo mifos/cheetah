@@ -28,7 +28,7 @@ public class StandardLoanProductDaoTest
     @Autowired
     private DriverManagerDataSource dataSource;
     
-    private static final DatabaseTestUtils dbTestUtils = new DatabaseTestUtils();
+    private static final DatabaseTestUtils databaseTestUtils = new DatabaseTestUtils();
 
     private static final String loanProductDataSetTwoProductsXml = 
         "<dataset>\r\n" + 
@@ -60,7 +60,7 @@ public class StandardLoanProductDaoTest
 	}
 	
 	public void testGetProducts() throws Exception {
-	    dbTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
+	    databaseTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
 	    List<LoanProduct> products = loanProductDao.getLoanProducts ();
 	    Assert.assertEquals(products.size(), 2);
 	    Collections.sort(products, loanProductComparator());
@@ -69,7 +69,7 @@ public class StandardLoanProductDaoTest
 	}
 	
 	public void testGet() throws Exception {
-        dbTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
+        databaseTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
         LoanProduct product1 = loanProductDao.get(1);
         Assert.assertEquals(product1.getLongName(), "long1", "Didn't get expected loan product");
         LoanProduct product2 = loanProductDao.get(2);
@@ -77,7 +77,7 @@ public class StandardLoanProductDaoTest
 	}
 	
 	public void testUpdate() throws Exception {
-        dbTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
+        databaseTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
         LoanProduct product = new LoanProduct(new Integer(1), "long3", "short3", 9.0, 10.0, LoanProductStatus.INACTIVE);
         loanProductDao.updateLoanProduct(product);
         LoanProduct retrievedProduct = loanProductDao.get(1);
@@ -88,7 +88,25 @@ public class StandardLoanProductDaoTest
         Assert.assertEquals(retrievedProduct.getStatus(), LoanProductStatus.INACTIVE, "Didn't update status");
 	}
 		
-
+    public void testDeleteLoanProduct() {
+        
+        String longName = "long name 1";
+        Double maxInterestRate = 1.0;
+        Double minInterestRate = 2.0;
+        
+        LoanProductStatus status = LoanProductStatus.ACTIVE;
+        LoanProduct newLoanProduct = loanProductDao.createLoanProduct(longName, "short-name-1", minInterestRate, 
+                                                                      maxInterestRate, status);
+        LoanProduct anotherLoanProduct = loanProductDao.createLoanProduct(longName, "short-name-2", minInterestRate, 
+                                                                          maxInterestRate, status);
+        
+        Assert.assertEquals(2, loanProductDao.getLoanProducts().size());
+        loanProductDao.deleteLoanProduct(newLoanProduct);
+        List<LoanProduct> loanProducts = loanProductDao.getLoanProducts();
+        Assert.assertEquals(1, loanProducts.size());
+        Assert.assertEquals(anotherLoanProduct.getId(), loanProducts.get(0).getId());
+    }
+    
 	private void assertSameState (LoanProduct actual, LoanProduct expected) {
 		Assert.assertEquals(actual.getLongName(), expected.getLongName(), "Wrong long name");
 		Assert.assertEquals(actual.getShortName(), expected.getShortName(), "Wrong short name");

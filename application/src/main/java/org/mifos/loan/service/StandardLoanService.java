@@ -34,10 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Validator;
 
-
-/**
- *
- */
 public class StandardLoanService implements LoanService {
 	private LoanDao loanDao;
 	private LoanProductDao loanProductDao;
