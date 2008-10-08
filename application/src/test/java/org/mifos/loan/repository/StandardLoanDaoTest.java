@@ -69,7 +69,7 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 	
     @BeforeMethod
     public void setUp() throws DataSetException, IOException, SQLException, DatabaseUnitException {
-        this.databaseTestUtils.deleteDataFromTable("loans", this.dataSource);
+        this.databaseTestUtils.deleteDataFromTables(this.dataSource, "loans");
         loanProduct = standardLoanProductDao.createLoanProduct("loan prod 1", "prod1", 0.0, 20.0, LoanProductStatus.ACTIVE);        
     }
     

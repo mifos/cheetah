@@ -37,11 +37,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class DatabaseTestUtils {
 
-    public void deleteDataFromTable(String tableName, DriverManagerDataSource dataSource) 
-                    throws IOException, DataSetException, SQLException, DatabaseUnitException {
-        cleanAndInsertDataSet("<dataset><" + tableName + "/></dataset>", dataSource);
-    }
-
     @SuppressWarnings("PMD.InsufficientStringBufferDeclaration") // test method doesn't need performance optimization yet
     public void deleteDataFromTables(DriverManagerDataSource dataSource, String...tableNames) 
     throws IOException, DataSetException, SQLException, DatabaseUnitException {

@@ -51,7 +51,7 @@ public class StandardClientDaoTest extends AbstractTransactionalTestNGSpringCont
 
 	@BeforeMethod
 	public void setUp() throws DataSetException, IOException, SQLException, DatabaseUnitException {
-	    this.databaseTestUtils.deleteDataFromTable("clients", this.getDataSource());
+        this.databaseTestUtils.deleteDataFromTables(this.getDataSource(), "clients");
 	}
 	
     public void testCreateClient() throws MifosException {

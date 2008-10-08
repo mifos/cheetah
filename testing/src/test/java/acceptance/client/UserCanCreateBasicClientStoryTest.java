@@ -63,7 +63,7 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
-        this.databaseTestUtils.deleteDataFromTable("clients", this.getDataSource());
+        this.databaseTestUtils.deleteDataFromTables(this.getDataSource(), "clients");
 	}
 
 	@AfterMethod
