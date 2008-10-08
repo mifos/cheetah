@@ -62,7 +62,6 @@ public class InMemoryLoanDaoTest {
 	}
 	
 	public void testCreateLoan() {
-		
 		LoanProduct loanProduct = new LoanProduct(LOAN_PRODUCT_ID,"long name", "name", 0.0, 20.0, LoanProductStatus.ACTIVE);
 		
 		Loan loan = loanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
@@ -91,18 +90,14 @@ public class InMemoryLoanDaoTest {
 	
 	public void testGetLoan() {
         Loan loanCreated = createStandardLoan();
-        
         Loan loanRetrieved = loanDao.getLoan(loanCreated.getId());
-
         Assert.assertNotNull(loanRetrieved);
         assertLoanIsExpected(loanRetrieved,loanCreated.getId(),LOAN_AMOUNT1, NO_DISBURSAL_DATE);
 	}
 	
     public void testGetLoanNotFound() {
         Loan loanCreated = createStandardLoan();
-            
         Loan loanRetrieved = loanDao.getLoan(loanCreated.getId()+1);
-
         Assert.assertNull(loanRetrieved);
     }
 

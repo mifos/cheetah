@@ -19,10 +19,12 @@
  */
 package org.mifos.loan.repository;
 
+import java.util.List;
+
+import junit.framework.Assert;
+
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
-import org.mifos.loan.repository.InMemoryLoanProductDao;
-import org.mifos.loan.repository.LoanProductDao;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,6 +32,11 @@ import org.testng.annotations.Test;
 public class InMemoryLoanProductDaoTest {
 
 	private LoanProductDao loanProductDao;
+
+    private String longName = "long name 1";
+    private Double maxInterestRate = 1.0;
+    private Double minInterestRate = 2.0;
+
 	
 	@BeforeMethod
 	void setUp() {
@@ -38,11 +45,8 @@ public class InMemoryLoanProductDaoTest {
 	
 	
 	@Test(groups = { "unit" })
-	public void testCreateLoan() {
-		String longName = "long name 1";
+	public void testCreateLoanProduct() {
 		String shortName = "short name 1";
-		Double maxInterestRate = 1.0;
-		Double minInterestRate = 2.0;
 		LoanProductStatus status = LoanProductStatus.ACTIVE;
 		
 		LoanProduct newLoanProduct = loanProductDao.createLoanProduct(longName, shortName, minInterestRate, 
@@ -57,4 +61,20 @@ public class InMemoryLoanProductDaoTest {
 				                                                          maxInterestRate, status);
 		assert(anotherLoanProduct.getId().equals(2));
 		}
+
+    @Test(groups = { "unit", "workInProgress" })
+    public void testDeleteLoanProduct() {
+        LoanProductStatus status = LoanProductStatus.ACTIVE;
+        LoanProduct newLoanProduct = loanProductDao.createLoanProduct(longName, "short-name-1", minInterestRate, 
+                                                                      maxInterestRate, status);
+        LoanProduct anotherLoanProduct = loanProductDao.createLoanProduct(longName, "short-name-2", minInterestRate, 
+                                                                          maxInterestRate, status);
+        
+        Assert.assertEquals(2, loanProductDao.getLoanProducts().size());
+        loanProductDao.deleteLoanProduct(newLoanProduct);
+        List<LoanProduct> loanProducts = loanProductDao.getLoanProducts();
+        Assert.assertEquals(1, loanProducts.size());
+        Assert.assertEquals(anotherLoanProduct.getId(), loanProducts.get(0).getId());
+    }
+
 }

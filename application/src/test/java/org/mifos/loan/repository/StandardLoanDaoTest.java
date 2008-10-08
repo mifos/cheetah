@@ -73,26 +73,8 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
         loanProduct = standardLoanProductDao.createLoanProduct("loan prod 1", "prod1", 0.0, 20.0, LoanProductStatus.ACTIVE);        
     }
     
-	private void verifyLoanData(Loan loan) {
-		Assert.assertTrue(loan.getId() > 0, "Expected a positive Id to be generated.");
-		Assert.assertEquals(loan.getLoanProduct().getId(), loanProduct.getId(),"LoanProductId mismatch.");
-		Assert.assertEquals(loan.getAmount(), LOAN_AMOUNT1, "Loan amount mismatch.");
-		Assert.assertEquals(loan.getInterestRate(), LOAN_INTEREST_RATE, "Loan interest rate mismatch.");
-		
-	}
-	
-    private void verifyLoanData(Loan loan, BigDecimal loanAmount) {
-        Assert.assertTrue(loan.getId() > 0, "Expected a positive Id to be generated.");
-        Assert.assertEquals(loan.getLoanProduct().getId(),loanProduct.getId(),"LoanProductId mismatch.");
-        Assert.assertEquals(loan.getAmount(), loanAmount, "Loan amount mismatch.");
-        Assert.assertEquals(loan.getInterestRate(), LOAN_INTEREST_RATE, "Loan interest rate mismatch.");
-        Assert.assertEquals(loan.getClientId(), CLIENT_ID,"Client id mismatch");
-    }
-    
-	
 	public void testCreateLoan() {
 		Loan loan = standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
-		
 		verifyLoanData(loan);
 	}
 
@@ -105,11 +87,8 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
 		standardLoanDao.createLoan(CLIENT_ID, LOAN_AMOUNT1, LOAN_INTEREST_RATE, loanProduct);
 		
 		List<Loan> loans = standardLoanDao.getAll();
-		
 		Assert.assertEquals(loans.size(),initialSize + 3,"Returned an unexpected number of loans.");
-		
 		Loan loan = loans.get(loans.size()-1);
-		
 		verifyLoanData(loan);
 	}
 	
@@ -156,4 +135,20 @@ public class StandardLoanDaoTest extends AbstractTransactionalTestNGSpringContex
         Assert.assertEquals(loanRetrieved.getDisbursalDate(), loanCreated.getDisbursalDate());
     }
 
+    private void verifyLoanData(Loan loan) {
+        Assert.assertTrue(loan.getId() > 0, "Expected a positive Id to be generated.");
+        Assert.assertEquals(loan.getLoanProduct().getId(), loanProduct.getId(),"LoanProductId mismatch.");
+        Assert.assertEquals(loan.getAmount(), LOAN_AMOUNT1, "Loan amount mismatch.");
+        Assert.assertEquals(loan.getInterestRate(), LOAN_INTEREST_RATE, "Loan interest rate mismatch.");
+        
+    }
+    
+    private void verifyLoanData(Loan loan, BigDecimal loanAmount) {
+        Assert.assertTrue(loan.getId() > 0, "Expected a positive Id to be generated.");
+        Assert.assertEquals(loan.getLoanProduct().getId(),loanProduct.getId(),"LoanProductId mismatch.");
+        Assert.assertEquals(loan.getAmount(), loanAmount, "Loan amount mismatch.");
+        Assert.assertEquals(loan.getInterestRate(), LOAN_INTEREST_RATE, "Loan interest rate mismatch.");
+        Assert.assertEquals(loan.getClientId(), CLIENT_ID,"Client id mismatch");
+    }
+    
 }

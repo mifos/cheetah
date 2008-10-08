@@ -29,7 +29,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import framework.pageobjects.DeleteLoanProductPage;
-import framework.pageobjects.EditLoanProductPage;
 import framework.pageobjects.LoginPage;
 import framework.pageobjects.ViewLoanProductDetailsPage;
 import framework.test.UiTestCaseBase;
