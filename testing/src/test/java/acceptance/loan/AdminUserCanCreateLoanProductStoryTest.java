@@ -19,8 +19,6 @@
  */
 package acceptance.loan;
 
-import junit.framework.Assert;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,7 +30,6 @@ import framework.pageobjects.CreateLoanProductPage;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
 import framework.util.AcceptanceDatabaseTestUtils;
-import framework.util.UiTestUtils;
 
 /*
  * Corresponds to story 678 in mingle

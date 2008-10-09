@@ -32,6 +32,11 @@ import org.testng.annotations.Test;
 public class LoanProductDtoValidationTest  extends AbstractDtoValidationTest {
 	
     private static final Logger logger = Logger.getLogger(LoanProductDtoValidationTest.class);
+    
+    private static final String name20 = "01234567890123456789";
+    private static final String name100 = name20 + name20 + name20 + name20 + name20;
+    private static final String name255 = name100 + name100 + name20 + name20 + "012345678901234";
+    private static final String name256 = name255 + "5";
 
 	private LoanProductDto loanProductDto;
 	
@@ -53,6 +58,21 @@ public class LoanProductDtoValidationTest  extends AbstractDtoValidationTest {
 		loanProductDto.setLongName(null);
 		verifyFieldError(loanProductDto, "longName", "not.null");
 	}
+	
+	public void testLongestLegalLongName () {
+	    loanProductDto.setLongName(name255);
+	    verifyNoErrors(loanProductDto);
+	}
+    
+    public void testTooLongLongName () {
+        loanProductDto.setLongName(name256);
+        verifyFieldError(loanProductDto, "longName", "max.length");
+    }
+    
+    public void testTooLongShortName () {
+        loanProductDto.setShortName("12345");
+        verifyFieldError(loanProductDto, "shortName", "max.length");
+    }
 
 	public void testNullMinInterestRate () {
 		loanProductDto.setMinInterestRate(null);
@@ -73,6 +93,11 @@ public class LoanProductDtoValidationTest  extends AbstractDtoValidationTest {
 		loanProductDto.setMaxInterestRate(-1.1);
 		verifyFieldError(loanProductDto, "maxInterestRate", "min");
 	}
+	
+	public void testTooBigMaxInterestRate () {
+        loanProductDto.setMaxInterestRate(1000.0);
+        verifyFieldError(loanProductDto, "maxInterestRate", "max");	    
+	}
 
 	public void testNullStatus () {
 		loanProductDto.setStatus(null);
@@ -88,8 +113,8 @@ public class LoanProductDtoValidationTest  extends AbstractDtoValidationTest {
 	
 	private LoanProductDto validLoanProductDto() {
 		loanProductDto = new LoanProductDto();
-		loanProductDto.setLongName("long");
-		loanProductDto.setShortName("short");
+		loanProductDto.setLongName("a long name");
+		loanProductDto.setShortName("shrt");
 		loanProductDto.setMinInterestRate(1.1);
 		loanProductDto.setMaxInterestRate(2.2);
 		loanProductDto.setStatus(LoanProductStatus.ACTIVE);

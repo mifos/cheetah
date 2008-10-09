@@ -19,11 +19,17 @@
  */
 package framework.test;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.testng.Assert;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dbunit.DatabaseUnitException;
+import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterGroups;
@@ -40,7 +46,12 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
     private static Boolean seleniumServerIsRunning = Boolean.FALSE;
     private static final String ERROR_ELEMENT_ID = "*.errors";
 
+
+    @Autowired
+    protected DriverManagerDataSource dataSource;
     
+    private DatabaseTestUtils dbUtils = new DatabaseTestUtils();
+   
 	protected Selenium selenium;
 	
 	@BeforeMethod
@@ -104,6 +115,16 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
     
     protected void assertErrorTextIncludes(String text) {
         assertElementTextIncludes(text, ERROR_ELEMENT_ID);
+    }
+    
+    protected void deleteDataFromTables(String...tableNames) 
+                    throws IOException, DatabaseUnitException, SQLException {
+        dbUtils.deleteDataFromTables(dataSource, tableNames);
+    }
+    
+    protected void cleanAndInsertDataSet(String xmlString) 
+                    throws IOException, DatabaseUnitException, SQLException {
+        dbUtils.cleanAndInsertDataSet(xmlString, dataSource);
     }
 
 }

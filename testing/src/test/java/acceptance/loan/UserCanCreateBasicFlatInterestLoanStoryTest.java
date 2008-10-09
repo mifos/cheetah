@@ -19,9 +19,16 @@
  */
 package acceptance.loan;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import junit.framework.Assert;
 
+import org.dbunit.DatabaseUnitException;
 import org.joda.time.DateTime;
+import org.mifos.test.framework.util.DatabaseTestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -31,6 +38,7 @@ import framework.pageobjects.CreateLoanPage;
 import framework.pageobjects.HomePage;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
+import framework.util.UiTestUtils;
 
 /*
  * Corresponds to story 675 in mingle
@@ -48,6 +56,8 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
+		deleteDataFromTables("loanproducts", "loans");
+
 	}
 
 	@AfterMethod
@@ -71,6 +81,9 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 	public void createInvalidLoanTest() {
 		double LOAN_AMOUNT = 1200;
 		double INVALID_INTEREST_RATE = -5;
+        
+        ensureLoanProductExists();
+        
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
 		Assert.assertTrue(selenium.isTextPresent("Create a new loan"));
@@ -81,8 +94,8 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 
 	private void ensureLoanProductExists() {
 		DateTime now = new DateTime();
-		String LONG_NAME = "Loan Product " + now.getMillis();
-		String SHORT_NAME = Long.toString(now.getMillis());
+		String LONG_NAME = "Loan Product";
+		String SHORT_NAME = "LP";
 		String MAX_INTEREST_RATE = "100";
 		
 		loginPage

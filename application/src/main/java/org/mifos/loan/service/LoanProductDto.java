@@ -22,6 +22,8 @@ package org.mifos.loan.service;
 
 import org.mifos.loan.domain.LoanProductStatus;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Max;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.MaxLength;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Min;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
@@ -33,19 +35,23 @@ public class LoanProductDto {
 	
 	@NotBlank
 	@NotNull
+	@MaxLength(255)
 	protected String longName;
 
 	@NotBlank
 	@NotNull
+	@MaxLength(4)
 	protected String shortName;
 
 	@NotNull
 	@Min(0)
+	@Max(99.999)
 	@Expression("maxInterestRate not null and minInterestRate <= maxInterestRate")  // first clause stops evaluation of the expression if maxInterestRate is null
 	protected Double minInterestRate;
 
 	@NotNull
 	@Min(0)
+	@Max(999.999)
 	protected Double maxInterestRate;
 
 	@NotNull
