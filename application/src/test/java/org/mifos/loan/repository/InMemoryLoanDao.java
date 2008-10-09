@@ -27,14 +27,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.mifos.client.domain.Client;
+import org.mifos.core.MifosNotImplementedException;
 import org.mifos.loan.domain.Loan;
 import org.mifos.loan.domain.LoanProduct;
 
-
-/**
- *
- */
 public class InMemoryLoanDao implements LoanDao {
 
 	private int nextLoanId = 1;
@@ -58,8 +54,7 @@ public class InMemoryLoanDao implements LoanDao {
 
 	@Override
 	public List<Loan> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+	    throw new MifosNotImplementedException();
 	}
 
     @Override
@@ -85,4 +80,17 @@ public class InMemoryLoanDao implements LoanDao {
         loanRetrieved.setDisbursalDate(loan.getDisbursalDate());
         loanRetrieved.setInterestRate(loan.getInterestRate());
     }
+
+    @Override
+    public Boolean loansExistForLoanProduct(Integer loanProductId) {
+        Boolean result = Boolean.FALSE;
+        for (Loan loan:loans.values()) {
+            if (loan.getLoanProduct().getId() == loanProductId) {
+                result = Boolean.TRUE;
+                break;
+            }
+        }
+        return result;
+    }
+
 }

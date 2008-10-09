@@ -21,12 +21,14 @@ package org.mifos.loan.service;
 
 import java.util.List;
 
+import org.mifos.core.MifosServiceException;
+
 public interface LoanProductService {
 
 	List getAll();
 	LoanProductDto getLoanProduct (Integer id);
 	LoanProductDto createLoanProduct(LoanProductDto product);
 	//LoanProductDto updateLoanProduct (LoanProductDto product);
-	void deleteLoanProduct (LoanProductDto product);
+	void deleteLoanProduct (LoanProductDto product) throws MifosServiceException;
 	LoanProductDto updateLoanProduct (LoanProductDto product);
 }

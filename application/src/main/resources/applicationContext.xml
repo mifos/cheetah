@@ -55,15 +55,5 @@
 			</list>
 		</property>
 	</bean>
-	<!-- 
-		<bean id="BeanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
-		<property name="mappingFiles">
-			<list>
-				<value>dozer-global-configuration.xml</value>
-				<value>dozer-bean-mappings.xml</value>
-			</list>
-		</property>
-	</bean>  
-	
-	 -->
+
 </beans>

@@ -22,24 +22,24 @@ package org.mifos.loan.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mifos.core.MifosServiceException;
 import org.mifos.loan.domain.LoanProduct;
+import org.mifos.loan.repository.LoanDao;
 import org.mifos.loan.repository.LoanProductDao;
 
 public class StandardLoanProductService implements LoanProductService {
 
 	private LoanProductDao loanProductDao;
+	private LoanDao loanDao;
 	
-	public LoanProductDao getLoanProductDao() {
-		return loanProductDao;
-	}
-	
-	public void setLoanProductDao (LoanProductDao dao) {
-		this.loanProductDao = dao;
-	}
-
 	@Override
-	public void deleteLoanProduct(LoanProductDto product) {
-		loanProductDao.deleteLoanProduct(disAssembleLoanProduct(product));
+	public void deleteLoanProduct(LoanProductDto product) throws MifosServiceException {
+        LoanProduct loanProduct = disAssembleLoanProduct(product);
+	    Integer loanProductId = loanProduct.getId();
+        if (loanDao.loansExistForLoanProduct(loanProductId)) {
+	        throw new MifosServiceException("Could not delete loan product.");
+	    }
+        loanProductDao.deleteLoanProduct(loanProduct);
 	}
 
 	@Override
@@ -75,7 +75,15 @@ public class StandardLoanProductService implements LoanProductService {
 		return assembleDto(product);
 	}
 	
-	private LoanProductDto assembleDto (LoanProduct loanProduct) {
+    public void setLoanDao(LoanDao loanDao) {
+        this.loanDao = loanDao;
+    }
+
+    public void setLoanProductDao (LoanProductDao dao) {
+        this.loanProductDao = dao;
+    }
+
+    private LoanProductDto assembleDto (LoanProduct loanProduct) {
 		LoanProductDto loanProductDto = new LoanProductDto(loanProduct.getLongName(), loanProduct.getShortName(), loanProduct.getMinInterestRate(),
 				                                loanProduct.getMaxInterestRate(), loanProduct.getStatus());
 		loanProductDto.setId(loanProduct.getId());
@@ -86,4 +94,7 @@ public class StandardLoanProductService implements LoanProductService {
 		return new LoanProduct(dto.getId(), dto.getLongName(), dto.getShortName(), dto.getMinInterestRate(),
 				               dto.getMaxInterestRate(), dto.getStatus());
 	}
+
+
+
 }

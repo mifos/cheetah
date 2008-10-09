@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.mifos.core.MifosException;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
 import org.mifos.test.framework.util.DatabaseTestUtils;
@@ -88,7 +89,7 @@ public class StandardLoanProductDaoTest
         Assert.assertEquals(retrievedProduct.getStatus(), LoanProductStatus.INACTIVE, "Didn't update status");
 	}
 		
-    public void testDeleteLoanProduct() {
+    public void testDeleteLoanProduct() throws MifosException {
         
         String longName = "long name 1";
         Double maxInterestRate = 1.0;

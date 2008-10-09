@@ -46,6 +46,14 @@
     </bean>
 
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+    <bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
+       <property name="mappingFiles">
+          <list>
+             <value>dozerBeanMappings.xml</value>
+          </list>
+       </property>
+    </bean>
    
     <context:component-scan base-package="org.mifos" />
     <bean id="databaseTestUtils" class="org.mifos.test.framework.util.DatabaseTestUtils" />
@@ -61,12 +69,17 @@
 
     <bean id="standardLoanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
     <bean id="standardLoanDao" class="org.mifos.loan.repository.StandardLoanDao"/>
+    
     <bean id="standardLoanService" class="org.mifos.loan.service.StandardLoanService">
-       <property name="validator" ref="validator"/>
+      <property name="validator" ref="validator"/>
+      <property name="beanMapper" ref="beanMapper"/>
+      <property name="loanDao" ref="standardLoanDao"/>
+      <property name="loanProductDao" ref="standardLoanProductDao"/>
     </bean> 
 
-    <bean id="loanProductService" class="org.mifos.loan.service.StandardLoanProductService">
+    <bean id="standardLoanProductService" class="org.mifos.loan.service.StandardLoanProductService">
       <property name="loanProductDao" ref="standardLoanProductDao"/>
+      <property name="loanDao" ref="standardLoanDao"/>
     </bean> 
     
     <bean id="standardLoanProductServiceIntegrationTest" class="org.mifos.loan.service.StandardLoanProductServiceIntegrationTest"/>

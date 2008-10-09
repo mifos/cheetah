@@ -26,7 +26,7 @@ import org.springframework.validation.BindingResult;
 public class MifosServiceException extends Exception {
 
 	private static final long serialVersionUID = -7431390954369329626L;
-	private final BeanPropertyBindingResult errors;
+	private BeanPropertyBindingResult errors = null;
 	
 	public MifosServiceException(String message, BeanPropertyBindingResult errors) {
 		super(message);
@@ -43,6 +43,10 @@ public class MifosServiceException extends Exception {
         this.errors = errors;
     }
     
+    public MifosServiceException(String message) {
+        super(message);
+    }
+
     public BindingResult getErrors() {
     	return this.errors;
     }

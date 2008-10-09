@@ -54,7 +54,7 @@ public class StandardLoanDao  implements LoanDao {
     @Override
     @Transactional(readOnly=true)
     public List<Loan> findLoansForClient(Integer clientId) {
-        Query query = entityManager.createQuery("SELECT loan from Loan loan where loan.clientId = :clientId");
+        Query query = entityManager.createQuery("select loan from Loan loan where loan.clientId = :clientId");
         query.setParameter("clientId", clientId);
         return query.getResultList();
     }
@@ -71,6 +71,13 @@ public class StandardLoanDao  implements LoanDao {
         // seems like merge is only needed if the Loan came from outside 
         // the current transaction.  So unclear if we need merge here.
         entityManager.merge(loan);
+    }
+
+    @Override
+    public Boolean loansExistForLoanProduct(Integer loanProductId) {
+        Query query = entityManager.createQuery("select count(*) from Loan loan where loan.loanProduct.id = :loanProductId");
+        query.setParameter("loanProductId", loanProductId);
+        return Boolean.valueOf(((Long) query.getResultList().get(0)) > 0);
     }
 
 }

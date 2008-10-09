@@ -28,7 +28,6 @@ import org.springframework.validation.Validator;
 
 /**
  * Validates the interest rate min and max based on the loan product.
- * 
  *
  */
 public class LoanDtoValidator implements Validator {

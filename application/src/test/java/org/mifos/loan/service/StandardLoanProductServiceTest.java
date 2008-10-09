@@ -19,8 +19,11 @@
  */
 package org.mifos.loan.service;
 
+import org.mifos.core.MifosServiceException;
 import org.mifos.loan.domain.LoanProductStatus;
+import org.mifos.loan.repository.InMemoryLoanDao;
 import org.mifos.loan.repository.InMemoryLoanProductDao;
+import org.mifos.loan.repository.LoanDao;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -51,6 +54,8 @@ public class StandardLoanProductServiceTest {
 	@BeforeMethod
 	private void setUp() {
 		loanProductService = new StandardLoanProductService();
+		LoanDao loanDao = new InMemoryLoanDao();
+		loanProductService.setLoanDao(loanDao);
 		loanProductService.setLoanProductDao (new InMemoryLoanProductDao());
 		testProduct1 = new LoanProductDto(longName1, shortName1, minInt1, maxInt1, status1);
 		testProduct2 = new LoanProductDto(longName2, shortName2, minInt2, maxInt2, status2);
@@ -73,7 +78,7 @@ public class StandardLoanProductServiceTest {
 		assertSameState(loanProductService.getLoanProduct(retrievedOnCreate.getId()), changed);
 	}
 	
-	public void testDeleteLoanProduct() {
+	public void testDeleteLoanProduct() throws MifosServiceException {
 		LoanProductDto testLoanProductDto = createTestLoanProductDto1();
 		loanProductService.deleteLoanProduct(testLoanProductDto);
 		Assert.assertEquals(loanProductService.getAll().size(), 0);		

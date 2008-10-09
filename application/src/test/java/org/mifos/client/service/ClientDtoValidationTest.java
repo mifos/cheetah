@@ -115,10 +115,7 @@ public class ClientDtoValidationTest  extends AbstractDtoValidationTest {
 	}
 	
 	private ClientDto validClientDto() {
-		clientDto = new ClientDto();
-		clientDto.setFirstName("Jane");
-		clientDto.setLastName("Doe");
-		clientDto.setLocalDateOfBirth(new LocalDate());
+		clientDto = new ClientDto("Jane", "Doe", new LocalDate());
 		return clientDto;
 	}
 

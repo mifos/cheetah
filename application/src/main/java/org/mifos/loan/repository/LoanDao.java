@@ -26,14 +26,11 @@ import java.util.List;
 import org.mifos.loan.domain.Loan;
 import org.mifos.loan.domain.LoanProduct;
 
-/**
- *
- */
 public interface LoanDao {
 	Loan createLoan(Integer clientId, BigDecimal loanAmount, BigDecimal interestRate, LoanProduct loanProduct);
 	List<Loan> getAll();
     List<Loan> findLoansForClient(Integer clientId);
     Loan getLoan(Integer id);
     void updateLoan(Loan loan);
-
+    Boolean loansExistForLoanProduct(Integer loanProductId);
 }

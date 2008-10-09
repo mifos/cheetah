@@ -26,9 +26,6 @@ import org.mifos.client.repository.ClientDao;
 import org.mifos.core.MifosServiceException;
 import org.springframework.validation.Validator;
 
-/**
- *
- */
 public interface ClientService {
 
 	ClientDto getClient(Integer clientId);
@@ -36,10 +33,9 @@ public interface ClientService {
 	/**
 	 * Find clients.
 	 * 
-	 * @param searchString the string to search for.  The initial implementation
-	 * considers a match to be a client who's first or last name contains the 
-	 * entire search string.  We will want to refactor and refine this behavior
-	 * later.
+	 * @param searchString the string to search for. Currently
+	 * considers a match to be a client whose first or last name contains the 
+	 * entire search string.
 	 * 
 	 * @return a list of client DTOs for clients matching the search string. 
 	 */

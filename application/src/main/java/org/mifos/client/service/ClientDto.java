@@ -45,6 +45,16 @@ public class ClientDto {
 	@Expression("dateOfBirth >= [1879-12-31]")
 	private LocalDate dateOfBirth;
 	
+    public ClientDto() {
+        // for dozer mapping
+    }
+
+    public ClientDto(String firstName, String lastName, LocalDate dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = this.getLocalDateNullSafe(dateOfBirth);
+    }
+
 	public Integer getId() {
 		return id;
 	}
@@ -71,19 +81,19 @@ public class ClientDto {
 
 	// java.util.Date because valang can only validate Date, not LocalDate
 	public Date getDateOfBirth() {
-		return getDate(this.dateOfBirth);
+		return getDateNullSafe(this.dateOfBirth);
 	}
 
 	public LocalDate getLocalDateOfBirth() {
-		return getLocalDate(this.dateOfBirth);
+		return getLocalDateNullSafe(this.dateOfBirth);
 	}
 
 	public void setLocalDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = getLocalDate(dateOfBirth);
+		this.dateOfBirth = getLocalDateNullSafe(dateOfBirth);
 	}
 	
 	@SuppressWarnings("PMD.OnlyOneReturn")
-	private Date getDate(LocalDate localDate) {
+	private Date getDateNullSafe(LocalDate localDate) {
 		if (localDate == null) {
 			return null;
 		} else {
@@ -92,7 +102,7 @@ public class ClientDto {
 	}
 
 	@SuppressWarnings("PMD.OnlyOneReturn")
-	private LocalDate getLocalDate(LocalDate localDate) {
+	private LocalDate getLocalDateNullSafe(LocalDate localDate) {
 		if (localDate == null) {
 			return null;
 		} else {

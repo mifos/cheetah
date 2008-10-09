@@ -44,12 +44,11 @@ public class StandardLoanService implements LoanService {
 	@Override
 	public LoanDto createLoan(LoanDto loanDto) throws MifosServiceException {
 		validate(loanDto);
-		LoanProduct loanProduct = loanProductDao.get(loanDto.getLoanProductId());
+		Integer loanProductId = loanDto.getLoanProductId();
+        LoanProduct loanProduct = loanProductDao.get(loanProductId);
 		Loan loan = loanDao.createLoan(loanDto.getClientId(), loanDto.getAmount(),loanDto.getInterestRate(),loanProduct);
 
-		// Use a net.sf.dozer.util.mapping.DozerBeanMapper to copy fields 
-		// from the Loan domain object to the LoanDto.  Not so interesting
-		// now, but it will be as we add fields
+		// Use a net.sf.dozer.util.mapping.DozerBeanMapper to copy fields between objects.
 		LoanDto newLoanDto = (LoanDto) beanMapper.map(loan, LoanDto.class);
 
 		return newLoanDto;
@@ -95,7 +94,7 @@ public class StandardLoanService implements LoanService {
 		BeanPropertyBindingResult errors = new BeanPropertyBindingResult(loanDto, "loanDto");
 		validator.validate(loanDto, errors);
 		if (errors.getErrorCount() > 0) {
-			throw new MifosServiceException("Loan validation failed.", errors);
+			throw new MifosServiceException("Loan validation failed: " + errors.toString() , errors);
 		}
 	}
 	
