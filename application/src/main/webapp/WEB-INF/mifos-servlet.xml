@@ -132,7 +132,7 @@
         <property name="loanProductService" ref="loanProductService"/>
     </bean>
 
-    <bean id="clientController" class="org.mifos.ui.client.controller.ClientController">
+    <bean id="createClientController" class="org.mifos.ui.client.controller.CreateClientController">
         <property name="sessionForm"  value="true"/>
         <property name="commandName"  value="client"/>
         <property name="commandClass" value="org.mifos.client.service.ClientDto"/>
@@ -166,7 +166,7 @@
     			/createLoanProduct.ftl=createLoanProductFormController
     			/updateLoanProduct.ftl=editLoanProductFormController
     			/createLoan.ftl=loanController
-    			/createClient.ftl=clientController
+    			/createClient.ftl=createClientController
     			/createClientSuccess.ftl=genericController
     			/clientSearchResults.ftl=clientSearchController
     			/clientDetail.ftl=clientDetailController

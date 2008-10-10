@@ -34,9 +34,6 @@ import org.mifos.loan.service.LoanService;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-/**
- *
- */
 public class ViewLoanController extends MultiActionController {
 
 	private LoanService loanService;

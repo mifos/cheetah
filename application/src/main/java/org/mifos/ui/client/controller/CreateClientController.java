@@ -37,7 +37,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
-public class ClientController extends SimpleFormController {
+public class CreateClientController extends SimpleFormController {
     
     private ClientService clientService;
     private LocalDateEditor localDateEditor;
@@ -61,7 +61,7 @@ public class ClientController extends SimpleFormController {
    @Override
    @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
    protected Map referenceData(HttpServletRequest request) throws Exception {      
-    HashMap<String, Object> referenceData = new HashMap<String, Object>();
+    Map<String, Object> referenceData = new HashMap<String, Object>();
     referenceData.put("client", new ClientDto());
     return referenceData;
    }
