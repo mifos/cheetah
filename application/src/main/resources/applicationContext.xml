@@ -47,6 +47,13 @@
       <property name="validator" ref="validator"/>
       <property name="clientDao" ref="standardClientDao"/>
    </bean> 
+     
+   <bean id="standardUserRepository" class="org.mifos.user.repository.StandardUserRepository"/>
+   
+   <bean id="userService" class="org.mifos.user.service.StandardUserService">
+		<property name="userRepository" ref="standardUserRepository"/>
+	</bean>
+    
    
 	<bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
 		<property name="mappingFiles">

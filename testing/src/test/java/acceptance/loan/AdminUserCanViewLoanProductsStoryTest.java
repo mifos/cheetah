@@ -20,19 +20,6 @@
 
 package acceptance.loan;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import org.dbunit.DatabaseUnitException;
-import org.dbunit.database.DatabaseDataSourceConnection;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.DataSetException;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
-import org.dbunit.operation.DatabaseOperation;
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -42,12 +29,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import framework.pageobjects.CreateLoanProductPage;
 import framework.pageobjects.LoginPage;
 import framework.pageobjects.ViewLoanProductDetailsPage;
 import framework.pageobjects.ViewLoanProductsPage;
 import framework.test.UiTestCaseBase;
-import framework.util.UiTestUtils;
 
 /*
  * Corresponds to story 679 in mingle

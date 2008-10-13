@@ -24,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.mifos.core.MifosException;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
 
@@ -33,7 +32,7 @@ public class InMemoryLoanProductDao implements LoanProductDao {
 	private int nextKey = 0;
 	
 	//@SuppressWarnings("PMD.ImmutableField")
-	private Map<Integer, LoanProduct> loanProductStore = new HashMap<Integer, LoanProduct>();
+	private final Map<Integer, LoanProduct> loanProductStore = new HashMap<Integer, LoanProduct>();
 
 	public LoanProduct createLoanProduct (String longName, String shortName, Double minInterestRate,
 			Double maxInterestRate, LoanProductStatus status) {

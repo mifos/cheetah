@@ -46,4 +46,10 @@ public class AdminPage extends AbstractPage {
         waitForPageToLoad();
         return new ViewLoanProductsPage(selenium);
     }
+
+    public CreateUserPage navigateToCreateUserPage() {
+        selenium.click("id=create.user");
+        waitForPageToLoad();
+        return new CreateUserPage(selenium);
+    }
 }

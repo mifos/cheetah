@@ -141,6 +141,16 @@
         <property name="validator"    ref="beanValidator"/>
         <property name="clientService" ref="clientService"/>
     </bean>
+    
+    <bean name="createUserFormController" class="org.mifos.ui.user.controller.CreateUserFormController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="user"/>
+        <property name="commandClass" value="org.mifos.ui.user.command.UserFormBean"/>
+        <property name="formView"     value="createUser"/>
+        <property name="successView"  value="home.ftl"/>
+        <property name="validator"    ref="beanValidator"/>
+        <property name="userService" ref="userService"/>
+    </bean>
 
     <bean id="appInfoController" class="org.mifos.ui.core.controller.AppInfoController">
         <property name="appInfo" ref="appInfo"/>
@@ -171,6 +181,7 @@
     			/clientSearchResults.ftl=clientSearchController
     			/clientDetail.ftl=clientDetailController
     			/loanDetail.ftl=viewLoanController
+    			/createUser.ftl=createUserFormController
     			/disburseLoan.ftl=disburseLoanController
     			/home.ftl=clientSearchController
     			/appInfo.ftl=appInfoController

@@ -24,7 +24,7 @@
 				
 					<ul class="navigation-list">
 					<li>View users</li>
-					<li><a href="createLoanAccount.ftl">Define a new user</a></li>
+					<li><a href="createUser.ftl">Define a new user</a></li>
 					</ul>
 		
 				<h4>System Information</h4>

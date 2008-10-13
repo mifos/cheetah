@@ -19,8 +19,6 @@
  */
 package acceptance.loan;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -29,7 +27,6 @@ import org.testng.annotations.Test;
 import framework.pageobjects.CreateLoanProductPage;
 import framework.pageobjects.LoginPage;
 import framework.test.UiTestCaseBase;
-import framework.util.AcceptanceDatabaseTestUtils;
 
 /*
  * Corresponds to story 678 in mingle
@@ -44,18 +41,12 @@ public class AdminUserCanCreateLoanProductStoryTest extends UiTestCaseBase {
 	private static final String SHORT_NAME = "SLP";
 	private static final String MIN_INTEREST_RATE = "5";
 	private static final String MAX_INTEREST_RATE = "100";
-	private static final String ERROR_ELEMENT_ID = "*.errors";
 	private static final String STATUS = "ACTIVE";
-
-    @Autowired
-    private DriverManagerDataSource dataSource;
 
 	@BeforeMethod
 	public void setUp() throws Exception {
 		super.setUp();
-		AcceptanceDatabaseTestUtils dbUtils = new AcceptanceDatabaseTestUtils();
-		dbUtils.deleteDataFromTable("loans", dataSource);
-		dbUtils.deleteDataFromTable("loanproducts", dataSource);
+		deleteDataFromTables("loanproducts", "loans");
 		loginPage = new LoginPage(selenium);
 	}
 

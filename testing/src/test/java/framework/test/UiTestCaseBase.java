@@ -117,6 +117,18 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
         assertElementTextIncludes(text, ERROR_ELEMENT_ID);
     }
     
+    protected void assertElementExistsOnPage(String elementId) {
+        selenium.isElementPresent(elementId);
+    }
+    
+    protected void assertElementDoesNotExistOnPage(String elementId, String messageIfFail) {
+        Assert.assertFalse(selenium.isElementPresent(elementId), messageIfFail);
+    }
+    
+    protected void assertElementExistsOnPage(String elementId, String messageIfFail) {
+        Assert.assertTrue(selenium.isElementPresent(elementId), messageIfFail);
+    }
+    
     protected void deleteDataFromTables(String...tableNames) 
                     throws IOException, DatabaseUnitException, SQLException {
         dbUtils.deleteDataFromTables(dataSource, tableNames);
