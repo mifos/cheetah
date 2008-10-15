@@ -18,39 +18,22 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.user.service;
+package org.mifos.security.service;
 
-import java.util.Set;
+import org.mifos.security.domain.PasswordEncoder;
+import org.mifos.security.domain.StandardPasswordEncoder;
 
-public class UserDto {
+/**
+ * This class implements security services using Mifos's default security framework and
+ * uses MD5 for password encoding.
+ */
+public class StandardSecurityService implements SecurityService {
+
+    private final PasswordEncoder encoder = new StandardPasswordEncoder();
     
-    private Integer id;
-    private String userId;
-    private String password;
-    Set<String> roles;
-    
-    public String getUserId() {
-        return userId;
+    @Override
+    public String encodePassword(String password) {
+        return encoder.encode(password);
     }
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public Set<String> getRoles() {
-        return roles;
-    }
-    public void setRole(Set<String> roles) {
-        this.roles = roles;
-    }
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
+
 }

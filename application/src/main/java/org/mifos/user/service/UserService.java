@@ -24,8 +24,5 @@ import org.mifos.core.MifosServiceException;
 
 public interface UserService {
     
-    void createUser(UserDto dto) throws MifosServiceException;
-
-    String getPasswordHash(String password);
-
+    UserDto createUser(UserDto dto) throws MifosServiceException;
 }

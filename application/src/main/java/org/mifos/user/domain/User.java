@@ -2,7 +2,9 @@ package org.mifos.user.domain;
 
 import java.util.Set;
 
-import org.mifos.user.service.UserService;
+import org.mifos.core.MifosValidationException;
+import org.mifos.security.service.SecurityService;
+import org.mifos.security.service.StandardSecurityService;
 
 public class User {
     
@@ -10,40 +12,47 @@ public class User {
     private Integer id;
     
     private final String userId;
-    private final transient String password;
-    private final String passwordHash;
-    private final Set<UserRole> roles;
-    private boolean persisted;
-    private UserService userService;
+    private final String encodedPassword;
+    private final Set<String> roles;
+    private final SecurityService securityService = new StandardSecurityService();
     
     
-    public User(Integer id, String userId, String password, Set<UserRole> roles, boolean isPersisted) {
+    public User(Integer id, String userId, String password, Set<String> roles) 
+                    throws MifosValidationException {
 
         super();
         this.id = id;
         this.userId = userId;
-        this.password = password;
         this.roles = roles;
-        this.persisted = isPersisted;
-        validate();
-        passwordHash = getUserService().getPasswordHash(password);
+        validateFields (userId, roles);
+        validatePassword(password);
+        encodedPassword = getSecurityService().encodePassword(password);
     }
     
 
-    private UserService getUserService() {
-        return userService;
+    private final void validateFields (String userId, Set<String> roles) 
+                    throws MifosValidationException {
+        
+        validateUserId(userId);
+        validateRoles(roles);
     }
 
-    private void validate() {
-        
-        if (userId == null) {
-            throw new IllegalArgumentException("user id cannot be null");
+    private final void validatePassword(String password) throws MifosValidationException {
+        if (password == null || password.length() == 0) {
+            throw new MifosValidationException ("Password cannot be blank");
+        } 
+    }
+
+    //TODO: fully validate assigned roles against the list of roles defined by security
+    private final void validateRoles(Set<String> roles) throws MifosValidationException{
+        if (roles == null || roles.isEmpty()) {
+            throw new MifosValidationException("user must be given at lease one authorization role");
         }
-        if (passwordHash == null) {
-            throw new IllegalArgumentException ("password digest cannot be null");
-        }
-        if (roles.isEmpty()) {
-            throw new IllegalArgumentException ("user must be assigned at least one role");
+    }
+
+    private final void validateUserId(String userId)  throws MifosValidationException{
+        if (userId == null || userId.length()==0) {
+            throw new MifosValidationException("User ID cannot be blank");
         }
     }
 
@@ -51,33 +60,28 @@ public class User {
         return this.userId;
     }
     
-    public String getPassword() {
-        return this.password;
-    }
-    
     public Integer getId() {
         return this.id;
     }
     
-    public void setId (Integer id) {
+    private void setId (Integer id) {
         this.id = id;
     }
         
-    public Set<UserRole> getRoles() {
+    public Set<String> getRoles() {
         return this.roles;
     }
-
-    public void markPersisted() {
-        this.persisted = true;
-    }
     
-    public boolean isPersisted() {
-        return this.persisted;
-    }
-    
-    public void setUserService (UserService userService) {
-        this.userService = userService;
+    public String getEncodedPassword() {
+        return this.encodedPassword;
     }
 
+    private SecurityService getSecurityService() {
+        return securityService;
+    }
+    
+    public void makePersistentWithId (Integer id) {
+        setId (id);
+    }
 
 }

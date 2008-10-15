@@ -50,7 +50,7 @@ public class StandardUserRepository implements UserRepository {
      * @see org.mifos.user.repository.UserRepository#makePersistent(org.mifos.user.domain.User)
      */
     @Override
-    public User makePersistent(User user) throws MifosRepositoryException {
+    public User add(User user) throws MifosRepositoryException {
         // TODO Auto-generated method stub
         return null;
     }

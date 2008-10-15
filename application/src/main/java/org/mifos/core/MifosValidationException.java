@@ -18,39 +18,20 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.user.service;
+package org.mifos.core;
 
-import java.util.Set;
+/**
+ *
+ */
+public class MifosValidationException extends MifosException {
 
-public class UserDto {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6380709999185779304L;
     
-    private Integer id;
-    private String userId;
-    private String password;
-    Set<String> roles;
-    
-    public String getUserId() {
-        return userId;
+    public MifosValidationException(String message) {
+        super(message);
     }
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public Set<String> getRoles() {
-        return roles;
-    }
-    public void setRole(Set<String> roles) {
-        this.roles = roles;
-    }
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
+
 }

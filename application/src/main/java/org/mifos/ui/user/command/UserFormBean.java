@@ -22,9 +22,6 @@ package org.mifos.ui.user.command;
 
 import org.mifos.user.service.UserDto;
 
-/**
- *
- */
 public class UserFormBean extends UserDto {
     
     private String confirmPassword;

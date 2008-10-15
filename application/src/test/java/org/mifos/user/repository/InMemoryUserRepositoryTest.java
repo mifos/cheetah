@@ -24,10 +24,11 @@ package org.mifos.user.repository;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.mifos.core.DuplicatePersistedObjectException;
 import org.mifos.core.MifosRepositoryException;
 import org.mifos.user.domain.User;
-import org.mifos.user.domain.UserRole;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -36,25 +37,65 @@ public class InMemoryUserRepositoryTest {
 
     private UserRepository userRepository;
     
+    private static Set<String> adminRoleSet;
+    private static Set<String> userRoleSet;
+    
+    @BeforeClass
+    private static void initialize() {
+        adminRoleSet = new HashSet<String>();
+        adminRoleSet.add("ROLE_ADMIN");
+        userRoleSet = new HashSet<String>();
+        userRoleSet.add("ROLE_USER");
+        
+    }
+    
     @BeforeMethod
     void setUp() {
         userRepository = new InMemoryUserRepository();
     }
     
     
-    @Test(groups="workInProgress")
-    public void testMakePersistentWithEmptyRepository() throws MifosRepositoryException{
-        Set<UserRole> adminRole = new HashSet<UserRole>();
-        adminRole.add(UserRole.ROLE_ADMIN);
-        
-        User newUser = new User (null, "userId", "password", adminRole, false);
-        User persistedUser = userRepository.makePersistent(newUser);
-        User retrievedUser = userRepository.get(persistedUser.getId());
-        assertIdenticalUsers(newUser, retrievedUser);
+    public void testMakePersistentWithEmptyRepository() throws Exception{
+        User newUser = new User (null, "userId", "password", adminRoleSet);
+        verifyMakePersistent (newUser);
     }
 
+    @Test(expectedExceptions=DuplicatePersistedObjectException.class)
+    public void testThrowsDuplicateException () throws Exception{
+        
+        userRepository.add(new User (null, "userId", "password1", adminRoleSet));
+        userRepository.add(new User (null, "userId", "password2", userRoleSet));
+    }
+    
+    public void testMakePersistentWithNonEmptyRepository() throws Exception {
+        
+        User user1 = new User (null, "userId1", "password1", adminRoleSet);
+        User user2 = new User (null, "userId2", "password2", userRoleSet);
+        
+        verifyMakePersistent(user1);
+        verifyMakePersistent(user2);
+    }
+    
+    private void assertIdenticalUsers(User actualUser, User expectedUser) {
+        Assert.assertEquals(
+                actualUser.getUserId(), 
+                expectedUser.getUserId(), 
+                "Unexpected user id");
+        Assert.assertEquals(
+                actualUser.getEncodedPassword(), 
+                expectedUser.getEncodedPassword(), 
+                "Unexpected encoded password");
+        assertSameRoles (actualUser.getRoles(), expectedUser.getRoles());
+    }
 
-    private void assertIdenticalUsers(User expectedUser, User actualUser) {
-        Assert.assertEquals(expectedUser.getUserId(), actualUser.getUserId());
+    private void verifyMakePersistent(User user) throws MifosRepositoryException {
+        User persistedUser = userRepository.add(user);
+        User retrievedUser = userRepository.get(persistedUser.getId());
+        assertIdenticalUsers(persistedUser, user);
+        assertIdenticalUsers(retrievedUser, user);
+    }
+
+    private void assertSameRoles(Set<String> actualRoles, Set<String> expectedRoles) {
+        //not yet implemented
     }
 }

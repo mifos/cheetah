@@ -23,7 +23,7 @@ package org.mifos.core;
 /**
  * Superclass of all exceptions thrown from a repository
  */
-public class MifosRepositoryException extends Exception {
+public class MifosRepositoryException extends MifosException {
 
 
     /**

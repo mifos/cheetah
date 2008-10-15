@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.mifos.core.DuplicatePersistedObjectException;
 import org.mifos.core.MifosRepositoryException;
+import org.mifos.core.MifosValidationException;
 import org.mifos.user.domain.User;
 
 public class InMemoryUserRepository implements UserRepository {
@@ -33,17 +34,24 @@ public class InMemoryUserRepository implements UserRepository {
     
     private final Map<Integer, User> userStore = new HashMap<Integer, User>();
 
-    public User makePersistent (User user) throws MifosRepositoryException {
+    public User add (User user) throws MifosRepositoryException {
+        
         if (userExists(user)) {
             throw new DuplicatePersistedObjectException(user);
         }
-        User persistedUser = new User(++nextKey,user.getUserId(),user.getPassword(), user.getRoles(), true);
-        userStore.put(nextKey, persistedUser);
-        return persistedUser;
+        nextKey = nextKey + 1;
+        user.makePersistentWithId(nextKey);
+        userStore.put(nextKey, user);
+        return user;
     }
 
     private boolean userExists(User user) {
-        return userStore.containsValue(user);
+        for (User storedUser : userStore.values()) {
+            if (user.getUserId().equalsIgnoreCase(storedUser.getUserId())) {
+                return true;
+            }
+        }
+        return false;
     }
     
     Map<Integer, User> getStore() {
@@ -63,8 +71,7 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public User get(Integer id) {
-        userStore.get(id);
-        return null;
+        return (User) userStore.get(id);
     }
     
 

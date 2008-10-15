@@ -28,7 +28,7 @@ import org.mifos.user.domain.User;
  */
 public interface UserRepository {
     
-    User makePersistent(User user) throws MifosRepositoryException;
+    User add(User user) throws MifosRepositoryException;
 
     User findByUserId(String userId);
 

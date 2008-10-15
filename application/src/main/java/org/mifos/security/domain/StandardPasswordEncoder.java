@@ -18,39 +18,20 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.user.service;
+package org.mifos.security.domain;
 
-import java.util.Set;
+import org.springframework.security.providers.encoding.Md5PasswordEncoder;
 
-public class UserDto {
+/**
+ * Uses Spring Security's MD5 password encoder
+ */
+public class StandardPasswordEncoder implements PasswordEncoder {
     
-    private Integer id;
-    private String userId;
-    private String password;
-    Set<String> roles;
-    
-    public String getUserId() {
-        return userId;
+    Md5PasswordEncoder encoder = new Md5PasswordEncoder();
+
+    @Override
+    public String encode(String password) {
+        return encoder.encodePassword(password, null);
     }
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    public Set<String> getRoles() {
-        return roles;
-    }
-    public void setRole(Set<String> roles) {
-        this.roles = roles;
-    }
-    public Integer getId() {
-        return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
-    }
+
 }

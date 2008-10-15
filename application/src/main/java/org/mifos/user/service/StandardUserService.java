@@ -23,6 +23,7 @@ package org.mifos.user.service;
 import org.mifos.core.DuplicatePersistedObjectException;
 import org.mifos.core.MifosRepositoryException;
 import org.mifos.core.MifosServiceException;
+import org.mifos.core.MifosValidationException;
 import org.mifos.user.domain.User;
 import org.mifos.user.repository.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,28 +47,47 @@ public class StandardUserService implements UserService {
 
     @Override
     @Transactional
-    public void createUser(UserDto dto) throws MifosServiceException {
-        User newUser = new User(null, dto.getUserId(), dto.getPassword(), dto.getRoles(), false);
+    public UserDto createUser(UserDto dto) throws MifosServiceException {
+        
+        User newUser = null;
+        User persistedUser = null;
+        
         try {
-            userRepository.makePersistent (newUser);
+            newUser = new User(null, dto.getUserId(), dto.getPassword(), dto.getRoles());
+        } 
+        catch (MifosValidationException validationException) {
+            throw new MifosServiceException(
+                    "Creating user from this Dto is not valid",
+                    validationException,
+                    new BeanPropertyBindingResult(dto, "dto"));
+        }
+        
+        try {
+            persistedUser = userRepository.add (newUser);
         }
         catch (DuplicatePersistedObjectException dupException) {
             throw new MifosServiceException (
-                        "User already exists: " + dto,
-                         dupException, 
-                         new BeanPropertyBindingResult(dto, "dto"));
+                    "User already exists: " + dto,
+                    dupException, 
+                    new BeanPropertyBindingResult(dto, "dto"));
         }
         catch (MifosRepositoryException otherException) {
             throw new MifosServiceException (
-                        "Unknown exception from repository when persisting " + dto,
-                        otherException,
-                        new BeanPropertyBindingResult (dto, "dto"));
+                    "Unknown exception from repository when persisting " + dto,
+                    otherException,
+                    new BeanPropertyBindingResult (dto, "dto"));
         }
+        
+        return assembleDto(persistedUser);
     }
 
-    @Override
-    public String getPasswordHash(String password) {
-        // TODO Auto-generated method stub
-        return null;
+    private UserDto assembleDto(User user) {
+        UserDto dto = new UserDto();
+        dto.setId(user.getId());
+        dto.setUserId(user.getUserId());
+        //don't return the password
+        dto.setPassword(null);
+        dto.setRole(user.getRoles());
+        return dto;
     }
 }
