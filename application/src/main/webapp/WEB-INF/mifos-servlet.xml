@@ -152,6 +152,15 @@
         <property name="userService" ref="userService"/>
     </bean>
 
+    <bean id="deleteLoanProductController" class="org.mifos.ui.loan.controller.DeleteLoanProductController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="deleteLoanProduct"/>
+        <property name="commandClass" value="org.mifos.ui.loan.controller.DeleteLoanProductDto"/>
+        <property name="formView"     value="deleteLoanProduct"/>
+        <property name="successView"  value="deleteLoanProductSuccess.ftl"/>
+        <property name="loanProductService" ref="loanProductService"/>
+    </bean>
+
     <bean id="appInfoController" class="org.mifos.ui.core.controller.AppInfoController">
         <property name="appInfo" ref="appInfo"/>
     </bean>
@@ -185,7 +194,7 @@
     			/disburseLoan.ftl=disburseLoanController
     			/home.ftl=clientSearchController
     			/appInfo.ftl=appInfoController
-            /deleteLoanProduct.ftl=genericController
+            /deleteLoanProduct.ftl=deleteLoanProductController
             /deleteLoanProductSuccess.ftl=genericController
     		</value>
     	</property>

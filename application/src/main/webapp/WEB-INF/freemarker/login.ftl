@@ -49,7 +49,7 @@
 	
 						<tr>
 							<td></td>
-							<td id="login-submit"><input type="submit" value="Login" class="buttn" id="login.form.submit"></td>
+							<td id="login-submit"><input type="submit" value="Login" class="buttn" id="login.form.submit" /></td>
 						</tr>
 	
 					</table> <!-- login-table -->

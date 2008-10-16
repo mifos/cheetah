@@ -22,7 +22,7 @@
       <h4>[@spring.message "toQuicklyFindAClientYouCan"/]</h4>
       <label id="clientSearch">[@spring.message "searchByName" /]</label> 
       [@form.input path="searchString"/]
-	  <input type="submit" value="[@spring.message "search" /]" class="buttn" id="clientSearch.form.submit" tabindex="6">
+	  <input type="submit" value="[@spring.message "search" /]" class="buttn" id="clientSearch.form.submit" tabindex="6" />
       
       [/@form.form]
     </div>

@@ -30,11 +30,11 @@
 	<fieldset class="login">
 	<legend>Login</legend>
 		<label for="login.form.username" accesskey="n">[@spring.message "UserName" /]:</label>
-			<input type="text" name="j_username" id="login.form.username" tabindex="1" value="" title="User Name"><br>
+			<input type="text" name="j_username" id="login.form.username" tabindex="1" value="" title="User Name" /><br>
 		<label for="login.form.password" accesskey="l">Password: </label>
-			<input type="password" id="login.form.password" name="j_username" tabindex="2" title="Password"><br>
+			<input type="password" id="login.form.password" name="j_username" tabindex="2" title="Password" /><br>
 		<label for="kludge"></label>
-			<input type="submit" value="Login" class="buttn" id="login.form.submit" tabindex="3">
+			<input type="submit" value="Login" class="buttn" id="login.form.submit" tabindex="3" />
 	</fieldset>
 					
 	</div>

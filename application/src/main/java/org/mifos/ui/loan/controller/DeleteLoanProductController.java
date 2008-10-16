@@ -39,17 +39,19 @@ public class DeleteLoanProductController extends SimpleFormController {
 
        @Override
         protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors)  {
-                Map<String, Object> model = errors.getModel();
-//                model.put("deleteLoanProduct", new DeleteLoanProductDto());
-                return new ModelAndView("deleteLoanProduct", model);
+            Map<String, Object> model = errors.getModel();
+            Integer loanProductId = Integer.valueOf(request.getParameter("id"));
+            LoanProductDto loanProduct = loanProductService.getLoanProduct(loanProductId);
+            model.put("loanProduct", loanProduct);
+            return new ModelAndView("deleteLoanProduct", model);
         }
         
        @Override
        @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
        protected Map referenceData(HttpServletRequest request) throws Exception {      
-        Map<String, Object> referenceData = new HashMap<String, Object>();
-        referenceData.put("client", new DeleteLoanProductDto());
-        return referenceData;
+            Map<String, Object> referenceData = new HashMap<String, Object>();
+            referenceData.put("deleteLoanProduct", new DeleteLoanProductDto());
+            return referenceData;
        }
        
         @Override
@@ -58,7 +60,7 @@ public class DeleteLoanProductController extends SimpleFormController {
             LoanProductDto loanProductDto = loanProductService.getLoanProduct(((DeleteLoanProductDto) command).getLoanProductId());
             loanProductService.deleteLoanProduct(loanProductDto);
             Map<String, Object> model = new HashMap<String, Object>();
-            return new ModelAndView("createClientSuccess", "model", model);
+            return new ModelAndView("deleteLoanProductSuccess", "model", model);
         }
 
         @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding

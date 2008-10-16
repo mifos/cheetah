@@ -22,7 +22,7 @@
               <label for="createClient.form.date.of.birth" accesskey="l">[@spring.message "dateOfBirth" /] (<span id="datePattern">${datePattern}</span>):</label>
                 [@form.input path="localDateOfBirth"/]<br/>
               <label for="kludge"></label>
-                 <input type="submit" value="[@spring.message "create"/]" class="buttn" id="client.form.submit" tabindex="4">
+                 <input type="submit" value="[@spring.message "create"/]" class="buttn" id="client.form.submit" tabindex="4"/>
          </fieldset>
       [/@form.form]
      

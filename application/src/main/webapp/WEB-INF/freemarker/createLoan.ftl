@@ -29,7 +29,7 @@
 					[@form.input path="interestRate"/]
 					<br/>
 				<label for="kludge"></label>
-					<input type="submit" value="Submit" class="buttn" id="loan.form.submit" tabindex="3">
+					<input type="submit" value="Submit" class="buttn" id="loan.form.submit" tabindex="3" />
 			</fieldset>	
 		[/@form.form]
   	</div>

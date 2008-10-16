@@ -50,7 +50,7 @@
 					<br/>
 			
 				<label for="kludge"></label>
-					<input type="submit" value="[@spring.message "submit"/]" class="buttn" id="login.form.submit" tabindex="6">
+					<input type="submit" value="[@spring.message "submit"/]" class="buttn" id="login.form.submit" tabindex="6" />
 			
 			</fieldset>
 			

@@ -24,7 +24,7 @@
                 <label for="loan.form.disbursalDate" accesskey="l">[@spring.message "disbursalDate" /] (<span id="datePattern">${datePattern}</span>):</label>
                     [@form.input path="disbursalDate"/]<br/>
 				<label for="kludge"></label>
-					<input type="submit" value="[@spring.message "submit"/]" class="buttn" id="disburseLoan.form.submit" tabindex="2">
+					<input type="submit" value="[@spring.message "submit"/]" class="buttn" id="disburseLoan.form.submit" tabindex="2" />
 			</fieldset>	
 		[/@form.form]
   	</div>

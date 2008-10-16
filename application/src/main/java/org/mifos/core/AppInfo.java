@@ -25,7 +25,7 @@ public class AppInfo {
 	private String svnRevision;
 	private String buildTag;
 	private String buildId;
-
+	
 	public String getBuildId() {
 		return buildId;
 	}
