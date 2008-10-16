@@ -28,6 +28,11 @@
         <property name="buildId" value="${build.id.appInfo}"/>
     </bean>
     
+    <bean id="systemInfo" class="org.mifos.core.SystemInfo">
+        <constructor-arg ref="appInfo"/>
+        <constructor-arg ref="dataSource"/>
+    </bean>
+    
    <bean id="loanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
    
    <bean id="loanProductService" class="org.mifos.loan.service.StandardLoanProductService">
