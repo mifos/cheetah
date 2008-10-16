@@ -36,7 +36,8 @@
    <bean id="loanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
    
    <bean id="loanProductService" class="org.mifos.loan.service.StandardLoanProductService">
-		<property name="loanProductDao" ref="loanProductDao"/>
+      <property name="loanProductDao" ref="loanProductDao"/>
+      <property name="loanDao" ref="standardLoanDao"/>
 	</bean>
     
    <bean id="loanService" class="org.mifos.loan.service.StandardLoanService">

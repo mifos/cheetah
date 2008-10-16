@@ -57,10 +57,19 @@ public class DeleteLoanProductController extends SimpleFormController {
         @Override
         @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
         protected ModelAndView onSubmit(Object command) throws Exception {
-            LoanProductDto loanProductDto = loanProductService.getLoanProduct(((DeleteLoanProductDto) command).getLoanProductId());
-            loanProductService.deleteLoanProduct(loanProductDto);
-            Map<String, Object> model = new HashMap<String, Object>();
-            return new ModelAndView("deleteLoanProductSuccess", "model", model);
+            DeleteLoanProductDto deleteLoanProductDto = (DeleteLoanProductDto) command;
+            ModelAndView result = null;
+            if ("Delete".equals(deleteLoanProductDto.getAction())) { 
+                    LoanProductDto loanProductDto = loanProductService.getLoanProduct(((DeleteLoanProductDto) command).getLoanProductId());
+                    loanProductService.deleteLoanProduct(loanProductDto);
+                    Map<String, Object> model = new HashMap<String, Object>();
+                    model.put("loanProductLongName", loanProductDto.getLongName());
+                    model.put("loanProductShortName", loanProductDto.getShortName());
+                    result = new ModelAndView("deleteLoanProductSuccess", "model", model);
+            } else {
+                result = new ModelAndView("adminHome");
+            }
+            return result;
         }
 
         @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding

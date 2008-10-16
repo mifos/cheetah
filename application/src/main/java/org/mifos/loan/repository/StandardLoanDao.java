@@ -74,6 +74,7 @@ public class StandardLoanDao  implements LoanDao {
     }
 
     @Override
+    @Transactional(readOnly=true)
     public Boolean loansExistForLoanProduct(Integer loanProductId) {
         Query query = entityManager.createQuery("select count(*) from Loan loan where loan.loanProduct.id = :loanProductId");
         query.setParameter("loanProductId", loanProductId);

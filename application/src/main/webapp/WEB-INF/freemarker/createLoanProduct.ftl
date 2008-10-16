@@ -40,11 +40,11 @@
 					[@form.input path="minInterestRate"/]
 					<br/>
 			
-				<label for="loanproduct.form.maxinterest" accesskey="a">[@spring.message "loanProduct.minInterestRate.description"/]:</label>
+				<label for="loanproduct.form.maxinterest" accesskey="a">[@spring.message "loanProduct.maxInterestRate.description"/]:</label>
 					[@form.input path="maxInterestRate"/]
 					<br/>
 			
-				<label for="loanproduct.form.status" accesskey="t">[@spring.message "loanProduct.maxInterestRate.description"/]:</label>
+				<label for="loanproduct.form.status" accesskey="t">[@spring.message "loanProduct.status.description"/]:</label>
 					[@form.select path="status"
 								  items=availableCategories /]
 					<br/>

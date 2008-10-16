@@ -33,8 +33,8 @@ public class StandardLoanProductService implements LoanProductService {
 	private LoanDao loanDao;
 	
 	@Override
-	public void deleteLoanProduct(LoanProductDto product) throws MifosServiceException {
-        LoanProduct loanProduct = disAssembleLoanProduct(product);
+	public void deleteLoanProduct(LoanProductDto loanProductDto) throws MifosServiceException {
+        LoanProduct loanProduct = disAssembleLoanProduct(loanProductDto);
 	    Integer loanProductId = loanProduct.getId();
         if (loanDao.loansExistForLoanProduct(loanProductId)) {
 	        throw new MifosServiceException("Could not delete loan product.");

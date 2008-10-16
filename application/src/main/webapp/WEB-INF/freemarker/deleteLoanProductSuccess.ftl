@@ -10,7 +10,7 @@
   [@mifos.header currentTab="ClientsAndAccounts" /]
   [#include "clientsAndAccountsLeftPane.ftl" ]
     <div class="content-pane">
-      You can not delete loan product XXX because there are active loans of that type.
+      Successfully deleted loanProduct '${model.loanProductLongName}'.
     </div>
 </body>
 </html>

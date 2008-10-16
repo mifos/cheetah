@@ -5,6 +5,15 @@ public class DeleteLoanProductDto {
 
     private boolean delete;
     private Integer loanProductId;
+    private String action;
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
 
     public DeleteLoanProductDto() {
         // for dozer
