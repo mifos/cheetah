@@ -196,6 +196,7 @@
     			/appInfo.ftl=appInfoController
             /deleteLoanProduct.ftl=deleteLoanProductController
             /deleteLoanProductSuccess.ftl=genericController
+            /deleteLoanProductFailure.ftl=genericController
     		</value>
     	</property>
     </bean>

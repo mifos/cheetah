@@ -52,18 +52,18 @@ public class CreateClientController extends SimpleFormController {
 
    @Override
     protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors)  {
-            Map<String, Object> model = errors.getModel();
-            model.put("datePattern", localDateEditor.getDatePattern());
-            model.put("client", new ClientDto());
-            return new ModelAndView("createClient", model);
+       Map<String, Object> model = errors.getModel();
+       model.put("datePattern", localDateEditor.getDatePattern());
+       model.put("client", new ClientDto());
+       return new ModelAndView("createClient", model);
     }
 	
    @Override
    @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
    protected Map referenceData(HttpServletRequest request) throws Exception {      
     Map<String, Object> referenceData = new HashMap<String, Object>();
-    referenceData.put("client", new ClientDto());
-    return referenceData;
+       referenceData.put("client", new ClientDto());
+       return referenceData;
    }
    
 	@Override

@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.mifos.core.MifosException;
 import org.mifos.loan.service.LoanProductDto;
 import org.mifos.loan.service.LoanProductService;
 import org.springframework.validation.BindException;
@@ -36,8 +37,7 @@ public class DeleteLoanProductController extends SimpleFormController {
 
     private LoanProductService loanProductService;
     
-
-       @Override
+    @Override
         protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors)  {
             Map<String, Object> model = errors.getModel();
             Integer loanProductId = Integer.valueOf(request.getParameter("id"));
@@ -54,18 +54,21 @@ public class DeleteLoanProductController extends SimpleFormController {
             return referenceData;
        }
        
-        @Override
-        @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
-        protected ModelAndView onSubmit(Object command) throws Exception {
+       @Override
+       @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+       protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
             DeleteLoanProductDto deleteLoanProductDto = (DeleteLoanProductDto) command;
             ModelAndView result = null;
+            Map<String, Object> model = errors.getModel();
             if ("Delete".equals(deleteLoanProductDto.getAction())) { 
                     LoanProductDto loanProductDto = loanProductService.getLoanProduct(((DeleteLoanProductDto) command).getLoanProductId());
-                    loanProductService.deleteLoanProduct(loanProductDto);
-                    Map<String, Object> model = new HashMap<String, Object>();
-                    model.put("loanProductLongName", loanProductDto.getLongName());
-                    model.put("loanProductShortName", loanProductDto.getShortName());
-                    result = new ModelAndView("deleteLoanProductSuccess", "model", model);
+                    model.put("loanProduct", loanProductDto);
+                    try {
+                       loanProductService.deleteLoanProduct(loanProductDto);
+                       result = new ModelAndView("deleteLoanProductSuccess", "model", model);
+                    } catch (MifosException e) {
+                        result = new ModelAndView("deleteLoanProductFailure", "model", model);
+                    }
             } else {
                 result = new ModelAndView("adminHome");
             }
@@ -80,5 +83,5 @@ public class DeleteLoanProductController extends SimpleFormController {
     public void setLoanProductService(LoanProductService loanProductService) {
         this.loanProductService = loanProductService;
     }
-
-    }
+    
+}

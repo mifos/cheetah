@@ -37,7 +37,7 @@ public class StandardLoanProductService implements LoanProductService {
         LoanProduct loanProduct = disAssembleLoanProduct(loanProductDto);
 	    Integer loanProductId = loanProduct.getId();
         if (loanDao.loansExistForLoanProduct(loanProductId)) {
-	        throw new MifosServiceException("Could not delete loan product.");
+	        throw new MifosServiceException("Could not delete loan product - loans exist that use this product.");
 	    }
         loanProductDao.deleteLoanProduct(loanProduct);
 	}
@@ -94,7 +94,5 @@ public class StandardLoanProductService implements LoanProductService {
 		return new LoanProduct(dto.getId(), dto.getLongName(), dto.getShortName(), dto.getMinInterestRate(),
 				               dto.getMaxInterestRate(), dto.getStatus());
 	}
-
-
 
 }

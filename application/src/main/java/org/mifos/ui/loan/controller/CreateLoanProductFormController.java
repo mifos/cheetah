@@ -22,8 +22,6 @@ package org.mifos.ui.loan.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.mifos.loan.service.LoanProductDto;
 import org.mifos.loan.service.LoanProductService;
 import org.mifos.ui.loan.command.LoanProductFormBean;
@@ -31,8 +29,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class CreateLoanProductFormController extends AbstractLoanProductFormController {
 	
-    private static final Log LOG = LogFactory.getLog(CreateLoanProductFormController.class);
-    
     private LoanProductService loanProductService;
     
     public LoanProductService getLoanProductService() {
@@ -47,9 +43,6 @@ public class CreateLoanProductFormController extends AbstractLoanProductFormCont
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_UNWRITTEN_FIELD"}, justification="set by Spring dependency injection")
 	protected ModelAndView onSubmit(Object command) throws Exception {
-	    
-		LOG.debug ("entered LoanProductController.onSubmit()");
-		
 		return createModelAndView(loanProductService.createLoanProduct((LoanProductDto) command),
 		                          "loanProductCreateSuccess");
 	}
