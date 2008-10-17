@@ -22,9 +22,6 @@ package framework.pageobjects;
 
 import com.thoughtworks.selenium.Selenium;
 
-/**
- *
- */
 public class CreateUserSuccessPage extends AbstractPage {
 
     public CreateUserSuccessPage(Selenium selenium) {

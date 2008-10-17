@@ -23,16 +23,8 @@ package framework.pageobjects;
 import com.thoughtworks.selenium.Selenium;
 
 
-/**
- * The Class ClientDetailPage.
- */
 public class ClientDetailPage extends AbstractPage {
 
-	/**
-	 * Instantiates a new client detail page.
-	 * 
-	 * @param selenium
-	 */
 	public ClientDetailPage(Selenium selenium) {
 		super(selenium);
 	}

@@ -23,14 +23,8 @@ package framework.pageobjects;
 import com.thoughtworks.selenium.Selenium;
 
 
-/**
- *
- */
 public class DisburseLoanPage extends AbstractPage {
 
-	/**
-	 * @param selenium
-	 */
 	public DisburseLoanPage(Selenium selenium) {
 		super(selenium);
 	}

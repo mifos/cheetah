@@ -23,9 +23,6 @@ package framework.pageobjects;
 import com.thoughtworks.selenium.Selenium;
 
 
-/**
- *
- */
 public class LoanDetailPage extends AbstractPage {
 
 	public LoanDetailPage(Selenium selenium) {

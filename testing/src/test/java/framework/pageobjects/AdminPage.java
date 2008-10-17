@@ -28,9 +28,6 @@ public class AdminPage extends AbstractPage {
 		super();
 	}
 
-	/**
-	 * @param selenium
-	 */
 	public AdminPage(Selenium selenium) {
 		super(selenium);
 	}
