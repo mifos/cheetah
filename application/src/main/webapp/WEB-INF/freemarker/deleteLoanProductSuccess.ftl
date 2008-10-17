@@ -10,7 +10,7 @@
   [@mifos.header currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ]
     <div class="content-pane">
-      <span id="deleteLoanProduct.successMessage">Successfully deleted loanProduct '<span id="deleteLoanProduct.loanProduct.longName">${model.loanProduct.longName}</span>'.</span>
+      <span id="deleteLoanProduct.successMessage">[@spring.message "deleteLoanProduct.successfullyDeleted" /] '<span id="deleteLoanProduct.loanProduct.longName">${model.loanProduct.longName}</span>'.</span>
       <p/>
       <a href="viewLoanProducts.ftl">Back to View Loan Products</a>
     </div>

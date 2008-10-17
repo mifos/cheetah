@@ -241,7 +241,12 @@
       <testSourceDirectory>${modules.root.dir}/application/src/test/java</testSourceDirectory>
       <outputDirectory>${project.build.directory}/mifos/WEB-INF/classes</outputDirectory>
       <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+
       <plugins>
+        <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>properties-maven-plugin</artifactId>
+        </plugin>  
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>sql-maven-plugin</artifactId>

@@ -20,10 +20,16 @@
 
 package acceptance.loan;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -48,17 +54,24 @@ public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
         
     private static final DatabaseTestUtils dbTestUtils = new DatabaseTestUtils();
     
-    private static final String loanProductDataSetXml = 
-            "<dataset>\r\n" + 
-            "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"0\"/>\r\n" + 
-            "  <loans/>\r\n" + 
-            "</dataset>\r\n";
+
+    private static final String loanProductWithNoLoansDataSetXml = 
+        "<dataset>\n" + 
+        "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"0\"/>\n" + 
+        "  <loans/>\n" + 
+        "</dataset>\n";
+
+    private static final String loanProductWithLoansDataSetXml = 
+            "<dataset>\n" + 
+            "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"0\"/>\n" + 
+            "  <loans id=\"1\" amount=\"10.1\" clientId=\"1\" interestRate=\"10\" loanProductId=\"1\" disbursalDate=\"2007-01-01\" />\n " +
+            "</dataset>\n";
 
     @BeforeMethod
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // signature of superclass method
     public void setUp() throws Exception {
         super.setUp();
         loginPage = new LoginPage(selenium);
-        dbTestUtils.cleanAndInsertDataSet(loanProductDataSetXml, dataSource); 
     }
 
     @AfterMethod
@@ -66,13 +79,23 @@ public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
         loginPage.logout();
     }            
 
-    public void testDeleteLoanProduct () throws Exception{
-        (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
+    public void testDeleteLoanProductWithoutLoans() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        insertDataSetAndDeleteProduct(loanProductWithNoLoansDataSetXml);
+        Assert.assertEquals(selenium.getText("id=deleteLoanProduct.successMessage"), "Successfully deleted loan product 'long1'.");
+    }
+    
+    public void testDeleteLoanProductWithLoans() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        insertDataSetAndDeleteProduct(loanProductWithLoansDataSetXml);
+        Assert.assertEquals(selenium.getText("id=deleteLoanProduct.errorMessage"), "Could not delete loan product 'long1' because there are loans that use this product.");
+    }
+
+    private void insertDataSetAndDeleteProduct(String dataSetXml) throws IOException,
+            DataSetException, SQLException, DatabaseUnitException {
+        dbTestUtils.cleanAndInsertDataSet(dataSetXml, dataSource); 
         ViewLoanProductDetailsPage viewLoanProductDetailsPage = navigateToViewLoanProductDetailsPage("short1");
         DeleteLoanProductPage deleteLoanProductPage = viewLoanProductDetailsPage.navigateToDeleteLoanProductPage();
         deleteLoanProductPage.verifyPage();
-        deleteLoanProductPage.deleteLoanProduct();      
-        assertTextFoundOnPage("Loan product \"long2\" was successfully deleted.", "Didn't get to loanProductDeleteSuccess.ftl");
+        deleteLoanProductPage.deleteLoanProduct();
     }
     
     private ViewLoanProductDetailsPage navigateToViewLoanProductDetailsPage (String linkName){

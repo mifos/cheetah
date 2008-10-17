@@ -43,7 +43,7 @@ public class Loan {
     private Integer id;
     private Integer clientId;
     @ManyToOne
-    @JoinColumn(name = "LOAN_PRODUCT_ID", nullable = false)
+    @JoinColumn(name = "loanProductId", nullable = false)
 	private LoanProduct loanProduct;
 	private BigDecimal amount;
 	private BigDecimal interestRate;

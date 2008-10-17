@@ -34,15 +34,13 @@ public class LoanProduct {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String longName;
-	
-	//Removed until a story requires unique short names
-	//@Column(unique=true)
 	private String shortName;
 	private Double minInterestRate;
 	private Double maxInterestRate;
 	private LoanProductStatus status;
+    private DeletedStatus deletedStatus;
 	
-	public Integer getId() {
+    public Integer getId() {
 		return id;
 	}
 
@@ -66,6 +64,14 @@ public class LoanProduct {
 		return status;
 	}
     
+    public DeletedStatus getDeletedStatus() {
+        return deletedStatus;
+    }
+
+    public void setDeletedStatus(DeletedStatus deleted) {
+        this.deletedStatus = deleted;
+    }
+
     public LoanProduct() {
     	//Spring framework needs a no-argument constructor
     	//By including this comment, PMD will not flag the empty constructor
@@ -79,6 +85,7 @@ public class LoanProduct {
 		this.minInterestRate = minInterestRate;
 		this.maxInterestRate = maxInterestRate;
 		this.status = status;
+		this.deletedStatus = DeletedStatus.VISIBLE;
 	}
 	
 	public void update (String longName, String shortName, Double minInterestRate,

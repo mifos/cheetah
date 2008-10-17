@@ -47,7 +47,7 @@ public class DeleteLoanProductController extends SimpleFormController {
         }
         
        @Override
-       @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+       @SuppressWarnings("PMD.SignatureDeclareThrowsException") // signature of superclass method
        protected Map referenceData(HttpServletRequest request) throws Exception {      
             Map<String, Object> referenceData = new HashMap<String, Object>();
             referenceData.put("deleteLoanProduct", new DeleteLoanProductDto());
@@ -55,7 +55,7 @@ public class DeleteLoanProductController extends SimpleFormController {
        }
        
        @Override
-       @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+       @SuppressWarnings("PMD.SignatureDeclareThrowsException") // signature of superclass method
        protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
             DeleteLoanProductDto deleteLoanProductDto = (DeleteLoanProductDto) command;
             ModelAndView result = null;
@@ -75,7 +75,7 @@ public class DeleteLoanProductController extends SimpleFormController {
             return result;
         }
 
-        @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+        @SuppressWarnings("PMD.SignatureDeclareThrowsException") // signature of superclass method
         protected Object formBackingObject(HttpServletRequest request) throws Exception {
             return new DeleteLoanProductDto();
         }

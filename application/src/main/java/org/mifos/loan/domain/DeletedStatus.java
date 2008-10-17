@@ -18,21 +18,10 @@
  * explanation of the license and how it is applied.
  */
 
-package framework.pageobjects;
+package org.mifos.loan.domain; //NOPMD
 
-import com.thoughtworks.selenium.Selenium;
 
-public class ClientSearchResultsPage extends AbstractPage {
-
-    public ClientSearchResultsPage(Selenium selenium) {
-        super(selenium);
-    }
-
-    public ClientDetailPage navigateToClientDetailPageForClient(int clientNum) {
-        selenium.click("//td[@id='client-name-" + clientNum + "']/a");
-        waitForPageToLoad();
-
-        return new ClientDetailPage(selenium);
-    }
-
+@SuppressWarnings("PMD.UseSingleton")
+public enum DeletedStatus {
+	VISIBLE, DELETED;	
 }
