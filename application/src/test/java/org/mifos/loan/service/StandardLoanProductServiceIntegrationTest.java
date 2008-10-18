@@ -29,8 +29,6 @@ import javax.persistence.PersistenceContext;
 
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.dataset.DataSetException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.joda.time.LocalDate;
 import org.mifos.client.service.ClientDto;
 import org.mifos.client.service.ClientService;
@@ -39,7 +37,6 @@ import org.mifos.loan.domain.LoanProductStatus;
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;

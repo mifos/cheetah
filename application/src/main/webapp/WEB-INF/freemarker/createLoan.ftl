@@ -13,19 +13,19 @@
   <body>
   [@mifos.header currentTab="Home" /]
 	<div id="page-content">
-		<h2>Create a new loan</h2>
+		<h2 id="createLoanHeading">[@spring.message "createANewLoan" /]</h2>
 		 [@form.form action="createLoan.ftl" commandName="loan"]
 		 [@form.errors path="*" cssClass="error-messages"/]
 			<fieldset>
-				<legend>Loan Details</legend>
-				<label id="clientLabel">Client:<label id="clientName">${clientName}</label></label>
+				<legend>[@spring.message "loanDetails" /]</legend>
+				<label id="clientLabel">[@spring.message "client" /]:<label id="clientName">${clientName}</label></label>
 					<br/>
-				<label id="loanProductLabel">Loan Product:<label id="loanProductName">${loanProductName}</label></label>
+				<label id="loanProductLabel">[@spring.message "loanProduct" /]:<label id="loanProductName">${loanProductName}</label></label>
 					<br/>
-				<label for="loan.form.amount" accesskey="a">Amount:</label>
+				<label for="loan.form.amount" accesskey="a">[@spring.message "amount" /]:</label>
 					[@form.input path="amount"/]
 					<br/>
-				<label  for="loan.form.interestRate" accesskey="i">Interest rate:</label>
+				<label  for="loan.form.interestRate" accesskey="i">[@spring.message "interestRate" /]:</label>
 					[@form.input path="interestRate"/]
 					<br/>
 				<label for="kludge"></label>

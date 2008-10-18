@@ -73,9 +73,9 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
 		
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
-		Assert.assertTrue(selenium.isTextPresent("Create a new loan"));
+		assertElementTextExactMatch("Create a new loan","createLoanHeading");
 		createLoanPage.createLoan(LOAN_AMOUNT, INTEREST_RATE);
-		Assert.assertTrue(selenium.isTextPresent("The loan has been created"));
+		assertElementTextExactMatch("The loan has been created","loanEditMessage");
 	}
 
 	public void createInvalidLoanTest() {
@@ -86,14 +86,13 @@ public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase 
         
 		HomePage homePage = loginPage.loginAs("mifos", "testmifos");
 		CreateLoanPage createLoanPage = homePage.navigateToCreateLoanPage();
-		Assert.assertTrue(selenium.isTextPresent("Create a new loan"));
+        assertElementTextExactMatch("Create a new loan","createLoanHeading");
 		createLoanPage.createLoanExpectingError(LOAN_AMOUNT, INVALID_INTEREST_RATE);
-		Assert.assertTrue(selenium.isTextPresent("Please enter an interest rate greater than or equal to the minimum of " +
-				MIN_INTEREST_RATE + " allowed by loan product."));
+		assertErrorTextExactMatch("Please enter an interest rate greater than or equal to the minimum of " +
+                MIN_INTEREST_RATE + " allowed by loan product.");
 	}
 
 	private void ensureLoanProductExists() {
-		DateTime now = new DateTime();
 		String LONG_NAME = "Loan Product";
 		String SHORT_NAME = "LP";
 		String MAX_INTEREST_RATE = "100";

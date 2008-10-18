@@ -11,7 +11,7 @@
       
 	<div id="page-content">
 	
-	 <h2>The loan has been created</h2>
+	 <h2 id="loanEditMessage">The loan has been created</h2>
 	 
 	 <table>
 	 	<tr><td>Loan Product:</td><td>${model.loan.loanProductDto.longName}</td></tr>

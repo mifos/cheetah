@@ -13,15 +13,15 @@
   <body>
   [@mifos.header currentTab="Home" /]
 	<div id="page-content">
-		<h2>Disburse loan</h2>
+		<h2>[@spring.message "disburseLoan" /]</h2>
 		 [@form.form action="disburseLoan.ftl" commandName="loan"]
 		 [@form.errors path="*" cssClass="error-messages"/]
 			<fieldset>
-				<label id="loanProductLabel">Loan Product:<label id="loanProductName">${loan.loanProductDto.longName}</label></label>
+				<label id="loanProductLabel">[@spring.message "loanProduct" /]:<label id="loanProductName">${loan.loanProductDto.longName}</label></label>
 					<br/>
-				<label id="loanAmountLabel">Loan Amount:<label id="loanAmount">${loan.amount}</label></label>
+				<label id="loanAmountLabel">[@spring.message "loanAmount" /]:<label id="loanAmount">${loan.amount}</label></label>
 					<br/>
-                <label for="loan.form.disbursalDate" accesskey="l">[@spring.message "disbursalDate" /] (<span id="datePattern">${datePattern}</span>):</label>
+                <label for="loan.form.disbursalDate" accesskey="l">[@spring.message "disbursalDate" /]: (<span id="datePattern">${datePattern}</span>):</label>
                     [@form.input path="disbursalDate"/]<br/>
 				<label for="kludge"></label>
 					<input type="submit" value="[@spring.message "submit"/]" class="buttn" id="disburseLoan.form.submit" tabindex="2" />
