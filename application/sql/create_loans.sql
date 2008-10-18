@@ -5,6 +5,7 @@ CREATE TABLE loanproducts (
 	minInterestRate DOUBLE,
 	shortName VARCHAR(255),
 	status INT,
+    deletedStatus INT,
 	PRIMARY KEY (id)
 );
 
@@ -17,7 +18,8 @@ CREATE TABLE loans (
 	clientId INT,
 	interestRate DECIMAL(10 , 2),
 	loanProductId INT NOT NULL,
-	PRIMARY KEY (id)
+	PRIMARY KEY (id),
+    disbursalDate DATE
 );
 
 CREATE INDEX FK625D983185434A3 ON loans (loanProductId ASC);

@@ -21,12 +21,22 @@
 package acceptance.loan;
 
 import java.io.IOException;
+import java.io.StringReader;
+import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.dbunit.Assertion;
+import org.dbunit.DataSourceDatabaseTester;
 import org.dbunit.DatabaseUnitException;
+import org.dbunit.IDatabaseTester;
+import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
@@ -106,7 +116,5 @@ public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
                 .navigateToViewLoanProductsPage()
                 .navigateToViewLoanProductDetailsPage(linkName);
     }
-
-    
 
 }

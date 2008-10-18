@@ -239,8 +239,8 @@
       <sourceDirectory>${modules.root.dir}/application/src/main/java</sourceDirectory>
       <scriptSourceDirectory>${modules.root.dir}/application/src/main/scripts</scriptSourceDirectory>
       <testSourceDirectory>${modules.root.dir}/application/src/test/java</testSourceDirectory>
-      <outputDirectory>${project.build.directory}/mifos/WEB-INF/classes</outputDirectory>
-      <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+      <outputDirectory>target/mifos/WEB-INF/classes</outputDirectory>
+      <testOutputDirectory>target/test-classes</testOutputDirectory>
 
       <plugins>
         <plugin>

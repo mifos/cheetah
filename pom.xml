@@ -127,11 +127,11 @@
                   <password>mysql</password>
                   <autocommit>true</autocommit>
                   <srcFiles>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/create_database.sql</srcFile>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/create_loans.sql</srcFile>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/create_security.sql</srcFile>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/security_data.sql</srcFile>
-                     <srcFile>${modules.root.dir}/application/target/mifos/WEB-INF/classes/sql/create_clients.sql</srcFile>
+                     <srcFile>${project.build.outputDirectory}/sql/create_database.sql</srcFile>
+                     <srcFile>${project.build.outputDirectory}/sql/create_loans.sql</srcFile>
+                     <srcFile>${project.build.outputDirectory}/sql/create_security.sql</srcFile>
+                     <srcFile>${project.build.outputDirectory}/sql/security_data.sql</srcFile>
+                     <srcFile>${project.build.outputDirectory}/sql/create_clients.sql</srcFile>
                   </srcFiles>
                </configuration>
                <executions>
