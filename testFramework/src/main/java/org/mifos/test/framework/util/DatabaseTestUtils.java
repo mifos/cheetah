@@ -25,11 +25,15 @@ import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.dbunit.Assertion;
+import org.dbunit.DataSourceDatabaseTester;
 import org.dbunit.DatabaseUnitException;
+import org.dbunit.IDatabaseTester;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -78,4 +82,37 @@ public class DatabaseTestUtils {
             DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
         }
     }
+    
+    /**
+     * Verify that a database table matches a dataSet table. dataSetXml must be formatted as a DBUnit
+     * xml dataset. This method can be safely invoked inside a Spring-managed transaction.
+     * @param dataSetXml
+     * @param tableName
+     * @param dataSource
+     * @throws Exception
+     */
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
+    public void verifyTable(String dataSetXml, String tableName, DriverManagerDataSource dataSource) throws Exception {
+        Connection jdbcConnection = null;
+        StringReader dataSetXmlStream = new StringReader(dataSetXml);
+        try {
+            jdbcConnection = DataSourceUtils.getConnection(dataSource);
+            IDatabaseTester databaseTester = new DataSourceDatabaseTester(dataSource);
+            IDatabaseConnection databaseConnection = databaseTester.getConnection();
+            IDataSet databaseDataSet = databaseConnection.createDataSet();
+            ITable actualTable = databaseDataSet.getTable(tableName);
+            IDataSet expectedDataSet = new FlatXmlDataSet(dataSetXmlStream);
+            ITable expectedTable = expectedDataSet.getTable(tableName);
+            Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, new String[] { "id" });   
+        }
+        finally {
+            jdbcConnection.close();
+            DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
+        }
+        
+        
+    }    
+    
+    
+    
 }

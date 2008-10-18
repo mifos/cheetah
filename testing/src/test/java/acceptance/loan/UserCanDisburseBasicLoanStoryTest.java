@@ -51,7 +51,7 @@ public class UserCanDisburseBasicLoanStoryTest extends UiTestCaseBase {
     
     private static final String dataSetXml = 
             "<dataset>\r\n" + 
-            "  <loanproducts id=\"1\" longName=\"loanProd1\" maxInterestRate=\"10.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"0\"/>\r\n" + 
+            "  <loanproducts id=\"1\" longName=\"loanProd1\" maxInterestRate=\"10.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\"/>\r\n" + 
             "  <clients id=\"1\" firstName=\"Sue\" lastName=\"Smith\" dateOfBirth=\"2000-12-30\"/>\r\n" + 
             "  <loans id=\"1\" clientId=\"1\" loanProductId=\"1\" amount=\"100\" interestRate=\"5\"/>\r\n" + 
             "</dataset>\r\n";

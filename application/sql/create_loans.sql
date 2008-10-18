@@ -4,8 +4,8 @@ CREATE TABLE loanproducts (
 	maxInterestRate DOUBLE,
 	minInterestRate DOUBLE,
 	shortName VARCHAR(255),
-	status INT,
-    deletedStatus INT,
+	status VARCHAR(255),
+    deletedStatus VARCHAR(255),
 	PRIMARY KEY (id)
 );
 

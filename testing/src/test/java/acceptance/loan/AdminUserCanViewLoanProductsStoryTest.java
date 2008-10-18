@@ -52,8 +52,8 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
 	    
     private static final String loanProductDataSetTwoProductsXml = 
     		"<dataset>\r\n" + 
-    		"  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"0\"/>\r\n" + 
-    		"  <loanproducts id=\"2\" longName=\"long2\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short2\" status=\"0\"/>\r\n" + 
+    		"  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\"/>\r\n" + 
+    		"  <loanproducts id=\"2\" longName=\"long2\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short2\" status=\"ACTIVE\"/>\r\n" + 
     		"  <loans/>\r\n" + 
     		"</dataset>\r\n";
 

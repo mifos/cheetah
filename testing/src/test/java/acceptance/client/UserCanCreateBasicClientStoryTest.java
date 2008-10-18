@@ -20,20 +20,9 @@
 
 package acceptance.client;
 
-import java.io.StringReader;
-import java.sql.Connection;
-
-import org.dbunit.Assertion;
-import org.dbunit.DataSourceDatabaseTester;
-import org.dbunit.IDatabaseTester;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.joda.time.format.DateTimeFormat;
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
@@ -138,24 +127,7 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
                 "         lastname=\"" +lastName + "\" \n" +
                 "         dateOfBirth=\"" + getIso8601Date(dateOfBirth, datePattern) + "\" /> \n" +
 	        "</dataset>\n";
-        Connection jdbcConnection = null;
-        StringReader dataSetXmlStream = new StringReader(expectedTableDatasetXml);
-        try {
-            jdbcConnection = DataSourceUtils.getConnection(dataSource);
-            IDatabaseTester databaseTester = new DataSourceDatabaseTester(this.dataSource);
-            IDatabaseConnection databaseConnection = databaseTester.getConnection();
-            IDataSet databaseDataSet = databaseConnection.createDataSet();
-            ITable actualTable = databaseDataSet.getTable("clients");
-            IDataSet expectedDataSet = new FlatXmlDataSet(dataSetXmlStream);
-            ITable expectedTable = expectedDataSet.getTable("clients");
-            Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, new String[] { "id" });   
-        }
-        finally {
-            jdbcConnection.close();
-            DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
-        }
- 	    
-	    
+        databaseTestUtils.verifyTable(expectedTableDatasetXml, "clients", this.dataSource);        
 	}
 	
 	private String getIso8601Date(String date, String datePattern) {

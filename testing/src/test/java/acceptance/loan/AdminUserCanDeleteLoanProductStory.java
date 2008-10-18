@@ -21,22 +21,13 @@
 package acceptance.loan;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.dbunit.Assertion;
-import org.dbunit.DataSourceDatabaseTester;
 import org.dbunit.DatabaseUnitException;
-import org.dbunit.IDatabaseTester;
-import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ITable;
-import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
@@ -62,18 +53,17 @@ public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
     @Autowired
     private DriverManagerDataSource dataSource;
         
-    private static final DatabaseTestUtils dbTestUtils = new DatabaseTestUtils();
-    
+    private static final DatabaseTestUtils databaseTestUtils = new DatabaseTestUtils();
 
     private static final String loanProductWithNoLoansDataSetXml = 
         "<dataset>\n" + 
-        "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"0\"/>\n" + 
+        "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\" deletedStatus=\"VISIBLE\" />\n" + 
         "  <loans/>\n" + 
         "</dataset>\n";
 
     private static final String loanProductWithLoansDataSetXml = 
             "<dataset>\n" + 
-            "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"0\"/>\n" + 
+            "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\" deletedStatus=\"VISIBLE\" />\n" + 
             "  <loans id=\"1\" amount=\"10.1\" clientId=\"1\" interestRate=\"10\" loanProductId=\"1\" disbursalDate=\"2007-01-01\" />\n " +
             "</dataset>\n";
 
@@ -89,9 +79,11 @@ public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
         loginPage.logout();
     }            
 
-    public void testDeleteLoanProductWithoutLoans() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
+    public void testDeleteLoanProductWithoutLoans() throws Exception {
         insertDataSetAndDeleteProduct(loanProductWithNoLoansDataSetXml);
         Assert.assertEquals(selenium.getText("id=deleteLoanProduct.successMessage"), "Successfully deleted loan product 'long1'.");
+        //verifyDeletedStatus();
     }
     
     public void testDeleteLoanProductWithLoans() throws DataSetException, IOException, SQLException, DatabaseUnitException {
@@ -101,7 +93,7 @@ public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
 
     private void insertDataSetAndDeleteProduct(String dataSetXml) throws IOException,
             DataSetException, SQLException, DatabaseUnitException {
-        dbTestUtils.cleanAndInsertDataSet(dataSetXml, dataSource); 
+        databaseTestUtils.cleanAndInsertDataSet(dataSetXml, dataSource); 
         ViewLoanProductDetailsPage viewLoanProductDetailsPage = navigateToViewLoanProductDetailsPage("short1");
         DeleteLoanProductPage deleteLoanProductPage = viewLoanProductDetailsPage.navigateToDeleteLoanProductPage();
         deleteLoanProductPage.verifyPage();
@@ -116,5 +108,15 @@ public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
                 .navigateToViewLoanProductsPage()
                 .navigateToViewLoanProductDetailsPage(linkName);
     }
+    
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
+    private void verifyDeletedStatus() throws Exception {
+        Connection jdbcConnection = null;
+        String deletedLoanProductDataSetXml = 
+        "<dataset>\n" + 
+        "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\" deletedStatus=\"DELETED\" />\n" + 
+        "</dataset>\n";
+        databaseTestUtils.verifyTable(deletedLoanProductDataSetXml, "loanProducts", this.dataSource);        
+    }    
 
 }
