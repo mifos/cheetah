@@ -27,6 +27,7 @@ import java.sql.SQLException;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.dataset.DataSetException;
 import org.mifos.test.framework.util.DatabaseTestUtils;
+import org.mifos.test.framework.util.SimpleDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
@@ -55,18 +56,6 @@ public class AdminUserCanDeleteLoanProductStoryTest extends UiTestCaseBase {
         
     private static final DatabaseTestUtils databaseTestUtils = new DatabaseTestUtils();
 
-    private static final String loanProductWithNoLoansDataSetXml = 
-        "<dataset>\n" + 
-        "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\" deletedStatus=\"VISIBLE\" />\n" + 
-        "  <loans/>\n" + 
-        "</dataset>\n";
-
-    private static final String loanProductWithLoansDataSetXml = 
-            "<dataset>\n" + 
-            "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\" deletedStatus=\"VISIBLE\" />\n" + 
-            "  <loans id=\"1\" amount=\"10.1\" clientId=\"1\" interestRate=\"10\" loanProductId=\"1\" disbursalDate=\"2007-01-01\" />\n " +
-            "</dataset>\n";
-
     @BeforeMethod
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") // signature of superclass method
     public void setUp() throws Exception {
@@ -81,19 +70,19 @@ public class AdminUserCanDeleteLoanProductStoryTest extends UiTestCaseBase {
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
     public void testDeleteLoanProductWithoutLoans() throws Exception {
-        insertDataSetAndDeleteProduct(loanProductWithNoLoansDataSetXml);
+        insertLoanProductWithNoLoansDataSet();
+        deleteLoanProduct();
         Assert.assertEquals(selenium.getText("id=deleteLoanProduct.successMessage"), "Successfully deleted loan product 'long1'.");
         verifyDeletedStatus();
     }
     
     public void testDeleteLoanProductWithLoans() throws DataSetException, IOException, SQLException, DatabaseUnitException {
-        insertDataSetAndDeleteProduct(loanProductWithLoansDataSetXml);
+        insertLoanProductWithLoansDataSet();
+        deleteLoanProduct();
         Assert.assertEquals(selenium.getText("id=deleteLoanProduct.errorMessage"), "Could not delete loan product 'long1' because there are loans that use this product.");
     }
 
-    private void insertDataSetAndDeleteProduct(String dataSetXml) throws IOException,
-            DataSetException, SQLException, DatabaseUnitException {
-        databaseTestUtils.cleanAndInsertDataSet(dataSetXml, dataSource); 
+    private void deleteLoanProduct() {
         ViewLoanProductDetailsPage viewLoanProductDetailsPage = navigateToViewLoanProductDetailsPage("short1");
         DeleteLoanProductPage deleteLoanProductPage = viewLoanProductDetailsPage.navigateToDeleteLoanProductPage();
         deleteLoanProductPage.verifyPage();
@@ -112,11 +101,24 @@ public class AdminUserCanDeleteLoanProductStoryTest extends UiTestCaseBase {
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
     private void verifyDeletedStatus() throws Exception {
         Connection jdbcConnection = null;
-        String deletedLoanProductDataSetXml = 
-        "<dataset>\n" + 
-        "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\" deletedStatus=\"DELETED\" />\n" + 
-        "</dataset>\n";
+        SimpleDataSet simpleDataSet = new SimpleDataSet();
+        simpleDataSet.row("loanProducts", "id=1", "longName=long1",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=short1", "status=ACTIVE", "deletedStatus=DELETED"); 
+        String deletedLoanProductDataSetXml = simpleDataSet.toString();
         databaseTestUtils.verifyTable(deletedLoanProductDataSetXml, "loanProducts", this.dataSource);        
     }    
 
+    private void insertLoanProductWithNoLoansDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        SimpleDataSet simpleDataSet = new SimpleDataSet();
+        simpleDataSet.row("loanProducts", "id=1", "longName=long1",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=short1", "status=ACTIVE", "deletedStatus=VISIBLE"); 
+        simpleDataSet.row("loans");
+        simpleDataSet.insert(this.dataSource);
+    }
+    
+    private void insertLoanProductWithLoansDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        SimpleDataSet simpleDataSet = new SimpleDataSet();
+        simpleDataSet.row("loanProducts", "id=1", "longName=long1",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=short1", "status=ACTIVE", "deletedStatus=VISIBLE"); 
+        simpleDataSet.row("loans", "id=1", "amount=10.1", "clientId=1", "interestRate=10", "loanProductId=1", "disbursalDate=2007-01-01");
+        simpleDataSet.insert(this.dataSource);
+    }
+    
 }
