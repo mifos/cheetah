@@ -46,7 +46,7 @@ import framework.test.UiTestCaseBase;
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
 @Test(groups={"DeleteLoanProductStory","acceptance","ui", "workInProgress"})
-public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
+public class AdminUserCanDeleteLoanProductStoryTest extends UiTestCaseBase {
 
     private LoginPage loginPage;
 
