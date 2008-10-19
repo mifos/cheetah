@@ -20,8 +20,14 @@
 
 package org.mifos.test.framework.util;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class SimpleDataSet {
 
@@ -44,6 +50,10 @@ public class SimpleDataSet {
         }
         dataSet.append("</dataset>");
         return dataSet.toString();
+    }
+
+    public void insert(DriverManagerDataSource dataSource) throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        (new DatabaseTestUtils()).cleanAndInsertDataSet(this.toString(), dataSource);
     }
     
     private static class Row {

@@ -83,7 +83,7 @@ public class AdminUserCanDeleteLoanProductStory extends UiTestCaseBase {
     public void testDeleteLoanProductWithoutLoans() throws Exception {
         insertDataSetAndDeleteProduct(loanProductWithNoLoansDataSetXml);
         Assert.assertEquals(selenium.getText("id=deleteLoanProduct.successMessage"), "Successfully deleted loan product 'long1'.");
-        //verifyDeletedStatus();
+        verifyDeletedStatus();
     }
     
     public void testDeleteLoanProductWithLoans() throws DataSetException, IOException, SQLException, DatabaseUnitException {

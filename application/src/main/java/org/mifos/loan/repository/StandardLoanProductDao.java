@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.mifos.loan.domain.DeletedStatus;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,7 +31,8 @@ public class StandardLoanProductDao implements LoanProductDao {
 	@Transactional
 	public void deleteLoanProduct(LoanProduct loanProduct) {
 		LoanProduct loanProductToBeRemoved = entityManager.find(LoanProduct.class, loanProduct.getId());
-		entityManager.remove(loanProductToBeRemoved);
+		loanProductToBeRemoved.setDeletedStatus(DeletedStatus.DELETED);
+		entityManager.persist(loanProductToBeRemoved);
 
 	}
 
@@ -43,7 +45,7 @@ public class StandardLoanProductDao implements LoanProductDao {
 	@Override
 	@Transactional(readOnly=true)
 	public List<LoanProduct> getLoanProducts() {
-		Query query = entityManager.createQuery("from LoanProduct");
+		Query query = entityManager.createQuery("from LoanProduct where deletedStatus='VISIBLE'");
 		return query.getResultList();
 	}
 
