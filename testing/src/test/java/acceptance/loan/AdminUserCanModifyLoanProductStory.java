@@ -20,7 +20,13 @@
 
 package acceptance.loan;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
 import org.mifos.test.framework.util.DatabaseTestUtils;
+import org.mifos.test.framework.util.SimpleDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
@@ -45,37 +51,26 @@ public class AdminUserCanModifyLoanProductStory extends UiTestCaseBase {
     @Autowired
     private DriverManagerDataSource dataSource;
         
-    private static final DatabaseTestUtils dbTestUtils = new DatabaseTestUtils();
-    
-    private static final String loanProductDataSetXml = 
-            "<dataset>\r\n" + 
-            "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"0\"/>\r\n" + 
-            "  <loans/>\r\n" + 
-            "</dataset>\r\n";
-
     @BeforeMethod
     public void setUp() throws Exception {
         super.setUp();
         loginPage = new LoginPage(selenium);
-        dbTestUtils.cleanAndInsertDataSet(loanProductDataSetXml, dataSource); 
+        insertLoanProductDataSet();
     }
-
+    
     @AfterMethod
     public void logOut() {
         loginPage.logout();
     }            
 
-    
-    public void canNavigateToEditLoanProductPage () throws Exception{
-        (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
-        navigateToEditLoanProductDetailsPage("short1");
+    public void testCanNavigateToEditLoanProductPage () {
+        navigateToEditLoanProductDetailsPage("lp1");
         assertTextFoundOnPage("Update loan product \"long1\"", "Didn't reach page editLoanProduct.ftl");
     }
     
-    public void testModifyLoanProduct () throws Exception{
-        (new DatabaseTestUtils()).cleanAndInsertDataSet(loanProductDataSetXml, dataSource);
-        EditLoanProductPage editPage = navigateToEditLoanProductDetailsPage("short1");
-        editPage.modifyLoanProduct("long2", "short2","9.0", "10.0", "INACTIVE");      
+    public void testModifyLoanProduct () {
+        EditLoanProductPage editPage = navigateToEditLoanProductDetailsPage("lp1");
+        editPage.modifyLoanProduct("long2", "lp2","9.0", "10.0", "INACTIVE");      
         assertTextFoundOnPage("Loan product \"long2\" was successfully updated.", "Didn't get to loanProductEditSuccess.ftl");
     }
     
@@ -90,6 +85,13 @@ public class AdminUserCanModifyLoanProductStory extends UiTestCaseBase {
                 
     }
 
+    private void insertLoanProductDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        SimpleDataSet simpleDataSet = new SimpleDataSet();
+        simpleDataSet.row("loanProducts", "id=1", "longName=long1",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=lp1", "status=ACTIVE", "deletedStatus=VISIBLE"); 
+        simpleDataSet.row("loans");
+        simpleDataSet.insert(this.dataSource);
+    }
+    
     
 
 }
