@@ -20,7 +20,13 @@
 
 package acceptance.loan;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
 import org.mifos.test.framework.util.DatabaseTestUtils;
+import org.mifos.test.framework.util.SimpleDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
@@ -47,26 +53,24 @@ public class UserCanDisburseBasicLoanStoryTest extends UiTestCaseBase {
     @Autowired
     private DriverManagerDataSource dataSource;
         
-    private static final DatabaseTestUtils dbTestUtils = new DatabaseTestUtils();
-    
-    private static final String dataSetXml = 
-            "<dataset>\r\n" + 
-            "  <loanproducts id=\"1\" longName=\"loanProd1\" maxInterestRate=\"10.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\"/>\r\n" + 
-            "  <clients id=\"1\" firstName=\"Sue\" lastName=\"Smith\" dateOfBirth=\"2000-12-30\"/>\r\n" + 
-            "  <loans id=\"1\" clientId=\"1\" loanProductId=\"1\" amount=\"100\" interestRate=\"5\"/>\r\n" + 
-            "</dataset>\r\n";
-
-    
 	private LoginPage loginPage;
     private static final String CLIENT_FIRST_NAME = "Sue";
     private static final String CLIENT_FULL_NAME = "Sue Smith";
 	private static final String LOAN_NAME = "loanProd1";
-	
+
+    private void insertDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        SimpleDataSet simpleDataSet = new SimpleDataSet();
+        simpleDataSet.row("loanProducts", "id=1", "longName=loanProd1",  "maxInterestRate=10.0", "minInterestRate=1.0", "shortName=lp1", "status=ACTIVE", "deletedStatus=VISIBLE"); 
+        simpleDataSet.row("clients", "id=1", "firstName=Sue", "lastName=Smith", "dateOfBirth=2000-12-30"); 
+        simpleDataSet.row("loans", "id=1",  "clientId=1", "loanProductId=1", "amount=100", "interestRate=5"); 
+        simpleDataSet.insert(this.dataSource);
+    }
+    
 	@BeforeMethod
 	public void setUp() throws Exception {
 		super.setUp();
 		loginPage = new LoginPage(selenium);
-        dbTestUtils.cleanAndInsertDataSet(dataSetXml, dataSource); 
+		insertDataSet();
 	}
 
 	@AfterMethod

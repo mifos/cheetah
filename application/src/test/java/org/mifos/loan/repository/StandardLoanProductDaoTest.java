@@ -1,13 +1,18 @@
 package org.mifos.loan.repository;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
 import org.mifos.core.MifosException;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
 import org.mifos.test.framework.util.DatabaseTestUtils;
+import org.mifos.test.framework.util.SimpleDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
@@ -29,15 +34,6 @@ public class StandardLoanProductDaoTest
     @Autowired
     private DriverManagerDataSource dataSource;
     
-    private static final DatabaseTestUtils databaseTestUtils = new DatabaseTestUtils();
-
-    private static final String loanProductDataSetTwoProductsXml = 
-        "<dataset>\r\n" + 
-        "  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\" deletedStatus=\"VISIBLE\" />\r\n" + 
-        "  <loanproducts id=\"2\" longName=\"long2\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short2\" status=\"ACTIVE\"  deletedStatus=\"VISIBLE\" />\r\n" + 
-        "  <loans/>\r\n" + 
-        "</dataset>\r\n";
-
     @BeforeMethod
     private void clearData() {
         super.deleteFromTables(new String[] {"loans"});
@@ -61,7 +57,7 @@ public class StandardLoanProductDaoTest
 	}
 	
 	public void testGetProducts() throws Exception {
-	    databaseTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
+	    insertLoanProductTwoProductsDataSet();
 	    List<LoanProduct> products = loanProductDao.getLoanProducts ();
 	    Assert.assertEquals(products.size(), 2);
 	    Collections.sort(products, loanProductComparator());
@@ -70,16 +66,16 @@ public class StandardLoanProductDaoTest
 	}
 	
 	public void testGet() throws Exception {
-        databaseTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
-        LoanProduct product1 = loanProductDao.get(1);
+	    insertLoanProductTwoProductsDataSet();
+	    LoanProduct product1 = loanProductDao.get(1);
         Assert.assertEquals(product1.getLongName(), "long1", "Didn't get expected loan product");
         LoanProduct product2 = loanProductDao.get(2);
         Assert.assertEquals(product2.getLongName(), "long2", "Didn't get expected loan product");
 	}
 	
 	public void testUpdate() throws Exception {
-        databaseTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
-        LoanProduct product = new LoanProduct(new Integer(1), "long3", "short3", 9.0, 10.0, LoanProductStatus.INACTIVE);
+	    insertLoanProductTwoProductsDataSet();
+	    LoanProduct product = new LoanProduct(new Integer(1), "long3", "short3", 9.0, 10.0, LoanProductStatus.INACTIVE);
         loanProductDao.updateLoanProduct(product);
         LoanProduct retrievedProduct = loanProductDao.get(1);
         Assert.assertEquals(retrievedProduct.getLongName(), "long3", "Didn't update long name");
@@ -125,6 +121,14 @@ public class StandardLoanProductDaoTest
     @Test(enabled=false)
     public void setDataSource(DriverManagerDataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    private void insertLoanProductTwoProductsDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        SimpleDataSet simpleDataSet = new SimpleDataSet();
+        simpleDataSet.row("loanProducts", "id=1", "longName=long1",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=lp1", "status=ACTIVE", "deletedStatus=VISIBLE"); 
+        simpleDataSet.row("loanProducts", "id=2", "longName=long2",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=lp2", "status=ACTIVE", "deletedStatus=VISIBLE"); 
+        simpleDataSet.row("loans");
+        simpleDataSet.insert(this.dataSource);
     }
 
     private Comparator loanProductComparator() {

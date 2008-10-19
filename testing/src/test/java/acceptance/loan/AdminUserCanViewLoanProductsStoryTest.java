@@ -20,7 +20,13 @@
 
 package acceptance.loan;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
 import org.mifos.test.framework.util.DatabaseTestUtils;
+import org.mifos.test.framework.util.SimpleDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
@@ -48,22 +54,6 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
 	@Autowired
 	private DriverManagerDataSource dataSource;
     
-    private static final DatabaseTestUtils dbTestUtils = new DatabaseTestUtils();
-	    
-    private static final String loanProductDataSetTwoProductsXml = 
-    		"<dataset>\r\n" + 
-    		"  <loanproducts id=\"1\" longName=\"long1\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short1\" status=\"ACTIVE\" deletedStatus=\"VISIBLE\" />\r\n" + 
-    		"  <loanproducts id=\"2\" longName=\"long2\" maxInterestRate=\"2.0\" minInterestRate=\"1.0\" shortName=\"short2\" status=\"ACTIVE\" deletedStatus=\"VISIBLE\" />\r\n" + 
-    		"  <loans/>\r\n" + 
-    		"</dataset>\r\n";
-
-	    
-    private static final String loanProductDataSetZeroProductsXml = 
-    		"<dataset>\r\n" + 
-    		"  <loanproducts/>\r\n" + 
-    		"  <loans/>\r\n" + 
-    		"</dataset>\r\n";
-
     @BeforeMethod
     public void setUp() throws Exception {
         super.setUp();
@@ -75,24 +65,23 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
         loginPage.logout();
     }
 
-	public void viewTwoLoanProducts() throws Exception {
-	    dbTestUtils.cleanAndInsertDataSet(loanProductDataSetTwoProductsXml, dataSource);
+	public void viewTwoLoanProducts()  throws DataSetException, IOException, SQLException, DatabaseUnitException  {
+	    insertLoanProductTwoProductsDataSet();
 	    navigateToViewLoanProductsPage();
-	    assertElementTextIncludes("short1", "short-name-1");
-	    assertElementTextIncludes("short2", "short-name-2");
+	    assertElementTextIncludes("lp1", "short-name-1");
+	    assertElementTextIncludes("lp2", "short-name-2");
 	}
 
-	public void viewZeroLoanProducts() throws Exception {
-	    dbTestUtils.cleanAndInsertDataSet(loanProductDataSetZeroProductsXml, dataSource);
+	public void viewZeroLoanProducts()  throws DataSetException, IOException, SQLException, DatabaseUnitException {
+	    insertLoanProductZeroProductsDataSet();
 	    navigateToViewLoanProductsPage();
 	    Assert.assertTrue(selenium.isTextPresent("No loan products have been defined"));
 	}
 
-    public void canReachViewLoanProductDetailsPage () {
-        navigateToViewLoanProductDetailsPage("short1");
-        //UiTestUtils.sleep(20000);
-        //assertTextFoundOnPage("viewLoanProduct.ftl", "Didn't reach viewLoanProduct.ftl");
-        assertElementTextIncludes("short1", "shortName");
+    public void testCanReachViewLoanProductDetailsPage () throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        insertLoanProductTwoProductsDataSet();
+        navigateToViewLoanProductDetailsPage("lp1");
+        assertElementTextIncludes("lp1", "shortName");
     }
     
     private ViewLoanProductDetailsPage navigateToViewLoanProductDetailsPage (String linkName){
@@ -113,6 +102,21 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
                 .navigateToViewLoanProductsPage();
     }
 
+    private void insertLoanProductTwoProductsDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        SimpleDataSet simpleDataSet = new SimpleDataSet();
+        simpleDataSet.row("loanProducts", "id=1", "longName=long1",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=lp1", "status=ACTIVE", "deletedStatus=VISIBLE"); 
+        simpleDataSet.row("loanProducts", "id=2", "longName=long2",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=lp2", "status=ACTIVE", "deletedStatus=VISIBLE"); 
+        simpleDataSet.row("loans");
+        simpleDataSet.insert(this.dataSource);
+    }
+        
+    private void insertLoanProductZeroProductsDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        SimpleDataSet simpleDataSet = new SimpleDataSet();
+        simpleDataSet.row("loanProducts");
+        simpleDataSet.row("loans");
+        simpleDataSet.insert(this.dataSource);
+    }
+    
 	@Test(enabled=false)
 	public DriverManagerDataSource getDataSource() {
 		return dataSource;

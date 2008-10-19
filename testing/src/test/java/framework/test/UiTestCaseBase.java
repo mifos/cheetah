@@ -17,6 +17,7 @@
  * See also http://www.apache.org/licenses/LICENSE-2.0.html for an
  * explanation of the license and how it is applied.
  */
+
 package framework.test;
 
 import java.io.IOException;
@@ -134,9 +135,4 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
         dbUtils.deleteDataFromTables(dataSource, tableNames);
     }
     
-    protected void cleanAndInsertDataSet(String xmlString) 
-                    throws IOException, DatabaseUnitException, SQLException {
-        dbUtils.cleanAndInsertDataSet(xmlString, dataSource);
-    }
-
 }
