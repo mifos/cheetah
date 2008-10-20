@@ -49,4 +49,10 @@ public class AdminPage extends AbstractPage {
         waitForPageToLoad();
         return new CreateUserPage(selenium);
     }
+
+    public ViewOfficesPage navigateToViewOfficesPage() {
+        selenium.click("id=view.offices");
+        waitForPageToLoad();
+        return new ViewOfficesPage(selenium);        
+    }
 }
