@@ -90,7 +90,5 @@ public class AdminUserCanModifyLoanProductStory extends UiTestCaseBase {
         simpleDataSet.row("loans");
         simpleDataSet.insert(this.dataSource);
     }
-    
-    
 
 }

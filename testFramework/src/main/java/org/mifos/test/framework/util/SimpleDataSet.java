@@ -29,6 +29,33 @@ import org.dbunit.DatabaseUnitException;
 import org.dbunit.dataset.DataSetException;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+/**
+ * Convenience wrapper for DbUnit's FlatXmlDataSet. Provides a simple
+ * interface for clearing tables and creating database records.
+ * <p/>
+ * Usage:
+ * <p/>
+ * SimpleDataSet simpleDataSet = new SimpleDataSet();
+ * simpleDataSet("tableToBeCleared");
+ * simpleDataSet("tableTwo", "id=13", "column1=value1", "column2=3.1415", "column3=50");
+ * simpleDataSet("tableTwo", "id=14", "column1=anotherValue", "column2=2.178", "column3=55");
+ * simpleDataSet("tableThree", "id=1", "fooColumn=something", "barColumn=2");
+ * <p/>
+ * simpleDataSet.insert(dataSource);
+ * <p/>
+ * or
+ * <p/>
+ * String flatXmlDataSetString = simpleDataSet.toString();
+ * <p/>
+ * Note that all data in a table will be removed before the new data is inserted.
+ * Not supplying name value pairs results in the table being emptied.
+ * <p/>
+ * Limitations: error reporting is primitive. Missing columns get null values, 
+ * following DbUnit's FlatXmlDataSet's limitations. '=' characters are not allowed in 
+ * field names or values because the parser is primitive. '"' characters must be
+ * escaped.
+ *
+ */
 public class SimpleDataSet {
 
     private final List<Row> rows;
@@ -37,9 +64,22 @@ public class SimpleDataSet {
         this.rows = new ArrayList<Row>();
     }
     
+    /**
+     * Adds a database row entry to the data set. Accepts 0 or more
+     * @param columnAndValuePairs to insert into the database.
+     * 
+     * @param tableName  the table name that the data should be inserted into.
+     * @param columnAndValuePairs in the form of "name1=value", if none are given all
+     *                            the data in the table will be deleted. '=' characters
+     *                            are not allowed.
+     */
     public void row(String tableName, String...columnAndValuePairs) {
         rows.add(new Row(tableName, columnAndValuePairs));
     }
+    
+    /**
+     * Returns a DbUnit FlatXmlDataSet representation of the data set.
+     */
     
     @SuppressWarnings("PMD.InsufficientStringBufferDeclaration") // test method doesn't need performance optimization yet
     public String toString() {
@@ -52,12 +92,23 @@ public class SimpleDataSet {
         return dataSet.toString();
     }
 
+    /** 
+     * Converts the data set to a FlatXmlDataSet representation and inserts it into
+     * the dataSource.
+     * 
+     * @param dataSource
+     * @throws DataSetException
+     * @throws IOException
+     * @throws SQLException
+     * @throws DatabaseUnitException
+     */
     public void insert(DriverManagerDataSource dataSource) throws DataSetException, IOException, SQLException, DatabaseUnitException {
         (new DatabaseTestUtils()).cleanAndInsertDataSet(this.toString(), dataSource);
     }
     
     private static class Row {
         
+        private static final String NAME_VALUE_PAIR_SEPARATOR = "=";
         private final String tableName;
         private final List<ColumnAndValuePair> columnAndValuePairs;
         
@@ -79,7 +130,7 @@ public class SimpleDataSet {
 
         private ColumnAndValuePair getColumnAndValuePair(
                 String columnAndValuePairString) {
-            String[] tokens = columnAndValuePairString.split("=");
+            String[] tokens = columnAndValuePairString.split(NAME_VALUE_PAIR_SEPARATOR);
             return new ColumnAndValuePair(tokens[0], tokens[1]);
         }
 
