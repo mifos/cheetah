@@ -36,10 +36,10 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  * Usage:
  * <p/>
  * SimpleDataSet simpleDataSet = new SimpleDataSet();
- * simpleDataSet("tableToBeCleared");
- * simpleDataSet("tableTwo", "id=13", "column1=value1", "column2=3.1415", "column3=50");
- * simpleDataSet("tableTwo", "id=14", "column1=anotherValue", "column2=2.178", "column3=55");
- * simpleDataSet("tableThree", "id=1", "fooColumn=something", "barColumn=2");
+ * simpleDataSet.row("tableTwo", "id=13", "column1=value1", "column2=3.1415", "column3=50");
+ * simpleDataSet.row("tableTwo", "id=14", "column1=anotherValue", "column2=2.178", "column3=55");
+ * simpleDataSet.row("tableThree", "id=1", "fooColumn=something", "barColumn=2");
+ * simpleDataSet.clearTable("tableToBeCleared");
  * <p/>
  * simpleDataSet.insert(dataSource);
  * <p/>
