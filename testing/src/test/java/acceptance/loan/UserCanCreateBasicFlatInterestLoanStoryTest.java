@@ -19,9 +19,6 @@
  */
 package acceptance.loan;
 
-import junit.framework.Assert;
-
-import org.joda.time.DateTime;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

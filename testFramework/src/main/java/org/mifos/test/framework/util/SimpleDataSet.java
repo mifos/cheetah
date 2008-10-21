@@ -66,7 +66,8 @@ public class SimpleDataSet {
     
     /**
      * Adds a database row entry to the data set. Accepts 0 or more
-     * @param columnAndValuePairs to insert into the database.
+     * @param columnAndValuePairs to insert into the database. Database
+     * table is cleared on insertion of the first row.
      * 
      * @param tableName  the table name that the data should be inserted into.
      * @param columnAndValuePairs in the form of "name1=value", if none are given all
@@ -75,6 +76,17 @@ public class SimpleDataSet {
      */
     public void row(String tableName, String...columnAndValuePairs) {
         rows.add(new Row(tableName, columnAndValuePairs));
+    }
+    
+    /**
+     * Clears specified table. Only necessary if you want to clear a table 
+     * without inserting new rows.
+     * 
+     * @param tableName  the table name that the data should be inserted into.
+     * 
+     */
+    public void clearTable(String tableName) {
+        rows.add(new Row(tableName));
     }
     
     /**

@@ -31,7 +31,6 @@ import org.mifos.test.framework.util.SimpleDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -116,7 +115,7 @@ public class AdminUserCanDeleteLoanProductStoryTest extends UiTestCaseBase {
     private void insertLoanProductWithNoLoansDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
         SimpleDataSet simpleDataSet = new SimpleDataSet();
         simpleDataSet.row("loanProducts", "id=1", "longName=long1",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=short1", "status=ACTIVE", "deletedStatus=VISIBLE"); 
-        simpleDataSet.row("loans");
+        simpleDataSet.clearTable("loans");
         simpleDataSet.insert(this.dataSource);
     }
     

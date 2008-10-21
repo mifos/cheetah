@@ -40,38 +40,38 @@ public class SimpleDataSetTest {
 	    Assert.assertEquals(this.simpleDataSet.toString(), expectedOutput);
 	}
 
-    public void testDataSetOneEmptyTable() {
+    public void testOneEmptyTable() {
         String expectedOutput = "<dataset>\n<firstTable />\n</dataset>";
         this.simpleDataSet.row("firstTable");
         Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
     }
 
-    public void testDataSetTwoEmptyTables() {
+    public void testTwoEmptyTables() {
         String expectedOutput = "<dataset>\n<firstTable />\n<secondTable />\n</dataset>";
         this.simpleDataSet.row("firstTable");
         this.simpleDataSet.row("secondTable");
         Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
     }
 
-    public void testDataSetOneTableOneColumn() {
+    public void testOneTableOneColumn() {
         String expectedOutput = "<dataset>\n<firstTable name=\"value\" />\n</dataset>";
         this.simpleDataSet.row("firstTable", "name=value");
         Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
     }
 
-    public void testDataSetOneTableTwoColumns() {
+    public void testOneTableTwoColumns() {
         String expectedOutput = "<dataset>\n<firstTable name1=\"value1\" name2=\"value2\" />\n</dataset>";
         this.simpleDataSet.row("firstTable", "name1=value1", "name2=value2");
         Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
     }
 
-    public void testDataSetOneTableNumericData() {
+    public void testOneTableNumericData() {
         String expectedOutput = "<dataset>\n<firstTable name1=\"10\" name2=\"3.145\" />\n</dataset>";
         this.simpleDataSet.row("firstTable", "name1=10", "name2=3.145");
         Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
     }
 
-    public void testDataSetOneTableTwoRows() {
+    public void testOneTableTwoRows() {
         String expectedOutput = "<dataset>\n" +
                 "<firstTable name1=\"value00\" name2=\"value01\" />\n" +
                 "<firstTable name1=\"value10\" name2=\"value11\" />\n" +
@@ -81,7 +81,20 @@ public class SimpleDataSetTest {
         Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
     }
 
-    public void testDataSetTwoTablesTwoRows() {
+    public void testClearTable() {
+        String expectedOutput = "<dataset>\n<firstTable />\n</dataset>";
+        this.simpleDataSet.clearTable("firstTable");
+        Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
+    }
+
+    public void testClearTableAfterAddingRow() {
+        String expectedOutput = "<dataset>\n<firstTable name1=\"value1\" name2=\"value2\" />\n<secondTable />\n</dataset>";
+        this.simpleDataSet.row("firstTable", "name1=value1", "name2=value2");
+        this.simpleDataSet.clearTable("secondTable");
+        Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
+    }
+
+    public void testTwoTablesTwoRows() {
         String expectedOutput = "<dataset>\n" +
                 "<firstTable name1=\"value00\" name2=\"value01\" />\n" +
                 "<firstTable name1=\"value10\" name2=\"2.178\" />\n" +
