@@ -21,7 +21,7 @@
     
     	[#assign clientNum = 0]
     	
-        <table id="loan-product-table">
+        <table id="client-list-table">
 	     [#list model.clients as client]
 	     [#assign clientNum = clientNum + 1]
 		 <tr>

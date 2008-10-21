@@ -12,34 +12,41 @@
         
 	<div id="page-content">
 	  <div id ="adminPageContent">
-		<h2 id="adminHome.heading">Administrative Tasks</h2>
+		<h2 id="adminHome.heading">[@spring.message "administrativeTasks" /]</h2>
 		
 			<p>
-			Welcome to the mifos administrative area. Click on a link below to begin.
+			[@spring.message "administrativeTasksWelcome" /]
 			</p>
 		
-			<h3>Manage Organization</h3>
+			<h3>[@spring.message "manageOrganization" /]</h3>
 			
-				<h4>Users</h4>
+				<h4>[@spring.message "users" /]</h4>
 				
 					<ul class="navigation-list">
-					<li>View users</li>
-					<li><a href="createUser.ftl">Define a new user</a></li>
+					<li>[@spring.message "viewUsers" /]</li>
+					<li><a href="createUser.ftl">[@spring.message "defineNewUser" /]</a></li>
+					</ul>
+
+				<h4>[@spring.message "offices" /]</h4>
+
+					<ul class="navigation-list">
+					<li><a href="viewOffices.ftl">[@spring.message "viewOffices" /]</a></li>
+					<li>[@spring.message "defineNewOffice" /]</li>
 					</ul>
 		
-				<h4>System Information</h4>
+				<h4>[@spring.message "systemInformation" /]</h4>
 				
 					<ul class="navigation-list">
-						<li><a href="appInfo.ftl" id="appinfo">View System Information</a></li>
+						<li><a href="appInfo.ftl" id="appinfo">[@spring.message "viewSystemInformation" /]</a></li>
 					</ul>
 				
-			<h3>Manage Products</h3>
+			<h3>[@spring.message "manageProducts" /]</h3>
 	
-				<h4>Manage Loan Products</h4>
+				<h4>[@spring.message "manageLoanProducts" /]</h4>
 		
 					<ul class="navigation-list">
-						<li> <a href="viewLoanProducts.ftl" id="view.loan.products">View loan products</a> </li>
-						<li> <a href="createLoanProduct.ftl"id="create.loan.product">Define a new loan product</a></li>
+						<li> <a href="viewLoanProducts.ftl" id="view.loan.products">[@spring.message "viewLoanProducts" /]</a> </li>
+						<li> <a href="createLoanProduct.ftl"id="create.loan.product">[@spring.message "defineLoanProduct" /]</a></li>
 					</ul>
 		</div>	
 	</div>

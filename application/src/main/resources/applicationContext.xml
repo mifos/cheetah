@@ -60,6 +60,7 @@
 		<property name="userRepository" ref="standardUserRepository"/>
 	</bean>
     
+   <bean id="officeService" class="org.mifos.user.service.OfficeService"/>
    
 	<bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
 		<property name="mappingFiles">

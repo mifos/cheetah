@@ -69,6 +69,10 @@
     	<property name="loanProductService" ref="loanProductService"/>
     </bean>
 
+    <bean id="officeController" class="org.mifos.ui.user.controller.OfficeController">
+    	<property name="officeService" ref="officeService"/>
+    </bean>
+
     <bean id="clientDetailController" class="org.mifos.ui.client.controller.ClientDetailController">
     	<property name="clientService" ref="clientService"/>
     	<property name="loanService" ref="loanService"/>
@@ -194,9 +198,10 @@
     			/disburseLoan.ftl=disburseLoanController
     			/home.ftl=clientSearchController
     			/appInfo.ftl=appInfoController
-            /deleteLoanProduct.ftl=deleteLoanProductController
-            /deleteLoanProductSuccess.ftl=genericController
-            /deleteLoanProductFailure.ftl=genericController
+            	/deleteLoanProduct.ftl=deleteLoanProductController
+            	/deleteLoanProductSuccess.ftl=genericController
+            	/deleteLoanProductFailure.ftl=genericController
+            	/viewOffices.ftl=officeController
     		</value>
     	</property>
     </bean>

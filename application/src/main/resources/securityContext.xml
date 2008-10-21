@@ -25,6 +25,7 @@
         <intercept-url pattern="/adminHome.ftl" access="ROLE_ADMIN" />
         <intercept-url pattern="/createClient.ftl" access="ROLE_ADMIN,ROLE_USER" />
         <intercept-url pattern="/viewLoanProducts.ftl*" access="ROLE_ADMIN" />
+        <intercept-url pattern="/viewOffices.ftl*" access="ROLE_ADMIN" />
         <intercept-url pattern="/viewLoanProduct.ftl*" access="ROLE_ADMIN" />
         <intercept-url pattern="/createLoanProduct.ftl*" access="ROLE_ADMIN" />
         <intercept-url pattern="/updateLoanProduct.ftl*" access="ROLE_ADMIN" />
