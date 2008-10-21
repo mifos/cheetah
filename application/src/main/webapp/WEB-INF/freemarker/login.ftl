@@ -19,11 +19,11 @@
      		<form method="POST" action="j_spring_security_check" id="login.form">
 
 				<div id="login-header">
-					Login
+					[@spring.message "login" /]
 				</div>
 	
 				<div id="login-welcome">
-					Welcome to Mifos
+					[@spring.message "welcomeToMifos" /]
 				</div>
 	
 				<div id="login-interaction">
@@ -43,13 +43,13 @@
 						</tr>
 	
 						<tr>
-							<td id="login-password-label" class="label">Password:</td>
+							<td id="login-password-label" class="label">[@spring.message "user.password" /]:</td>
 							<td><input type="password" name="j_password" id="login.form.password"></td>
 						</tr>
 	
 						<tr>
 							<td></td>
-							<td id="login-submit"><input type="submit" value="Login" class="buttn" id="login.form.submit" /></td>
+							<td id="login-submit"><input type="submit" value="[@spring.message "login" /]" class="buttn" id="login.form.submit" /></td>
 						</tr>
 	
 					</table> <!-- login-table -->

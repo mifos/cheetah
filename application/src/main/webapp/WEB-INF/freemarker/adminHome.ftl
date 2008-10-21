@@ -30,7 +30,7 @@
 				<h4>[@spring.message "offices" /]</h4>
 
 					<ul class="navigation-list">
-					<li><a href="viewOffices.ftl">[@spring.message "viewOffices" /]</a></li>
+					<li><a href="viewOffices.ftl" id="view.offices">[@spring.message "viewOffices" /]</a></li>
 					<li>[@spring.message "defineNewOffice" /]</li>
 					</ul>
 		
