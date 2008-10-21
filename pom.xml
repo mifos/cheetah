@@ -130,7 +130,6 @@
                      <srcFile>${project.build.outputDirectory}/sql/create_database.sql</srcFile>
                      <srcFile>${project.build.outputDirectory}/sql/create_security.sql</srcFile>
                      <srcFile>${project.build.outputDirectory}/sql/security_data.sql</srcFile>
-                     <srcFile>${project.build.outputDirectory}/sql/create_clients.sql</srcFile>
                   </srcFiles>
                </configuration>
                <executions>
