@@ -3,14 +3,14 @@
 [#import "macros.ftl" as mifos]
 <html>
   <head>
-  	<title id="clientsAndAccounts.title">[@spring.message "clientsAndAccounts.title" /]</title>
+  	<title id="clientsAndAccounts.title">[@spring.message "createClientSuccess.title" /]</title>
    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
   [@mifos.header currentTab="ClientsAndAccounts" /]
   [#include "clientsAndAccountsLeftPane.ftl" ]
     <div class="content-pane">
-      [@spring.message "createClientSuccess.clientCreatedSuccessfully" /]
+      <span id="createClientSuccess.message">[@spring.message "createClientSuccess.clientCreatedSuccessfully" /]</span>
     </div>
 </body>
 </html>

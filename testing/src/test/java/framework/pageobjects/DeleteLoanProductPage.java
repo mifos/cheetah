@@ -10,10 +10,16 @@ public class DeleteLoanProductPage extends AbstractPage {
         super(selenium);
     }
     
-    public DeleteLoanProductSuccessPage deleteLoanProduct () {
+    public DeleteLoanProductResultPage deleteLoanProduct () {
         selenium.click("id=client.form.submit.delete");
         waitForPageToLoad();
-        return new DeleteLoanProductSuccessPage(selenium);
+        DeleteLoanProductResultPage result = null;
+        if (selenium.getTitle().contains("success")) {
+            result = new DeleteLoanProductSuccessPage(selenium);
+        } else {
+            result = new DeleteLoanProductFailurePage(selenium);
+        }
+        return result;
     }
 
     public void verifyPage() {

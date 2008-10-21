@@ -98,6 +98,7 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
         createClientPage.verifyDatePatternMessage(datePattern);
         CreateClientSuccessPage createClientSuccessPage = createClientPage.createValidClient(firstName, lastName, dateOfBirth);
         createClientSuccessPage.verifyPage();
+        createClientSuccessPage.verifyMessage();
         verifyClientCreation(firstName, lastName, dateOfBirth, datePattern);
     }
 

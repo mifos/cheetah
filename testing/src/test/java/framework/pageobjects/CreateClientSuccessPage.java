@@ -10,9 +10,13 @@ public class CreateClientSuccessPage extends AbstractPage {
 		super(selenium);
 	}
 
-	public void verifyPage() {
-		Assert.assertTrue(selenium.isTextPresent("Client created successfully!"));
-	}
+    public void verifyPage() {
+        Assert.assertEquals("Create Client success", selenium.getTitle());
+    }
+
+    public void verifyMessage() {
+        Assert.assertEquals("Client created successfully!", selenium.getText("createClientSuccess.message"));
+    }
 
 }
 

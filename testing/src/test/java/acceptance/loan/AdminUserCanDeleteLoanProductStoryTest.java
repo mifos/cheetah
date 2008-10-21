@@ -36,7 +36,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import framework.pageobjects.DeleteLoanProductFailurePage;
 import framework.pageobjects.DeleteLoanProductPage;
+import framework.pageobjects.DeleteLoanProductSuccessPage;
 import framework.pageobjects.LoginPage;
 import framework.pageobjects.ViewLoanProductDetailsPage;
 import framework.test.UiTestCaseBase;
@@ -71,22 +73,26 @@ public class AdminUserCanDeleteLoanProductStoryTest extends UiTestCaseBase {
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
     public void testDeleteLoanProductWithoutLoans() throws Exception {
         insertLoanProductWithNoLoansDataSet();
-        deleteLoanProduct();
-        Assert.assertEquals(selenium.getText("id=deleteLoanProduct.successMessage"), "Successfully deleted loan product 'long1'.");
+        DeleteLoanProductPage deleteLoanProductPage = deleteLoanProduct();
+        DeleteLoanProductSuccessPage deleteLoanProductSuccessPage = (DeleteLoanProductSuccessPage) deleteLoanProductPage.deleteLoanProduct();
+        deleteLoanProductSuccessPage.verifyPage();
+        deleteLoanProductSuccessPage.verifyMessage("long1");
         verifyDeletedStatus();
     }
     
     public void testDeleteLoanProductWithLoans() throws DataSetException, IOException, SQLException, DatabaseUnitException {
         insertLoanProductWithLoansDataSet();
-        deleteLoanProduct();
-        Assert.assertEquals(selenium.getText("id=deleteLoanProduct.errorMessage"), "Could not delete loan product 'long1' because there are loans that use this product.");
+        DeleteLoanProductPage deleteLoanProductPage = deleteLoanProduct();
+        DeleteLoanProductFailurePage deleteLoanProductFailurePage = (DeleteLoanProductFailurePage) deleteLoanProductPage.deleteLoanProduct();
+        deleteLoanProductFailurePage.verifyPage();
+        deleteLoanProductFailurePage.verifyMessage("long1");
     }
 
-    private void deleteLoanProduct() {
+    private DeleteLoanProductPage deleteLoanProduct() {
         ViewLoanProductDetailsPage viewLoanProductDetailsPage = navigateToViewLoanProductDetailsPage("short1");
         DeleteLoanProductPage deleteLoanProductPage = viewLoanProductDetailsPage.navigateToDeleteLoanProductPage();
         deleteLoanProductPage.verifyPage();
-        deleteLoanProductPage.deleteLoanProduct();
+        return deleteLoanProductPage;
     }
     
     private ViewLoanProductDetailsPage navigateToViewLoanProductDetailsPage (String linkName){
