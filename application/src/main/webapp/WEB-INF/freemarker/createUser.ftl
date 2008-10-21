@@ -6,7 +6,7 @@
 <html>
 
   <head>
-  	<title id="createUser.title">[@spring.message "title" /]</title>
+  	<title id="createUser.title">[@spring.message "user.create.title" /]</title>
     <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   
@@ -27,15 +27,15 @@
 			<fieldset>
 				<legend>User Login Details</legend>
 			
-				<label for="user.form.userId">[@spring.message "user.userId.description"/]:</label>
-					[@form.input path="user"/]
+				<label for="user.form.userId">[@spring.message "user.userId"/]:</label>
+					[@form.input path="userId"/]
 					<br/>
 			
-				<label  for="user.form.password">[@spring.message "user.password.description"/]:</label>
+				<label  for="user.form.password">[@spring.message "user.password"/]:</label>
 					[@form.input path="password"/]
 					<br/>
 			
-				<label for="user.form.confirmPassword">[@spring.message "user.confirmPassword.description"/]:</label>
+				<label for="user.confirmPassword">[@spring.message "user.confirmPassword"/]:</label>
 					[@form.input path="confirmPassword"/]
 					<br/>			
 				<label for="kludge"></label>

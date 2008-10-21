@@ -109,10 +109,48 @@ public class DatabaseTestUtils {
             jdbcConnection.close();
             DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
         }
-        
-        
     }    
     
-    
-    
+    /**
+     * Return the current contents of the specified tables. 
+     * This method can be invoked safely inside a Spring-managed transaction.
+     * 
+     * @param dataSource
+     * @param tableNames variable parameter list of table names
+     * @return the IDataSet containing the current contents of the specified tables
+     * @throws IOException
+     * @throws DataSetException
+     * @throws SQLException
+     * @throws DatabaseUnitException
+     */
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+    //Rationale: You cannot define new local variables in the try block because the finally block must reference it.
+    public IDataSet saveTables(DriverManagerDataSource dataSource, String...tableNames) 
+                    throws IOException, DataSetException, SQLException, DatabaseUnitException {
+        Connection jdbcConnection = null;
+        try {
+            jdbcConnection = DataSourceUtils.getConnection(dataSource);
+            return new DatabaseConnection(jdbcConnection)
+                        .createDataSet(tableNames);
+        }
+        finally {
+            jdbcConnection.close();
+            DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
+        }
+    }
+
+    public void restoreDataSet (IDataSet savedDataSet, DriverManagerDataSource dataSource) 
+                    throws IOException, DataSetException, SQLException, DatabaseUnitException{
+        Connection jdbcConnection = null;
+        try {
+            jdbcConnection = DataSourceUtils.getConnection(dataSource);
+            IDatabaseConnection databaseConnection = new DatabaseConnection(jdbcConnection);
+            DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, savedDataSet);
+        }
+        finally {
+            jdbcConnection.close();
+            DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
+        }
+
+    }
 }

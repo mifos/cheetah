@@ -20,6 +20,7 @@
 
 package org.mifos.user.service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class UserDto {
@@ -52,5 +53,10 @@ public class UserDto {
     }
     public void setId(Integer id) {
         this.id = id;
+    }
+    public void setDefaultRole() {
+        Set<String> userRole = new HashSet<String>();
+        userRole.add("ROLE_USER");
+        setRole(userRole);
     }
 }

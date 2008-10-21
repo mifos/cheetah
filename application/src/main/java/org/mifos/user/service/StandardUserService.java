@@ -21,39 +21,59 @@
 package org.mifos.user.service;
 
 import org.mifos.core.DuplicatePersistedObjectException;
-import org.mifos.core.MifosRepositoryException;
 import org.mifos.core.MifosServiceException;
 import org.mifos.core.MifosValidationException;
-import org.mifos.user.domain.User;
-import org.mifos.user.repository.UserRepository;
+import org.mifos.security.service.SecurityService;
+import org.mifos.security.util.SecurityUtils;
+import org.mifos.user.domain.UserDetailsValidator;
+import org.springframework.security.userdetails.User;
+import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.userdetails.UserDetailsManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 
 /**
- * An internal implementation of UserService that uses Mifos's operational database
- * to manage user information, including passwords and permissions.
+ * An internal implementation of UserService that uses Spring (Acegi) security
+ * to manage users and permissions.
  */
 public class StandardUserService implements UserService {
     
-    private UserRepository userRepository;
-
-    public UserRepository getUserRepository() {
-        return userRepository;
+    private UserDetailsManager userDetailsManager;
+    private SecurityService securityService;
+    private static final SecurityUtils securityUtils = new SecurityUtils();
+    
+    public UserDetailsManager getUserDetailsManager() {
+        return userDetailsManager;
     }
 
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserDetailsManager(UserDetailsManager userDetailsManager) {
+        this.userDetailsManager = userDetailsManager;
+    }
+
+    public SecurityService getSecurityService() {
+        return securityService;
+    }
+
+    public void setSecurityService(SecurityService securityService) {
+        this.securityService = securityService;
     }
 
     @Override
     @Transactional
-    public UserDto createUser(UserDto dto) throws MifosServiceException {
-        
-        User newUser = null;
-        User persistedUser = null;
-        
-        try {
-            newUser = new User(null, dto.getUserId(), dto.getPassword(), dto.getRoles());
+    public void createUser(UserDto dto) throws MifosServiceException {
+        validateDetails(dto);
+        verifyUserDoesNotExistInRepository(dto);
+        userDetailsManager.createUser(new User(
+                dto.getUserId(), 
+                securityService.encodePassword(dto.getPassword()), 
+                true, true, true, true, 
+                securityUtils.rolesToGrantedAuthorityArray(dto.getRoles())));
+    }
+
+    private void validateDetails (UserDto dto) throws MifosServiceException {
+         try {
+            (new UserDetailsValidator()).validateNewUserDetails(
+                    dto.getUserId(), dto.getPassword(), dto.getRoles());
         } 
         catch (MifosValidationException validationException) {
             throw new MifosServiceException(
@@ -61,33 +81,26 @@ public class StandardUserService implements UserService {
                     validationException,
                     new BeanPropertyBindingResult(dto, "dto"));
         }
-        
-        try {
-            persistedUser = userRepository.add (newUser);
-        }
-        catch (DuplicatePersistedObjectException dupException) {
-            throw new MifosServiceException (
-                    "User already exists: " + dto,
-                    dupException, 
+    }
+    
+    private void verifyUserDoesNotExistInRepository(UserDto dto) 
+                throws MifosServiceException {
+        if (userDetailsManager.userExists(dto.getUserId())) {
+            throw new MifosServiceException("User \"" + dto.getUserId() + "\" already exists",
+                    new DuplicatePersistedObjectException(dto.getUserId()),
                     new BeanPropertyBindingResult(dto, "dto"));
-        }
-        catch (MifosRepositoryException otherException) {
-            throw new MifosServiceException (
-                    "Unknown exception from repository when persisting " + dto,
-                    otherException,
-                    new BeanPropertyBindingResult (dto, "dto"));
-        }
-        
-        return assembleDto(persistedUser);
+        }  
     }
 
-    private UserDto assembleDto(User user) {
+    public UserDto getUser(String userId) throws MifosServiceException {
+        return assembleDto(userDetailsManager.loadUserByUsername(userId));
+    }
+
+    private UserDto assembleDto(UserDetails user) {
         UserDto dto = new UserDto();
-        dto.setId(user.getId());
-        dto.setUserId(user.getUserId());
-        //don't return the password
-        dto.setPassword(null);
-        dto.setRole(user.getRoles());
+        dto.setUserId(user.getUsername());
+        dto.setPassword(user.getPassword());
+        dto.setRole(securityUtils.authoritiesToStringSet(user.getAuthorities()));
         return dto;
     }
-}
+ }

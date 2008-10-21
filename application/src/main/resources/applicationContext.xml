@@ -54,12 +54,18 @@
       <property name="clientDao" ref="standardClientDao"/>
    </bean> 
      
-   <bean id="standardUserRepository" class="org.mifos.user.repository.StandardUserRepository"/>
-   
-   <bean id="userService" class="org.mifos.user.service.StandardUserService">
-		<property name="userRepository" ref="standardUserRepository"/>
+	<bean id="userService" class="org.mifos.user.service.StandardUserService">
+		<property name="userDetailsManager" ref="userDetailsManager"/>
+		<property name="securityService" ref="securityService"/>
+	</bean>
+	
+	<bean id="userDetailsManager" 
+	      class="org.springframework.security.userdetails.jdbc.JdbcUserDetailsManager">
+	      <property name="dataSource" ref="dataSource"/>
 	</bean>
     
+    <bean id="securityService" class="org.mifos.security.service.StandardSecurityService"/>
+
    <bean id="officeService" class="org.mifos.user.service.OfficeService"/>
    
 	<bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
