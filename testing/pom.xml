@@ -313,6 +313,14 @@
       <outputDirectory>target/cheetah-testing/WEB-INF/classes</outputDirectory>
       <testOutputDirectory>target/test-classes</testOutputDirectory>
       <plugins>
+        <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>properties-maven-plugin</artifactId>
+        </plugin>  
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sql-maven-plugin</artifactId>
+         </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
