@@ -8,7 +8,7 @@
 
     <aop:aspectj-autoproxy />
     
-    <bean id="seleniumSpeedControl" class="org.mifos.testing.acceptance.framework.util.SeleniumSpeedControl" />
+    <bean id="seleniumSpeedControl" class="org.mifos.test.acceptance.framework.util.SeleniumSpeedControl" />
 
     <bean id="selenium" class="com.thoughtworks.selenium.DefaultSelenium" >
         <constructor-arg type="java.lang.String" value="localhost" />
