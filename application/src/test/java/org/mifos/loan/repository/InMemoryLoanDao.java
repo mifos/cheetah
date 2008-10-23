@@ -85,7 +85,7 @@ public class InMemoryLoanDao implements LoanDao {
     public Boolean loansExistForLoanProduct(Integer loanProductId) {
         Boolean result = Boolean.FALSE;
         for (Loan loan:loans.values()) {
-            if (loan.getLoanProduct().getId() == loanProductId) {
+            if (loan.getLoanProduct().getId().equals(loanProductId)) {
                 result = Boolean.TRUE;
                 break;
             }
