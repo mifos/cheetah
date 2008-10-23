@@ -55,4 +55,12 @@ public class AdminPage extends AbstractPage {
         waitForPageToLoad();
         return new ViewOfficesPage(selenium);        
     }
+
+    public AppInfoPage navigateToAppInfoPage() {
+        selenium.click("id=view.system.information");
+        waitForPageToLoad();
+        return new AppInfoPage(selenium);        
+    }
+
+
 }

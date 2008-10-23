@@ -18,17 +18,32 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.test.framework.util;
+package org.mifos.test.acceptance.core;
 
-import junit.framework.Assert;
-
+import org.mifos.test.acceptance.framework.PingPage;
+import org.mifos.test.acceptance.framework.UiTestCaseBase;
+import org.springframework.test.context.ContextConfiguration;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-@Test(groups = { "unit" })
-public class DatabaseTestUtilsTest {
 
-	public void testCreateClient() {
-		Assert.assertEquals(true, true);
+/*
+ * Corresponds to story 683 in mingle
+ * http://mingle.mifos.org:7070/projects/cheetah/cards/683
+ */
+@ContextConfiguration(locations={"classpath:ui-test-context.xml"})
+@Test(sequential=true, groups={"pingTest","acceptance","ui"})
+public class PingTest extends UiTestCaseBase {
+
+	@BeforeMethod
+	public void setUp() throws Exception {
+		super.setUp();
 	}
 
+	public void pingTest() {
+	    PingPage pingPage = new PingPage(this.selenium);
+	    pingPage.navigateToPingPage();
+	    pingPage.verifyPage();
+	}
 }
+

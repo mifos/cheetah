@@ -28,6 +28,7 @@ import org.mifos.test.acceptance.framework.HomePage;
 import org.mifos.test.acceptance.framework.LoginPage;
 import org.mifos.test.acceptance.framework.UiTestCaseBase;
 import org.mifos.test.framework.util.DatabaseTestUtils;
+import org.mifos.test.framework.util.SimpleDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
@@ -42,7 +43,7 @@ import org.testng.annotations.Test;
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
 @Test(sequential=true, groups={"userCanCreateBasicClientStoryTest","acceptance","ui"})
-public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
+public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase {
 
 	private LoginPage loginPage;
 	private DriverManagerDataSource dataSource;
@@ -51,7 +52,7 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 	@BeforeMethod
 	public void setUp() throws Exception {
 		super.setUp();
-		loginPage = new LoginPage(selenium);
+		loginPage = new LoginPage(this.selenium);
         this.databaseTestUtils.deleteDataFromTables(this.getDataSource(), "clients");
 	}
 
@@ -121,19 +122,16 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase{
 	}
 	
 	private void verifyClientCreation(String firstName, String lastName, String dateOfBirth, String datePattern) throws Exception {
-	    String expectedTableDatasetXml = 
-	        "<dataset>\n" +
-                "<clients id=\"1\" " +
-                "firstName=\"" + firstName + "\" \n" +
-                "         lastname=\"" +lastName + "\" \n" +
-                "         dateOfBirth=\"" + getIso8601Date(dateOfBirth, datePattern) + "\" /> \n" +
-	        "</dataset>\n";
-        databaseTestUtils.verifyTable(expectedTableDatasetXml, "clients", this.dataSource);        
+	    SimpleDataSet dataSet = new SimpleDataSet();
+	    dataSet.row("clients", "id=1",
+	                           "firstName=" + firstName, 
+	                           "lastname=" + lastName, 
+	                           "dateOfBirth=" + getIso8601Date(dateOfBirth, datePattern));
+        databaseTestUtils.verifyTable(dataSet.toString(), "clients", this.dataSource);        
 	}
 	
 	private String getIso8601Date(String date, String datePattern) {
-        String iso8601Date = DateTimeFormat.forPattern(datePattern).parseDateTime(date).toDateMidnight().toLocalDate().toString();
-        return iso8601Date;
+        return DateTimeFormat.forPattern(datePattern).parseDateTime(date).toDateMidnight().toLocalDate().toString();
 	}
 	
 	@Test(enabled=false)

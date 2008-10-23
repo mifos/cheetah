@@ -168,6 +168,10 @@
     <bean id="appInfoController" class="org.mifos.ui.core.controller.AppInfoController">
         <property name="appInfo" ref="appInfo"/>
     </bean>
+
+    <bean id="pingController" class="org.mifos.ui.core.controller.PingController">
+    </bean>
+    
     
     <bean id="publicUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
       <property name="interceptors">
@@ -177,8 +181,9 @@
       </property>
     	<property name="mappings">
     		<value>
-    			/=redirectionController
+            /=redirectionController
     			/index.ftl=redirectionController
+            /ping.ftl=pingController
     			/login.ftl=genericController
     			/accessDenied.ftl=genericController
     			/languages.ftl=genericController
@@ -198,10 +203,10 @@
     			/disburseLoan.ftl=disburseLoanController
     			/home.ftl=clientSearchController
     			/appInfo.ftl=appInfoController
-            	/deleteLoanProduct.ftl=deleteLoanProductController
-            	/deleteLoanProductSuccess.ftl=genericController
-            	/deleteLoanProductFailure.ftl=genericController
-            	/viewOffices.ftl=officeController
+            /deleteLoanProduct.ftl=deleteLoanProductController
+            /deleteLoanProductSuccess.ftl=genericController
+            /deleteLoanProductFailure.ftl=genericController
+            /viewOffices.ftl=officeController
     		</value>
     	</property>
     </bean>

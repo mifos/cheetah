@@ -45,14 +45,14 @@ public class HomePage extends AbstractPage {
 	}
 
 	public AdminPage navigateToAdminPage() {
-		selenium.open("/mifos/home.ftl");
+		openHomePage();
 		selenium.click("id=header.tab.admin");
 		waitForPageToLoad();
 		return new AdminPage(selenium);		
 	}
 
 	public ClientsAndAccountsPage navigateToClientsAndAccountsPage() {
-		selenium.open("/mifos/home.ftl");
+		openHomePage();
 		selenium.click("id=header.tab.clientsAndAccounts");
 		waitForPageToLoad();
 		return new ClientsAndAccountsPage(selenium);		
@@ -65,4 +65,15 @@ public class HomePage extends AbstractPage {
         
 		return new ClientSearchResultsPage(selenium);
 	}
+
+    public ViewGroupsPage navigateToViewGroupsPage() {
+        openHomePage();
+        selenium.click("id=header.tab.admin");
+        waitForPageToLoad();
+        return new ViewGroupsPage(selenium);     
+    }
+
+    private void openHomePage() {
+        selenium.open("/mifos/home.ftl");
+    }
 }

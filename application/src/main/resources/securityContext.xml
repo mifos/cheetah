@@ -18,6 +18,7 @@
         
     <http access-decision-manager-ref="accessDecisionManager"
           access-denied-page="/accessDenied.ftl">
+        <intercept-url pattern="/ping.ftl" access="ROLE_ANONYMOUS,ROLE_GUEST" />
         <intercept-url pattern="/login.ftl" access="ROLE_ANONYMOUS,ROLE_GUEST" />
         <intercept-url pattern="/accessDenied.ftl" access="ROLE_ANONYMOUS,ROLE_GUEST,ROLE_USER,ROLE_ADMIN" />
         <intercept-url pattern="/home.ftl" access="ROLE_USER" />

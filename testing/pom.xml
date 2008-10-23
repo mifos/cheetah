@@ -388,24 +388,6 @@
             </executions>
          </plugin>
          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>selenium-maven-plugin</artifactId>
-            <executions>
-               <execution>
-                  <id>start-selenium</id>
-                  <phase>pre-integration-test</phase>
-                  <goals>
-                     <goal>start-server</goal>
-                  </goals>
-               </execution>
-            </executions>
-            <configuration>
-               <background>${selenium.background}</background>
-               <port>${selenium.port}</port>
-               <logOutput>${selenium.log.output}</logOutput>
-            </configuration>
-         </plugin>
-         <plugin>
             <groupId>org.codehaus.cargo</groupId>
             <artifactId>cargo-maven2-plugin</artifactId>
             <version>1.0-SNAPSHOT</version>
@@ -454,10 +436,28 @@
                         <properties>
                            <context>mifos</context>
                         </properties>
-                        <pingURL>http://localhost:${servlet.port}/mifos</pingURL>
+                        <pingURL>http://localhost:${servlet.port}/mifos/ping.ftl</pingURL>
                      </deployable>
                   </deployables>
                </configuration>
+            </configuration>
+         </plugin>
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>selenium-maven-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>start-selenium</id>
+                  <phase>pre-integration-test</phase>
+                  <goals>
+                     <goal>start-server</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <background>${selenium.background}</background>
+               <port>${selenium.port}</port>
+               <logOutput>${selenium.log.output}</logOutput>
             </configuration>
          </plugin>
       </plugins>

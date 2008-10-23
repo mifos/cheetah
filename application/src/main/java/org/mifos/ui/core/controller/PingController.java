@@ -18,17 +18,24 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.test.framework.util;
+package org.mifos.ui.core.controller;
 
-import junit.framework.Assert;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.testng.annotations.Test;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@Test(groups = { "unit" })
-public class DatabaseTestUtilsTest {
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.AbstractController;
 
-	public void testCreateClient() {
-		Assert.assertEquals(true, true);
-	}
+public class PingController extends AbstractController {
 
+    @Override
+    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)  {
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("request", request);
+            return new ModelAndView("ping", "model", model);
+    }
+    
 }

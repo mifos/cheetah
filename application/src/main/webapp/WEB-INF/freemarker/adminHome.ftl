@@ -37,7 +37,7 @@
 				<h4>[@spring.message "systemInformation" /]</h4>
 				
 					<ul class="navigation-list">
-						<li><a href="appInfo.ftl" id="appinfo">[@spring.message "viewSystemInformation" /]</a></li>
+						<li><a href="appInfo.ftl" id="view.system.information">[@spring.message "viewSystemInformation" /]</a></li>
 					</ul>
 				
 			<h3>[@spring.message "manageProducts" /]</h3>

@@ -42,10 +42,6 @@ public class CreateClientController extends SimpleFormController {
     private ClientService clientService;
     private LocalDateEditor localDateEditor;
     
-    public ClientService getClientService() {
-		return clientService;
-	}
-
 	public void setClientService(ClientService clientService) {
 		this.clientService = clientService;
 	}
