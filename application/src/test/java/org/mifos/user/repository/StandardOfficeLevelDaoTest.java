@@ -42,7 +42,7 @@ import org.testng.annotations.Test;
 
 @ContextConfiguration(locations={"classpath:integrationTestContext.xml"})
 @TransactionConfiguration(transactionManager="transactionManager")
-@Test(groups = { "integration","workInProgress" })
+@Test(groups = { "integration" })
 public class StandardOfficeLevelDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired
