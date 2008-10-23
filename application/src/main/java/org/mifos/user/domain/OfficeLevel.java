@@ -20,6 +20,7 @@
 
 package org.mifos.user.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,8 +40,10 @@ import javax.persistence.Table;
 public class OfficeLevel {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)    
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="ID")
     private Integer id;
+    @Column(name="NAME")
     private String name;
     @OneToOne
     @JoinColumn(name="LEVEL_ABOVE_ID", nullable=true)
