@@ -29,9 +29,6 @@ import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
- *
- */
 public class GeneratePseudoLocalization {
     private static final Log LOG = LogFactory.getLog(GeneratePseudoLocalization.class);
 	private static final String PREFIX = "@@@";

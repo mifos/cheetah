@@ -23,9 +23,6 @@ package org.mifos.user.repository;
 import org.mifos.user.domain.OfficeLevel;
 import org.testng.Assert;
 
-/**
- *
- */
 public class OfficeLevelDaoTestHelper {
 
 	private final OfficeLevelDao officeLevelDao;

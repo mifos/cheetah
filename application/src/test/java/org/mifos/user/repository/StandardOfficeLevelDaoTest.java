@@ -20,25 +20,23 @@
 
 package org.mifos.user.repository;
 
-import java.math.BigDecimal;
-import java.util.List;
+import java.io.IOException;
+import java.sql.SQLException;
 
-import org.joda.time.LocalDate;
-import org.mifos.loan.domain.Loan;
-import org.mifos.loan.domain.LoanProduct;
-import org.mifos.loan.domain.LoanProductStatus;
-import org.mifos.user.domain.OfficeLevel;
+import javax.annotation.Resource;
+
+import junit.framework.Assert;
+
+import org.dbunit.DatabaseUnitException;
+import org.dbunit.dataset.DataSetException;
+import org.mifos.test.framework.util.SimpleDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-/**
- *
- */
 
 @ContextConfiguration(locations={"classpath:integrationTestContext.xml"})
 @TransactionConfiguration(transactionManager="transactionManager")
@@ -47,11 +45,16 @@ public class StandardOfficeLevelDaoTest extends AbstractTransactionalTestNGSprin
 
     @Autowired
     private OfficeLevelDao officeLevelDao;
+    @Resource(name="integrationTestDataSource")
+    private DriverManagerDataSource dataSource;
+
     private OfficeLevelDaoTestHelper officeLevelDaoTestHelper;
 
     @BeforeMethod
-    void setUp() {
+    void setUp() throws DataSetException, IOException, SQLException, DatabaseUnitException {
         officeLevelDaoTestHelper = new OfficeLevelDaoTestHelper(officeLevelDao);
+        Assert.assertNotNull(this.dataSource);
+        insertOfficeLevelDataSet();
     }
     
     public void testGetHeadOfficeLevel() {
@@ -62,5 +65,12 @@ public class StandardOfficeLevelDaoTest extends AbstractTransactionalTestNGSprin
         officeLevelDaoTestHelper.testGetBranchOfficeLevel();
     }
     
-
+    private void insertOfficeLevelDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        SimpleDataSet simpleDataSet = new SimpleDataSet();
+        simpleDataSet.enableColumnSensing();
+        simpleDataSet.row("OFFICE_LEVEL", "ID=2", "NAME=Branch Office", "LEVEL_BELOW_ID=1"); 
+        simpleDataSet.row("OFFICE_LEVEL", "ID=1", "NAME=Head Office", "LEVEL_ABOVE_ID=2"); 
+        simpleDataSet.insert(this.dataSource);
+    }
+    
 }

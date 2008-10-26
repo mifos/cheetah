@@ -11,7 +11,6 @@ import org.dbunit.dataset.DataSetException;
 import org.mifos.core.MifosException;
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
-import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.mifos.test.framework.util.SimpleDataSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -30,7 +29,6 @@ public class StandardLoanProductDaoTest
 	
     @Autowired
 	private LoanProductDao loanProductDao;
-    
     @Autowired
     private DriverManagerDataSource dataSource;
     

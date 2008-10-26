@@ -59,6 +59,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class SimpleDataSet {
 
     private final List<Row> rows;
+    private boolean columnSensing = false;
     
     public SimpleDataSet() {
         this.rows = new ArrayList<Row>();
@@ -115,9 +116,23 @@ public class SimpleDataSet {
      * @throws DatabaseUnitException
      */
     public void insert(DriverManagerDataSource dataSource) throws DataSetException, IOException, SQLException, DatabaseUnitException {
-        (new DatabaseTestUtils()).cleanAndInsertDataSet(this.toString(), dataSource);
+        if (columnSensing) {
+            (new DatabaseTestUtils()).cleanAndInsertDataSetWithColumnSensing(this.toString(), dataSource);
+        } else {
+            (new DatabaseTestUtils()).cleanAndInsertDataSet(this.toString(), dataSource);
+        }
     }
-    
+
+    /**
+     * Enables DbUnit column sensing - 
+     * useful if the first row contains null values.
+     * 
+     * @param columnSensing
+     */
+    public void enableColumnSensing() {
+        this.columnSensing = true;
+    }
+
     private static class Row {
         
         private static final String NAME_VALUE_PAIR_SEPARATOR = "=";

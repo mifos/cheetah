@@ -20,6 +20,9 @@
 
 package org.mifos.test.framework.util;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.sql.Connection;
@@ -70,9 +73,24 @@ public class DatabaseTestUtils {
     public void cleanAndInsertDataSet(String xmlString, DriverManagerDataSource dataSource) 
                     throws IOException, DataSetException, SQLException, DatabaseUnitException {
         StringReader dataSetXmlStream = new StringReader(xmlString);
+        IDataSet dataSet = new FlatXmlDataSet(dataSetXmlStream);
+        cleanAndInsertDataSet(dataSource, dataSet);
+    }
+
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+    //Rationale: You cannot define new local variables in the try block because the finally block must reference it.
+    public void cleanAndInsertDataSetWithColumnSensing(String xmlString, DriverManagerDataSource dataSource) 
+                    throws IOException, DataSetException, SQLException, DatabaseUnitException {
+        boolean dtdMetadata = false;
+        boolean enableColumnSensing = true;
+        IDataSet dataSet = new FlatXmlDataSet(createTempFile(xmlString), dtdMetadata, enableColumnSensing);
+        cleanAndInsertDataSet(dataSource, dataSet);
+    }
+    
+    private void cleanAndInsertDataSet(DriverManagerDataSource dataSource,
+            IDataSet dataSet) throws DatabaseUnitException, SQLException {
         Connection jdbcConnection = null;
         try {
-            IDataSet dataSet = new FlatXmlDataSet(dataSetXmlStream);
             jdbcConnection = DataSourceUtils.getConnection(dataSource);
             IDatabaseConnection databaseConnection = new DatabaseConnection(jdbcConnection);
             DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
@@ -81,6 +99,18 @@ public class DatabaseTestUtils {
             jdbcConnection.close();
             DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
         }
+    }
+
+    private File createTempFile(String xmlString) throws IOException {
+        File tempFile = File.createTempFile("simpleDataSetTemp", ".xml");
+        tempFile.deleteOnExit();
+        BufferedWriter out = new BufferedWriter(new FileWriter(tempFile));
+        try {
+           out.write(xmlString);
+        } finally {
+           out.close();
+        }
+        return tempFile;
     }
     
     /**

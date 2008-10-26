@@ -22,9 +22,6 @@ package org.mifos.user.repository;
 
 import org.mifos.user.domain.OfficeLevel;
 
-/**
- *
- */
 public interface OfficeLevelDao {
 
     OfficeLevel getHeadOfficeLevel();

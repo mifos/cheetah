@@ -14,6 +14,27 @@
 
     <import resource="dataSource.xml"/>
 
+    <bean id="propertyConfigurer" 
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:jdbc.local.properties</value>
+                <value>classpath:appInfo.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="integrationTestDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+          autowire-candidate="false">
+        <property name="driverClassName"
+            value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}?sessionVariables=FOREIGN_KEY_CHECKS=0" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
+
     <context:component-scan base-package="org.mifos" />
 
     <context:annotation-config />
@@ -83,19 +104,10 @@
       <property name="loanDao" ref="standardLoanDao"/>
     </bean> 
     
-    <bean id="standardLoanProductServiceIntegrationTest" 
-    	  class="org.mifos.loan.service.StandardLoanProductServiceIntegrationTest"/>
+    <bean id="standardLoanProductServiceIntegrationTest" class="org.mifos.loan.service.StandardLoanProductServiceIntegrationTest"/>
 
 <!-- User services  and tests -->
 
-	<!-- try autowiring
-	<bean id="standardUserServiceIntegrationTest" 
-		  class="org.mifos.user.service.StandardUserServiceIntegrationTest">
-		<property name="userService" ref="standardUserService"/>
-		<property name="securityService" ref="securityService"/>
-	</bean>
-	-->
-	
 	<bean id="userService" class="org.mifos.user.service.StandardUserService">
 		<property name="userDetailsManager" ref="userDetailsManager"/>
 		<property name="securityService" ref="securityService"/>

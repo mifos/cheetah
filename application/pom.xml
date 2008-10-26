@@ -271,6 +271,7 @@
             </configuration>
             <executions>
                <execution>
+                  <id>integration-test</id>
                   <phase>integration-test</phase>
                   <goals>
                      <goal>test</goal>

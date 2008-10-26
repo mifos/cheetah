@@ -30,9 +30,6 @@ import org.mifos.core.MifosRuntimeException;
 import org.mifos.user.domain.OfficeLevel;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- *
- */
 public class StandardOfficeLevelDao implements OfficeLevelDao {
 
     @PersistenceContext
