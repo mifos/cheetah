@@ -1,0 +1,13 @@
+#!/bin/bash
+
+BASEDIR=application/src/main/resources
+MESSAGES_FILE=$BASEDIR/messages.properties
+ERRORS_FILE=$BASEDIR/errors.properties
+
+mv $MESSAGES_FILE $MESSAGES_FILE.1
+sort $MESSAGES_FILE.1 >$MESSAGES_FILE
+rm $MESSAGES_FILE.1
+
+mv $ERRORS_FILE $ERRORS_FILE.1
+sort $ERRORS_FILE.1 > $ERRORS_FILE
+rm $ERRORS_FILE.1
