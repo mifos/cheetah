@@ -23,11 +23,24 @@ package org.mifos.user.service;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springmodules.validation.bean.conf.loader.annotation.handler.MaxLength;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
+
 public class UserDto {
     
     private Integer id;
+    
+    @NotNull
+    @NotBlank
+    @MaxLength(20)
     private String userId;
-    private String password;
+    
+    @NotNull
+    @NotBlank
+    @MaxLength(32)
+    protected String password;
+    
     Set<String> roles;
     
     public String getUserId() {
@@ -45,7 +58,7 @@ public class UserDto {
     public Set<String> getRoles() {
         return roles;
     }
-    public void setRole(Set<String> roles) {
+    public void setRoles(Set<String> roles) {
         this.roles = roles;
     }
     public Integer getId() {
@@ -57,6 +70,6 @@ public class UserDto {
     public void setDefaultRole() {
         Set<String> userRole = new HashSet<String>();
         userRole.add("ROLE_USER");
-        setRole(userRole);
+        setRoles(userRole);
     }
 }

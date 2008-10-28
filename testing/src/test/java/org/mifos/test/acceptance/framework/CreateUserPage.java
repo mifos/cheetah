@@ -28,19 +28,23 @@ public class CreateUserPage extends AbstractPage {
         super(selenium);
     }
 
-    public CreateUserSuccessPage createUserExpectSuccess (String userId, String password) {
-        fillAndSubmitForm(userId, password);
+    public CreateUserSuccessPage createUserExpectSuccess (
+            String userId, String password, String confirmPassword) {
+        fillAndSubmitForm(userId, password, confirmPassword);
         return new CreateUserSuccessPage(selenium);
          }
 
-    public CreateUserPage createUserExpectFailure(String userId, String password) {
-        fillAndSubmitForm(userId, password);
+    public CreateUserPage createUserExpectFailure(
+            String userId, String password, String confirmPassword) {
+        fillAndSubmitForm(userId, password, confirmPassword);
         return new CreateUserPage(selenium);
     }
 
-    private void fillAndSubmitForm (String userId, String password) {
+    private void fillAndSubmitForm (String userId, String password, String confirmPassword) {
         selenium.type("userId", userId);
         selenium.type("password", password);
-        selenium.click("user-form-submit"); 
+        selenium.type("confirmPassword", confirmPassword);
+        selenium.click("user.form.submit"); 
+        waitForPageToLoad();
     }
 }

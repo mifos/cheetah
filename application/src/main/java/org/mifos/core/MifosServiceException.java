@@ -20,25 +20,24 @@
 
 package org.mifos.core;
 
-import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
 public class MifosServiceException extends MifosException {
 
 	private static final long serialVersionUID = -7431390954369329626L;
-	private BeanPropertyBindingResult errors = null;
+	protected BindingResult errors = null;
 	
-	public MifosServiceException(String message, BeanPropertyBindingResult errors) {
+	public MifosServiceException(String message, BindingResult errors) {
 		super(message);
 		this.errors = errors;
 	}
 	
-    public MifosServiceException(String message, Throwable cause, BeanPropertyBindingResult errors) {
+    public MifosServiceException(String message, Throwable cause, BindingResult errors) {
         super(message, cause);
         this.errors = errors;
     }
 
-    public MifosServiceException(Throwable cause, BeanPropertyBindingResult errors) {
+    public MifosServiceException(Throwable cause, BindingResult errors) {
         super(cause);
         this.errors = errors;
     }

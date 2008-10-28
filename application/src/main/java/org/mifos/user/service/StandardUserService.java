@@ -20,17 +20,20 @@
 
 package org.mifos.user.service;
 
-import org.mifos.core.DuplicatePersistedObjectException;
+import javax.annotation.Resource;
+
 import org.mifos.core.MifosServiceException;
 import org.mifos.core.MifosValidationException;
 import org.mifos.security.service.SecurityService;
 import org.mifos.security.util.SecurityUtils;
 import org.mifos.user.domain.UserDetailsValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.userdetails.User;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.BindingResult;
 
 /**
  * An internal implementation of UserService that uses Spring (Acegi) security
@@ -40,6 +43,10 @@ public class StandardUserService implements UserService {
     
     private UserDetailsManager userDetailsManager;
     private SecurityService securityService;
+    
+    @Autowired
+    @Resource
+    private final UserDetailsValidator userDetailsValidator = new UserDetailsValidator();
     private static final SecurityUtils securityUtils = new SecurityUtils();
     
     public UserDetailsManager getUserDetailsManager() {
@@ -58,11 +65,14 @@ public class StandardUserService implements UserService {
         this.securityService = securityService;
     }
 
+    public UserDetailsValidator getUserDetailsValidator() {
+        return userDetailsValidator;
+    }
+
     @Override
     @Transactional
-    public void createUser(UserDto dto) throws MifosServiceException {
+    public void createUser(UserDto dto) throws MifosValidationException {
         validateDetails(dto);
-        verifyUserDoesNotExistInRepository(dto);
         userDetailsManager.createUser(new User(
                 dto.getUserId(), 
                 securityService.encodePassword(dto.getPassword()), 
@@ -70,26 +80,12 @@ public class StandardUserService implements UserService {
                 securityUtils.rolesToGrantedAuthorityArray(dto.getRoles())));
     }
 
-    private void validateDetails (UserDto dto) throws MifosServiceException {
-         try {
-            (new UserDetailsValidator()).validateNewUserDetails(
-                    dto.getUserId(), dto.getPassword(), dto.getRoles());
-        } 
-        catch (MifosValidationException validationException) {
-            throw new MifosServiceException(
-                    "Creating user from this Dto is not valid",
-                    validationException,
-                    new BeanPropertyBindingResult(dto, "dto"));
+    private void validateDetails (UserDto userDto) throws MifosValidationException {
+        BindingResult errors = new BeanPropertyBindingResult(userDto, "user");
+        userDetailsValidator.validate(userDto, errors);
+        if (errors.getErrorCount() > 0) {
+            throw new MifosValidationException("User validation error", errors);
         }
-    }
-    
-    private void verifyUserDoesNotExistInRepository(UserDto dto) 
-                throws MifosServiceException {
-        if (userDetailsManager.userExists(dto.getUserId())) {
-            throw new MifosServiceException("User \"" + dto.getUserId() + "\" already exists",
-                    new DuplicatePersistedObjectException(dto.getUserId()),
-                    new BeanPropertyBindingResult(dto, "dto"));
-        }  
     }
 
     public UserDto getUser(String userId) throws MifosServiceException {
@@ -100,7 +96,7 @@ public class StandardUserService implements UserService {
         UserDto dto = new UserDto();
         dto.setUserId(user.getUsername());
         dto.setPassword(user.getPassword());
-        dto.setRole(securityUtils.authoritiesToStringSet(user.getAuthorities()));
+        dto.setRoles(securityUtils.authoritiesToStringSet(user.getAuthorities()));
         return dto;
     }
  }

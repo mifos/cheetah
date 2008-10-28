@@ -53,10 +53,14 @@
       <property name="validator" ref="validator"/>
       <property name="clientDao" ref="standardClientDao"/>
    </bean> 
-     
+
 	<bean id="userService" class="org.mifos.user.service.StandardUserService">
+		<property name="userDetailsManager"   ref="userDetailsManager"/>
+		<property name="securityService"      ref="securityService"/>
+	</bean>
+	
+	<bean id="userDetailsValidator" class="org.mifos.user.domain.UserDetailsValidator">
 		<property name="userDetailsManager" ref="userDetailsManager"/>
-		<property name="securityService" ref="securityService"/>
 	</bean>
 	
 	<bean id="userDetailsManager" 

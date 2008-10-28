@@ -24,12 +24,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.mifos.core.MifosValidationException;
 import org.mifos.ui.user.command.UserFormBean;
-import org.mifos.user.service.UserDto;
 import org.mifos.user.service.UserService;
+import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -37,7 +37,6 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
  *
  */
 public class CreateUserFormController extends SimpleFormController {
-    private static final Log LOG = LogFactory.getLog(CreateUserFormController.class);
     
     private UserService userService;
     
@@ -48,25 +47,45 @@ public class CreateUserFormController extends SimpleFormController {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-
+    
+    
     @Override
-    @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_UNWRITTEN_FIELD"}, justification="set by Spring dependency injection")
-    protected ModelAndView onSubmit(Object command) throws Exception {
+    @SuppressWarnings({"PMD.SignatureDeclareThrowsException", "PMD.OnlyOneReturn"}) 
+        //rationale: This is the signature of the superclass's method that we're overriding
+        //rationale: Forcing a single return, in code this simple, will make it more complex
+        //and harder to understand
+    
+    protected ModelAndView onSubmit(HttpServletRequest request,
+            HttpServletResponse response, Object command, BindException errors)
+            throws Exception {
         
-        LOG.debug ("entered CreateUserFormController.onSubmit()");
-        UserDto userForm = (UserDto)command;
+        UserFormBean userForm = (UserFormBean)command;
         userForm.setDefaultRole();
-        userService.createUser(userForm);
+        
+        try {
+            userService.createUser(userForm);
+        } catch (MifosValidationException e) {
+            errors.addAllErrors(e.getErrors());
+            return showForm(request, response, errors);                   
+        }
+        
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("user", command);
-        return new ModelAndView("userCreateSuccess", "model", model);
-
+        return new ModelAndView("userCreateSuccess", "model", model);       
     }
     
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         return new UserFormBean();
+    }
+    
+    @Override
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+    protected ModelAndView showForm(HttpServletRequest request,
+            HttpServletResponse response, BindException errors)
+            throws Exception {
+        // TODO Auto-generated method stub
+        return super.showForm(request, response, errors);
     }
 }
 

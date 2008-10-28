@@ -21,9 +21,15 @@
 package org.mifos.ui.user.command;
 
 import org.mifos.user.service.UserDto;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
 public class UserFormBean extends UserDto {
     
+    @NotBlank
+    @NotNull
+    @Expression("password not null and confirmPassword=password")
     private String confirmPassword;
 
     public String getConfirmPassword() {

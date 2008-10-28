@@ -19,10 +19,12 @@
 
 	<div id="page-content">
 	
-		<h2>[@spring.message "user.create.heading"/]</h2>
+		<h2 id="user.create.heading">[@spring.message "user.create.heading"/]</h2>
 				
 		 [@form.form action="createUser.ftl" commandName="user"]
+		 <div id="form.errors">
 		 [@form.errors path="*" cssClass="error-messages"/]
+		 </div>
 		
 			<fieldset>
 				<legend>User Login Details</legend>

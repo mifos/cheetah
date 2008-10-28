@@ -21,17 +21,25 @@
 package org.mifos.test.acceptance.user;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.dbunit.DatabaseUnitException;
+import org.dbunit.database.DatabaseConnection;
+import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.operation.DatabaseOperation;
 import org.mifos.test.acceptance.framework.CreateUserPage;
 import org.mifos.test.acceptance.framework.CreateUserSuccessPage;
 import org.mifos.test.acceptance.framework.LoginPage;
 import org.mifos.test.acceptance.framework.UiTestCaseBase;
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.mifos.test.framework.util.SimpleDataSet;
+import org.springframework.jdbc.datasource.DataSourceUtils;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.providers.encoding.Md5PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.Assert;
@@ -46,13 +54,16 @@ import org.testng.annotations.Test;
  * http://mingle.mifos.org:7070/projects/cheetah/cards/678
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
-@Test(groups={"createUserStory","acceptance","ui", "workInProgress"})
+@Test(groups={"createUserStory","acceptance","ui", "workInProgress"}, sequential=true)
 public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
+    
+    private static final Log LOG = LogFactory.getLog(AdminUserCanCreateNewUserStoryTest.class);
     
     private DatabaseTestUtils dbUtils;
     private LoginPage loginPage;
     private IDataSet savedUsers;
     private Md5PasswordEncoder passwordEncoder;
+    private Connection jdbcConnection;
     
     private static final String TEST_ADMIN_USER_ID     = "adminuser";
     private static final String TEST_ADMIN_USER_PASSWORD = "adminpassword";
@@ -60,9 +71,10 @@ public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
     private static final String TEST_USER_PASSWORD = "userpassword";
     private static final String NEW_USER_ID       = "newUser";
     private static final String NEW_USER_PASSWORD   = "newpassword";
-    private static final String USER_ID_80_CHARS  = 
-        "TencharachTencharachTencharachTencharachTencharachTencharachTencharachTencharach";
-    private static final String USER_ID_81_CHARS     = USER_ID_80_CHARS + "1";
+    private static final String NEW_USER_PASSWORD_DIFFERENT = "newpassworddifferent";
+    private static final String USER_ID_20_CHARS  = 
+        "TencharachTencharach";
+    private static final String USER_ID_21_CHARS     = USER_ID_20_CHARS + "1";
     private static final String ROLE_ADMIN = "ROLE_ADMIN";
     private static final String ROLE_USER = "ROLE_USER";
     private static final String USER_TABLE_NAME = "users";
@@ -75,19 +87,23 @@ public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
     }
     @BeforeMethod
     public void setUp() throws Exception {
+        LOG.debug("Enter setUp");
+        
         super.setUp();
         loginPage = new LoginPage(selenium);
-        savedUsers = dbUtils.saveTables(dataSource, USER_TABLE_NAME, AUTHORITIES_TABLE_NAME);
+        savedUsers = saveTables(dataSource, USER_TABLE_NAME, AUTHORITIES_TABLE_NAME);
         SimpleDataSet testUsers = new SimpleDataSet();
         addUser(testUsers, TEST_ADMIN_USER_ID, TEST_ADMIN_USER_PASSWORD, ROLE_ADMIN, ROLE_USER);
         addUser(testUsers, TEST_USER_ID, TEST_USER_PASSWORD, ROLE_USER);
+        testUsers.insert(dataSource);
     }
 
     @AfterMethod
     public void logOut() 
                     throws DataSetException, IOException, SQLException, DatabaseUnitException {
+        LOG.debug("enter logOut");
         loginPage.logout();
-        dbUtils.restoreDataSet(savedUsers, dataSource);
+        restoreDataSet(savedUsers, dataSource);
     }
     
 /*--------------------
@@ -97,56 +113,57 @@ public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
 
     public void adminUserCanNavigateToCreateUserPageTest() {
         loginAndNavigateToCreateUserPage(TEST_ADMIN_USER_ID, TEST_ADMIN_USER_PASSWORD);
-        Assert.assertTrue(selenium.isElementPresent("create-user-heading"), 
+        Assert.assertTrue(selenium.isElementPresent("user.create.heading"), 
                                                     "Did not reach create user page");
     }
 
     public void adminUserCanCreateValidUser() {
         
         //create new user, check for success and that default user role displays
-        createUserExpectSuccess(NEW_USER_ID, NEW_USER_PASSWORD);
+        createUserExpectSuccess(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
         
-        assertCreateSuccessful();
+        assertCreateSuccessful(NEW_USER_ID);
         
         loginPage.logout();
         
         //New user should be able to log in and see the home page (because they have user prvileges
         //but not see admin functions
         loginPage.loginAs(NEW_USER_ID, NEW_USER_PASSWORD);
+        //UiTestUtils.sleep(5000);
         
-        assertElementExistsOnPage("home-heading", "newUser failed to login successfully");
+        assertElementExistsOnPage("homePageContent", "New user failed to reach home page");
         assertElementDoesNotExistOnPage("adminTab", 
                                         "Admin tab should be absent for new user without admin role");
     }
 
     public void createUserFailsWithBlankUserId() {
-        createUserExpectFailure("", NEW_USER_PASSWORD);
-        assertErrorTextIncludes("Please enter a user name");
+        createUserExpectFailure("", NEW_USER_PASSWORD, NEW_USER_PASSWORD);
+        assertErrorTextIncludes("Please enter a user id");
     }
     
     public void createUserSucceedsWithMaxLengthUserId() {
-        createUserExpectSuccess(USER_ID_80_CHARS, NEW_USER_PASSWORD);
-        assertCreateSuccessful();
+        createUserExpectSuccess(USER_ID_20_CHARS, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
+        assertCreateSuccessful(USER_ID_20_CHARS);
     }
     
     public void createUserFailsWithTooLongUserId() {
-        createUserExpectFailure(USER_ID_81_CHARS, NEW_USER_PASSWORD);
-        assertErrorTextIncludes("User name must be at most");
+        createUserExpectFailure(USER_ID_21_CHARS, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
+        assertErrorTextIncludes("User id must be at most");
     }
     
     public void createUserFailsWithBlankPassword() {
-        createUserExpectFailure(NEW_USER_ID, "");
+        createUserExpectFailure(NEW_USER_ID, "", "");
         assertErrorTextIncludes("Please enter a password");
     }
     
     public void createDuplicateUserFails() {
-        createUserExpectSuccess(NEW_USER_ID, NEW_USER_PASSWORD);
+        createUserExpectSuccess(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
         loginPage.logout();
         
-        createUserExpectFailure(NEW_USER_ID, NEW_USER_PASSWORD);
+        createUserExpectFailure(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
         
-        assertElementExistsOnPage("create-user-heading", "Did not return to create user page");
-        assertErrorTextIncludes("User " + NEW_USER_ID + " already exists");
+        assertElementExistsOnPage("user.create.heading", "Did not return to create user page");
+        assertErrorTextIncludes("User id already exists");
     }
     
     /*--------------------
@@ -161,22 +178,22 @@ public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
                 .navigateToCreateUserPage();
     }
     
-    private CreateUserSuccessPage createUserExpectSuccess (String userName, String password) {
+    private CreateUserSuccessPage createUserExpectSuccess (
+            String userName, String password, String confirmPassword) {
         return loginAndNavigateToCreateUserPage(TEST_ADMIN_USER_ID, TEST_ADMIN_USER_PASSWORD)
-                    .createUserExpectSuccess(userName, password);
+                    .createUserExpectSuccess(userName, password, confirmPassword);
     }
     
-    private CreateUserPage createUserExpectFailure (String userName, String password) {
+    private CreateUserPage createUserExpectFailure (
+            String userName, String password, String confirmPassword) {
         return loginAndNavigateToCreateUserPage(TEST_ADMIN_USER_ID, TEST_ADMIN_USER_PASSWORD)
-                    .createUserExpectFailure(userName, password);
+                    .createUserExpectFailure(userName, password, confirmPassword);
     }
     
-    private void assertCreateSuccessful() {
-        assertElementExistsOnPage("create-user-success-heading", 
+    private void assertCreateSuccessful(String userId) {
+        assertElementExistsOnPage("user.create.success.heading", 
                                   "Did not reach create user success page");
-        assertElementExistsOnPage("user-name", 
-                                  "New user's name does not appear on create user success page");
-        assertElementTextExactMatch("ROLE_USER", "user-roles");
+        assertTextFoundOnPage(userId, "Did not find user id on create user success page");
     }
     
     private void addUser (SimpleDataSet dataSet, String userId, String password, String...roles) {
@@ -188,4 +205,28 @@ public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
         }
 
     }
+    
+    @SuppressWarnings("PMD.DataflowAnomalyAnalysis")
+    //Rationale: You cannot define new local variables in the try block because the finally block must reference it.
+    private IDataSet saveTables(DriverManagerDataSource dataSource, String...tableNames) 
+                    throws IOException, DataSetException, SQLException, DatabaseUnitException {
+        DatabaseConnection dbConn = null;
+        jdbcConnection = DataSourceUtils.getConnection(dataSource);
+        dbConn = new DatabaseConnection(jdbcConnection);
+        return dbConn.createDataSet(tableNames);
+   }
+
+    private void restoreDataSet (IDataSet savedDataSet, DriverManagerDataSource dataSource) 
+                    throws IOException, DataSetException, SQLException, DatabaseUnitException{
+        try {
+            IDatabaseConnection databaseConnection = new DatabaseConnection(jdbcConnection);
+            DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, savedDataSet);
+        }
+        finally {
+            jdbcConnection.close();
+            DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
+        }
+
+    }
+
 }

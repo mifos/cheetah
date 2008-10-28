@@ -1,7 +1,5 @@
 package org.mifos.user.service;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,64 +53,58 @@ public class StandardUserServiceIntegrationTest
         assertCreateValidUser("anotherUser", "anotherPassword", toStringSet("ROLE_ADMIN", "ROLE_USER"));
     }
     
-    public void createWithBlankUserId() {
-        assertCreateExpectsValidationException("", "aPassword", toStringSet("ROLE_ADMIN"));
+    @Test(expectedExceptions=MifosValidationException.class)
+    public void createWithBlankUserId() throws MifosServiceException {
+        createUser("", "aPassword", toStringSet("ROLE_ADMIN"));
     }
     
-    public void createWithBlankPassword() {
-        assertCreateExpectsValidationException("userId1", "", toStringSet("ROLE_ADMIN"));        
+    @Test(expectedExceptions=MifosValidationException.class)
+    public void createWithNullUserId() throws MifosServiceException {
+        createUser(null, "aPassword", toStringSet("ROLE_ADMIN"));
     }
     
-    public void createWithNullPassword() {
-        assertCreateExpectsValidationException("userId2", null, toStringSet("ROLE_ADMIN"));        
+    @Test(expectedExceptions=MifosValidationException.class)
+    public void createWithBlankPassword() throws MifosServiceException {
+        createUser("userId1", "", toStringSet("ROLE_ADMIN"));        
     }
     
-    public void createWithEmptyRoleSet() {
-        assertCreateExpectsValidationException("userId3", "aPassword", new HashSet<String>());        
+    @Test(expectedExceptions=MifosValidationException.class)
+    public void createWithNullPassword() throws MifosServiceException {
+        createUser("userId2", null, toStringSet("ROLE_ADMIN"));        
     }
     
-    public void createWithNullRoleSet() {
-        assertCreateExpectsValidationException("userId", "aPassword", null);        
+    @Test(expectedExceptions=MifosValidationException.class)
+    public void createWithEmptyRoleSet() throws MifosServiceException {
+        createUser("userId3", "aPassword", new HashSet<String>());        
     }
     
-    public void createDuplicateUsersThrowsException () throws MifosServiceException {
+    @Test(expectedExceptions=MifosValidationException.class)
+    public void createWithNullRoleSet() throws MifosServiceException {
+        createUser("userId", "aPassword", null);        
+    }
+    
+    @Test(expectedExceptions=MifosValidationException.class)
+    public void createDuplicateUser () throws MifosServiceException {
         String duplicateId = "newUserId";
-        assertCreateValidUser(duplicateId, "pswd", toStringSet("A_ROLE"));
-        assertCreateExpectsDuplicateException(duplicateId, "apswd", toStringSet("ROLE_B"));
+        createUser (duplicateId, "pswd", toStringSet("A_ROLE"));
+        createUser (duplicateId, "apswd", toStringSet("ROLE_B"));
     }
     
     /*
      * Helper utilities
      */
-    
-    private void assertCreateExpectsValidationException(String userId, String password, Set<String> roles) {
-        try {
-            UserDto dto = makeUserDto (userId, password, roles);
-            userService.createUser(dto);
-            Assert.fail("Should have thrown an exception");
-        } catch (MifosServiceException e) {
-            Assert.assertTrue(e.getCause() instanceof MifosValidationException);
-        }
-    }
-     
-    private void assertCreateExpectsDuplicateException(String userId, String password, Set<String> roles) {
-        try {
-            UserDto dto = makeUserDto (userId, password, roles);
-            userService.createUser(dto);
-            Assert.fail("Should have thrown an exception");
-        } catch (MifosServiceException e) {
-            Assert.assertTrue(e.getCause() instanceof DuplicatePersistedObjectException, 
-                  "MifosServiceException should have wrapped a DuplicatePersistedObjectException");
-        }
+        
+    private void createUser (String userId, String password, Set<String> roles) 
+            throws MifosServiceException{
+        userService.createUser(makeUserDto (userId, password, roles));
     }
    
     private void assertCreateValidUser(String userId, String password, Set<String> roles) 
             throws MifosServiceException{
-        UserDto dto = makeUserDto (userId, password, roles);
-        userService.createUser(dto);
-        UserDto retrievedDto = userService.getUser(userId);
-        assertSameDtoWithEncodedPassword(retrievedDto, dto);
-       
+        createUser (userId, password, roles);
+        assertSameDtoWithEncodedPassword(
+                userService.getUser(userId), 
+                makeUserDto(userId, password, roles));
     }
 
     private void assertEqualRoles(Set<String> actualRoles, Set<String> expectedRoles) {
@@ -124,7 +116,7 @@ public class StandardUserServiceIntegrationTest
         UserDto dto = new UserDto();
         dto.setUserId(userId);
         dto.setPassword(password);
-        dto.setRole(roles);
+        dto.setRoles(roles);
         return dto;
     }
     

@@ -24,7 +24,7 @@
 				
 					<ul class="navigation-list">
 					<li>[@spring.message "viewUsers" /]</li>
-					<li><a href="createUser.ftl">[@spring.message "defineNewUser" /]</a></li>
+					<li><a href="createUser.ftl" id="create.user">[@spring.message "defineNewUser" /]</a></li>
 					</ul>
 
 				<h4>[@spring.message "offices" /]</h4>

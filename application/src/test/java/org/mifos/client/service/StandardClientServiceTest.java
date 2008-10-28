@@ -22,6 +22,8 @@ package org.mifos.client.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -31,6 +33,7 @@ import org.mifos.client.repository.InMemoryClientDao;
 import org.mifos.core.MifosException;
 import org.mifos.core.MifosServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.validation.Validator;
@@ -197,6 +200,7 @@ public class StandardClientServiceTest extends AbstractTestNGSpringContextTests 
 
 	@Autowired
     @Test(enabled = false)
+	@Resource
 	public void setValidator(Validator validator) {
 		this.validator = validator;
 	}

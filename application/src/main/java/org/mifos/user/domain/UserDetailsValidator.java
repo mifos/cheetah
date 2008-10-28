@@ -22,37 +22,57 @@ package org.mifos.user.domain;
 
 import java.util.Set;
 
-import org.mifos.core.MifosValidationException;
+import org.mifos.user.service.UserDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.userdetails.UserDetailsManager;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
-/**
- *
- */
-public class UserDetailsValidator {
+public class UserDetailsValidator implements Validator {
     
-    public void validateNewUserDetails (String userId, String password, Set<String> roles)
-            throws MifosValidationException {
-        validateUserId (userId);
-        validatePassword (password);
-        validateRoles (roles);
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"NP_UNWRITTEN_FIELD"}, justification="set by Spring dependency injection")
+    private UserDetailsManager userDetailsManager;
+
+    @Override
+    public boolean supports(Class clazz) {
+        return UserDto.class.equals(clazz);
     }
     
-    private final void validatePassword(String password) throws MifosValidationException {
-        if (password == null || password.length() == 0) {
-            throw new MifosValidationException ("Password cannot be blank");
-        } 
+    @Autowired
+    public void setUserDetailsManager (UserDetailsManager manager) {
+        this.userDetailsManager = manager;
     }
 
-    private final void validateRoles(Set<String> roles) throws MifosValidationException{
-        if (roles == null || roles.isEmpty()) {
-            throw new MifosValidationException("user must be given at lease one authorization role");
+    @Override
+    public void validate(Object obj, Errors errors) {
+        UserDto userDto = (UserDto) obj;
+        validateId(userDto.getUserId(), errors);
+        validatePassword(errors);
+        validateRoles(userDto.getRoles(), errors);
+    }
+            
+
+    private void validateRoles(Set<String> roles, Errors errors) {
+        if (null==roles || roles.isEmpty()) {
+            errors.rejectValue("roles", "user.roles.[not.empty]", "User must be assigned at least one role");
+        }
+        
+    }
+
+    /**
+     * Simple password validation simply checks whether password is not blank.
+     * TODO: strengthen password validation.
+     * @param errors
+     */
+    private void validatePassword(Errors errors) {
+        ValidationUtils.rejectIfEmpty(errors, "password", "User.password.[not.blank]", "Password must be specified");
+    }
+
+    private void validateId(String userId, Errors errors) {
+       ValidationUtils.rejectIfEmpty(errors, "userId", "User.userId.[not.blank]", "User Id must not be missing");
+       if (userDetailsManager.userExists(userId)) {
+            errors.rejectValue("userId", "User.userId.[not.exist]", "User id already exists.");
         }
     }
-
-    private final void validateUserId(String userId)  throws MifosValidationException{
-        if (userId == null || userId.length()==0) {
-            throw new MifosValidationException("User ID cannot be blank");
-        }
-    }
-
-
 }

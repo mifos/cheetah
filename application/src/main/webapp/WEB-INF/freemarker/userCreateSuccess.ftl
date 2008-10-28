@@ -17,7 +17,7 @@
 	
 		[#assign userId = ["${model.user.userId}"]]
 			
-		<h2 id="page-content-heading">[@spring.messageArgs "user.create.success.heading" userId /]</h2>
+		<h2 id="user.create.success.heading">[@spring.messageArgs "user.create.success.heading" userId /]</h2>
 	   
 	</div>
   </body>

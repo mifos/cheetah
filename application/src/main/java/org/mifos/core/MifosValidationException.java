@@ -20,18 +20,18 @@
 
 package org.mifos.core;
 
+import org.springframework.validation.BindingResult;
+
 /**
  *
  */
-public class MifosValidationException extends MifosException {
+public class MifosValidationException extends MifosServiceException {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -6380709999185779304L;
+    private static final long serialVersionUID = -2688482252685058329L;
     
-    public MifosValidationException(String message) {
-        super(message);
-    }
+    public MifosValidationException(String message,
+            BindingResult errors) {
+        super(message, errors);
+   }
 
 }
