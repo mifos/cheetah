@@ -62,7 +62,8 @@ public class UserCanViewListOfGroupsStoryTest extends UiTestCaseBase {
 	
     public void testCanReachViewLoanProductDetailsPage () throws DataSetException, IOException, SQLException, DatabaseUnitException {
         insertTwoGroupsDataSet();
-        navigateToViewGroupsPage();
+        ViewGroupsPage viewGroupsPage = navigateToViewGroupsPage();
+        viewGroupsPage.verifyPage();
     }
     
     private ViewGroupsPage navigateToViewGroupsPage (){

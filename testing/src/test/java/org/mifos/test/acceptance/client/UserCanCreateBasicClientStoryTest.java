@@ -123,10 +123,10 @@ public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase {
 	
 	private void verifyClientCreation(String firstName, String lastName, String dateOfBirth, String datePattern) throws Exception {
 	    SimpleDataSet dataSet = new SimpleDataSet();
-	    dataSet.row("clients", "id=1",
-	                           "firstName=" + firstName, 
-	                           "lastname=" + lastName, 
-	                           "dateOfBirth=" + getIso8601Date(dateOfBirth, datePattern));
+	    dataSet.row("CLIENTS", "ID=1",
+	                           "FIRST_NAME=" + firstName, 
+	                           "LAST_NAME=" + lastName, 
+	                           "DATE_OF_BIRTH=" + getIso8601Date(dateOfBirth, datePattern));
         databaseTestUtils.verifyTable(dataSet.toString(), "clients", this.dataSource);        
 	}
 	

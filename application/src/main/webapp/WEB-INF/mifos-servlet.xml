@@ -207,6 +207,7 @@
             /deleteLoanProductSuccess.ftl=genericController
             /deleteLoanProductFailure.ftl=genericController
             /viewOffices.ftl=officeController
+            /viewGroups.ftl=genericController
     		</value>
     	</property>
     </bean>

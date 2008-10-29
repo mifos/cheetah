@@ -53,6 +53,13 @@ public class SimpleDataSetTest {
         Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
     }
 
+    public void testTwoEmptyTablesWithUnderscores() {
+        String expectedOutput = "<dataset>\n<TABLE_FIRST />\n<TABLE_SECOND />\n</dataset>";
+        this.simpleDataSet.row("TABLE_FIRST");
+        this.simpleDataSet.row("TABLE_SECOND");
+        Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
+    }
+
     public void testOneTableOneColumn() {
         String expectedOutput = "<dataset>\n<firstTable name=\"value\" />\n</dataset>";
         this.simpleDataSet.row("firstTable", "name=value");

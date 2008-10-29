@@ -26,6 +26,7 @@
          </activation>
          <properties>
             <database.properties.file>${modules.root.dir}/resources/deploy-build/jdbc.local.properties</database.properties.file>
+            <insert-sql-data>true</insert-sql-data>
          </properties>
       </profile>
       <profile>

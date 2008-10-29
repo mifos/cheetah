@@ -68,7 +68,7 @@ public class HomePage extends AbstractPage {
 
     public ViewGroupsPage navigateToViewGroupsPage() {
         openHomePage();
-        selenium.click("id=header.tab.admin");
+        selenium.click("id=home.list.groups");
         waitForPageToLoad();
         return new ViewGroupsPage(selenium);     
     }

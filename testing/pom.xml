@@ -20,6 +20,7 @@
       <selenium.background>true</selenium.background>
       <tomcat.container.url>http://www.apache.org/dist/tomcat/tomcat-6/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.container.url>
       <cargo.wait>false</cargo.wait>
+      <insert-sql-data>true</insert-sql-data>
    </properties>
    
    <profiles>
@@ -318,25 +319,6 @@
            <artifactId>properties-maven-plugin</artifactId>
         </plugin>  
         <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>sql-maven-plugin</artifactId>
-            <executions>
-                 <execution>
-                   <id>post-application-startup</id>
-                   <phase>integration-test</phase>
-                   <goals>
-                     <goal>execute</goal>
-                   </goals>
-                   <configuration>
-                     <srcFiles>
-                        <srcFile>${project.build.outputDirectory}/sql/use_database.sql</srcFile>
-                        <srcFile>${project.build.outputDirectory}/sql/office_level_data.sql</srcFile>
-                     </srcFiles>
-                   </configuration>
-                 </execution>
-            </executions>            
-         </plugin>
-         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
