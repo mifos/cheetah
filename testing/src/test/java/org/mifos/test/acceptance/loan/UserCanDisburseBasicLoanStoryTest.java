@@ -60,7 +60,7 @@ public class UserCanDisburseBasicLoanStoryTest extends UiTestCaseBase {
     private void insertDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
         SimpleDataSet simpleDataSet = new SimpleDataSet();
         simpleDataSet.row("loanProducts", "id=1", "longName=loanProd1",  "maxInterestRate=10.0", "minInterestRate=1.0", "shortName=lp1", "status=ACTIVE", "deletedStatus=VISIBLE"); 
-        simpleDataSet.row("CLIENTS", "ID=1", "FIRST_NAME=Sue", "LAST_NAME=Smith", "DATE_OF_BIRTH=2000-12-30"); 
+        simpleDataSet.row("clients", "id=1", "first_name=Sue", "last_name=Smith", "date_of_birth=2000-12-30"); 
         simpleDataSet.row("loans", "id=1",  "clientId=1", "loanProductId=1", "amount=100", "interestRate=5"); 
         simpleDataSet.insert(this.dataSource);
     }

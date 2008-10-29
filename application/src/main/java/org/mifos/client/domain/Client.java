@@ -40,15 +40,14 @@ public class Client implements Serializable {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="ID")
     private Integer id;
 
-    @Column(name="FIRST_NAME")
+    @Column(name="first_name")
 	private String firstName;
-    @Column(name="LAST_NAME")
+    @Column(name="last_name")
 	private String lastName;
 
-    @Column(name="DATE_OF_BIRTH")
+    @Column(name="date_of_birth")
 	@Type(type="org.joda.time.contrib.hibernate.PersistentLocalDate")
 	private LocalDate dateOfBirth;
 
