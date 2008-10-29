@@ -59,6 +59,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class SimpleDataSet {
 
     private final List<Row> rows;
+    
+    // TODO: remove columnSensing (becuase of problems with interleaving table data, use xxx=[null] instead)
     private boolean columnSensing = false;
     
     public SimpleDataSet() {

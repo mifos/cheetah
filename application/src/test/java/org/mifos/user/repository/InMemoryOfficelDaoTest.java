@@ -18,28 +18,33 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.user.service;
+package org.mifos.user.repository;
 
-import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 /**
  *
  */
-public class OfficeDto {
-    @NotNull
-    private String name;
+@Test(groups = { "unit" })
+public class InMemoryOfficelDaoTest {
 
-    public String getName() {
-        return name;
-    }
+    private OfficeDao officeDao;
+    private OfficeDaoTestHelper officeDaoTestHelper;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isHeadOffice() {
-        // TODO Auto-generated method stub
-        return false;
+    @BeforeMethod
+	void setUp() {
+        InMemoryOfficeLevelDao officeLevelDao = new InMemoryOfficeLevelDao();
+	    officeDao = new InMemoryOfficeDao(officeLevelDao.getHeadOfficeLevel(), officeLevelDao.getBranchOfficeLevel());
+	    officeDaoTestHelper = new OfficeDaoTestHelper(officeDao);
+	}
+	
+    public void testGetHeadOffice() {
+        officeDaoTestHelper.testGetHeadOffice();
     }
     
+    public void testGetAll() {
+        officeDaoTestHelper.testGetAll();
+    }
+	 
 }

@@ -20,11 +20,6 @@
 
 package org.mifos.test.acceptance.user;
 
-import org.joda.time.format.DateTimeFormat;
-import org.mifos.test.acceptance.framework.ClientsAndAccountsPage;
-import org.mifos.test.acceptance.framework.CreateClientPage;
-import org.mifos.test.acceptance.framework.CreateClientSuccessPage;
-import org.mifos.test.acceptance.framework.HomePage;
 import org.mifos.test.acceptance.framework.LoginPage;
 import org.mifos.test.acceptance.framework.UiTestCaseBase;
 import org.mifos.test.framework.util.DatabaseTestUtils;

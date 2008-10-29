@@ -20,12 +20,9 @@
 
 package org.mifos.user.repository;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.mifos.loan.domain.Loan;
-import org.mifos.loan.domain.LoanProduct;
 import org.mifos.user.domain.OfficeLevel;
 
 /**

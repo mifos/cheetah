@@ -18,28 +18,19 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.user.service;
+package org.mifos.user.repository;
 
-import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
+import java.util.List;
+
+import org.mifos.user.domain.Office;
 
 /**
  *
  */
-public class OfficeDto {
-    @NotNull
-    private String name;
+public interface OfficeDao {
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isHeadOffice() {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    Office getHeadOffice();
     
+    List<Office> getAll();
+
 }

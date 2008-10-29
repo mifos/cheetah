@@ -20,26 +20,36 @@
 
 package org.mifos.user.service;
 
-import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mifos.user.repository.OfficeDao;
 
 /**
  *
  */
-public class OfficeDto {
-    @NotNull
-    private String name;
+public class StandardOfficeService implements OfficeService {
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isHeadOffice() {
+    /* (non-Javadoc)
+     * @see org.mifos.user.service.OfficeService#getAll()
+     */
+    public List<OfficeDto> getAll() {
         // TODO Auto-generated method stub
-        return false;
+        return new ArrayList<OfficeDto>();
     }
-    
+
+    /* (non-Javadoc)
+     * @see org.mifos.user.service.OfficeService#getHeadOffice()
+     */
+    public OfficeDto getHeadOffice() {
+        // TODO Auto-generated method stub
+        return new OfficeDto();
+    }
+
+    @Override
+    public void setOfficeDao(OfficeDao officeDao) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

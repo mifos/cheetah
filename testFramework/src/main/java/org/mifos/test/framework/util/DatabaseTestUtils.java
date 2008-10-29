@@ -37,6 +37,7 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -90,10 +91,12 @@ public class DatabaseTestUtils {
     private void cleanAndInsertDataSet(DriverManagerDataSource dataSource,
             IDataSet dataSet) throws DatabaseUnitException, SQLException {
         Connection jdbcConnection = null;
+        ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet); 
+        replacementDataSet.addReplacementObject("[null]", null);        
         try {
             jdbcConnection = DataSourceUtils.getConnection(dataSource);
             IDatabaseConnection databaseConnection = new DatabaseConnection(jdbcConnection);
-            DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
+            DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, replacementDataSet);
         }
         finally {
             jdbcConnection.close();

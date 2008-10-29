@@ -41,34 +41,37 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations={"classpath:integrationTestContext.xml"})
 @TransactionConfiguration(transactionManager="transactionManager")
 @Test(groups = { "integration" })
-public class StandardOfficeLevelDaoTest extends AbstractTransactionalTestNGSpringContextTests {
+public class StandardOfficeDaoTest extends AbstractTransactionalTestNGSpringContextTests {
 
     @Autowired
-    private OfficeLevelDao officeLevelDao;
+    private OfficeDao officeDao;
     @Resource(name="integrationTestDataSource")
     private DriverManagerDataSource dataSource;
 
-    private OfficeLevelDaoTestHelper officeLevelDaoTestHelper;
+    private OfficeDaoTestHelper officeDaoTestHelper;
 
     @BeforeMethod
     void setUp() throws DataSetException, IOException, SQLException, DatabaseUnitException {
-        officeLevelDaoTestHelper = new OfficeLevelDaoTestHelper(officeLevelDao);
+        officeDaoTestHelper = new OfficeDaoTestHelper(officeDao);
         Assert.assertNotNull(this.dataSource);
-        insertOfficeLevelDataSet();
+        insertOfficeDataSet();
     }
     
-    public void testGetHeadOfficeLevel() {
-        officeLevelDaoTestHelper.testGetHeadOfficeLevel();
+    public void testGetHeadOffice() {
+        officeDaoTestHelper.testGetHeadOffice();
     }
-    
-    public void testGetBranchOfficeLevel() {
-        officeLevelDaoTestHelper.testGetBranchOfficeLevel();
+
+    public void testGetAll() {
+        officeDaoTestHelper.testGetAll();
     }
+
     
-    private void insertOfficeLevelDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
+    private void insertOfficeDataSet() throws DataSetException, IOException, SQLException, DatabaseUnitException {
         SimpleDataSet simpleDataSet = new SimpleDataSet();
         simpleDataSet.row("OFFICE_LEVEL", "ID=1", "NAME=Head Office Level", "LEVEL_BELOW_ID=2", "LEVEL_ABOVE_ID=[null]"); 
         simpleDataSet.row("OFFICE_LEVEL", "ID=2", "NAME=Branch Office Level", "LEVEL_BELOW_ID=[null]", "LEVEL_ABOVE_ID=1");
+        simpleDataSet.row("OFFICE", "ID=1", "NAME=Head Office", "OFFICE_LEVEL_ID=1", "PARENT_OFFICE_ID=[null]"); 
+        simpleDataSet.row("OFFICE", "ID=2", "NAME=Branch Office", "OFFICE_LEVEL_ID=2", "PARENT_OFFICE_ID=1"); 
         simpleDataSet.insert(this.dataSource);
     }
     

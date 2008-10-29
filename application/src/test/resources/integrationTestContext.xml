@@ -91,6 +91,7 @@
     <bean id="standardLoanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
     <bean id="standardLoanDao" class="org.mifos.loan.repository.StandardLoanDao"/>
     <bean id="standardOfficeLevelDao" class="org.mifos.user.repository.StandardOfficeLevelDao"/>
+    <bean id="standardOfficeDao" class="org.mifos.user.repository.StandardOfficeDao"/>
     
     <bean id="standardLoanService" class="org.mifos.loan.service.StandardLoanService">
       <property name="validator" ref="validator"/>

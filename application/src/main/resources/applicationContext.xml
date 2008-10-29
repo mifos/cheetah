@@ -70,7 +70,7 @@
     
     <bean id="securityService" class="org.mifos.security.service.StandardSecurityService"/>
 
-   <bean id="officeService" class="org.mifos.user.service.OfficeService"/>
+   <bean id="officeService" class="org.mifos.user.service.StandardOfficeService"/>
    
 	<bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
 		<property name="mappingFiles">
