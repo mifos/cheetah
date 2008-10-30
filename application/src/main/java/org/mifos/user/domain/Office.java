@@ -35,6 +35,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name="OFFICE")
 public class Office {
+    public static final String DEFAULT_HEAD_OFFICE_NAME = "Head Office";
+    public static final String DEFAULT_BRANCH_OFFICE_NAME = "Branch Office";  
+    
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="ID")    

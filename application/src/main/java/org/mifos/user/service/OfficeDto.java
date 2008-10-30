@@ -28,7 +28,13 @@ import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 public class OfficeDto {
     @NotNull
     private String name;
+    private final boolean headOffice;
 
+    public OfficeDto(String name, boolean headOffice) {
+        this.name = name;
+        this.headOffice = headOffice;
+    }
+    
     public String getName() {
         return name;
     }
@@ -38,8 +44,7 @@ public class OfficeDto {
     }
 
     public boolean isHeadOffice() {
-        // TODO Auto-generated method stub
-        return false;
+        return headOffice;
     }
     
 }

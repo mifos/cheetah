@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  * http://mingle.mifos.org:7070/projects/cheetah/cards/987
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
-@Test(sequential=true, groups={"userCanCreateBasicClientStoryTest","acceptance","ui","workInProgress"})
+@Test(sequential=true, groups={"userCanCreateBasicClientStoryTest","acceptance","ui"})
 public class BranchOfficeAndHeadOfficeAreAutomaticallyCreatedStoryTest extends UiTestCaseBase{
 
 	private LoginPage loginPage;
@@ -60,8 +60,8 @@ public class BranchOfficeAndHeadOfficeAreAutomaticallyCreatedStoryTest extends U
         .navigateToAdminPage()
         .navigateToViewOfficesPage();
         
-        assertElementTextExactMatch("Mifos Head Office", "headOffice");
-        assertElementTextExactMatch("Mifos Default Branch Office", "office-1");	    
+        assertElementTextExactMatch("Head Office", "headOffice");
+        assertElementTextExactMatch("Branch Office", "office-1");       
 	}
 
 	public void nonAdminUserCannotSeeOfficeList() {

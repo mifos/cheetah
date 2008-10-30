@@ -30,8 +30,6 @@ import org.testng.Assert;
  */
 public class OfficeDaoTestHelper {
 
-	private static final String DEFAULT_HEAD_OFFICE_NAME = "Head Office";
-    private static final String DEFAULT_BRANCH_OFFICE_NAME = "Branch Office";
     private final OfficeDao officeDao;
 
 	public OfficeDaoTestHelper(OfficeDao officeDao) {
@@ -43,7 +41,7 @@ public class OfficeDaoTestHelper {
 	    Assert.assertNotNull(office,"Expected head office but got none.");
 	    
 	    Assert.assertTrue(office.isHeadOffice(), "Expected this to be the head office .");
-	    Assert.assertEquals(DEFAULT_HEAD_OFFICE_NAME, office.getName());
+	    Assert.assertEquals(Office.DEFAULT_HEAD_OFFICE_NAME, office.getName());
 	}
 
     public void testGetAll() {
@@ -51,9 +49,9 @@ public class OfficeDaoTestHelper {
         Assert.assertEquals(offices.size(), 2);
         for (Office office : offices) {
             if (office.isHeadOffice()) {
-                Assert.assertEquals(office.getName(), DEFAULT_HEAD_OFFICE_NAME);
+                Assert.assertEquals(office.getName(), Office.DEFAULT_HEAD_OFFICE_NAME);
             } else {
-                Assert.assertEquals(office.getName(), DEFAULT_BRANCH_OFFICE_NAME);
+                Assert.assertEquals(office.getName(), Office.DEFAULT_BRANCH_OFFICE_NAME);
             }
         }
     }

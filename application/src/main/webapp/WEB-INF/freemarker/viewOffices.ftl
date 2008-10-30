@@ -17,7 +17,7 @@
    
 	    <h2>[@spring.message "viewOffices" /]</h2>
 	  
-	    	<p id="headOffice">${(headOffice.name)!"No head office defined"}</p>
+	    	<p id="headOffice">${(model.headOffice.name)!"No head office defined"}</p>
 	    	    
 	    	<h4>[@spring.message "offices" /]</h4>
 	    	   		
@@ -30,10 +30,12 @@
 	    		[#assign num = 0]
 	    	    <table id="office-table">
 			    [#list model.offices as office]
-			    [#assign num = num + 1]
-				<tr>
-		        	<td id="office-${num}">${office.name}</td>
-		    	</tr>
+			    [#if !office.headOffice]
+				    [#assign num = num + 1]
+					<tr>
+			        	<td id="office-${num}">${office.name}</td>
+			    	</tr>
+			    [/#if]
 		    	[/#list]
 		    	<table>
 		    [/#if]

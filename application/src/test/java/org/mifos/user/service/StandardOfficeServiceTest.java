@@ -20,21 +20,23 @@
 
 package org.mifos.user.service;
 
-import junit.framework.Assert;
+import java.util.List;
 
+import org.mifos.user.domain.Office;
+import org.mifos.user.domain.OfficeLevel;
 import org.mifos.user.repository.InMemoryOfficeDao;
 import org.mifos.user.repository.InMemoryOfficeLevelDao;
 import org.mifos.user.repository.OfficeDao;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  *
  */
-@Test(groups={ "unit", "workInProgress" } )
+@Test(groups={ "unit" } )
 public class StandardOfficeServiceTest {
 
-    private static final String DEFAULT_HEAD_OFFICE_NAME = "Head Office";
     OfficeService standardOfficeService;
     
     @BeforeMethod
@@ -50,6 +52,19 @@ public class StandardOfficeServiceTest {
     public void testGetHeadOffice() {
         OfficeDto officeDto = standardOfficeService.getHeadOffice();
         Assert.assertTrue(officeDto.isHeadOffice());
-        Assert.assertEquals(DEFAULT_HEAD_OFFICE_NAME, officeDto.getName());
+        Assert.assertEquals(officeDto.getName(),Office.DEFAULT_HEAD_OFFICE_NAME);
+    }
+    
+    @Test
+    public void testGetAll() {
+        List<OfficeDto> officeDtos = standardOfficeService.getAll();
+        Assert.assertEquals(officeDtos.size(), 2);
+        for (OfficeDto officeDto : officeDtos) {
+            if (officeDto.isHeadOffice()) {
+                Assert.assertEquals(officeDto.getName(), Office.DEFAULT_HEAD_OFFICE_NAME);
+            } else {
+                Assert.assertEquals(officeDto.getName(), Office.DEFAULT_BRANCH_OFFICE_NAME);
+            }
+        }
     }
 }

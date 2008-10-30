@@ -23,33 +23,46 @@ package org.mifos.user.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mifos.user.domain.Office;
 import org.mifos.user.repository.OfficeDao;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  */
 public class StandardOfficeService implements OfficeService {
 
+    private OfficeDao officeDao;
+    
     /* (non-Javadoc)
      * @see org.mifos.user.service.OfficeService#getAll()
      */
+    @Transactional(readOnly=true)
+    @Override
     public List<OfficeDto> getAll() {
-        // TODO Auto-generated method stub
-        return new ArrayList<OfficeDto>();
+        List<Office> offices = officeDao.getAll();
+        List<OfficeDto> officeDtos = new ArrayList<OfficeDto>();
+        for (Office office: offices) {
+            officeDtos.add(mapOfficeToOfficeDto(office));
+        }
+        return officeDtos;
     }
 
     /* (non-Javadoc)
      * @see org.mifos.user.service.OfficeService#getHeadOffice()
      */
+    @Transactional(readOnly=true)
+    @Override
     public OfficeDto getHeadOffice() {
-        // TODO Auto-generated method stub
-        return new OfficeDto();
+        return mapOfficeToOfficeDto(officeDao.getHeadOffice());
     }
 
+    private OfficeDto mapOfficeToOfficeDto(Office office) {
+        return new OfficeDto(office.getName(), office.isHeadOffice());
+    }
     @Override
     public void setOfficeDao(OfficeDao officeDao) {
-        // TODO Auto-generated method stub
-        
+        this.officeDao = officeDao;
     }
-
+    
 }

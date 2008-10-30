@@ -32,10 +32,6 @@ import org.mifos.user.domain.OfficeLevel;
  *
  */
 public class InMemoryOfficeDao implements OfficeDao {
-
-    private static final String DEFAULT_HEAD_OFFICE_NAME = "Head Office";
-    private static final String DEFAULT_BRANCH_OFFICE_NAME = "Branch Office";  
-
     private int nextId = 1;
     
     private final Map<Integer, Office> store = new HashMap<Integer, Office>(); 
@@ -47,13 +43,13 @@ public class InMemoryOfficeDao implements OfficeDao {
     }
     
     private void generateDefaultOffices(OfficeLevel headOfficeLevel, OfficeLevel branchOfficeLevel) {
-        Office headOffice = new Office(DEFAULT_HEAD_OFFICE_NAME, headOfficeLevel, null);
+        Office headOffice = new Office(Office.DEFAULT_HEAD_OFFICE_NAME, headOfficeLevel, null);
         headOffice.setId(generateNextId());
         
         store.put(headOffice.getId(), headOffice);
         this.headOffice = headOffice;
 
-        Office branchOffice = new Office(DEFAULT_BRANCH_OFFICE_NAME, branchOfficeLevel, headOffice);
+        Office branchOffice = new Office(Office.DEFAULT_BRANCH_OFFICE_NAME, branchOfficeLevel, headOffice);
         branchOffice.setId(generateNextId());   
 
         store.put(branchOffice.getId(), branchOffice);

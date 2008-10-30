@@ -39,6 +39,7 @@ public class StandardOfficeDao implements OfficeDao {
     private EntityManager entityManager;
     
     @Override
+    @Transactional(readOnly=true)
     public List<Office> getAll() {
         Query query = entityManager.createQuery("from Office");
         return query.getResultList();

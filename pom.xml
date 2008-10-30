@@ -45,6 +45,7 @@
                         <srcFiles>
                            <srcFile>${project.build.outputDirectory}/sql/use_database.sql</srcFile>
                            <srcFile>${project.build.outputDirectory}/sql/office_level_data.sql</srcFile>
+                           <srcFile>${project.build.outputDirectory}/sql/office_data.sql</srcFile>
                         </srcFiles>
                       </configuration>
                     </execution>

@@ -70,7 +70,11 @@
     
     <bean id="securityService" class="org.mifos.security.service.StandardSecurityService"/>
 
-   <bean id="officeService" class="org.mifos.user.service.StandardOfficeService"/>
+	<bean id="officeDao" class="org.mifos.user.repository.StandardOfficeDao"/>
+    
+    <bean id="officeService" class="org.mifos.user.service.StandardOfficeService">
+   		<property name="officeDao" ref="officeDao"/>
+    </bean>
    
 	<bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
 		<property name="mappingFiles">
