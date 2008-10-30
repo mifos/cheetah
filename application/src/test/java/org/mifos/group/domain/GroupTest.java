@@ -17,28 +17,21 @@
  * See also http://www.apache.org/licenses/LICENSE-2.0.html for an
  * explanation of the license and how it is applied.
  */
-package org.mifos.loan.domain;
+
+package org.mifos.group.domain;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class LoanProductTest {
+public class GroupTest {
 	
 	@Test
-	public void testConstructValidLoanProduct() {
-		Integer id = 3;
-		String longName = "A Very Long Name";
-		String shortName = "sn";
-		Double minInterestRate = 1.2;
-		Double maxInterestRate = 10.6;
-		LoanProductStatus status = LoanProductStatus.ACTIVE;
-		LoanProduct loanProduct = new LoanProduct(id, longName,shortName,minInterestRate, maxInterestRate,status);
-		Assert.assertEquals(loanProduct.getId(), id);
-		Assert.assertEquals(loanProduct.getLongName(), longName);
-		Assert.assertEquals(loanProduct.getShortName(), shortName);
-		Assert.assertEquals(loanProduct.getMinInterestRate(), minInterestRate);
-		Assert.assertEquals(loanProduct.getMaxInterestRate(), maxInterestRate);
-		Assert.assertEquals(loanProduct.getStatus(), status);
+	public void testConstructValidGroup() {
+		Integer id = 7;
+		String name = "Purple Group";
+		Group group = new Group(id, name);
+        Assert.assertEquals(group.getId(), id);
+        Assert.assertEquals(group.getName(), name);
 	}
 
 }
