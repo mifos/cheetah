@@ -55,7 +55,7 @@ public class UserDetailsValidator implements Validator {
 
     private void validateRoles(Set<String> roles, Errors errors) {
         if (null==roles || roles.isEmpty()) {
-            errors.rejectValue("roles", "user.roles.[not.empty]", "User must be assigned at least one role");
+            errors.rejectValue("roles", "user.roles.[not.empty]", "User must be assigned at least one security role");
         }
         
     }
@@ -70,9 +70,9 @@ public class UserDetailsValidator implements Validator {
     }
 
     private void validateId(String userId, Errors errors) {
-       ValidationUtils.rejectIfEmpty(errors, "userId", "User.userId.[not.blank]", "User Id must not be missing");
+       ValidationUtils.rejectIfEmpty(errors, "userId", "User.userId[not.blank]", "User Id must not be missing");
        if (userDetailsManager.userExists(userId)) {
-            errors.rejectValue("userId", "User.userId.[not.exist]", "User id already exists.");
+            errors.rejectValue("userId", "User.userId[not.exist]", "User id already exists.");
         }
     }
 }

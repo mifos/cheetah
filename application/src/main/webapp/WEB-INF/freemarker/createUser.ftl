@@ -39,7 +39,13 @@
 			
 				<label for="user.confirmPassword">[@spring.message "user.confirmPassword"/]:</label>
 					[@form.input path="confirmPassword"/]
-					<br/>			
+					<br/>
+								
+				<label for="user.form.roles">[@spring.message "user.roles.description"/]:</label>
+					[@form.select path="roles"
+								  items=availableRoles /]
+					<br/>
+			
 				<label for="kludge"></label>
 					<input type="submit" value="[@spring.message "submit"/]" class="buttn" id="user.form.submit">
 			</fieldset>

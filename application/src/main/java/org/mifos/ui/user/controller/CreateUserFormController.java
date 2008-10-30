@@ -60,7 +60,7 @@ public class CreateUserFormController extends SimpleFormController {
             throws Exception {
         
         UserFormBean userForm = (UserFormBean)command;
-        userForm.setDefaultRole();
+        //userForm.setDefaultRole();
         
         try {
             userService.createUser(userForm);
@@ -74,18 +74,33 @@ public class CreateUserFormController extends SimpleFormController {
         return new ModelAndView("userCreateSuccess", "model", model);       
     }
     
-    @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") 
+        //rationale: This is the signature of the superclass's method that we're overriding
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         return new UserFormBean();
     }
     
     @Override
-    @SuppressWarnings("PMD.SignatureDeclareThrowsException") //rationale: This is the signature of the superclass's method that we're overriding
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") 
+        //rationale: This is the signature of the superclass's method that we're overriding
     protected ModelAndView showForm(HttpServletRequest request,
             HttpServletResponse response, BindException errors)
             throws Exception {
         // TODO Auto-generated method stub
         return super.showForm(request, response, errors);
     }
+    
+
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") 
+        //rationale: This is the signature of the superclass's method that we're overriding
+    protected Map referenceData (HttpServletRequest request) throws Exception {
+        Map<String, Object> model = new HashMap<String, Object>();
+        Map<String, String> aMap = new HashMap<String, String>();
+        aMap.put("ROLE_USER", "User");
+        aMap.put("ROLE_ADMIN", "Administrator");
+        model.put("availableRoles", aMap);
+        return model;
+    }
+
 }
 
