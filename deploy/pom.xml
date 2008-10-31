@@ -1,0 +1,102 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.mifos</groupId>
+   <artifactId>cheetah-deploy</artifactId>
+   <packaging>jar</packaging>
+   <version>0.0.3-SNAPSHOT</version>
+   <name>Mifos - Cheetah Deploy</name>
+   <url>http://www.mifos.org</url>
+   <parent>
+      <groupId>org.mifos</groupId>
+      <artifactId>cheetah-parent</artifactId>
+      <version>0.0.3-SNAPSHOT</version>
+   </parent>
+   <properties>
+      <modules.root.dir>${basedir}/..</modules.root.dir>
+   </properties>
+   
+   <profiles>
+   
+      <profile>
+         <id>deploy-build-pre-startup</id>
+         <activation>
+            <activeByDefault>false</activeByDefault>
+         </activation>
+         <properties>
+            <database.properties.file>${modules.root.dir}/resources/deploy-build/jdbc.local.properties</database.properties.file>
+            <insert-sql-data>true</insert-sql-data>
+         </properties>
+         <build>
+            <plugins>
+              <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>sql-maven-plugin</artifactId>
+               <executions>
+                    <execution>
+                      <id>post-application-startup</id>
+                      <phase>none</phase>
+                    </execution>
+               </executions>            
+             </plugin>
+           </plugins>
+        </build>
+      </profile>
+      
+      <profile>
+         <id>deploy-build-post-startup</id>
+         <activation>
+            <activeByDefault>false</activeByDefault>
+         </activation>
+         <properties>
+            <database.properties.file>${modules.root.dir}/resources/deploy-build/jdbc.local.properties</database.properties.file>
+            <insert-sql-data>true</insert-sql-data>
+         </properties>
+         <build>
+            <plugins>
+              <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>sql-maven-plugin</artifactId>
+               <executions>
+                    <execution>
+                      <id>pre-application-startup</id>
+                      <phase>none</phase>
+                    </execution>
+               </executions>            
+             </plugin>
+           </plugins>
+        </build>
+      </profile>
+   </profiles>
+
+   <pluginRepositories>
+      <pluginRepository>
+         <id>Codehaus Repository</id>
+         <url>http://repository.codehaus.org/</url>
+      </pluginRepository>
+   </pluginRepositories>
+
+   <build>
+      <finalName>cheetah-deploy</finalName>
+      <defaultGoal>integration-test</defaultGoal>
+      <sourceDirectory>${modules.root.dir}/deploy/src/main/java</sourceDirectory>
+      <scriptSourceDirectory>${modules.root.dir}/deploy/src/main/scripts</scriptSourceDirectory>
+      <testSourceDirectory>${modules.root.dir}/deploy/src/test/java</testSourceDirectory>
+      <outputDirectory>target/cheetah-testing/classes</outputDirectory>
+      <testOutputDirectory>target/test-classes</testOutputDirectory>
+      <plugins>
+        <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>properties-maven-plugin</artifactId>
+        </plugin>  
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sql-maven-plugin</artifactId>
+         </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+         </plugin>
+      </plugins>
+   </build>
+</project>
