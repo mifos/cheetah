@@ -19,8 +19,7 @@ export TOMCAT_HOME=$HUDSON_BASEDIR/apache-tomcat-6.0.18
 export CATALINA_PID=$HUDSON_BASEDIR/hudson-tomcat.pid
 export CATALINA_OPTS="-DHUDSON_HOME=$HUDSON_BASEDIR/hudson-home -Xmx512m -Djava.awt.headless=true"
 
-[ -f $TOMCAT_HOME/bin/startup.sh ] || exit 0
-[ -f $TOMCAT_HOME/bin/shutdown.sh ] || exit 0
+[ -f $TOMCAT_HOME/bin/catalina.sh ] || exit 0
 
 export PATH=$PATH:/usr/bin:/usr/local/bin
 
