@@ -40,12 +40,33 @@
 				<label for="user.confirmPassword">[@spring.message "user.confirmPassword"/]:</label>
 					[@form.input path="confirmPassword"/]
 					<br/>
-								
+				
 				<label for="user.form.roles">[@spring.message "user.roles.description"/]:</label>
-					[@form.select path="roles"
-								  items=availableRoles /]
-					<br/>
-			
+				<select id="roles" name="roles" multiple>
+					[#list availableRoles as role]			
+						[#if user.roles?seq_contains(role)]
+							<option name="roles" value="${role}" selected>
+								[@spring.message "security.role.${role}"/]
+							</option>
+						[#else]
+							<option name="roles" value = "${role}">
+								[@spring.message "security.role.${role}"/]
+							</option>
+						[/#if]
+					[/#list]
+				</select>
+				
+				<!--
+					This marker field tells Spring MVC to reset the "roles" field to be empty
+					if the field is missing from the request (i.e., if the user de-selects all
+					options). Otherwise the controller will not reset the field and leave its
+					default value, "ROLE_USER", which is misleading because it suppresses validation
+					which should return an error stating that the user must be given at least one
+					role.
+				-->
+				<input type="hidden" name="_roles" value="1"/>
+				<br/>
+				
 				<label for="kludge"></label>
 					<input type="submit" value="[@spring.message "submit"/]" class="buttn" id="user.form.submit">
 			</fieldset>

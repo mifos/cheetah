@@ -104,9 +104,10 @@ public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
                                                     "Did not reach create user page");
     }
 
-    public void createValidUserWithUserRole() {
+    //Default role should be user
+    public void createValidUserWithDefaultRole() {
         
-        createUserExpectSuccess(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD, ROLE_USER);     
+        createUserExpectSuccess(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD);     
         assertCreateSuccessful(NEW_USER_ID);
         loginPage.logout();
         
@@ -127,7 +128,7 @@ public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
         assertCreateSuccessful(NEW_ADMIN_USER_ID);
         loginPage.logout();
         
-        //New user should be able to log in and see the home page (because they have user prvileges
+        //New user should be able to log in and see the home page (because they have user privileges
         //but not see admin functions
         loginPage.loginAs(NEW_ADMIN_USER_ID, NEW_ADMIN_USER_PASSWORD);
         assertElementExistsOnPage("homePageContent", "New user failed to reach home page");
@@ -136,22 +137,22 @@ public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
     }
 
     public void createUserFailsWithBlankUserId() {
-        createUserExpectFailure("", NEW_USER_PASSWORD, NEW_USER_PASSWORD, ROLE_USER);
+        createUserExpectFailure("", NEW_USER_PASSWORD, NEW_USER_PASSWORD);
         assertErrorTextIncludes("Please enter a user id");
     }
     
     public void createUserFailsWithNoRoles() {
-        createUserExpectFailure(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
+        createUserExpectFailure(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD, "");
         assertErrorTextIncludes("User must be assigned at least one security role");
     }
     
     public void createUserSucceedsWithMaxLengthUserId() {
-        createUserExpectSuccess(USER_ID_20_CHARS, NEW_USER_PASSWORD, NEW_USER_PASSWORD, ROLE_USER);
+        createUserExpectSuccess(USER_ID_20_CHARS, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
         assertCreateSuccessful(USER_ID_20_CHARS);
     }
     
     public void createUserFailsWithTooLongUserId() {
-        createUserExpectFailure(USER_ID_21_CHARS, NEW_USER_PASSWORD, NEW_USER_PASSWORD, ROLE_USER);
+        createUserExpectFailure(USER_ID_21_CHARS, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
         assertErrorTextIncludes("User id must be at most");
     }
     
@@ -161,17 +162,17 @@ public class AdminUserCanCreateNewUserStoryTest extends UiTestCaseBase {
     }
     
     public void createDuplicateUserFails() {
-        createUserExpectSuccess(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD, ROLE_USER);
+        createUserExpectSuccess(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
         loginPage.logout();
         
-        createUserExpectFailure(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD, ROLE_USER);
+        createUserExpectFailure(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD);
         
         assertElementExistsOnPage("user.create.heading", "Did not return to create user page");
         assertErrorTextIncludes("User id already exists");
     }
     
     public void userFailsToConfirmPassword () {
-        createUserExpectFailure(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD_DIFFERENT, ROLE_USER);
+        createUserExpectFailure(NEW_USER_ID, NEW_USER_PASSWORD, NEW_USER_PASSWORD_DIFFERENT);
         assertErrorTextIncludes("Passwords did not match");
 
     }

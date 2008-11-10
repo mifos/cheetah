@@ -27,21 +27,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.mifos.core.MifosValidationException;
+import org.mifos.security.domain.SecurityRoles;
 import org.mifos.ui.user.command.UserFormBean;
 import org.mifos.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-/**
- *
- */
 public class CreateUserFormController extends SimpleFormController {
     
     private UserService userService;
+    private SecurityRoles securityRoles;
     
     public UserService getUserService() {
         return userService;
+    }
+
+    public SecurityRoles getSecurityRoles() {
+        return securityRoles;
+    }
+
+    @Autowired
+    public void setSecurityRoles(SecurityRoles securityRoles) {
+        this.securityRoles = securityRoles;
     }
 
     public void setUserService(UserService userService) {
@@ -59,9 +68,7 @@ public class CreateUserFormController extends SimpleFormController {
             HttpServletResponse response, Object command, BindException errors)
             throws Exception {
         
-        UserFormBean userForm = (UserFormBean)command;
-        //userForm.setDefaultRole();
-        
+        UserFormBean userForm = (UserFormBean)command;        
         try {
             userService.createUser(userForm);
         } catch (MifosValidationException e) {
@@ -86,7 +93,6 @@ public class CreateUserFormController extends SimpleFormController {
     protected ModelAndView showForm(HttpServletRequest request,
             HttpServletResponse response, BindException errors)
             throws Exception {
-        // TODO Auto-generated method stub
         return super.showForm(request, response, errors);
     }
     
@@ -95,10 +101,7 @@ public class CreateUserFormController extends SimpleFormController {
         //rationale: This is the signature of the superclass's method that we're overriding
     protected Map referenceData (HttpServletRequest request) throws Exception {
         Map<String, Object> model = new HashMap<String, Object>();
-        Map<String, String> aMap = new HashMap<String, String>();
-        aMap.put("ROLE_USER", "User");
-        aMap.put("ROLE_ADMIN", "Administrator");
-        model.put("availableRoles", aMap);
+        model.put("availableRoles", securityRoles.getRoles());
         return model;
     }
 

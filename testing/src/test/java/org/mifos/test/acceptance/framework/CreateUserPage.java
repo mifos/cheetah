@@ -44,10 +44,23 @@ public class CreateUserPage extends AbstractPage {
         selenium.type("userId", userId);
         selenium.type("password", password);
         selenium.type("confirmPassword", confirmPassword);
-        for (String role : roles) {
-            selenium.addSelection("roles", "value=" + role);
+        /*
+         * If no roles are listed, just take the default (do nothing). 
+         * If the first role is an empty string (""), un-select all roles
+         * (if more roles are listed, they are ignored).
+         * Otherwise un-select all roles and fill in with listed roles.
+         * TODO: complete this logic
+         */
+        if (roles.length > 0) {
+            selenium.removeAllSelections("roles");
+            if (!roles[0].isEmpty()){
+                for (String role : roles) {
+                    selenium.addSelection("roles", "value=" + role);
+                }
+            }
         }
         selenium.click("user.form.submit"); 
         waitForPageToLoad();
+        
     }
 }

@@ -41,7 +41,7 @@ public class UserDto {
     @MaxLength(32)
     protected String password;
     
-    Set<String> roles;
+    Set<String> roles = new HashSet<String>();
     
     public String getUserId() {
         return userId;
@@ -66,10 +66,5 @@ public class UserDto {
     }
     public void setId(Integer id) {
         this.id = id;
-    }
-    public void setDefaultRole() {
-        Set<String> userRole = new HashSet<String>();
-        userRole.add("ROLE_USER");
-        setRoles(userRole);
     }
 }

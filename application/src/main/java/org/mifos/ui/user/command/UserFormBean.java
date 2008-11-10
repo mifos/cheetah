@@ -20,15 +20,16 @@
 
 package org.mifos.ui.user.command;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.mifos.user.service.UserDto;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.Expression;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
-import org.springmodules.validation.bean.conf.loader.annotation.handler.NotNull;
 
 public class UserFormBean extends UserDto {
     
     @NotBlank
-    @NotNull
     @Expression("password not null and confirmPassword=password")
     private String confirmPassword;
 
@@ -39,4 +40,17 @@ public class UserFormBean extends UserDto {
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
     }
+    
+    public UserFormBean() {
+        super();
+        this.setDefaultRole();
+    }
+    
+    public final void setDefaultRole() {
+        Set<String> userRole = new HashSet<String>();
+        userRole.add("ROLE_USER");
+        setRoles(userRole);
+    }
+
+    
 }

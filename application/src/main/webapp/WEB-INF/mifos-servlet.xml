@@ -16,6 +16,17 @@
         </property>
     </bean>
     
+    <bean id="securityRoles" class="org.mifos.security.domain.SecurityRoles">
+    	<property name="roles">
+    		<list>
+    			<value>ROLE_ADMIN</value>
+    			<value>ROLE_USER</value>
+    			<value>ROLE_GUEST</value>
+    			<value>ROLE_ANONYMOUS</value>
+    		</list>
+    	</property>
+    </bean>
+    
    <!-- freemarker config -->
    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
      <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
@@ -116,7 +127,7 @@
         <property name="clientService" ref="clientService"/>
     </bean>
     
-    <bean name="createLoanProductFormController" class="org.mifos.ui.loan.controller.CreateLoanProductFormController">
+    <bean id="createLoanProductFormController" class="org.mifos.ui.loan.controller.CreateLoanProductFormController">
         <property name="sessionForm"  value="true"/>
         <property name="commandName"  value="loanProduct"/>
         <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductFormBean"/>
@@ -126,7 +137,7 @@
         <property name="loanProductService" ref="loanProductService"/>
     </bean>
     
-    <bean name="editLoanProductFormController" class="org.mifos.ui.loan.controller.EditLoanProductFormController">
+    <bean id="editLoanProductFormController" class="org.mifos.ui.loan.controller.EditLoanProductFormController">
         <property name="sessionForm"  value="true"/>
         <property name="commandName"  value="loanProduct"/>
         <property name="commandClass" value="org.mifos.ui.loan.command.LoanProductFormBean"/>
@@ -146,7 +157,7 @@
         <property name="clientService" ref="clientService"/>
     </bean>
     
-    <bean name="createUserFormController" class="org.mifos.ui.user.controller.CreateUserFormController">
+    <bean id="createUserFormController" class="org.mifos.ui.user.controller.CreateUserFormController">
         <property name="sessionForm"  value="true"/>
         <property name="commandName"  value="user"/>
         <property name="commandClass" value="org.mifos.ui.user.command.UserFormBean"/>
@@ -154,6 +165,7 @@
         <property name="successView"  value="home.ftl"/>
         <property name="validator"    ref="beanValidator"/>
         <property name="userService" ref="userService"/>
+        <property name="securityRoles" ref="securityRoles"/>
     </bean>
 
     <bean id="deleteLoanProductController" class="org.mifos.ui.loan.controller.DeleteLoanProductController">
