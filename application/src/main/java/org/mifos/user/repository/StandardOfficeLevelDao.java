@@ -68,12 +68,4 @@ public class StandardOfficeLevelDao implements OfficeLevelDao {
         return result.get(0);
     }
 
-    /* TODO: 2008/10/22 work in progress
-    @Override
-    public OfficeLevel create(String name) {
-        OfficeLevel officeLevel = new OfficeLevel(name,null,null);
-        entityManager.persist(officeLevel);
-        return officeLevel;
-    }
-    */
 }

@@ -28,8 +28,6 @@ import org.dbunit.dataset.DataSetException;
 import org.mifos.test.acceptance.framework.AppInfoPage;
 import org.mifos.test.acceptance.framework.LoginPage;
 import org.mifos.test.acceptance.framework.UiTestCaseBase;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -42,10 +40,8 @@ public class AppInfoTest extends UiTestCaseBase {
     
 
     private LoginPage loginPage;
-
-    @Autowired
-    private DriverManagerDataSource dataSource;
-    
+   
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
     @BeforeMethod
     public void setUp() throws Exception {
         super.setUp();

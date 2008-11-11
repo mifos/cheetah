@@ -23,7 +23,6 @@ package org.mifos.user.service;
 import java.util.List;
 
 import org.mifos.user.domain.Office;
-import org.mifos.user.domain.OfficeLevel;
 import org.mifos.user.repository.InMemoryOfficeDao;
 import org.mifos.user.repository.InMemoryOfficeLevelDao;
 import org.mifos.user.repository.OfficeDao;

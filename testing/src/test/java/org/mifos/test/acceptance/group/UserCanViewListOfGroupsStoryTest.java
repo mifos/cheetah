@@ -28,9 +28,6 @@ import org.dbunit.dataset.DataSetException;
 import org.mifos.test.acceptance.framework.LoginPage;
 import org.mifos.test.acceptance.framework.UiTestCaseBase;
 import org.mifos.test.acceptance.framework.ViewGroupsPage;
-import org.mifos.test.framework.util.DatabaseTestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -46,9 +43,8 @@ import org.testng.annotations.Test;
 public class UserCanViewListOfGroupsStoryTest extends UiTestCaseBase {
 
 	private LoginPage loginPage;
-	private DriverManagerDataSource dataSource;
-    private DatabaseTestUtils databaseTestUtils;
 
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
 	@BeforeMethod
 	public void setUp() throws Exception {
 		super.setUp();
@@ -77,17 +73,7 @@ public class UserCanViewListOfGroupsStoryTest extends UiTestCaseBase {
         // do nothing
     }
 
-	@Autowired
-	@Test(enabled=false)
-	public void setDataSource(DriverManagerDataSource dataSource) {
-		this.dataSource = dataSource;
-	}
 
-    @Autowired
-    @Test(enabled=false)
-    public void setDatabaseTestUtils(DatabaseTestUtils databaseTestUtils) {
-        this.databaseTestUtils = databaseTestUtils;
-    }
 
 }
 

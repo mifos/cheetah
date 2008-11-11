@@ -86,12 +86,12 @@ public class StandardLoanProductServiceIntegrationTest extends AbstractTransacti
     }    
     
     public void testCreateLoanProduct() {
-        assertSameState (loanProductService.createLoanProduct(testLoanProductDto1), testLoanProductDto1);
+        LoanProductServiceTestHelper.assertSameState (loanProductService.createLoanProduct(testLoanProductDto1), testLoanProductDto1);
         Assert.assertEquals(loanProductService.getAll().size(), 1, "Expected one loan product");
-        assertSameState ((LoanProductDto)loanProductService.getAll().get(0), testLoanProductDto1);
-        assertSameState (loanProductService.createLoanProduct(testLoanProductDto2), testLoanProductDto2);
+        LoanProductServiceTestHelper.assertSameState ((LoanProductDto)loanProductService.getAll().get(0), testLoanProductDto1);
+        LoanProductServiceTestHelper.assertSameState (loanProductService.createLoanProduct(testLoanProductDto2), testLoanProductDto2);
         Assert.assertEquals(loanProductService.getAll().size(), 2, "Expected two loan products");
-        assertSameState ((LoanProductDto)loanProductService.getAll().get(1), testLoanProductDto2);
+        LoanProductServiceTestHelper.assertSameState ((LoanProductDto)loanProductService.getAll().get(1), testLoanProductDto2);
     }
     
     public void testDeleteLoanProductWithNoLoans() throws MifosServiceException {
@@ -124,16 +124,8 @@ public class StandardLoanProductServiceIntegrationTest extends AbstractTransacti
             entityManager.flush();
             Assert.fail("Should have raised exception.");
         } catch (MifosServiceException e) {
-            // expected
+            Assert.assertNotNull(e, "Expected to get an exception.");
         }
-    }
-
-    private void assertSameState (LoanProductDto actual, LoanProductDto expected) {
-        Assert.assertEquals(actual.getLongName(), expected.getLongName(), "Wrong long name");
-        Assert.assertEquals(actual.getShortName(), expected.getShortName(), "Wrong short name");
-        Assert.assertEquals(actual.getMinInterestRate(), expected.getMinInterestRate(), 0, "Wrong min interest rate");
-        Assert.assertEquals(actual.getMaxInterestRate(), expected.getMaxInterestRate(), 0, "Wrong max interest rate");
-        Assert.assertEquals(actual.getStatus(), expected.getStatus(), "Wrong status");
     }
 
 }

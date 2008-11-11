@@ -18,32 +18,20 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.user.repository;
+package org.mifos.loan.service;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.Assert;
 
 /**
  *
  */
-@Test(groups = { "unit" })
-public class InMemoryOfficelDaoTest {
-
-    private OfficeDaoTestHelper officeDaoTestHelper;
-
-    @BeforeMethod
-	void setUp() {
-        InMemoryOfficeLevelDao officeLevelDao = new InMemoryOfficeLevelDao();
-        OfficeDao officeDao = new InMemoryOfficeDao(officeLevelDao.getHeadOfficeLevel(), officeLevelDao.getBranchOfficeLevel());
-	    officeDaoTestHelper = new OfficeDaoTestHelper(officeDao);
-	}
-	
-    public void testGetHeadOffice() {
-        officeDaoTestHelper.testGetHeadOffice();
+public class LoanProductServiceTestHelper {
+    public static void assertSameState (LoanProductDto actual, LoanProductDto expected) {
+        Assert.assertEquals(actual.getLongName(), expected.getLongName(), "Wrong long name");
+        Assert.assertEquals(actual.getShortName(), expected.getShortName(), "Wrong short name");
+        Assert.assertEquals(actual.getMinInterestRate(), expected.getMinInterestRate(), 0, "Wrong min interest rate");
+        Assert.assertEquals(actual.getMaxInterestRate(), expected.getMaxInterestRate(), 0, "Wrong max interest rate");
+        Assert.assertEquals(actual.getStatus(), expected.getStatus(), "Wrong status");
     }
-    
-    public void testGetAll() {
-        officeDaoTestHelper.testGetAll();
-    }
-	 
+
 }

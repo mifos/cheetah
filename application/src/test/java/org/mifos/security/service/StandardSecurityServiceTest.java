@@ -1,6 +1,5 @@
 package org.mifos.security.service;
 
-import org.mifos.security.domain.StandardPasswordEncoder;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -15,7 +14,7 @@ public class StandardSecurityServiceTest {
 
     private void assertCorrectMd5Hash (String password, String expectedEncoding) {
         Assert.assertEquals(
-                (new StandardSecurityService()).encodePassword(password), 
+                new StandardSecurityService().encodePassword(password), 
                 expectedEncoding);
         
     }

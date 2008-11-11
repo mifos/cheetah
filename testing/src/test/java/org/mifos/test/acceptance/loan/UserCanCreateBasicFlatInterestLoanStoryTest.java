@@ -35,6 +35,7 @@ import org.testng.annotations.Test;
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
 @Test(groups={"basicFlatInterestLoanStory","acceptance","ui"})
+@SuppressWarnings("PMD.SignatureDeclareThrowsException") // for test cases, throwing Exception is ok
 public class UserCanCreateBasicFlatInterestLoanStoryTest extends UiTestCaseBase {
 
 	private LoginPage loginPage;

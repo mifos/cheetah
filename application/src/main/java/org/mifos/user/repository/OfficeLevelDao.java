@@ -28,7 +28,4 @@ public interface OfficeLevelDao {
 
     OfficeLevel getBranchOfficeLevel();
 
-    /* TODO: 2008/10/22 work in progress
-    OfficeLevel create(String name);
-    */
 }

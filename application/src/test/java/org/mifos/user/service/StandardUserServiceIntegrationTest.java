@@ -3,7 +3,6 @@ package org.mifos.user.service;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.mifos.core.DuplicatePersistedObjectException;
 import org.mifos.core.MifosServiceException;
 import org.mifos.core.MifosValidationException;
 import org.mifos.security.service.SecurityService;
@@ -37,7 +36,7 @@ public class StandardUserServiceIntegrationTest
     }
     
     @BeforeMethod
-    private void clearData() {
+    public void clearData() {
         super.deleteFromTables(new String[] {"authorities", "users"});
     }
     

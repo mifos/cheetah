@@ -54,6 +54,7 @@ public class AdminUserCanViewLoanProductsStoryTest extends UiTestCaseBase {
 	private DriverManagerDataSource dataSource;
     
     @BeforeMethod
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // Exception is thrown by superclass method
     public void setUp() throws Exception {
         super.setUp();
         loginPage = new LoginPage(selenium);

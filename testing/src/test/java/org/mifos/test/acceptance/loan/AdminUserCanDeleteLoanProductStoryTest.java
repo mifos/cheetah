@@ -21,7 +21,6 @@
 package org.mifos.test.acceptance.loan;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.dbunit.DatabaseUnitException;
@@ -105,7 +104,6 @@ public class AdminUserCanDeleteLoanProductStoryTest extends UiTestCaseBase {
     
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
     private void verifyDeletedStatus() throws Exception {
-        Connection jdbcConnection = null;
         SimpleDataSet simpleDataSet = new SimpleDataSet();
         simpleDataSet.row("loanProducts", "id=1", "longName=long1",  "maxInterestRate=2.0", "minInterestRate=1.0", "shortName=short1", "status=ACTIVE", "deletedStatus=DELETED"); 
         String deletedLoanProductDataSetXml = simpleDataSet.toString();

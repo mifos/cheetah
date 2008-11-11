@@ -11,7 +11,8 @@ public class SeleniumSpeedControl {
 
     private static final Log LOG = LogFactory.getLog(SeleniumSpeedControl.class);
 
-	private int delay = 0;
+    @SuppressWarnings("PMD.ImmutableField") // making this final generates a compile error in the constructor
+	private int delay = 0; 
 	
 	public SeleniumSpeedControl() {
 		String delayString = System.getProperty("mifos.selenium.delay", "0");

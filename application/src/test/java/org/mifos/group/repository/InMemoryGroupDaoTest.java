@@ -24,8 +24,6 @@ import java.util.List;
 
 import junit.framework.Assert;
 
-import org.joda.time.LocalDate;
-import org.mifos.client.domain.Client;
 import org.mifos.core.MifosException;
 import org.mifos.group.domain.Group;
 import org.testng.annotations.BeforeMethod;

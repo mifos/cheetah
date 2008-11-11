@@ -35,6 +35,7 @@ public class AppInfoControllerTest {
 	
 	AppInfo appInfo;
 	
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // Exception is thrown by AppInfoController.handleRequest
 	public void testHandleRequestView() throws Exception {
 		appInfo = new AppInfo();
 		String expectedSvnRevision = "123456";

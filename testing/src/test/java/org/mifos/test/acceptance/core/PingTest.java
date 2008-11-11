@@ -23,7 +23,6 @@ package org.mifos.test.acceptance.core;
 import org.mifos.test.acceptance.framework.PingPage;
 import org.mifos.test.acceptance.framework.UiTestCaseBase;
 import org.springframework.test.context.ContextConfiguration;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
@@ -34,11 +33,6 @@ import org.testng.annotations.Test;
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
 @Test(sequential=true, groups={"pingTest","acceptance","ui"})
 public class PingTest extends UiTestCaseBase {
-
-	@BeforeMethod
-	public void setUp() throws Exception {
-		super.setUp();
-	}
 
 	public void pingTest() {
 	    PingPage pingPage = new PingPage(this.selenium);

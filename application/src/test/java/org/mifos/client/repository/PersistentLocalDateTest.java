@@ -45,8 +45,6 @@ import org.testng.annotations.Test;
 @Test(groups = { "integration" })
 public class PersistentLocalDateTest extends AbstractTransactionalTestNGSpringContextTests {
 
-	@Autowired
-	private ClientDao clientDao;
 	private DriverManagerDataSource dataSource;
     private DatabaseTestUtils databaseTestUtils;
 
@@ -75,14 +73,18 @@ public class PersistentLocalDateTest extends AbstractTransactionalTestNGSpringCo
         LocalDate localDate = new LocalDate(expectedDate);
         PersistentLocalDate persistentLocalDate = new PersistentLocalDate();
         Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into clients (dateOfBirth, firstName, lastName) values (?, ?, ?)");
-        persistentLocalDate.nullSafeSet(preparedStatement, localDate, 1);
-        String[] statementParts = preparedStatement.toString().split(" ");
-        String actualDate = statementParts[8];
-        actualDate = actualDate.replaceAll("\\(", "");
-        actualDate = actualDate.replaceAll("'", "");
-        actualDate = actualDate.replaceAll(",", "");
-        Assert.assertEquals(actualDate, expectedDate);
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into clients (dateOfBirth, firstName, lastName) values (?, ?, ?)");
+            persistentLocalDate.nullSafeSet(preparedStatement, localDate, 1);
+            String[] statementParts = preparedStatement.toString().split(" ");
+            String actualDate = statementParts[8];
+            actualDate = actualDate.replaceAll("\\(", "");
+            actualDate = actualDate.replaceAll("'", "");
+            actualDate = actualDate.replaceAll(",", "");
+            Assert.assertEquals(actualDate, expectedDate);
+        } finally {
+            connection.close();
+        }
     }
     
     @Test(enabled=false)

@@ -35,6 +35,7 @@ public class AccessControlTest extends UiTestCaseBase {
 
     private LoginPage loginPage;
     
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // one of the dependent methods throws Exception
     @BeforeMethod
     public void setUp() throws Exception {
         super.setUp();

@@ -19,12 +19,9 @@
  */
 package org.mifos.loan.repository;
 
-import java.util.List;
-
-import junit.framework.Assert;
-
 import org.mifos.loan.domain.LoanProduct;
 import org.mifos.loan.domain.LoanProductStatus;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -32,49 +29,37 @@ import org.testng.annotations.Test;
 public class InMemoryLoanProductDaoTest {
 
 	private LoanProductDao loanProductDao;
-
-    private static final String longName = "long name 1";
-    private static final Double maxInterestRate = 1.0;
-    private static final Double minInterestRate = 2.0;
-
+	private LoanProductDaoTestHelper loanProductDaoTestHelper;
 	
 	@BeforeMethod
 	void setUp() {
 		loanProductDao = new InMemoryLoanProductDao();
+		loanProductDaoTestHelper = new LoanProductDaoTestHelper(loanProductDao);
 	}
+
+    public void testCreateOneProduct() {
+        loanProductDaoTestHelper.testCreateOneProduct();
+    }
 	
-	
-	@Test(groups = { "unit" })
 	public void testCreateLoanProduct() {
 		String shortName = "short name 1";
 		LoanProductStatus status = LoanProductStatus.ACTIVE;
 		
-		LoanProduct newLoanProduct = loanProductDao.createLoanProduct(longName, shortName, minInterestRate, 
-				                                                      maxInterestRate, status);
-		assert(newLoanProduct.getId().equals(1));
-		assert(newLoanProduct.getLongName().equals(longName));
-		assert(newLoanProduct.getShortName().equals(shortName));
-		assert(newLoanProduct.getMinInterestRate().equals(minInterestRate));
-		assert(newLoanProduct.getMaxInterestRate().equals(maxInterestRate));
-		assert(newLoanProduct.getStatus().equals(status));
-		LoanProduct anotherLoanProduct = loanProductDao.createLoanProduct(longName, shortName, minInterestRate, 
-				                                                          maxInterestRate, status);
-		assert(anotherLoanProduct.getId().equals(2));
-		}
+		LoanProduct newLoanProduct = loanProductDao.createLoanProduct(LoanProductDaoTestHelper.longName, shortName, LoanProductDaoTestHelper.minInterestRate, 
+		        LoanProductDaoTestHelper.maxInterestRate, status);
+		Assert.assertEquals(newLoanProduct.getId().intValue(),1);
+		Assert.assertEquals(newLoanProduct.getLongName(),LoanProductDaoTestHelper.longName);
+		Assert.assertEquals(newLoanProduct.getShortName(),shortName);
+		Assert.assertEquals(newLoanProduct.getMinInterestRate(),LoanProductDaoTestHelper.minInterestRate);
+		Assert.assertEquals(newLoanProduct.getMaxInterestRate(),LoanProductDaoTestHelper.maxInterestRate);
+		Assert.assertEquals(newLoanProduct.getStatus(),status);
+		LoanProduct anotherLoanProduct = loanProductDao.createLoanProduct(LoanProductDaoTestHelper.longName, shortName, LoanProductDaoTestHelper.minInterestRate, 
+		        LoanProductDaoTestHelper.maxInterestRate, status);
+		Assert.assertEquals(anotherLoanProduct.getId().intValue(),2);
+	}
 
-    @Test(groups = { "unit" })
     public void testDeleteLoanProduct() {
-        LoanProductStatus status = LoanProductStatus.ACTIVE;
-        LoanProduct newLoanProduct = loanProductDao.createLoanProduct(longName, "short-name-1", minInterestRate, 
-                                                                      maxInterestRate, status);
-        LoanProduct anotherLoanProduct = loanProductDao.createLoanProduct(longName, "short-name-2", minInterestRate, 
-                                                                          maxInterestRate, status);
-        
-        Assert.assertEquals(2, loanProductDao.getLoanProducts().size());
-        loanProductDao.deleteLoanProduct(newLoanProduct);
-        List<LoanProduct> loanProducts = loanProductDao.getLoanProducts();
-        Assert.assertEquals(1, loanProducts.size());
-        Assert.assertEquals(anotherLoanProduct.getId(), loanProducts.get(0).getId());
+        loanProductDaoTestHelper.testDeleteLoanProduct();
     }
 
 }

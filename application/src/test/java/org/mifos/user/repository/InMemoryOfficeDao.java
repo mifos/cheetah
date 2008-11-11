@@ -74,13 +74,4 @@ public class InMemoryOfficeDao implements OfficeDao {
         return new ArrayList<Office>(store.values());
     }
 
-    /* TODO: 2008/10/22 work in progress
-    @Override
-    public Office create(String name) {
-        Office office = new Office(name,null,null);
-        office.setId(generateNextId());
-        store.put(office.getId(), office);
-        return office;
-    }
-     */
 }

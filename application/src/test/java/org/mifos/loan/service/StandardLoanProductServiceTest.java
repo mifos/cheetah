@@ -49,23 +49,21 @@ public class StandardLoanProductServiceTest {
 	private final LoanProductStatus status2 = LoanProductStatus.INACTIVE;
 	
 	private LoanProductDto testProduct1;
-	private LoanProductDto testProduct2;
 
 	@BeforeMethod
-	private void setUp() {
+	public void setUp() {
 		loanProductService = new StandardLoanProductService();
 		LoanDao loanDao = new InMemoryLoanDao();
 		loanProductService.setLoanDao(loanDao);
 		loanProductService.setLoanProductDao (new InMemoryLoanProductDao());
 		testProduct1 = new LoanProductDto(longName1, shortName1, minInt1, maxInt1, status1);
-		testProduct2 = new LoanProductDto(longName2, shortName2, minInt2, maxInt2, status2);
 	}
 	
 	public void testCreateLoanProduct() {
-		assertSameState (loanProductService.createLoanProduct(testProduct1),
+		LoanProductServiceTestHelper.assertSameState (loanProductService.createLoanProduct(testProduct1),
 							  testProduct1);
 		Assert.assertEquals(loanProductService.getAll().size(), 1, "Expected one loan product");
-		assertSameState ((LoanProductDto)loanProductService.getAll().get(0), testProduct1);
+		LoanProductServiceTestHelper.assertSameState ((LoanProductDto)loanProductService.getAll().get(0), testProduct1);
 	}
 	
 	public void testUpdateLoanProduct() {
@@ -74,8 +72,8 @@ public class StandardLoanProductServiceTest {
 		LoanProductDto changed = new LoanProductDto("new long name", "new short name",
 													 3.5, 4.5, LoanProductStatus.INACTIVE);
 		changed.setId(retrievedOnCreate.getId());											 
-		assertSameState(loanProductService.updateLoanProduct(changed), changed);
-		assertSameState(loanProductService.getLoanProduct(retrievedOnCreate.getId()), changed);
+		LoanProductServiceTestHelper.assertSameState(loanProductService.updateLoanProduct(changed), changed);
+		LoanProductServiceTestHelper.assertSameState(loanProductService.getLoanProduct(retrievedOnCreate.getId()), changed);
 	}
 	
 	public void testDeleteLoanProduct() throws MifosServiceException {
@@ -92,7 +90,7 @@ public class StandardLoanProductServiceTest {
 		LoanProductDto testLoanProductDto = createTestLoanProductDto1();
 		LoanProductDto retrievedLoanProductDto = loanProductService.createLoanProduct(testLoanProductDto);
 		Assert.assertEquals(loanProductService.getAll().size(), 1);
-		assertSameState(loanProductService.getLoanProduct(retrievedLoanProductDto.getId()), 
+		LoanProductServiceTestHelper.assertSameState(loanProductService.getLoanProduct(retrievedLoanProductDto.getId()), 
 									   testLoanProductDto);
 	}
 	
@@ -102,27 +100,18 @@ public class StandardLoanProductServiceTest {
 		LoanProductDto retrievedLoanProductDto1 = loanProductService.createLoanProduct(testLoanProductDto1);
 		LoanProductDto retrievedLoanProductDto2 = loanProductService.createLoanProduct(testLoanProductDto2);
 		Assert.assertEquals(loanProductService.getAll().size(), 2);
-		assertSameState(loanProductService.getLoanProduct(retrievedLoanProductDto1.getId()), 
+		LoanProductServiceTestHelper.assertSameState(loanProductService.getLoanProduct(retrievedLoanProductDto1.getId()), 
 				   					   testLoanProductDto1);
-		assertSameState(loanProductService.getLoanProduct(retrievedLoanProductDto2.getId()), 
+		LoanProductServiceTestHelper.assertSameState(loanProductService.getLoanProduct(retrievedLoanProductDto2.getId()), 
 				   					   testLoanProductDto2);
 	}
 
 	private LoanProductDto createTestLoanProductDto1() {
-		LoanProductDto loanProductDTO = new LoanProductDto(longName1, shortName1, minInt1, maxInt1, status1);
-		return loanProductDTO;
+		return new LoanProductDto(longName1, shortName1, minInt1, maxInt1, status1);
 	}
 
 	private LoanProductDto createTestLoanProductDto2() {
-		LoanProductDto loanProductDTO = new LoanProductDto(longName2, shortName2, minInt2, maxInt2, status2);
-		return loanProductDTO;
+		return new LoanProductDto(longName2, shortName2, minInt2, maxInt2, status2);
 	}
 	
-	private void assertSameState (LoanProductDto actual, LoanProductDto expected) {
-		Assert.assertEquals(actual.getLongName(), expected.getLongName(), "Wrong long name");
-		Assert.assertEquals(actual.getShortName(), expected.getShortName(), "Wrong short name");
-		Assert.assertEquals(actual.getMinInterestRate(), expected.getMinInterestRate(), 0, "Wrong min interest rate");
-		Assert.assertEquals(actual.getMaxInterestRate(), expected.getMaxInterestRate(), 0, "Wrong max interest rate");
-		Assert.assertEquals(actual.getStatus(), expected.getStatus(), "Wrong status");
-	}
 }

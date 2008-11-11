@@ -26,12 +26,11 @@ import org.testng.annotations.Test;
 @Test(groups = { "unit" })
 public class InMemoryOfficeLevelDaoTest {
 
-    private OfficeLevelDao officeLevelDao;
     private OfficeLevelDaoTestHelper officeLevelDaoTestHelper;
 
     @BeforeMethod
 	void setUp() {
-	    officeLevelDao = new InMemoryOfficeLevelDao();
+        OfficeLevelDao officeLevelDao = new InMemoryOfficeLevelDao();
 	    officeLevelDaoTestHelper = new OfficeLevelDaoTestHelper(officeLevelDao);
 	}
 	

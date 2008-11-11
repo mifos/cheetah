@@ -37,17 +37,19 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * @author kpierce
  *
  */
-@java.lang.SuppressWarnings("PMD.UnusedPrivateMethod")
+
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"UPM"}, justification="@BeforeMethod & @AfterMethod methods are called by testNG")
 @Test(groups = { "unit" })
 public class TestDateUtilityServiceTests {
 
 	@BeforeMethod(groups = { "unit" })
+	@SuppressWarnings("PMD.UnusedPrivateMethod")
 	private void setUp() {
 		DateTimeUtils.setCurrentMillisSystem();
 	}
 	
 	@AfterMethod(groups = { "unit" })
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
 	private void tearDown() {
 		DateTimeUtils.setCurrentMillisSystem();
 	}

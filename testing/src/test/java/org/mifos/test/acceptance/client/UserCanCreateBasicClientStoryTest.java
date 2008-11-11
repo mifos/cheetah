@@ -43,6 +43,7 @@ import org.testng.annotations.Test;
  */
 @ContextConfiguration(locations={"classpath:ui-test-context.xml"})
 @Test(sequential=true, groups={"userCanCreateBasicClientStoryTest","acceptance","ui"})
+@SuppressWarnings("PMD.SignatureDeclareThrowsException") // for test cases, throwing Exception is ok
 public class UserCanCreateBasicClientStoryTest extends UiTestCaseBase {
 
 	private LoginPage loginPage;

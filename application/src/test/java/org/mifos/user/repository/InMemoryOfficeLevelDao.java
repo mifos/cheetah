@@ -78,13 +78,4 @@ public class InMemoryOfficeLevelDao implements OfficeLevelDao {
         return headOfficeLevel;
     }
 
-    /* TODO: 2008/10/22 work in progress
-    @Override
-    public OfficeLevel create(String name) {
-        OfficeLevel officeLevel = new OfficeLevel(name,null,null);
-        officeLevel.setId(generateNextId());
-        store.put(officeLevel.getId(), officeLevel);
-        return officeLevel;
-    }
-     */
 }

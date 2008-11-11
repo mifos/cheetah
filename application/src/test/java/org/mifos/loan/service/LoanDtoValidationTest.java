@@ -22,7 +22,6 @@ package org.mifos.loan.service;
 
 import java.math.BigDecimal;
 
-import org.apache.log4j.Logger;
 import org.mifos.core.AbstractDtoValidationTest;
 import org.mifos.loan.domain.LoanProductStatus;
 import org.testng.annotations.BeforeMethod;
@@ -30,9 +29,6 @@ import org.testng.annotations.Test;
 
 @Test(groups = { "unit" })
 public class LoanDtoValidationTest  extends AbstractDtoValidationTest {
-	
-    private static final Logger logger = Logger.getLogger(LoanDtoValidationTest.class);
-
 	private LoanDto loanDto;
 	
 	@BeforeMethod

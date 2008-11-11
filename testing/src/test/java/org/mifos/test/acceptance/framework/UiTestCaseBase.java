@@ -23,16 +23,13 @@ package org.mifos.test.acceptance.framework;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import org.testng.Assert;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dbunit.DatabaseUnitException;
 import org.mifos.test.framework.util.DatabaseTestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.AfterGroups;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -43,7 +40,6 @@ import com.thoughtworks.selenium.Selenium;
 @Test(sequential=true)
 public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
 
-    private static final Log LOG = LogFactory.getLog(UiTestCaseBase.class);
     private static Boolean seleniumServerIsRunning = Boolean.FALSE;
     private static final String ERROR_ELEMENT_ID = "*.errors";
 
@@ -51,10 +47,11 @@ public class UiTestCaseBase extends AbstractTestNGSpringContextTests {
     @Autowired
     protected DriverManagerDataSource dataSource;
     
-    private DatabaseTestUtils dbUtils = new DatabaseTestUtils();
+    private final DatabaseTestUtils dbUtils = new DatabaseTestUtils();
    
 	protected Selenium selenium;
 	
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // allow for overriding methods to throw Exception
 	@BeforeMethod
 	public void setUp() throws Exception {
 		// do nothing

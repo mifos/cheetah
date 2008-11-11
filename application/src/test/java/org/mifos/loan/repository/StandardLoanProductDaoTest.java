@@ -21,9 +21,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 @ContextConfiguration(locations={"classpath:integrationTestContext.xml"})
 @TransactionConfiguration(transactionManager="transactionManager")
 @Test(groups = { "integration" })
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"UPM"}, justification="@BeforeMethod & @AfterMethod methods are called by testNG")
+@java.lang.SuppressWarnings("PMD.SignatureDeclareThrowsException") // for test cases, throwing Exception is ok
 public class StandardLoanProductDaoTest  
 			extends	AbstractTransactionalTestNGSpringContextTests{
 	
@@ -32,28 +36,21 @@ public class StandardLoanProductDaoTest
     @Autowired
     private DriverManagerDataSource dataSource;
     
+    private LoanProductDaoTestHelper loanProductDaoTestHelper;
+    
     @BeforeMethod
-    private void clearData() {
+    @SuppressWarnings("PMD.UnusedPrivateMethod")    
+    private void setUp() {
         super.deleteFromTables(new String[] {"loans"});
         super.deleteFromTables(new String[] {"loanproducts"});
+        loanProductDaoTestHelper = new LoanProductDaoTestHelper(loanProductDao);
     }
 	
 	public void testCreateOneProduct() {
-		String longName = "long";
-		String shortName = "short";
-		Double minInterestRate = 1.0;
-		Double maxInterestRate = 2.0;
-		LoanProductStatus status = LoanProductStatus.ACTIVE;
-		
-		LoanProduct product = new LoanProduct(null, "long", "short", 1.0, 2.0, LoanProductStatus.ACTIVE);
-		LoanProduct createdProduct = loanProductDao.createLoanProduct(longName, shortName, minInterestRate, 
-															maxInterestRate, status);
-		assertSameState(createdProduct, product);
-		Assert.assertNotNull(createdProduct.getId());
-		LoanProduct retrievedProduct = loanProductDao.get(createdProduct.getId());
-		assertSameState(retrievedProduct, product);
+	    loanProductDaoTestHelper.testCreateOneProduct();
 	}
 	
+	@SuppressWarnings("PMD.SignatureDeclareThrowsException") // for test cases, throwing Exception is ok
 	public void testGetProducts() throws Exception {
 	    insertLoanProductTwoProductsDataSet();
 	    List<LoanProduct> products = loanProductDao.getLoanProducts ();
@@ -63,6 +60,7 @@ public class StandardLoanProductDaoTest
         Assert.assertEquals(products.get(1).getLongName(), "long2", "Second product retrieved has incorrect long name");
 	}
 	
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // for test cases, throwing Exception is ok
 	public void testGet() throws Exception {
 	    insertLoanProductTwoProductsDataSet();
 	    LoanProduct product1 = loanProductDao.get(1);
@@ -71,9 +69,10 @@ public class StandardLoanProductDaoTest
         Assert.assertEquals(product2.getLongName(), "long2", "Didn't get expected loan product");
 	}
 	
+    @SuppressWarnings("PMD.SignatureDeclareThrowsException") // for test cases, throwing Exception is ok
 	public void testUpdate() throws Exception {
 	    insertLoanProductTwoProductsDataSet();
-	    LoanProduct product = new LoanProduct(new Integer(1), "long3", "short3", 9.0, 10.0, LoanProductStatus.INACTIVE);
+	    LoanProduct product = new LoanProduct(Integer.valueOf(1), "long3", "short3", 9.0, 10.0, LoanProductStatus.INACTIVE);
         loanProductDao.updateLoanProduct(product);
         LoanProduct retrievedProduct = loanProductDao.get(1);
         Assert.assertEquals(retrievedProduct.getLongName(), "long3", "Didn't update long name");
@@ -84,33 +83,9 @@ public class StandardLoanProductDaoTest
 	}
 		
     public void testDeleteLoanProduct() throws MifosException {
-        
-        String longName = "long name 1";
-        Double maxInterestRate = 1.0;
-        Double minInterestRate = 2.0;
-        
-        LoanProductStatus status = LoanProductStatus.ACTIVE;
-        LoanProduct newLoanProduct = loanProductDao.createLoanProduct(longName, "short-name-1", minInterestRate, 
-                                                                      maxInterestRate, status);
-        LoanProduct anotherLoanProduct = loanProductDao.createLoanProduct(longName, "short-name-2", minInterestRate, 
-                                                                          maxInterestRate, status);
-        
-        Assert.assertEquals(2, loanProductDao.getLoanProducts().size());
-        loanProductDao.deleteLoanProduct(newLoanProduct);
-        List<LoanProduct> loanProducts = loanProductDao.getLoanProducts();
-        Assert.assertEquals(1, loanProducts.size());
-        Assert.assertEquals(anotherLoanProduct.getId(), loanProducts.get(0).getId());
+        loanProductDaoTestHelper.testDeleteLoanProduct();
     }
     
-	private void assertSameState (LoanProduct actual, LoanProduct expected) {
-		Assert.assertEquals(actual.getLongName(), expected.getLongName(), "Wrong long name");
-		Assert.assertEquals(actual.getShortName(), expected.getShortName(), "Wrong short name");
-		Assert.assertEquals(actual.getMinInterestRate(), expected.getMinInterestRate(), 0, "Wrong min interest rate");
-		Assert.assertEquals(actual.getMaxInterestRate(), expected.getMaxInterestRate(), 0, "Wrong max interest rate");
-		Assert.assertEquals(actual.getStatus(), expected.getStatus(), "Wrong status");
-	}
-	
-
     @Test(enabled=false)
     public DriverManagerDataSource getDataSource() {
         return dataSource;

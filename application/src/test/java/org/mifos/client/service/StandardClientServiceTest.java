@@ -33,7 +33,6 @@ import org.mifos.client.repository.InMemoryClientDao;
 import org.mifos.core.MifosException;
 import org.mifos.core.MifosServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.validation.Validator;
