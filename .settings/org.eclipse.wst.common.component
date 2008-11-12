@@ -16,6 +16,8 @@
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/testFramework/src/main/java"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/testFramework/src/test/java"/>
 <wb-resource deploy-path="/WEB-INF/classes" source-path="/webapp/src/main/webapp/css"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/acceptanceTesting/src/test/java"/>
+<wb-resource deploy-path="/WEB-INF/classes" source-path="/acceptanceTesting/src/test/resources"/>
 <property name="java-output-path"/>
         <property name="context-root" value="mifos"/>
 </wb-module>
