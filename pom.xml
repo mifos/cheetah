@@ -12,7 +12,7 @@
      <module>testFramework</module>
      <module>application</module>
      <module>webapp</module>
-     <module>testing</module>
+     <module>acceptanceTesting</module>
    </modules>
 
    <properties>
