@@ -101,7 +101,7 @@
                            <tasks>
                               <copy todir="${tomcat.home.directory}/conf"
                                  overwrite="true">
-                                 <fileset dir="${modules.root.dir}/testing/src/test/containers/${container.name}" />
+                                 <fileset dir="${modules.root.dir}/acceptanceTesting/src/test/containers/${container.name}" />
                               </copy>
                            </tasks>
                         </configuration>
@@ -308,9 +308,9 @@
    <build>
       <finalName>cheetah-testing</finalName>
       <defaultGoal>integration-test</defaultGoal>
-      <sourceDirectory>${modules.root.dir}/testing/src/main/java</sourceDirectory>
-      <scriptSourceDirectory>${modules.root.dir}/testing/src/main/scripts</scriptSourceDirectory>
-      <testSourceDirectory>${modules.root.dir}/testing/src/test/java</testSourceDirectory>
+      <sourceDirectory>${modules.root.dir}/acceptanceTesting/src/main/java</sourceDirectory>
+      <scriptSourceDirectory>${modules.root.dir}/acceptanceTesting/src/main/scripts</scriptSourceDirectory>
+      <testSourceDirectory>${modules.root.dir}/acceptanceTesting/src/test/java</testSourceDirectory>
       <outputDirectory>target/cheetah-testing/WEB-INF/classes</outputDirectory>
       <testOutputDirectory>target/test-classes</testOutputDirectory>
       <plugins>
@@ -415,8 +415,8 @@
                <wait>${cargo.wait}</wait>
                <container>
                   <containerId>${container.name}</containerId>
-                  <log>${modules.root.dir}/testing/target/logs/${container.name}.log</log>
-                  <output>${modules.root.dir}/testing/target/logs/${container.name}.out</output>
+                  <log>${modules.root.dir}/acceptanceTesting/target/logs/${container.name}.log</log>
+                  <output>${modules.root.dir}/acceptanceTesting/target/logs/${container.name}.out</output>
                   <timeout>600000</timeout>
                </container>
                <configuration>
