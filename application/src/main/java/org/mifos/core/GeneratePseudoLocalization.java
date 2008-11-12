@@ -45,6 +45,7 @@ public class GeneratePseudoLocalization {
 	 *   * pass prop files in from maven and autogenerate the _is localization
 	 *   * remove _is localization from version control
 	 */
+	@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 	public static void main(String[] args) throws IOException {
 
 	    Properties defaultProps = new Properties();
@@ -61,7 +62,7 @@ public class GeneratePseudoLocalization {
 			String key = (String)entry.getKey();
 			String value = (String)entry.getValue();
 			LOG.info(key + "=" + value);
-			StringBuffer buffer = new StringBuffer(PREFIX); // NOPMD by Van on 9/24/08 10:22 PM
+			StringBuffer buffer = new StringBuffer(PREFIX); 
 			buffer.append(value);
 			buffer.append(SUFFIX);
 			defaultProps.setProperty(key, buffer.toString());

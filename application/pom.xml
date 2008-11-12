@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.mifos</groupId>
    <artifactId>cheetah</artifactId>
-   <packaging>war</packaging>
+   <packaging>jar</packaging>
    <version>0.0.3-SNAPSHOT</version>
    <name>Mifos - Cheetah Application</name>
    <url>http://www.mifos.org</url>
@@ -45,47 +45,6 @@
       </profile>
       
    </profiles>   
-   <repositories>
-      <repository>
-         <id>spring-snapshot</id>
-         <name>Spring Portfolio Milestone Repository</name>
-         <url>http://s3.amazonaws.com/maven.springframework.org/milestone</url>
-      </repository>
-      <repository>
-         <id>maven2-repository.dev.java.net</id>
-         <name>Java.net Repository for Maven</name>
-         <url>http://download.java.net/maven/2/</url>
-         <layout>default</layout>
-      </repository>
-      <repository>
-         <id>maven2-jboss-repository</id>
-         <name>JBoss maven2 repository</name>
-         <url>http://repository.jboss.com/maven2</url>
-         <layout>default</layout>
-      </repository>
-      <repository>
-         <id>ibiblio-maven2-repository</id>
-         <name>Ibiblio maven2 repository</name>
-         <url>http://mirrors.ibiblio.org/pub/mirrors/maven2/</url>
-         <layout>default</layout>
-      </repository>
-   </repositories>
-   <pluginRepositories>
-      <pluginRepository>
-         <id>Codehaus Snapshots</id>
-         <url>http://snapshots.repository.codehaus.org/</url>
-         <snapshots>
-            <enabled>true</enabled>
-         </snapshots>
-         <releases>
-            <enabled>false</enabled>
-         </releases>
-      </pluginRepository>
-      <pluginRepository>
-         <id>Codehaus Repository</id>
-         <url>http://repository.codehaus.org/</url>
-      </pluginRepository>
-   </pluginRepositories>
    <dependencies>
    
       <!-- from parent pom -->
@@ -109,120 +68,94 @@
           <groupId>org.dbunit</groupId>
           <artifactId>dbunit</artifactId>
       </dependency>   
-
-      <!-- for this module -->
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring</artifactId>
-         <version>2.5.5</version>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring-test</artifactId>
-         <version>2.5.5</version>
       </dependency>
       <dependency>
          <groupId>org.springframework</groupId>
          <artifactId>spring-webmvc</artifactId>
-         <version>2.5.5</version>
       </dependency>
       <dependency>
          <groupId>org.springframework.security</groupId>
          <artifactId>spring-security-core</artifactId>
-         <version>2.0-M2</version>
       </dependency>
       <dependency>
          <groupId>org.testng</groupId>
          <artifactId>testng</artifactId>
-         <version>5.8</version>
-         <scope>test</scope>
          <classifier>jdk15</classifier>
       </dependency>
       <dependency>
          <groupId>org.freemarker</groupId>
          <artifactId>freemarker</artifactId>
-         <version>2.3.13</version>
       </dependency>
       <dependency>
          <groupId>javax.servlet</groupId>
          <artifactId>servlet-api</artifactId>
-         <version>2.5</version>
-         <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>joda-time</groupId>
          <artifactId>joda-time</artifactId>
-         <version>1.5.2</version>
       </dependency>
       <dependency>
         <groupId>joda-time</groupId>
         <artifactId>joda-time-hibernate</artifactId>
-        <version>1.0</version>
       </dependency>
       <dependency>
          <groupId>commons-logging</groupId>
          <artifactId>commons-logging</artifactId>
-         <version>1.1.1</version>
       </dependency>
       <dependency>
          <groupId>org.aspectj</groupId>
          <artifactId>aspectjweaver</artifactId>
-         <version>1.6.1</version>
       </dependency>
       <dependency>
          <groupId>mysql</groupId>
          <artifactId>mysql-connector-java</artifactId>
-         <version>5.1.6</version>
       </dependency>
       <dependency>
          <groupId>findbugs</groupId>
          <artifactId>annotations</artifactId>
-         <version>1.0.0</version>
       </dependency>
       <dependency>
          <groupId>org.hibernate</groupId>
          <artifactId>ejb3-persistence</artifactId>
-         <version>1.0.1.GA</version>
       </dependency>
       <dependency>
          <groupId>org.hibernate</groupId>
          <artifactId>hibernate-entitymanager</artifactId>
-         <version>3.3.2.GA</version>
       </dependency>
       <dependency>
       	<groupId>javax.persistence</groupId>
       	<artifactId>persistence-api</artifactId>
-      	<version>1.0</version>
       </dependency>
 	  <dependency>
-		<groupId>commons-lang</groupId>
-		<artifactId>commons-lang</artifactId>
-		<version>2.3</version>
+    		<groupId>commons-lang</groupId>
+	   	<artifactId>commons-lang</artifactId>
 	  </dependency>
       <dependency>
           <groupId>org.springmodules</groupId>
           <artifactId>spring-modules-validation</artifactId>
-          <version>0.8</version>
       </dependency>
       <dependency>
       	<groupId>net.sf.dozer</groupId>
       	<artifactId>dozer</artifactId>
-      	<version>4.2.1</version>
       </dependency>
       <dependency>
          <groupId>asm</groupId>
          <artifactId>asm-all</artifactId>
-         <version>3.1</version>
       </dependency>
       <dependency>
           <groupId>org.hibernate</groupId>
           <artifactId>hibernate</artifactId>
-          <version>3.2.6.ga</version>
       </dependency>
 	  <dependency>
 		  <groupId>org.springframework.security</groupId>
 		  <artifactId>spring-security-taglibs</artifactId>
-		  <version>2.0.2</version>
 	  </dependency>
    </dependencies>
    <build>
@@ -315,12 +248,6 @@
                   </goals>
                </execution>
             </executions>
-         </plugin>
-         <plugin>
-            <artifactId>maven-war-plugin</artifactId>
-            <configuration>
-               <workDirectory>${project.build.directory}</workDirectory>
-            </configuration>
          </plugin>
       </plugins>
    </build>

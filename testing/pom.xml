@@ -262,7 +262,7 @@
       <!-- for this module -->
       <dependency>
          <groupId>org.mifos</groupId>
-         <artifactId>cheetah</artifactId>
+         <artifactId>cheetah-webapp</artifactId>
          <version>0.0.3-SNAPSHOT</version>
          <type>war</type>
       </dependency>
@@ -428,7 +428,7 @@
                   <deployables>
                      <deployable>
                         <groupId>org.mifos</groupId>
-                        <artifactId>cheetah</artifactId>
+                        <artifactId>cheetah-webapp</artifactId>
                         <type>war</type>
                         <properties>
                            <context>mifos</context>
