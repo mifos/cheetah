@@ -15,7 +15,7 @@ public class PingPage extends AbstractPage {
     }
 
     public void verifyPage() {
-        Assert.assertEquals("ping", this.selenium.getTitle());
+        Assert.assertEquals(this.selenium.getTitle(), "ping");
         Assert.assertTrue(this.selenium.isTextPresent("OK"), "'OK' not found on page.");
     }
 
