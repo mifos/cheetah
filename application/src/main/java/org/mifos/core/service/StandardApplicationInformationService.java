@@ -20,20 +20,21 @@
 
 package org.mifos.core.service;
 
-import org.mifos.core.AppInfo;
+import org.mifos.core.service.ApplicationInformationService;
+import org.mifos.core.service.ApplicationInformationDto;
 
 /**
  *
  */
 public class StandardApplicationInformationService implements
         ApplicationInformationService {
-    private AppInfo appInfo;
+    private ApplicationInformationDto appInfo;
 
-    public AppInfo getAppInfo() {
+    public ApplicationInformationDto getApplicationInformation() {
         return appInfo;
     }
 
-    public void setAppInfo(AppInfo appInfo) {
+    public void setApplicationInformation(ApplicationInformationDto appInfo) {
         this.appInfo = appInfo;
     }
     

@@ -22,18 +22,19 @@ package org.mifos.core;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mifos.core.service.ApplicationInformationDto;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 public class SystemInfo {
 
     private static final Log LOG = LogFactory.getLog(SystemInfo.class);
 
-	public SystemInfo(AppInfo appInfo, DriverManagerDataSource driverManagerDataSource) {
+	public SystemInfo(ApplicationInformationDto applicationInformationDto, DriverManagerDataSource driverManagerDataSource) {
         LOG.info("Mifos Cheetah system information:");
         LOG.info("  Software:");
-        LOG.info("    Build Id: " + appInfo.getBuildId());
-        LOG.info("    SVN revision: " + appInfo.getSvnRevision());
-        LOG.info("    Build Tag: " + appInfo.getBuildTag());
+        LOG.info("    Build Id: " + applicationInformationDto.getBuildId());
+        LOG.info("    SVN revision: " + applicationInformationDto.getSvnRevision());
+        LOG.info("    Build Tag: " + applicationInformationDto.getBuildTag());
         LOG.info("  Data source:");
         LOG.info("    JDBC URL: " + driverManagerDataSource.getUrl());
         LOG.info("    Database username: " + driverManagerDataSource.getUsername());

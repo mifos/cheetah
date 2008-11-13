@@ -21,14 +21,10 @@
 package org.mifos.core.service;
 
 
-import org.mifos.core.AppInfo;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-/**
- *
- */
 public class ApplicationInformationServiceTest {
 
     private static final String BUILD_ID = "ID_1";
@@ -40,16 +36,16 @@ public class ApplicationInformationServiceTest {
     @BeforeMethod
     public void setUp() {
         applicationInfoService = new StandardApplicationInformationService();
-        AppInfo appInfo = new AppInfo();
-        appInfo.setBuildId(BUILD_ID);
-        appInfo.setBuildTag(BUILD_NUMBER);
-        appInfo.setSvnRevision(SVN_REVISION);
-        applicationInfoService.setAppInfo(appInfo);
+        ApplicationInformationDto applicationInformationDto = new ApplicationInformationDto();
+        applicationInformationDto.setBuildId(BUILD_ID);
+        applicationInformationDto.setBuildTag(BUILD_NUMBER);
+        applicationInformationDto.setSvnRevision(SVN_REVISION);
+        applicationInfoService.setApplicationInformation(applicationInformationDto);
     }
     @Test(groups = { "unit" })
     public void testGetAppInfo() {
-        Assert.assertEquals(applicationInfoService.getAppInfo().getBuildId(), BUILD_ID);
-        Assert.assertEquals(applicationInfoService.getAppInfo().getBuildTag(), BUILD_NUMBER);
-        Assert.assertEquals(applicationInfoService.getAppInfo().getSvnRevision(), SVN_REVISION);
+        Assert.assertEquals(applicationInfoService.getApplicationInformation().getBuildId(), BUILD_ID);
+        Assert.assertEquals(applicationInfoService.getApplicationInformation().getBuildTag(), BUILD_NUMBER);
+        Assert.assertEquals(applicationInfoService.getApplicationInformation().getSvnRevision(), SVN_REVISION);
     }
 }

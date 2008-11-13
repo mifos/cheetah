@@ -20,14 +20,13 @@
 
 package org.mifos.core.service;
 
-import org.mifos.core.AppInfo;
 
 /**
  *
  */
 public interface ApplicationInformationService {
 
-    void setAppInfo(AppInfo appInfo);
-    AppInfo getAppInfo();
+    void setApplicationInformation(ApplicationInformationDto applicationInformationDto);
+    ApplicationInformationDto getApplicationInformation();
 
 }

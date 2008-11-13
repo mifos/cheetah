@@ -10,6 +10,7 @@
     
    <modules>
      <module>testFramework</module>
+     <module>serviceInterfaces</module>
      <module>application</module>
      <module>userInterface</module>
      <module>webapp</module>

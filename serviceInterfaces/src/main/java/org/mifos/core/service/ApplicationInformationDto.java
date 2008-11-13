@@ -18,9 +18,9 @@
  * explanation of the license and how it is applied.
  */
 
-package org.mifos.core;
+package org.mifos.core.service;
 
-public class AppInfo {
+public class ApplicationInformationDto {
 
 	private String svnRevision;
 	private String buildTag;

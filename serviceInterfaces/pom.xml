@@ -2,10 +2,10 @@
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <groupId>org.mifos</groupId>
-   <artifactId>cheetah</artifactId>
+   <artifactId>cheetah-serviceInterfaces</artifactId>
    <packaging>jar</packaging>
    <version>0.0.3-SNAPSHOT</version>
-   <name>Mifos - Cheetah Application</name>
+   <name>Mifos - Cheetah Service Interfaces</name>
    <url>http://www.mifos.org</url>
 
    <properties>
@@ -17,40 +17,8 @@
      <artifactId>cheetah-parent</artifactId>
      <version>0.0.3-SNAPSHOT</version>
    </parent>
-   
-   <profiles>
-
-      <profile>
-         <id>continuous-integration</id>
-         <activation>
-            <activeByDefault>false</activeByDefault>
-         </activation>
-         <properties>
-            <continuous.integration.resources.dir>${modules.root.dir}/resources/continuous-integration/integration</continuous.integration.resources.dir>
-            <database.properties.file>${continuous.integration.resources.dir}/jdbc.local.properties</database.properties.file>
-         </properties>
-         <build>
-            <plugins>
-               <plugin>
-                  <groupId>org.apache.maven.plugins</groupId>
-                  <artifactId>maven-surefire-plugin</artifactId>
-                  <configuration>         
-                     <additionalClasspathElements>
-                        <additionalClasspathElement>${continuous.integration.resources.dir}</additionalClasspathElement>
-                     </additionalClasspathElements>
-                  </configuration>
-               </plugin>
-            </plugins>
-         </build>
-      </profile>
-      
-   </profiles>   
+     
    <dependencies>
-      <dependency>
-         <groupId>org.mifos</groupId>
-         <artifactId>cheetah-serviceInterfaces</artifactId>
-         <version>0.0.3-SNAPSHOT</version>
-      </dependency>      
    
       <!-- from parent pom -->
       <dependency>
@@ -164,23 +132,13 @@
 	  </dependency>
    </dependencies>
    <build>
-      <finalName>mifos</finalName>
-      <defaultGoal>war:war</defaultGoal>
-      <sourceDirectory>${modules.root.dir}/application/src/main/java</sourceDirectory>
-      <scriptSourceDirectory>${modules.root.dir}/application/src/main/scripts</scriptSourceDirectory>
-      <testSourceDirectory>${modules.root.dir}/application/src/test/java</testSourceDirectory>
-      <outputDirectory>target/mifos/WEB-INF/classes</outputDirectory>
-      <testOutputDirectory>target/test-classes</testOutputDirectory>
+      <finalName>cheetah-serviceInterfaces</finalName>
+      <defaultGoal>jar</defaultGoal>
+      <sourceDirectory>${modules.root.dir}/serviceInterfaces/src/main/java</sourceDirectory>
+      <scriptSourceDirectory>${modules.root.dir}/serviceInterfaces/src/main/scripts</scriptSourceDirectory>
+      <outputDirectory>target/classes</outputDirectory>
 
       <plugins>
-        <plugin>
-           <groupId>org.codehaus.mojo</groupId>
-           <artifactId>properties-maven-plugin</artifactId>
-        </plugin>  
-        <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>sql-maven-plugin</artifactId>
-         </plugin>
          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
@@ -196,23 +154,9 @@
             <version>2.4.3</version>
             <configuration>
                <includedGroups>unit</includedGroups>
-               <excludedGroups>integration, workInProgress</excludedGroups>
+               <excludedGroups>workInProgress</excludedGroups>
                <reportsDirectory>${project.build.directory}/surefire-reports/unit</reportsDirectory>
             </configuration>
-            <executions>
-               <execution>
-                  <id>integration-test</id>
-                  <phase>integration-test</phase>
-                  <goals>
-                     <goal>test</goal>
-                  </goals>
-                  <configuration>
-                     <includedGroups>integration</includedGroups>
-                     <excludedGroups>unit, workInProgress</excludedGroups>
-                     <reportsDirectory>${project.build.directory}/surefire-reports/integration</reportsDirectory>
-                  </configuration>
-               </execution>
-            </executions>
          </plugin>
          <plugin>
             <groupId>org.codehaus.mojo</groupId>
