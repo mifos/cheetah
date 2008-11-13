@@ -11,6 +11,7 @@
    <modules>
      <module>testFramework</module>
      <module>application</module>
+     <module>userInterface</module>
      <module>webapp</module>
      <module>acceptanceTesting</module>
    </modules>
