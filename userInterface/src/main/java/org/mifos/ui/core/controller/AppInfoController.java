@@ -28,18 +28,18 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.mifos.core.AppInfo;
+import org.mifos.core.service.ApplicationInformationDto;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 public class AppInfoController extends AbstractController {
 
-	private AppInfo appInfo = null;
+	private ApplicationInformationDto applicationInformationDto = null;
 
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response)  {
         	Map<String, Object> model = new HashMap<String, Object>();
-        	model.put("appInfo", appInfo);
+        	model.put("appInfo", applicationInformationDto);
         	model.put("request", request);
         	Map<String, Object> status = new HashMap<String, Object>();
         	List<String> errorMessages = new ArrayList<String>();
@@ -49,12 +49,12 @@ public class AppInfoController extends AbstractController {
         	return modelAndView;
 	}
 	
-	public AppInfo getAppInfo() {
-		return appInfo;
+	public ApplicationInformationDto getAppInfo() {
+		return applicationInformationDto;
 	}
 
-	public void setAppInfo(AppInfo appInfo) {
-		this.appInfo = appInfo;
+	public void setAppInfo(ApplicationInformationDto applicationInformationDto) {
+		this.applicationInformationDto = applicationInformationDto;
 	}
     
 }

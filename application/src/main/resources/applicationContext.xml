@@ -22,14 +22,14 @@
     <bean id="validator" class="org.springmodules.validation.bean.BeanValidator"
         p:configurationLoader-ref="configurationLoader"/>  
 
-    <bean id="appInfo" class="org.mifos.core.AppInfo">
+    <bean id="applicationInformation" class="org.mifos.core.service.ApplicationInformationDto">
         <property name="svnRevision" value="${svn.revision.appInfo}"/>
         <property name="buildTag" value="${build.tag.appInfo}"/>
         <property name="buildId" value="${build.id.appInfo}"/>
     </bean>
     
     <bean id="systemInfo" class="org.mifos.core.SystemInfo">
-        <constructor-arg ref="appInfo"/>
+        <constructor-arg ref="applicationInformation"/>
         <constructor-arg ref="dataSource"/>
     </bean>
     

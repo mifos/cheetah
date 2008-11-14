@@ -19,8 +19,8 @@
   	<param-value>
 		classpath:applicationContext.xml
 		classpath:repositoryContext.xml
-        classpath:securityContext.xml
-        classpath:dataSource.xml
+      classpath:securityContext.xml
+      classpath:dataSource.xml
 	</param-value>
   </context-param>
 

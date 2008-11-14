@@ -22,7 +22,7 @@ package org.mifos.ui.loan.controller;
 
 import java.util.Map;
 
-import org.mifos.core.AppInfo;
+import org.mifos.core.service.ApplicationInformationDto;
 import org.mifos.ui.core.controller.AppInfoController;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -33,19 +33,19 @@ import org.testng.annotations.Test;
 @Test(groups = { "unit" })
 public class AppInfoControllerTest {
 	
-	AppInfo appInfo;
+    ApplicationInformationDto applicationInformationDto;
 	
     @SuppressWarnings("PMD.SignatureDeclareThrowsException") // Exception is thrown by AppInfoController.handleRequest
 	public void testHandleRequestView() throws Exception {
-		appInfo = new AppInfo();
+		applicationInformationDto = new ApplicationInformationDto();
 		String expectedSvnRevision = "123456";
-		appInfo.setSvnRevision(expectedSvnRevision);
+		applicationInformationDto.setSvnRevision(expectedSvnRevision);
 		String expectedBuildId = "fooId";
-		appInfo.setBuildId(expectedBuildId);
+		applicationInformationDto.setBuildId(expectedBuildId);
 		String expectedBuildTag = "bar-baz-tag-1";
-		appInfo.setBuildTag(expectedBuildTag);
+		applicationInformationDto.setBuildTag(expectedBuildTag);
         AppInfoController controller = new AppInfoController();
-        controller.setAppInfo(appInfo);
+        controller.setAppInfo(applicationInformationDto);
         MockHttpServletRequest mockRequest = new MockHttpServletRequest();
         mockRequest.setMethod("GET");
         mockRequest.setRequestURI("/appInfo.ftl");
@@ -55,10 +55,10 @@ public class AppInfoControllerTest {
         Assert.assertNotNull(modelAndView.getModel());
         Map<String, Object> modelMap = (Map<String, Object>) modelAndView.getModel().get("model");
         Assert.assertNotNull(modelMap);
-        AppInfo actualAppInfo = (AppInfo) modelMap.get("appInfo");
-		Assert.assertNotNull(actualAppInfo);
-		Assert.assertEquals(actualAppInfo.getSvnRevision(), expectedSvnRevision);
-		Assert.assertEquals(actualAppInfo.getBuildId(), expectedBuildId);
-		Assert.assertEquals(actualAppInfo.getBuildTag(), expectedBuildTag);
+        ApplicationInformationDto actualApplicationInformationDto = (ApplicationInformationDto) modelMap.get("appInfo");
+		Assert.assertNotNull(actualApplicationInformationDto);
+		Assert.assertEquals(actualApplicationInformationDto.getSvnRevision(), expectedSvnRevision);
+		Assert.assertEquals(actualApplicationInformationDto.getBuildId(), expectedBuildId);
+		Assert.assertEquals(actualApplicationInformationDto.getBuildTag(), expectedBuildTag);
      }
 }

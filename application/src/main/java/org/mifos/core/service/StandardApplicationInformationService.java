@@ -20,12 +20,6 @@
 
 package org.mifos.core.service;
 
-import org.mifos.core.service.ApplicationInformationService;
-import org.mifos.core.service.ApplicationInformationDto;
-
-/**
- *
- */
 public class StandardApplicationInformationService implements
         ApplicationInformationService {
     private ApplicationInformationDto appInfo;

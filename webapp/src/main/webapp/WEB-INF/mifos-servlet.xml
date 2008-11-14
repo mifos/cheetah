@@ -179,7 +179,7 @@
     </bean>
 
     <bean id="appInfoController" class="org.mifos.ui.core.controller.AppInfoController">
-        <property name="appInfo" ref="appInfo"/>
+        <property name="appInfo" ref="applicationInformation"/>
     </bean>
 
     <bean id="pingController" class="org.mifos.ui.core.controller.PingController">
