@@ -31,6 +31,7 @@
    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
      <property name="templateLoaderPaths">
        <list>
+         <value>classpath:org/mifos/ui/freemarker/css</value>
          <value>classpath:org/mifos/ui/freemarker/core</value>
          <value>classpath:org/mifos/ui/freemarker/client</value>
          <value>classpath:org/mifos/ui/freemarker/group</value>
@@ -230,6 +231,7 @@
             /deleteLoanProductFailure.ftl=genericController
             /viewOffices.ftl=officeController
             /viewGroups.ftl=genericController
+            /cssstyle.ftl=genericController
     		</value>
     	</property>
     </bean>

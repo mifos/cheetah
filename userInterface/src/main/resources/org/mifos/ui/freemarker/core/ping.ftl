@@ -5,5 +5,5 @@
   <head>
     <title>ping</title>
   </head>
-  <body>OK</body>
-</html>
+  <body>OK[@mifos.footer /]
+

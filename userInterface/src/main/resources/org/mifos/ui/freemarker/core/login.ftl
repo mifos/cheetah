@@ -1,14 +1,8 @@
 [#ftl]
 [#import "spring.ftl" as spring]
-<html>
-   <head>
-      <title id="login.title">Login</title>
-      <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-   </head>
+[#import "macros.ftl" as mifos]
 
-   <body>
-   
-	<!-- this is the header portion of the login page - should be put in its own freemarker file and included in each page -->
+[@mifos.header "login" /]
 
 	<div id="login-page-header">
 	</div>
@@ -57,6 +51,6 @@
 			</div> <!-- login -->
 		</form>
 	</div> <!-- page-content -->
-</body>
-</html>
+[@mifos.footer /]
+
    

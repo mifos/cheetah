@@ -8,7 +8,7 @@
    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-  [@mifos.header currentTab="Admin" /]
+  [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
       
 	<div id="page-content">
@@ -25,5 +25,5 @@
          </fieldset>
       [/@form.form]
 	</div>
-  </body>
-</html>
+[@mifos.footer /]
+

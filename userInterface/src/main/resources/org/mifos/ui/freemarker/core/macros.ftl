@@ -8,8 +8,8 @@
 [#-- header macro --]
 [#-- Generate the Mifos header with tabbed navigation --]
 [#-- currentTab values: "Home","ClientsAndAccounts","Reports","Admin" --]
-[#-- usage   [@mifos.header currentTab="Home" /] --]
-[#macro header currentTab]
+[#-- usage   [@mifos.topNavigation currentTab="Home" /] --]
+[#macro topNavigation currentTab]
 <div id = "homePageHeader">
 	<IMG id="logo" height=74 alt=""
 					src="images/logo.gif" width=188></td>
@@ -31,7 +31,7 @@
 </div>
 [/#macro]
 
-[#macro headerNoSecurity currentTab]
+[#macro topNavigationNoSecurity currentTab]
 <div id = "homePageHeader">
 	<IMG id="logo" height=74 alt=""
 					src="images/logo.gif" width=188></td>
@@ -49,4 +49,18 @@
 		</ul>
 	</div>			
 </div>
+[/#macro]
+
+[#macro header pageTitle ]
+<html>
+  <head>
+   <title id="${pageTitle}">[@spring.message "${pageTitle}" /]</title>
+   <link href="cssstyle.ftl" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+[/#macro]
+
+[#macro footer]
+</body>
+</html>
 [/#macro]

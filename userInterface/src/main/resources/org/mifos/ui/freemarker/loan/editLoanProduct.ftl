@@ -3,18 +3,10 @@
 [#import "macros.ftl" as mifos]
 [#assign form=JspTaglibs["/WEB-INF/tld/spring-form.tld"]]
 
-<html>
-
-  <head>
-  	<title id="hello.title">[@spring.message "title" /]</title>
-    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  
-  <body>
-  
+[@mifos.header "title" /]
   <!-- page: editLoanProduct.ftl -->
   
-  [@mifos.header currentTab="Admin" /]
+  [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
 
 	<div id="page-content">
@@ -61,5 +53,5 @@
   	</div>
   
       [#include "footer.ftl"]    
-  </body>
-  </html>
+[@mifos.footer /]
+  

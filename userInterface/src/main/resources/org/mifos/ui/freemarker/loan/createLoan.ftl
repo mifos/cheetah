@@ -3,15 +3,8 @@
 [#import "macros.ftl" as mifos]
 [#assign form=JspTaglibs["/WEB-INF/tld/spring-form.tld"]]
 
-<html>
-
-  <head>
-  	<title id="hello.title">[@spring.message "title" /]</title>
-    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  
-  <body>
-  [@mifos.header currentTab="Home" /]
+[@mifos.header "title" /]
+  [@mifos.topNavigation currentTab="Home" /]
 	<div id="page-content">
 		<h2 id="createLoanHeading">[@spring.message "createANewLoan" /]</h2>
 		 [@form.form action="createLoan.ftl" commandName="loan"]
@@ -33,5 +26,4 @@
 			</fieldset>	
 		[/@form.form]
   	</div>
-  </body>
-</html>
+[@mifos.footer /]

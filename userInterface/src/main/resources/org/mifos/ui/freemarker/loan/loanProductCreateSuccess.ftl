@@ -1,16 +1,11 @@
 [#ftl]
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
-<html>
-  <head>
-  	<title id="hello.title">[@spring.message "title" /]</title>
-   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-  
+
+[@mifos.header "title" /]
   <!-- page: loanProductCreateSuccess.ftl -->
   
-  [@mifos.header currentTab="Admin" /]
+  [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
       
 	<div id="page-content">
@@ -43,5 +38,5 @@
 	 </table>
 	   
 	   </div>
-  </body>
-</html>
+[@mifos.footer /]
+

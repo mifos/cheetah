@@ -1,15 +1,10 @@
-   [#ftl]
+[#ftl]
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
 [#assign form=JspTaglibs["/WEB-INF/tld/spring-form.tld"]]
 
-<html>
-  <head>
-  	<title id="hello.title">[@spring.message "title" /]</title>
-   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-  [@mifos.header currentTab="Home" /]
+[@mifos.header "title" /]
+  [@mifos.topNavigation currentTab="Home" /]
   [#include "homeLeftPane.ftl" ]  
   
   
@@ -29,5 +24,4 @@
     </div>
   </div>
 
-  </body>
-</html>
+[@mifos.footer /]

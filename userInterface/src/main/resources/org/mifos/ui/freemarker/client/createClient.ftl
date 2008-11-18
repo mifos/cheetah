@@ -2,13 +2,9 @@
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
 [#assign form=JspTaglibs["/WEB-INF/tld/spring-form.tld"]]
-<html>
-  <head>
-  	<title id="createClient.title">[@spring.message "createClient.title" /]</title>
-   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-   </head>
-   <body>
-   [@mifos.header currentTab="ClientsAndAccounts" /]
+
+[@mifos.header "createClient.title" /]
+   [@mifos.topNavigation currentTab="ClientsAndAccounts" /]
    [#include "clientsAndAccountsLeftPane.ftl"]
     <div class="content-pane">
       [@form.form action="createClient.ftl" commandName="client"]
@@ -27,6 +23,4 @@
       [/@form.form]
      
   </div> <!-- content-pane -->
-  
-</body>
-</html>
+[@mifos.footer /]

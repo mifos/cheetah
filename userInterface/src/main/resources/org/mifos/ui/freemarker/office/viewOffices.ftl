@@ -9,7 +9,7 @@
   <body>
   
   
-  [@mifos.header currentTab="Admin" /]
+  [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ]  
   
   <div id="page-content">     
@@ -41,6 +41,5 @@
 		    [/#if]
 	  </div>
 	 </div>
+[@mifos.footer /]
 
-  </body>
-</html>

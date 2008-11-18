@@ -1,16 +1,11 @@
 [#ftl]
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
-<html>
-  <head>
-  	<title id="user.create.success.title">[@spring.message "user.create.success.title" /]</title>
-   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-  
+
+[@mifos.header "user.create.success.title" /]
   <!-- page: userCreateSuccess.ftl -->
   
-  [@mifos.header currentTab="Admin" /]
+  [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
       
 	<div id="page-content">
@@ -20,5 +15,5 @@
 		<h2 id="user.create.success.heading">[@spring.messageArgs "user.create.success.heading" userId /]</h2>
 	   
 	</div>
-  </body>
-</html>
+[@mifos.footer /]
+

@@ -1,14 +1,10 @@
 [#ftl]
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
-<html>
-  <head>
-  	<title id="view.groups.title">[@spring.message "viewGroups.title" /]</title>
-   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
+
+[@mifos.header "viewGroups.title" /]
   
-  [@mifos.header currentTab="Home" /]
+  [@mifos.topNavigation currentTab="Home" /]
   [#include "homeLeftPane.ftl" ]  
   
   <div id="page-content">      
@@ -27,6 +23,5 @@
 [/#if]
 --]
   </div>
+[@mifos.footer /]
 
-  </body>
-</html>

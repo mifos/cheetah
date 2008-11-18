@@ -1,13 +1,9 @@
 [#ftl]
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
-<html>
-  <head>
-    <title>[@spring.message "systemInformation" /]</title>
-    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-  [@mifos.header currentTab="Admin" /]
+
+[@mifos.header "systemInformation" /]
+  [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
         
 	<div id="page-content">
@@ -20,5 +16,5 @@
 	    </ul>
 	  </div>
 	</div>
-  </body>
-</html>
+[@mifos.footer /]
+

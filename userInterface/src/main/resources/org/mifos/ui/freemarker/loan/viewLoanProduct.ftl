@@ -11,7 +11,7 @@
   
   <!-- page: viewLoanProduct.ftl -->
   
-  [@mifos.header currentTab="Admin" /]
+  [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
       
 	<div id="page-content">
@@ -53,5 +53,5 @@
 		[/@security.authorize]
 		
 	</div>
-  </body>
-</html>
+[@mifos.footer /]
+

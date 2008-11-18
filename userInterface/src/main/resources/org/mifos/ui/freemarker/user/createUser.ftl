@@ -3,18 +3,10 @@
 [#import "macros.ftl" as mifos]
 [#assign form=JspTaglibs["/WEB-INF/tld/spring-form.tld"]]
 
-<html>
-
-  <head>
-  	<title id="createUser.title">[@spring.message "user.create.title" /]</title>
-    <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
+[@mifos.header "user.create.title" /]
+  <!-- page: createUser.ftl -->
   
-  <body>
-  
-  <!-- page: creatUser.ftl -->
-  
-  [@mifos.header currentTab="Admin" /]
+  [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
 
 	<div id="page-content">
@@ -76,5 +68,5 @@
   	</div>
   
       [#include "footer.ftl"]    
-  </body>
-  </html>
+[@mifos.footer /]
+  
