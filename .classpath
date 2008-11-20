@@ -7,7 +7,6 @@
 	<classpathentry kind="src" path="serviceInterfaces/src/main/java"/>
 	<classpathentry kind="src" output="acceptanceTesting/target/test-classes" path="acceptanceTesting/src/test/java"/>
 	<classpathentry kind="src" output="acceptanceTesting/target/test-classes" path="acceptanceTesting/src/test/resources"/>
-	<classpathentry kind="src" output="webapp/target/mifos/WEB-INF/css" path="webapp/src/main/webapp/css"/>
 	<classpathentry kind="src" output="testFramework/target/classes" path="testFramework/src/main/java"/>
 	<classpathentry kind="src" output="webapp/target/mifos/WEB-INF/classes" path="application/src/main/java"/>
 	<classpathentry kind="src" output="application/target/test-classes" path="application/src/test/java"/>
