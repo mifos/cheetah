@@ -52,12 +52,6 @@ public class AbstractPage {
 		return this.selenium;
 	}
 
-	public LoginPage logout() {
-		selenium.open("	j_spring_security_logout");
-		waitForPageToLoad();
-		return new LoginPage(selenium);
-	}
-	
 	public void openUri (String uri) {
 	    selenium.open(uri);
 	    waitForPageToLoad();
