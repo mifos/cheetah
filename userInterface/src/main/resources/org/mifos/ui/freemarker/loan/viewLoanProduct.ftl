@@ -2,13 +2,8 @@
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
 [#assign security=JspTaglibs["/WEB-INF/tld/security.tld"]]
-<html>
-  <head>
-  	<title id="hello.title">[@spring.message "title" /]</title>
-   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-  
+
+[@mifos.header "title" /]
   <!-- page: viewLoanProduct.ftl -->
   
   [@mifos.topNavigation currentTab="Admin" /]

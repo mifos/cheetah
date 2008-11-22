@@ -54,8 +54,9 @@
 [#macro header pageTitle ]
 <html>
   <head>
-   <title id="${pageTitle}">[@spring.message "${pageTitle}" /]</title>
-   <link href="cssstyle.ftl" rel="stylesheet" type="text/css">
+    <title id="${pageTitle}">[@spring.message "${pageTitle}" /]</title>
+    <link href="cheetah.css.ftl" rel="stylesheet" type="text/css" />
+    <link href="gazelle.css.ftl" rel="stylesheet" type="text/css" />
   </head>
   <body>
 [/#macro]

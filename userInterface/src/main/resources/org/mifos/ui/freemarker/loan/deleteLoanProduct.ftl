@@ -2,12 +2,8 @@
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
 [#assign form=JspTaglibs["/WEB-INF/tld/spring-form.tld"]]
-<html>
-  <head>
-  	<title id="hello.title">[@spring.message "deleteLoanProduct.title" /]</title>
-   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
+
+[@mifos.header "deleteLoanProduct.title" /]
   [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ] 
       

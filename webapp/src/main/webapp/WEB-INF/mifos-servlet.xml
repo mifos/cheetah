@@ -231,7 +231,8 @@
             /deleteLoanProductFailure.ftl=genericController
             /viewOffices.ftl=officeController
             /viewGroups.ftl=genericController
-            /cssstyle.ftl=genericController
+            /cheetah.css.ftl=genericController
+            /gazelle.css.ftl=genericController
     		</value>
     	</property>
     </bean>

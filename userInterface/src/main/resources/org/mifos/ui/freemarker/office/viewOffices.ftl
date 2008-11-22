@@ -1,14 +1,8 @@
 [#ftl]
 [#import "spring.ftl" as spring]
 [#import "macros.ftl" as mifos]
-<html>
-  <head>
-  	<title id="view.offices.title">[@spring.message "title" /]</title>
-   <link href="css/cssstyle.css" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-  
-  
+
+[@mifos.header "title" /]
   [@mifos.topNavigation currentTab="Admin" /]
   [#include "adminLeftPane.ftl" ]  
   
