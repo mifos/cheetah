@@ -7,13 +7,15 @@
         classpath:xsd/spring-aop-2.5.xsd">
 
     <aop:aspectj-autoproxy />
+
+    <import resource="dataSource.xml"/>
     
     <bean id="seleniumSpeedControl" class="org.mifos.test.acceptance.framework.util.SeleniumSpeedControl" />
 
     <bean id="selenium" class="com.thoughtworks.selenium.DefaultSelenium" >
         <constructor-arg type="java.lang.String" value="localhost" />
         <constructor-arg type="int" value="4444" />
-        <constructor-arg type="java.lang.String" value="*firefox" />
+        <constructor-arg type="java.lang.String" value="${selenium.start.browser.command}" />
         <constructor-arg type="java.lang.String" value="http://localhost:8080/mifos/" />
     </bean>
 
