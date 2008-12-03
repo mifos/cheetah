@@ -20,7 +20,7 @@
         <selenium.background>true</selenium.background>
         <tomcat.container.url>http://www.apache.org/dist/tomcat/tomcat-6/v${tomcat.version}/bin/apache-tomcat-${tomcat.version}.zip</tomcat.container.url>
         <cargo.wait>false</cargo.wait>
-        <selenium.start.browser.command>*firefox</selenium.start.browser.command>
+        <selenium.browser.start.command>*firefox</selenium.browser.start.command>
     </properties>
 
     <profiles>
@@ -120,7 +120,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                <browser>${selenium.start.browser.command}</browser>
+                <browser>${selenium.browser.start.command}</browser>
             </properties>
         </profile>
         <profile>

@@ -8,14 +8,25 @@
 
     <aop:aspectj-autoproxy />
 
-    <import resource="dataSource.xml"/>
+    <bean id="propertyConfigurer" 
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" name="locations">
+            <list>
+                <value>classpath:jdbc.properties</value>
+                <value>classpath:jdbc.local.properties</value>
+                <value>classpath:appInfo.properties</value>
+                <value>classpath:acceptanceTest.properties</value>
+                <value>file:${user.home}/.mifos/local.properties</value>
+            </list>
+        </property>
+    </bean>
     
     <bean id="seleniumSpeedControl" class="org.mifos.test.acceptance.framework.util.SeleniumSpeedControl" />
 
     <bean id="selenium" class="com.thoughtworks.selenium.DefaultSelenium" >
         <constructor-arg type="java.lang.String" value="localhost" />
         <constructor-arg type="int" value="4444" />
-        <constructor-arg type="java.lang.String" value="${selenium.start.browser.command}" />
+        <constructor-arg type="java.lang.String" value="${selenium.browser.start.command}" />
         <constructor-arg type="java.lang.String" value="http://localhost:8080/mifos/" />
     </bean>
 
