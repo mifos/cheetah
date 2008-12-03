@@ -11,7 +11,7 @@
                 <value>classpath:jdbc.properties</value>
                 <value>classpath:jdbc.local.properties</value>
                 <value>classpath:appInfo.properties</value>
-                <value>file:${user.home}/.mifos/mifos.local.properties</value>
+                <value>file:${user.home}/.mifos/local.properties</value>
             </list>
         </property>
     </bean>
