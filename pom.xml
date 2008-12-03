@@ -20,9 +20,9 @@
     <properties>
         <modules.root.dir>${basedir}</modules.root.dir>
         <database.properties.file>${modules.root.dir}/application/src/main/resources/jdbc.properties</database.properties.file>
-        <!-- Override this property in M2_REPO/settings.xml to allow local
-        settings. -->
-        <database.local.overrides>${database.properties.file}</database.local.overrides> 
+        <!-- This must be set to something known to exist. Override this
+        property in M2_REPO/settings.xml to allow local settings. -->
+        <local.property.overrides>${database.properties.file}</local.property.overrides> 
     </properties>
 
     <repositories>
@@ -222,8 +222,14 @@
                 <filtering>true</filtering>
                 <targetPath>sql</targetPath>
             </resource>
+            <!-- FIXME: put XSDs and such in a separate module/package -->
             <resource>
                 <directory>${modules.root.dir}/application/src/main/resources</directory>
+            </resource>
+            <!-- redundant to the resource directory above, but necessary for
+            acceptance tests to be able to find their own resources. :( -->
+            <resource>
+                <directory>src/main/resources</directory>
             </resource>
         </resources>
         <pluginManagement>
@@ -280,7 +286,7 @@
                             <configuration>
                                 <files>
                                     <file>${database.properties.file}</file>
-                                    <file>${database.local.overrides}</file>
+                                    <file>${local.property.overrides}</file>
                                 </files>
                             </configuration>
                         </execution>
