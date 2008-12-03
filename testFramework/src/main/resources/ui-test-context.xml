@@ -2,15 +2,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:aop="http://www.springframework.org/schema/aop"
     xsi:schemaLocation="http://www.springframework.org/schema/beans 
-        classpath:xsd/spring-beans-2.5.xsd
-        http://www.springframework.org/schema/aop 
-        classpath:xsd/spring-aop-2.5.xsd">
+    classpath:xsd/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/aop 
+    classpath:xsd/spring-aop-2.5.xsd">
 
     <aop:aspectj-autoproxy />
 
     <bean id="propertyConfigurer" 
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="ignoreResourceNotFound" name="locations">
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
             <list>
                 <value>classpath:jdbc.properties</value>
                 <value>classpath:jdbc.local.properties</value>
@@ -20,7 +21,7 @@
             </list>
         </property>
     </bean>
-    
+
     <bean id="seleniumSpeedControl" class="org.mifos.test.acceptance.framework.util.SeleniumSpeedControl" />
 
     <bean id="selenium" class="com.thoughtworks.selenium.DefaultSelenium" >
