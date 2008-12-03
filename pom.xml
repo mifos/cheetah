@@ -20,7 +20,9 @@
     <properties>
         <modules.root.dir>${basedir}</modules.root.dir>
         <database.properties.file>${modules.root.dir}/application/src/main/resources/jdbc.properties</database.properties.file>
-        <database.local.overrides>${user.home}/.mifos/mifos.local.properties</database.local.overrides> 
+        <!-- Override this property in M2_REPO/settings.xml to allow local
+        settings. -->
+        <database.local.overrides>${database.properties.file}</database.local.overrides> 
     </properties>
 
     <repositories>
