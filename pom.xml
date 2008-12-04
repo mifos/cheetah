@@ -229,7 +229,7 @@
             <!-- redundant to the resource directory above, but necessary for
             acceptance tests to be able to find their own resources. :( -->
             <resource>
-                <directory>src/main/resources</directory>
+                <directory>src/test/resources</directory>
             </resource>
         </resources>
         <pluginManagement>
