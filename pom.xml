@@ -14,7 +14,7 @@
         <module>application</module>
         <module>userInterface</module>
         <module>webapp</module>
-        <module>acceptanceTesting</module>
+        <module>acceptanceTests</module>
     </modules>
 
     <properties>
