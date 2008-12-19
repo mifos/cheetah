@@ -4,18 +4,16 @@
 	<div class="left-pane">
 	  <div class="left-pane-header">Clients & Accounts Tasks</div>
 	  <div class="left-pane-content">
-       <p>
-         <h2>Manage Collection Sheets<br/>
-       <p/>
-       <p>
-         Create new Clients<br/> 
-         <a href="createClient.ftl" id="leftPane.createClient">Create new Clients</a>
-         <p/>
-       <p>
-         Create new Accounts<br/>
-       </p>
-       <p>
-         Manage account status<br/>
-       </p>
-   	</div>
+         <h3>Manage Collection Sheets</h3>
+         	<p>
+         		<a href="collectionSheetEntrySelectCenter.ftl" id="leftPane.link.enterCollectionSheetData">Enter Collection Sheet Data</a>
+       		<p>
+         <h3>Create new Clients</h3>
+         	<p> 
+         		<a href="createClient.ftl" id="leftPane.createClient">Create new Client</a>
+        	 <p/>
+       	<h3>Create new Accounts</h3>
+
+		<h3>Manage account status</h3>
+    	</div>
 	</div>

@@ -38,6 +38,7 @@
          <value>classpath:org/mifos/ui/freemarker/loan</value>
          <value>classpath:org/mifos/ui/freemarker/office</value>
          <value>classpath:org/mifos/ui/freemarker/user</value>
+         <value>classpath:org/mifos/ui/freemarker/bulkentry</value>
        </list>
      </property>
      <property name="preferFileSystemAccess" value="false"/>
@@ -187,6 +188,16 @@
         <property name="successView"  value="deleteLoanProductSuccess.ftl"/>
         <property name="loanProductService" ref="loanProductService"/>
     </bean>
+    
+    <bean id="collectionSheetEntrySelectFormController" 
+    		class="org.mifos.ui.collectionsheetentry.controller.CollectionSheetEntrySelectFormController">
+        <property name="sessionForm"  value="true"/>
+        <property name="commandName"  value="collectionSheetEntrySelection"/>
+        <property name="commandClass" value="org.mifos.ui.collectionsheetentry.command.CollectionSheetEntrySelectFormBean"/>
+        <property name="formView"     value="collectionSheetEntrySelectCenter"/>
+        <property name="successView"  value="home.ftl"/>
+        <property name="validator"    ref="beanValidator"/>
+    </bean>
 
     <bean id="appInfoController" class="org.mifos.ui.core.controller.AppInfoController">
         <property name="appInfo" ref="applicationInformation"/>
@@ -231,6 +242,7 @@
             /deleteLoanProductFailure.ftl=genericController
             /viewOffices.ftl=officeController
             /viewGroups.ftl=genericController
+            /collectionSheetEntrySelectCenter.ftl=collectionSheetEntrySelectFormController
             /cheetah.css.ftl=genericController
             /gazelle.css.ftl=genericController
     		</value>
