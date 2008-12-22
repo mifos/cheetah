@@ -191,12 +191,12 @@ public class DbUnitDataImportExport {
                     "jdbc:mysql://localhost/" + databaseName, user, password);
             IDatabaseConnection connection = new DatabaseConnection(jdbcConnection);
 
-            // use a sequenced data set to write out data such that 
-            // foreign key constraints won't be violated as we read it back in
-            ITableFilter filter = new DatabaseSequenceFilter(connection);
-            fullDataSet = new FilteredDataSet(filter, connection.createDataSet());
-
             System.out.println("dumping data to: " + fileName + " ...");
+
+            // sequenced data should not be necessary when foreign key constraints
+            // are turned off on the connection...
+            fullDataSet = connection.createDataSet();
+            
             FlatXmlDataSet.write(fullDataSet, new FileOutputStream(fileName));
         } finally {
             if (jdbcConnection != null) {
