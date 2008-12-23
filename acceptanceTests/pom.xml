@@ -307,7 +307,7 @@
         <sourceDirectory>${modules.root.dir}/acceptanceTests/src/main/java</sourceDirectory>
         <scriptSourceDirectory>${modules.root.dir}/acceptanceTests/src/main/scripts</scriptSourceDirectory>
         <testSourceDirectory>${modules.root.dir}/acceptanceTests/src/test/java</testSourceDirectory>
-        <outputDirectory>target/cheetah-testing/WEB-INF/classes</outputDirectory>
+        <outputDirectory>target/cheetah-testing/classes</outputDirectory>
         <testOutputDirectory>target/test-classes</testOutputDirectory>
         <plugins>
             <plugin>
