@@ -9,6 +9,7 @@
     <url>http://www.mifos.org</url>
 
     <modules>
+        <module>common</module>
         <module>testFramework</module>
         <module>serviceInterfaces</module>
         <module>application</module>
