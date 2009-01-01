@@ -3,19 +3,7 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         classpath:xsd/spring-beans-2.5.xsd">
 
-    <bean id="propertyConfigurer" 
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="ignoreResourceNotFound" value="true"/>
-        <property name="locations">
-            <list>
-                <value>classpath:jdbc.properties</value>
-                <value>classpath:jdbc.local.properties</value>
-                <value>classpath:appInfo.properties</value>
-                <value>file:${user.home}/.mifos/local.properties</value>
-                <value>file:${MIFOS_CONF}/local.properties</value>
-            </list>
-        </property>
-    </bean>
+    <import resource="propertyConfigurer.xml"/>
 
     <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
