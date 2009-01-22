@@ -19,13 +19,16 @@
  */
 package org.mifos.test.acceptance.framework;
 
+import org.testng.Assert;
+
 import com.thoughtworks.selenium.Selenium;
 
 /**
- * Encapsulates the GUI based actions that can
- * be done from the Login page and the page 
- * that will be navigated to.
- *
+ * Base class for all Page objects -
+ * There should be a Page object for each page referenced in an Selenium-based acceptance test.
+ * Page objects should be the place that all verification and navigation is done,
+ * to keep this activity in one place. If the web page changes, then only one class
+ * needs to change to make all the tests that reference it work.
  */
 public class AbstractPage {
 
@@ -56,5 +59,11 @@ public class AbstractPage {
 	    selenium.open(uri);
 	    waitForPageToLoad();
 	}
+	
+    public void verifyPage(String pageName) {
+        Assert.assertEquals(selenium.getValue("page.id"), pageName);
+    }
+
+
 
 }
