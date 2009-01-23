@@ -56,14 +56,12 @@ public class AbstractPage {
 	}
 
 	public void openUri (String uri) {
-	    selenium.open(uri);
-	    waitForPageToLoad();
+		selenium.open(uri);
+		waitForPageToLoad();
 	}
-	
-    public void verifyPage(String pageName) {
-        Assert.assertEquals(selenium.getValue("page.id"), pageName);
-    }
 
-
+	public void verifyPage(String pageName) {
+		Assert.assertEquals(selenium.getValue("page.id"), pageName);
+	}
 
 }
