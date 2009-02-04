@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 /**
@@ -36,7 +37,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  * Usage:
  * <p/>
  * SimpleDataSet simpleDataSet = new SimpleDataSet();
- * simpleDataSet.row("tableTwo", "id=13", "column1=value1", "column2=3.1415", "column3=50");
+ * simpleDataSet.row("tableTwo", "id=13", "column1=value1", "column2=3.1415", "column3=[null]");
  * simpleDataSet.row("tableTwo", "id=14", "column1=anotherValue", "column2=2.178", "column3=55");
  * simpleDataSet.row("tableThree", "id=1", "fooColumn=something", "barColumn=2");
  * simpleDataSet.clearTable("tableToBeCleared");
@@ -50,18 +51,19 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  * Note that all data in a table will be removed before the new data is inserted.
  * Not supplying name value pairs results in the table being emptied.
  * <p/>
+ * The first row of the DataSet must specify all columns; for null values, 
+ * specify "columnFoo=[null]" if you want columnFoo to be null.
+ * <p/>
  * Limitations: error reporting is primitive. Missing columns get null values, 
  * following DbUnit's FlatXmlDataSet's limitations. '=' characters are not allowed in 
  * field names or values because the parser is primitive. '"' characters must be
  * escaped.
+ * 
  *
  */
 public class SimpleDataSet {
 
     private final List<Row> rows;
-    
-    // TODO: remove columnSensing (becuase of problems with interleaving table data, use xxx=[null] instead)
-    private boolean columnSensing = false;
     
     public SimpleDataSet() {
         this.rows = new ArrayList<Row>();
@@ -93,7 +95,7 @@ public class SimpleDataSet {
     }
     
     /**
-     * Returns a DbUnit FlatXmlDataSet representation of the data set.
+     * Returns a DbUnit FlatXmlDataSet string representation of the data set.
      */
     
     @SuppressWarnings("PMD.InsufficientStringBufferDeclaration") // test method doesn't need performance optimization yet
@@ -106,7 +108,14 @@ public class SimpleDataSet {
         dataSet.append("</dataset>");
         return dataSet.toString();
     }
-
+    
+    /**
+     * Returns a DbUnit data set.
+     */
+    public IDataSet getDataSet() throws DataSetException, IOException {
+        return new DatabaseTestUtils().getXmlDataSet(this.toString());
+    }
+    
     /** 
      * Converts the data set to a FlatXmlDataSet representation and inserts it into
      * the dataSource.
@@ -118,21 +127,7 @@ public class SimpleDataSet {
      * @throws DatabaseUnitException
      */
     public void insert(DriverManagerDataSource dataSource) throws DataSetException, IOException, SQLException, DatabaseUnitException {
-        if (columnSensing) {
-            (new DatabaseTestUtils()).cleanAndInsertDataSetWithColumnSensing(this.toString(), dataSource);
-        } else {
             (new DatabaseTestUtils()).cleanAndInsertDataSet(this.toString(), dataSource);
-        }
-    }
-
-    /**
-     * Enables DbUnit column sensing - 
-     * useful if the first row contains null values.
-     * 
-     * @param columnSensing
-     */
-    public void enableColumnSensing() {
-        this.columnSensing = true;
     }
 
     private static class Row {

@@ -20,6 +20,10 @@
 
 package org.mifos.test.framework.util;
 
+import java.io.IOException;
+
+import org.dbunit.dataset.DataSetException;
+import org.dbunit.dataset.IDataSet;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -80,10 +84,10 @@ public class SimpleDataSetTest {
     public void testOneTableTwoRows() {
         String expectedOutput = "<dataset>\n" +
                 "<firstTable name1=\"value00\" name2=\"value01\" />\n" +
-                "<firstTable name1=\"value10\" name2=\"value11\" />\n" +
+                "<firstTable name1=\"value10\" name2=\"[null]\" />\n" +
                 "</dataset>";
         this.simpleDataSet.row("firstTable", "name1=value00", "name2=value01");
-        this.simpleDataSet.row("firstTable", "name1=value10", "name2=value11");
+        this.simpleDataSet.row("firstTable", "name1=value10", "name2=[null]");
         Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
     }
 
@@ -110,6 +114,14 @@ public class SimpleDataSetTest {
         this.simpleDataSet.row("firstTable", "name1=value10", "name2=2.178");
         this.simpleDataSet.row("secondTable", "fooName1=10.00001", "barName=someValue");
         Assert.assertEquals(expectedOutput, this.simpleDataSet.toString());
+    }
+
+    public void testGetDataSet() throws DataSetException, IOException {
+        this.simpleDataSet.row("firstTable", "column1=value1", "column2=[null]");
+        IDataSet actualDataSet = this.simpleDataSet.getDataSet();
+        Assert.assertNotNull(actualDataSet);
+        Assert.assertEquals("value1", actualDataSet.getTable("firstTable").getValue(0, "column1"));
+        Assert.assertEquals(null, actualDataSet.getTable("firstTable").getValue(0, "column2"));
     }
 
 }

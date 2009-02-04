@@ -83,17 +83,14 @@ public class DatabaseTestUtils {
     //Rationale: You cannot define new local variables in the try block because the finally block must reference it.
     public void cleanAndInsertDataSetWithColumnSensing(String xmlString, DriverManagerDataSource dataSource) 
                     throws IOException, DataSetException, SQLException, DatabaseUnitException {
-        boolean dtdMetadata = false;
-        boolean enableColumnSensing = true;
-        IDataSet dataSet = new FlatXmlDataSet(createTempFile(xmlString), dtdMetadata, enableColumnSensing);
+        IDataSet dataSet = getXmlDataSet(xmlString);
         cleanAndInsertDataSet(dataSource, dataSet);
     }
-    
+
     private void cleanAndInsertDataSet(DriverManagerDataSource dataSource,
             IDataSet dataSet) throws DatabaseUnitException, SQLException {
         Connection jdbcConnection = null;
-        ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet); 
-        replacementDataSet.addReplacementObject("[null]", null);        
+        ReplacementDataSet replacementDataSet = getDataSetWithNullsReplaced(dataSet);        
         try {
             jdbcConnection = DataSourceUtils.getConnection(dataSource);
             IDatabaseConnection databaseConnection = new DatabaseConnection(jdbcConnection);
@@ -103,6 +100,31 @@ public class DatabaseTestUtils {
             jdbcConnection.close();
             DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
         }
+    }
+
+    /** 
+     * given an XML string, returns an data set with [null] replaced by actual null objects.
+     * @param xmlString
+     * @return
+     * @throws IOException
+     * @throws DataSetException
+     */
+    public IDataSet getXmlDataSet(String xmlString) throws IOException, DataSetException {
+        boolean dtdMetadata = false;
+        boolean enableColumnSensing = true;
+        IDataSet xmlDataSet = new FlatXmlDataSet(createTempFile(xmlString), dtdMetadata, enableColumnSensing);
+        return this.getDataSetWithNullsReplaced(xmlDataSet);
+    }
+
+    /**
+     * Given a data set, return a data set with [null] replaced by actual null objects
+     * @param dataSet
+     * @return
+     */
+    public ReplacementDataSet getDataSetWithNullsReplaced(IDataSet dataSet) {
+        ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet); 
+        replacementDataSet.addReplacementObject("[null]", null);
+        return replacementDataSet;
     }
 
     private File createTempFile(String xmlString) throws IOException {
