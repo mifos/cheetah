@@ -77,13 +77,13 @@ public class PseudoLocalizationGenerator {
 	 *   * pass prop files in from maven and autogenerate the _is localization
 	 *   * remove _is localization from version control
 	 */
-	@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 	public static void main(String[] args) throws IOException {
 	    PseudoLocalizationGenerator generator = new PseudoLocalizationGenerator();
 	    generator.parseOptions(args);
 	    generator.generatePseudoLocalization();
 	}
 	
+    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops") // doesn't seem like an issue for a small utility like this
 	public void generatePseudoLocalization() throws IOException {
 	    Properties defaultProps = new Properties();
 		FileInputStream in = null;
