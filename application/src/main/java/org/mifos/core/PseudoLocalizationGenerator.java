@@ -71,7 +71,6 @@ public class PseudoLocalizationGenerator {
 	 * some characters to each string.
 	 * 
 	 *   TODO: pseudolocalizer work
-	 *   * refactor code below into multiple methods
 	 *   * take multiple properties files as inputs and loop on them
 	 *   * integrate this in the maven build using the exec plugin
 	 *   * pass prop files in from maven and autogenerate the _is localization
