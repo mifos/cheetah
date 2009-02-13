@@ -1,4 +1,6 @@
 #!/bin/bash
+set -x
+set -o errexit
 # current working directory must be the root of mifos-cheetah project
 # DEPLOY_BASE is the directory a tomcat installation will be created in
 TOMCAT=apache-tomcat-6.0.18
