@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 set -o errexit
 # current working directory must be the root of mifos-cheetah project
 # DEPLOY_BASE is the directory a tomcat installation will be created in
@@ -9,6 +8,7 @@ export CATALINA_HOME=$DEPLOY_BASE/$TOMCAT_DEPLOY
 export CATALINA_PID=$DEPLOY_BASE/mifos-local-deploy-tomcat.pid
 PROJECT_BUILD_DIR=`pwd`
 DEPLOY_RESOURCES=$PROJECT_BUILD_DIR/resources/deploy-build
+set -x
 $CATALINA_HOME/bin/catalina.sh stop
 rm -rf $DEPLOY_BASE
 mkdir $DEPLOY_BASE
