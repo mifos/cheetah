@@ -97,7 +97,9 @@ public class DatabaseTestUtils {
             DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, replacementDataSet);
         }
         finally {
-            jdbcConnection.close();
+            if (null != jdbcConnection) {
+                jdbcConnection.close();
+            }
             DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
         }
     }
@@ -162,7 +164,9 @@ public class DatabaseTestUtils {
             Assertion.assertEqualsIgnoreCols(expectedTable, actualTable, new String[] { "id" });   
         }
         finally {
-            jdbcConnection.close();
+            if (null != jdbcConnection) {
+                jdbcConnection.close();
+            }
             DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
         }
     }    
@@ -192,7 +196,9 @@ public class DatabaseTestUtils {
             return stream.toString();
         }
         finally {
-            jdbcConnection.close();
+            if (null != jdbcConnection) {
+                jdbcConnection.close();
+            }
             DataSourceUtils.releaseConnection(jdbcConnection, dataSource);
         }
     }
