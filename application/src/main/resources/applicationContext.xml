@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns:aop="http://www.springframework.org/schema/aop"
-         xmlns:tx="http://www.springframework.org/schema/tx"
-         xmlns:p="http://www.springframework.org/schema/p"
-         xsi:schemaLocation="http://www.springframework.org/schema/beans 
-           classpath:xsd/spring-beans-2.5.xsd
-           http://www.springframework.org/schema/aop 
-           classpath:xsd/spring-aop-2.5.xsd
-           http://www.springframework.org/schema/tx 
-           classpath:xsd/spring-tx-2.5.xsd
-           http://www.springframework.org/schema/context
-           classpath:xsd/spring-context-2.5.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    classpath:xsd/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/aop 
+    classpath:xsd/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/tx 
+    classpath:xsd/spring-tx-2.5.xsd
+    http://www.springframework.org/schema/context
+    classpath:xsd/spring-context-2.5.xsd">
 
     <import resource="dataSource.xml"/>
 
     <bean id="configurationLoader" 
-      class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" />
+        class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader" />
 
     <bean id="validator" class="org.springmodules.validation.bean.BeanValidator"
         p:configurationLoader-ref="configurationLoader"/>  
@@ -27,61 +27,61 @@
         <property name="buildTag" value="${build.tag.appInfo}"/>
         <property name="buildId" value="${build.id.appInfo}"/>
     </bean>
-    
+
     <bean id="systemInfo" class="org.mifos.core.SystemInfo">
         <constructor-arg ref="applicationInformation"/>
         <constructor-arg ref="dataSource"/>
     </bean>
-    
-   <bean id="loanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
-   
-   <bean id="loanProductService" class="org.mifos.loan.service.StandardLoanProductService">
-      <property name="loanProductDao" ref="loanProductDao"/>
-      <property name="loanDao" ref="standardLoanDao"/>
-	</bean>
-    
-   <bean id="loanService" class="org.mifos.loan.service.StandardLoanService">
-		<property name="loanProductDao" ref="loanProductDao"/>
-		<property name="loanDao" ref="standardLoanDao"/>
-		<property name="beanMapper" ref="beanMapper"/>
-		<property name="validator" ref="validator"/>
-	</bean>
-    
-   <bean id="standardClientDao" class="org.mifos.client.repository.StandardClientDao"/>
 
-   <bean id="clientService" class="org.mifos.client.service.StandardClientService">
-      <property name="validator" ref="validator"/>
-      <property name="clientDao" ref="standardClientDao"/>
-   </bean> 
+    <bean id="loanProductDao" class="org.mifos.loan.repository.StandardLoanProductDao"/>
 
-	<bean id="userService" class="org.mifos.user.service.StandardUserService">
-		<property name="userDetailsManager"   ref="userDetailsManager"/>
-		<property name="securityService"      ref="securityService"/>
-	</bean>
-	
-	<bean id="userDetailsValidator" class="org.mifos.user.domain.UserDetailsValidator">
-		<property name="userDetailsManager" ref="userDetailsManager"/>
-	</bean>
-	
-	<bean id="userDetailsManager" 
-	      class="org.springframework.security.userdetails.jdbc.JdbcUserDetailsManager">
-	      <property name="dataSource" ref="dataSource"/>
-	</bean>
-    
+    <bean id="loanProductService" class="org.mifos.loan.service.StandardLoanProductService">
+        <property name="loanProductDao" ref="loanProductDao"/>
+        <property name="loanDao" ref="standardLoanDao"/>
+    </bean>
+
+    <bean id="loanService" class="org.mifos.loan.service.StandardLoanService">
+        <property name="loanProductDao" ref="loanProductDao"/>
+        <property name="loanDao" ref="standardLoanDao"/>
+        <property name="beanMapper" ref="beanMapper"/>
+        <property name="validator" ref="validator"/>
+    </bean>
+
+    <bean id="standardClientDao" class="org.mifos.client.repository.StandardClientDao"/>
+
+    <bean id="clientService" class="org.mifos.client.service.StandardClientService">
+        <property name="validator" ref="validator"/>
+        <property name="clientDao" ref="standardClientDao"/>
+    </bean> 
+
+    <bean id="userService" class="org.mifos.user.service.StandardUserService">
+        <property name="userDetailsManager"   ref="userDetailsManager"/>
+        <property name="securityService"      ref="securityService"/>
+    </bean>
+
+    <bean id="userDetailsValidator" class="org.mifos.user.domain.UserDetailsValidator">
+        <property name="userDetailsManager" ref="userDetailsManager"/>
+    </bean>
+
+    <bean id="userDetailsManager" 
+        class="org.springframework.security.userdetails.jdbc.JdbcUserDetailsManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <bean id="securityService" class="org.mifos.security.service.StandardSecurityService"/>
 
-	<bean id="officeDao" class="org.mifos.user.repository.StandardOfficeDao"/>
-    
+    <bean id="officeDao" class="org.mifos.user.repository.StandardOfficeDao"/>
+
     <bean id="officeService" class="org.mifos.user.service.StandardOfficeService">
-   		<property name="officeDao" ref="officeDao"/>
+        <property name="officeDao" ref="officeDao"/>
     </bean>
-   
-	<bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
-		<property name="mappingFiles">
-			<list>
-				<value>dozerBeanMappings.xml</value>
-			</list>
-		</property>
-	</bean>
+
+    <bean id="beanMapper" class="net.sf.dozer.util.mapping.DozerBeanMapper">
+        <property name="mappingFiles">
+            <list>
+                <value>dozerBeanMappings.xml</value>
+            </list>
+        </property>
+    </bean>
 
 </beans>
